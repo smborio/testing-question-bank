@@ -32,3 +32,15 @@ FEEDBACK (negotiable): Worked solution: standard two-applications-of-Rolle's-The
 PRT/QTEST SUGGESTIONS: Include one qtest where the student does {b,c} before {a,b} (reversed order from the canonical worked solution, so their p>q), to confirm PRT A accepts it and PRT B/C correctly expects cc(q,p)/oo(q,p).
 ```
 
+## Entry 2 — author · build round 1 (2026-10-15T11:30:43)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 1 attempt(s).
+Retriever gave the Author: Authoring/Variables.md, Authoring/Question_note.md, Authoring/Answer_Tests/Grading_recipes.md, CAS/Real_Intervals.md, CAS/Genuine_numbers_and_zero.md, Authoring/Answer_Tests/Equivalence.md, Authoring/Potential_response_trees.md
+Deviations reported: - ANSWER TESTS section: for blanks 1–4 I compare the two closed-interval endpoint pairs as *sets* (so `cc(a,b)` and `cc(b,a)` are treated as equally valid), since the plan only specifies which unordered pair of zeros must be used, not an endpoint order within that pair; this is lenient but doesn't weaken the intended check (bracket type, pairing to {a,b}/{b,c}, distinctness).
+- FEEDBACK/ANSWER TESTS: I split the 1.0 raw score for the blanks 1–4 PRT as 0.15 per bracket-type blank (×4 = 0.6) plus 0.4 for correct pairing, and for blanks 5–6 as 0.25 each for bracket type and 0.25 each for correct follow-through endpoints — the plan asked for "partial credit per blank independent of pairing" but didn't fix exact weights, so I chose a split that makes bracket-type errors and pairing errors each independently visible while summing to 1.
+```
+
