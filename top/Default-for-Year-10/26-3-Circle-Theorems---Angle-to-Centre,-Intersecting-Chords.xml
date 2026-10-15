@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>26.3 Circle Theorems - Angle to Centre, Intersecting Chords</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Points \(A,B,C,D\) lie on the circle centred at \(O\).
+<br>The point \(E\) is the intersection of the lines \(AB\) and \(CD\).
+<br><i>Diagram not to scale.</i></p>
+
+[[jsxgraph height="300px" width="500px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,3,5,-3],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    var circStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black"
+    };
+
+    var pointStyle = {
+      fixed:true,
+      highlight:false,
+      showInfoBox:false,
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        anchorX:"left",
+        anchorY:"middle",
+        fontSize:12,
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    var segStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"blue",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        anchorX:"left",
+        anchorY:"middle",
+        fontSize:12,
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    // Origin O and circle
+
+    pointStyle.name = "\\(O\\)";
+    pointStyle.label.offset = [5,12];
+    var pO = board.create("point", [-2,0], pointStyle);
+    var circle = board.create("circle", [pO,2], circStyle);
+
+    // Points A,B,C on circle
+
+    pointStyle.name = "\\(A\\)";
+    pointStyle.label.offset = [5,12];
+    var pA = board.create("glider", [-0.27, 1, circle], pointStyle);
+
+    pointStyle.name = "\\(B\\)";
+    pointStyle.label.anchorX = "right";
+    pointStyle.label.offset = [-5,12];
+    var pB = board.create("glider", [-3.6, 1.2, circle], pointStyle);
+
+    pointStyle.name = "\\(C\\)";
+    pointStyle.label.offset = [-5,-14];
+    var pC = board.create("glider", [-2.12, -2, circle], pointStyle);
+
+    // Point D on circle such that BD is a diameter
+
+    var lineOB = board.create("line", [pB, pO], {visible:false});
+
+    pointStyle.name = "\\(D\\)";
+    pointStyle.label.anchorX = "left";
+    pointStyle.label.offset = [5,-14];
+    var pD = board.create("intersection", [lineOB, circle], pointStyle);
+
+    // Lines AB and CD and intersection point
+
+    var lineAB = board.create("line", [pA, pB], {visible:false});
+    var lineCD = board.create("line", [pC, pD], {visible:false});
+
+    pointStyle.name = "\\(E\\)";
+    pointStyle.label.offset = [5,12];
+    var pE = board.create("intersection", [lineAB, lineCD], pointStyle);
+
+    // Drawing relevent chords
+
+    segStyle.name = "\\(".concat({#segAB#},"cm\\)");
+    segStyle.label.offset = [-10,12];
+    board.create("segment", [pA, pB], segStyle);
+
+    segStyle.name = "\\(".concat({#segAE#},"cm\\)");
+    segStyle.label.offset = [-10,12];
+    board.create("segment", [pA, pE], segStyle);
+
+    segStyle.name = "\\(".concat({#segDE#},"cm\\)");
+    segStyle.label.offset = [35,0];
+    board.create("segment", [pC, pE], segStyle);
+
+    segStyle.name = "\\(".concat({#rad#},"cm\\)");
+    segStyle.label.offset = [35,-15];
+    board.create("segment", [pB, pD], segStyle);
+
+    segStyle.withLabel = false;
+    board.create("segment", [pB, pC], segStyle);
+    board.create("segment", [pO, pC], segStyle);
+
+    // Adding angle
+
+    board.create("angle", [pB, pO, pC], {
+      fixed:true,
+      highlight:false,
+      withLabel:false
+    });
+
+[[/jsxgraph]]
+
+<p>The radius of the circle, \(OD = {@rad@}cm\).</p>
+<p><br>\(AB = {@segAB@}cm\)</p>
+<p>\(AE = {@segAE@}cm\)</p>
+<p>\(DE = {@segDE@}cm\)</p>
+
+<p><br>(a) Find the length \(CD\).</p>
+<p align="right">\(CD =\) [[input:ans1]] \(cm\) [[validation:ans1]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) Find the angle \(COB\).
+<br><i>Give your answer to the nearest whole degree.</i></p>
+<p align="right">\(COB =\) [[input:ans2]] \(^\circ\) [[validation:ans2]]</p>
+<p align="right"><b>(4)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>7</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Part (a) */
+
+fact1:rand_with_step(2,6,1);
+fact2:rand_with_step(fact1+1,9,1);
+
+segDE:fact1*fact2;
+segAE:fact1*(fact2-1);
+segAB:fact2*(fact1+3)-segAE;
+
+tans1:(segAE*(segAE+segAB)/segDE)-segDE;
+
+/* Part (b) */
+
+rad:rand_with_step(2*ceiling(segAB/2),2*segAB,2)/2;
+
+tans2:round(acos(tans1/(2*rad))*360/%pi);</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>\(DE = {@segDE@}\)
+<br>\(AB = {@segAB@}\)
+<br>\(AE = {@segAE@}\)
+<br>\(r = {@rad@}\)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>tans1</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>tans2</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Correct answer */
+/* Node 2: Worked solution */
+
+/* Node 3: Correctly finds CE but does not subtract DE (2) */
+
+/* Node 4: Uses BA and CD in place of BE and CE (1) */
+node4_test: if abs(ans1-(segAE*segAB/segDE))<=0.1 then 1 else 0;
+
+/* Node 5: Uses incorrect version of chord rule (1) */
+node5_test: if abs(ans1-((segDE*(segAE+segAB)/segAE)-segDE))<=0.1 or abs(ans1-((segAE*segDE/(segAE+segAB))-segDE))<=0.1 then 1 else 0;
+
+/* Node 6: Uses incorrect version of chord rule and BA,CD in place of BE,CE (feedback) */
+node6_test: if abs(ans1-(segDE*segAB/segAE))<=0.1 or abs(ans1-(segAE*segDE/segAB))<=0.1 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>tans1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>Using the properties of intersecting chords: \(AE \times BE = CE \times DE\)</p>
+<p>\(CE = \frac{AE \times BE}{DE}\)</p>
+<p>\(CE = \frac{{@segAE@} \times {@segAE+segAB@}}{{@segDE@}}\)</p>
+<p>\(CD + {@segDE@} = {@tans1+segDE@}\)</p>
+<p>Therefore \(CD = {@tans1@}cm\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>tans1+segDE</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.6670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly found the length \(CE\).
+<br>However, you have forgotten to subtract the length of \(DE\) to find \(CD\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have used the formula \(AB \times AE = CD \times DE\).
+<br>However, the correct relationship between the chords is \(AE \times BE = CE \times DE\).</p>
+<p>Remember that you should use the distance from each point on the circle to the <b>intersection point</b>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have incorrectly related the chords using the formula: {@if abs(ans1-((segDE*(segAE+segAB)/segAE)-segDE))<=0.1 then "\\(BE \\times DE = AE \\times CE\\)" else if abs(ans1-((segAE*segDE/(segAE+segAB))-segDE))<=0.1 then "\\(AE \\times DE = BE \\times CE\\)"@}
+<br>The correct relationship between the chords is: \(AE \times BE = CE \times DE\)</p>
+<p>Remember that the product of the lengths of the chords which lie on the <b>same line</b> are equal.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have incorrectly related the chords using the formula: {@if abs(ans1-(segDE*segAB/segAE))<=0.1 then "\\(AB \\times DE = AE \\times CD\\)" else if abs(ans1-(segAE*segDE/segAB))<=0.1 then "\\(AE \\times DE = AB \\times CD\\)"@}
+<br>The correct relationship between the chords is: \(AE \times BE = CE \times DE\)</p>
+<p>Remember that you should use the distance from each point on the circle to the <b>intersection point</b> and that the product of the lengths of the chords which lie on the <b>same line</b> are equal.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Correct answer */
+/* Node 2: Worked solution */
+/* Node 3: ECF (4) */
+ecf2: round(acos(ans1/(2*rad))*360/%pi);
+
+/* Node 4: Rounds incorrectly (3) */
+node4_test: if abs(ans2-tans2)<=0.1 then 1 else 0;
+
+/* Node 5: Rounds incorrectly (3) */
+node5_test: if abs(ans2-ecf2)<=0.1 then 1 else 0;
+
+/* Node 6: Uses incorrect trigonometry but correctly doubles angle CDB (2) */
+node6_test: if is(ans2=round(acos((2*rad)/ans1)*360/%pi)) or is(ans2=round(asin(ans1/(2*rad))*360/%pi)) or is(ans2=round(asin((2*rad)/ans1)*360/%pi)) or is(ans2=round(atan(ans1/(2*rad))*360/%pi)) or is(ans2=round(atan((2*rad)/ans1)*360/%pi)) then 1 else 0;
+
+/* Node 7: Uses incorrect circle theorem but correctly finds CDB (2) */
+node7_test: if is(ans2=round(acos(ans1/(2*rad))*180/%pi)) or is(ans2=round(180-acos(ans1/(2*rad))*180/%pi)) or is(ans2=round(90+acos(ans1/(2*rad))*180/%pi)) then 1 else 0;
+
+/* Node 8: Node 6 error with incorrect rounding (1) */
+node8_test: if abs(ans2-acos((2*rad)/ans1)*360/%pi)<=1 or abs(ans2-asin(ans1/(2*rad))*360/%pi)<=1 or abs(ans2-asin((2*rad)/ans1)*360/%pi)<=1 or abs(ans2-atan(ans1/(2*rad))*360/%pi)<=1 or abs(ans2-atan((2*rad)/ans1)*360/%pi)<=1 then 1 else 0;
+
+/* Node 9: Node 7 error with incorrect rounding (1) */
+node9_test: if abs(ans2-acos(ans1/(2*rad))*180/%pi)<=1 or abs(ans2-180+acos(ans1/(2*rad))*180/%pi)<=1 or abs(ans1-90-acos(ans2/(2*rad))*180/%pi)<=1 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>tans2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>Using the circle theorem: "An angle subtended at the circumference by a diameter is a right angle", the angle \(BCD = 90^\circ\).</p>
+<p>So, using trigonometry, \(\cos(CDB) = \frac{CD}{BD}\)</p>
+<p>Using part (a):</p>
+<p>\(\cos(CDB) = \frac{{@tans1@}}{{@2*rad@}}\)</p>
+<p>\(CDB = {@acos(tans1/(2*rad))@}\)</p>
+<p>\(CDB = {@decimalplaces(acos(tans1/(2*rad))*180/%pi,5)@}...^\circ\)</p>
+
+<p><br>Using the circle theorem: "An angle formed at the centre of a sector is twice the angle formed at the circumference": the angle \(COB\) is twice the angle \(CDB\).</p>
+<p>\(COB = {@decimalplaces(acos(tans1/(2*rad))*360/%pi,5)@}...^\circ\)</p>
+<p>\(COB = {@if acos(tans1/(2*rad))*360/%pi-floor(acos(tans1/(2*rad))*360/%pi)<0.5 then floor(acos(tans1/(2*rad))*360/%pi) else ceiling(acos(tans1/(2*rad))*360/%pi)@}^\circ\) <i>(to the nearest degree)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>ecf2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer is not the correct angle \(COB\).
+<br>However, it is consistent with the answer that you have to part (a).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.7500000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have not found the correct angle \(COB\).
+<br>However, your solution is consistent with the answer that you gave to part (a).
+<br>Also, you have not rounded your answer correctly to the nearest whole degree.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.7500000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the correct angle \(COB\).
+<br>However, you have not rounded your answer correctly to the nearest whole degree.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have used the correct circle theorem to find \(COB\) from \(CDB\).
+<br>However, you have not used the correct trigonometric relationship to find \(CDB\).</p>
+<p>Using trigonometry, \(\cos(\theta) = \frac{a}{h} \Rightarrow \cos(CDB) = \frac{CD}{BD}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have used the correct trigonometric relationship to find \(CDB\).
+<br>However, you have not used the correct circle theorem to find \(COB\) from \(CDB\).</p>
+<p>Using the circle theorem: "An angle formed at the centre of a sector is twice the angle formed at the circumference": the angle \(COB\) is twice the angle \(CDB\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt2-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node8_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.2500000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have used the correct circle theorem to find \(COB\) from \(CDB\).
+<br>However, you have not used the correct trigonometric relationship to find \(CDB\).</p>
+<p>Using trigonometry, \(\cos(\theta) = \frac{a}{h} \Rightarrow \cos(CDB) = \frac{CD}{BD}\)</p>
+<p>You have also not rounded your answer correctly to the nearest whole degree</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt2-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node9_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.2500000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have used the correct trigonometric relationship to find \(CDB\).
+<br>However, you have not used the correct circle theorem to find \(COB\) from \(CDB\).</p>
+<p>Using the circle theorem: "An angle formed at the centre of a sector is twice the angle formed at the circumference": the angle \(COB\) is twice the angle \(CDB\).</p>
+<p>You have also not rounded your answer correctly to the nearest whole degree</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

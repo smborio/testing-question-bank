@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Using Trig ratios to Find the Vertical Side</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>Solve for \(x\). Do not convert your answer to decimal form. Rationalize and simplify if needed.</p>
+
+<p><strong>Hint:</strong> To type trig expressions in your work:</p>
+<ul>
+  <li>Use <code> sin (x )</code>, <code> cos(x) </code>, <code>tan (x)</code> for sine, cosine, and tangent. Example: <code> sin (30)</code> → \(\sin 30 \)</li>
+ </ul>
+
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-2, 12, 12, -2],
+    axis: false,
+    keepAspectRatio: true,
+    showNavigation: false,
+    showCopyright: false
+});
+
+/* Right-angle triangle coordinates */
+const A = board.create('point', [0, 0], {name: '', fixed: true, size: 2});    // right angle
+const B = board.create('point', [10, 0], {name: '', fixed: true, size: 2});   // bottom right (angle theta)
+const C = board.create('point', [0, 10], {name: '', fixed: true, size: 2});   // top (length x)
+
+/* Triangle edges */
+board.create('segment', [A, B]);
+board.create('segment', [A, C]);
+board.create('segment', [B, C]);
+
+/* Right-angle square at A */
+board.create('polygon', [
+    board.create('point', [0, 0], {visible:false}),
+    board.create('point', [1, 0], {visible:false}),
+    board.create('point', [1, 1], {visible:false}),
+    board.create('point', [0, 1], {visible:false})
+], {
+    fillColor: 'white',
+    fillOpacity: 1,
+    borders: {strokeColor: 'black'}
+});
+
+/* Labels */
+board.create('text', [-0.5, 5, 'x'], {fontSize: 14});              // vertical side
+board.create('text', [5, 6, '{#hyp#}'], {fontSize: 14});             // hypotenuse (random)
+board.create('text', [8, 0.5, '{#theta#}°'], {fontSize: 14});     // angle at B (random)
+[[/jsxgraph]]
+
+<p>\(x = \) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text><![CDATA[<h3>Worked Solution</h3>
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-2, 12, 12, -2],
+    axis: false,
+    keepAspectRatio: true,
+    showNavigation: false,
+    showCopyright: false
+});
+
+/* Right-angle triangle coordinates */
+const A = board.create('point', [0, 0], {name: '', fixed: true, size: 2});    // right angle
+const B = board.create('point', [10, 0], {name: '', fixed: true, size: 2});   // bottom right (angle theta)
+const C = board.create('point', [0, 10], {name: '', fixed: true, size: 2});   // top (length x)
+
+/* Triangle edges */
+board.create('segment', [A, B]);
+board.create('segment', [A, C]);
+board.create('segment', [B, C]);
+
+/* Right-angle square at A */
+board.create('polygon', [
+    board.create('point', [0, 0], {visible:false}),
+    board.create('point', [1, 0], {visible:false}),
+    board.create('point', [1, 1], {visible:false}),
+    board.create('point', [0, 1], {visible:false})
+], {
+    fillColor: 'white',
+    fillOpacity: 1,
+    borders: {strokeColor: 'black'}
+});
+
+/* Labels */
+board.create('text', [-0.5, 5, 'x'], {fontSize: 14});              // vertical side
+board.create('text', [5, 6, '{#hyp#}'], {fontSize: 14});             // hypotenuse (random)
+board.create('text', [8, 0.5, '{#theta#}°'], {fontSize: 14});     // angle at B (random)
+[[/jsxgraph]]
+
+<p>We have a right-angled triangle with the right angle at the bottom-left, hypotenuse <b>{@h@}</b>, and an angle <b>{@theta@}°</b> at the bottom-right. We need to find the vertical side <b>x</b>.</p>
+
+<p>The vertical side opposite the angle is related to the hypotenuse by the sine ratio:</p>
+
+<p>
+\[
+\sin({@theta@}°) = \frac{\text{opposite}}{\text{hypotenuse}} = \frac{x}{@h@}
+\]
+</p>
+
+<p>Solving for <code>x</code> gives:</p>
+
+<p>
+\[
+x = {@h@} \,\sin({@theta@}°)
+\]
+</p>
+
+<hr>
+
+<p><strong>Evaluate exactly (no decimals):</strong></p>
+
+<ul>
+  <li> \(\sin 30° = \tfrac{1}{2}\)  </li>
+
+  <li> \(\sin 45° = \tfrac{\sqrt{2}}{2}\),  </li>
+
+  <li> \(\sin 60° = \tfrac{\sqrt{3}}{2}\)  </li>
+
+  <li>For other angles (e.g. 35°, 40°, 55°), leave the answer as the exact trig expression:
+  \[
+  x = {@h@} \,\sin({@theta@}°)
+  \]
+  Replace \(\sin({@theta@}°)\) with a known exact value if possible.
+  </li>
+</ul>
+
+<hr>
+
+<p><strong>Tips:</strong></p>
+<ul>
+  <li>When the sine involves a square root, write the answer as \(\frac{{@h@}\sqrt{n}}{2}\), not with a root in the denominator.</li>
+  <li>Always rationalise the denominator if needed.</li>
+  <li>Keep answers exact — do not convert to decimals.</li>
+</ul>
+
+<p><strong>Example:</strong> If we have hypoteneus as <b>8</b> \( \theta\) = 60°:</p>
+
+<p> then \(
+x = 8\sin 60° = 8 \cdot \frac{\sqrt{3}}{2} = 4\sqrt{3}.
+\)
+</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Random acute angle at C between 30° and 70° */
+theta: rand([30,45,60]);
+
+/* Random hypotenuse length between 5 and 12 */
+hyp: 5 + rand(8);
+
+/* Vertical side x = hyp * sin(theta in radians) */
+xx: hyp * sin(theta * %pi/180);
+
+/* Teacher answer*/
+ta: xx;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<br> Angle - {@theta@}
+<br> Hypotenuse - {@hyp@}
+<br> Model - {@ta@}]]></text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description>Checks for correct hypoteneus.</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>1946617082</deployedseed>
+    <deployedseed>1100091614</deployedseed>
+    <deployedseed>1318404738</deployedseed>
+    <deployedseed>513546682</deployedseed>
+    <deployedseed>763238353</deployedseed>
+  </question>
+</quiz>

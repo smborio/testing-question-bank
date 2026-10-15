@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Corresponding Angles Theorem and Exercise_sec1</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p></p>
+<p><strong>Corresponding Angles Theorem:</strong></p>
+
+<p>When a line (called a <strong>transversal</strong>) crosses two parallel lines, the angles that are in the same position at each intersection are called <strong>corresponding angles</strong>. These angles are always equal.</p> 
+<p>In the diagram below:</p> 
+<ul> 
+<li>Parallel lines: <strong>AB</strong> and <strong>CD</strong></li> 
+<li>Transversal: <strong>XY</strong></li> 
+<li>The following are corresponding angles: <strong>\(O_1\) </strong> and <strong>\(O_2\)</strong></li>
+</ul>
+
+<p> </p>
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-1, 7, 8, -1],
+    axis: false,
+    showCopyright: false,
+    showNavigation: false,
+    keepAspectRatio: true
+});
+
+// Define points for parallel lines
+var A = board.create('point', [0,5], {name:'A', size:2, fixed:true});
+var B = board.create('point', [7,5], {name:'B', size:2, fixed:true});
+var C = board.create('point', [0,2], {name:'C', size:2, fixed:true});
+var D = board.create('point', [7,2], {name:'D', size:2, fixed:true});
+
+// Draw parallel lines AB and CD
+var lineAB = board.create('line', [A, B], {straightFirst:false, straightLast:false, strokeWidth:2});
+var lineCD = board.create('line', [C, D], {straightFirst:false, straightLast:false, strokeWidth:2});
+
+
+// Define points for transversal
+var X = board.create('point', [1,0], {name:'X', size:2, fixed:true});
+var Y = board.create('point', [4,6], {name:'Y', size:2, fixed:true});
+
+// Draw transversal XY
+var transversal = board.create('line', [X,Y], {straightFirst:false, straightLast:false, strokeWidth:2, dash:2});
+
+// Intersection points of transversal with parallel lines
+var O1 = board.create('intersection', [lineAB, transversal, 0], {name:'O₁', size:2});
+var O2 = board.create('intersection', [lineCD, transversal, 0], {name:'O₂', size:2});
+
+// Small shaded angle at O1
+board.create('angle', [B, O1, Y], { 
+    radius: 0.6,      
+    name: ' ',
+    type: 'sector', 
+    fillColor: 'lightblue', 
+    fillOpacity: 0.6, // semi-transparent
+    strokeColor: 'blue', 
+    strokeWidth: 1
+});
+
+// Small shaded corresponding angle at O2
+board.create('angle', [D, O2, O1], { 
+    radius: 0.6, 
+    name: ' ',
+    type: 'sector', 
+    fillColor: 'lightblue', 
+    fillOpacity: 0.6, 
+    strokeColor: 'blue', 
+    strokeWidth: 1
+});
+
+[[/jsxgraph]]
+
+<p> Suppose \(O_1 =  {@angle_corres@}°\), what will be the measure of  \(O_2 \) ? </p>
+<p>Write your answer here [[input:ans1]] [[validation:ans1]] [[feedback:prt1]] </p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text>angle_corres:10+rand_with_step(30,60,5);
+ta1: angle_corres;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="html">
+      <text>{@ta1@}</text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta1</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>907323404</deployedseed>
+    <deployedseed>1828770415</deployedseed>
+    <deployedseed>756734398</deployedseed>
+    <deployedseed>894243193</deployedseed>
+    <deployedseed>1892826407</deployedseed>
+    <deployedseed>1092810063</deployedseed>
+    <deployedseed>1832640543</deployedseed>
+  </question>
+</quiz>

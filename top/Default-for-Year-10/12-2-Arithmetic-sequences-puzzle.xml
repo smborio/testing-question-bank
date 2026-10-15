@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>12.2 Arithmetic sequences puzzle</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Find \(x\) so that \( ({@a_1@})\),  \(({@a_2@})\), and \({@a_3@}\) are consecutive terms of an arithmetic sequence:</p>
+<p>\(x=\)[[input:ans1]] [[validation:ans1]][[feedback:prt1]]</p>
+<p>What is the common difference of the sequence?</p>
+<p>\(d=\)[[input:ans2]] [[validation:ans2]][[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/*--------------------------------------------------------------------------------------------*/
+/*Define function S(n) that given a number n, returns the string "+n" if positive (or zero) and "-n" if negative, if n=+1 or -1 it returns + or - respectively*/
+
+S(n):= block([], if (n=1) then return("+") elseif (n=-1) then return("-") elseif (n>=0) then return(vconcat("+", abs(n)))  else  return(vconcat("-", abs(n))));
+
+/*Define function S1(n) that given a number n, returns the string "+n" if positive (or zero) and "-n" if negative (1 and -1 are treated as the other numbers)*/
+
+S1(n):= block([], if (n>=0) then return(vconcat("+", abs(n)))  else  return(vconcat("-", abs(n))));
+
+/*Define function SP(n) that given a number n, returns the string "n" if positive (or zero) and "(-n)" if negative*/
+
+SP(n):= block([], if (n>=0) then return(n)  else  return(vconcat("(-", abs(n), ")")));
+
+/*----------------------------------------------------------------------------------------------------*/
+
+
+/*generate coefficients for terms in sequence in order to have nice values for x=ta1:
+The sequence is a=AAx+BB, a2= CCx+DD, a3= EEx (with AA<0, CC>0, EE>0). In order for it to be arithmetic, it should hold
+ (CCx+DD)-(AAx+BB) = EEx-(CCx+DD)
+From this we obtain
+ x= \frac{-2DD+BB}{2CC-AA-EE}
+So we randomly generate AA, CC, EE and x and set SS=x(2CC-AA-EE), so that -2DD+BB=SS. */
+
+AA: -rand(5)-1;
+CC:rand(5)+1;
+EE:rand(6)+2;
+
+ta1:rand(5)+1;
+SS:ta1*(2*CC-AA-EE);
+
+/*Next, we randomly generate DD and then set BB = SS+2DD*/
+
+DD: rand_with_prohib(-10,10,[]);
+BB:SS+2*DD;
+
+/*Degenerate cases:
+- when x is such that all the terms are the same--> common difference d=0
+- when the equation to solve is 0=0 due to the fact that 2C-A-E=0
+-->while loop to avoid these 2 cases*/
+
+intersection:(DD-BB)/(AA-CC);  /*the denominator is always nonzero!*/
+x_coeff:2*CC-AA-EE;
+
+while (ta1=intersection or x_coeff=0) do (AA: -rand(5)-1,CC:rand(5)+1,EE:rand(6)+2,ta1:rand(5)+1,SS:ta1*(2*CC-AA-EE),DD: rand_with_prohib(-10,10,[]),BB:SS+2*DD,intersection:(DD-BB)/(AA-CC), x_coeff:2*CC-AA-EE)
+
+
+/*Terms of the puzzle sequence*/
+a_1:AA*x+BB;
+a_2:CC*x+DD;
+a_3:EE*x;
+
+/*common difference*/
+ta2:(EE-CC)*ta1-DD;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>Sequence \(({@AA*x+BB@})\),    \(({@CC*x+DD@})\)  and \({@EE*x@}\)</p>
+<p>x={@ta1@}</p>
+<p>d={@ta2@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>ta2</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/*dividing instead of subtracting*/
+x_from_dividing:allroots((CC*x+DD)^2=EE*x*(AA*x+BB))
+zero_denom1:-BB/AA;
+zero_denom2:-DD/CC;
+
+
+/*Thinking each term has to be the same*/
+x_12:(DD-BB)/(AA-CC); 
+x_23:-DD/(CC-EE);
+
+/*Calculation errors*/
+/*wrong brackets*/
+x_wr_brackects_left:rhs(solve(CC*x+DD-AA*x+BB=EE*x-CC*x-DD)[1]);
+x_wr_brackects_right:rhs(solve(CC*x+DD-AA*x-BB=EE*x-CC*x+DD)[1]);
+x_wr_brackects_leftright:rhs(solve(CC*x+DD-AA*x+BB=EE*x-CC*x+DD)[1]);
+
+/*not changing sign to AA (since AA<0)*/
+x_AA_no_plus:rhs(solve(CC*x+DD+AA*x-BB=EE*x-CC*x-DD)[1]);
+
+/*combination of wrong brackets and not changing sign to AA*/
+x_AA_wr_brackects_left:rhs(solve(CC*x+DD+AA*x+BB=EE*x-CC*x-DD)[1]);
+x_AA_wr_brackects_right:rhs(solve(CC*x+DD+AA*x-BB=EE*x-CC*x+DD)[1]);
+x_AA_wr_brackects_leftright:rhs(solve(CC*x+DD+AA*x+BB=EE*x-CC*x+DD)[1]);]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Worked solution:</p>
+<p>An arithmetic sequence is a sequence such that the difference of any two consecutive terms is the same (i.e. the common difference). So if we consider the 3 consecutive terms of the sequence \( ({@a_1@})\),  \(({@a_2@})\), and \({@a_3@}\), we have that the difference between the second and first term must be equal to the difference between the third and second term:
+\[({@a_2@})-({@a_1@}) = {@a_3@}-({@a_2@}).\]
+Solving the equation for \(x\) we get</p>
+<p>\({@a_2@}  {@S1(-BB)@} {@S(-AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(-DD)@}\)</p>
+<p>\( {@CC*x@} {@S(-AA)@}x  {@S(-EE)@}x  {@S(CC)@}x =   {@-DD@} {@S1(BB)@} {@S1(-DD)@}\)</p>
+<p>\( {@(2*CC-AA-EE)*x@} = {@-2*DD+BB@}\)</p>
+<p>\(x = {@ta1@}.\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>10</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>x_AA_wr_brackects_leftright</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-11-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[It looks like when solving the equation 
+\(({@a_2@})-({@a_1@}) = {@a_3@}-({@a_2@}),\) you have not multiplied out brackets correctly. You probably did<p></p>
+<p>\({@a_2@}  {@S1(BB)@} {@S(AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(DD)@}\)</p>
+<p>rather than</p>
+<p>\({@a_2@}  {@S1(-BB)@} {@S(-AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(-DD)@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-11-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>x_12</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>It looks like you solved the equation \({@a_1@}={@a_2@} \) and 
+found the value for \(x\) such that the first and second terms are the same, instead of the value such that the <b>difference</b> between any two consecutive terms is the same.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>x_23</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>It looks like you solved the equation \({@a_2@}={@a_3@} \) and 
+found the value for \(x\) such that the second and third terms are the same, instead of the value such that the <b>difference</b> between any two consecutive terms is the same.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>x_wr_brackects_left</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[It looks like when solving the equation 
+\(({@a_2@})-({@a_1@}) = {@a_3@}-({@a_2@}),\) you have not multiplied out brackets correctly. You probably did<p></p>
+<p>\({@a_2@}  {@S1(BB)@} {@S(-AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(-DD)@}\)</p>
+<p>rather than</p>
+<p>\({@a_2@}  {@S1(-BB)@} {@S(-AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(-DD)@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>x_wr_brackects_right</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[It looks like when solving the equation 
+\(({@a_2@})-({@a_1@}) = {@a_3@}-({@a_2@}),\) you have not multiplied out brackets correctly. You probably did<p></p>
+<p>\({@a_2@}  {@S1(-BB)@} {@S(-AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(DD)@}\)</p>
+<p>rather than</p>
+<p>\({@a_2@}  {@S1(-BB)@} {@S(-AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(-DD)@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>x_wr_brackects_leftright</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[It looks like when solving the equation 
+\(({@a_2@})-({@a_1@}) = {@a_3@}-({@a_2@}),\) you have not multiplied out brackets correctly. You probably did<p></p>
+<p>\({@a_2@}  {@S1(BB)@} {@S(-AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(DD)@}\)</p>
+<p>rather than</p>
+<p>\({@a_2@}  {@S1(-BB)@} {@S(-AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(-DD)@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>x_AA_no_plus</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[It looks like when solving the equation 
+\(({@a_2@})-({@a_1@}) = {@a_3@}-({@a_2@}),\) you have not multiplied out brackets correctly. You probably did<p></p>
+<p>\({@a_2@}  {@S1(-BB)@} {@S(AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(-DD)@}\)</p>
+<p>rather than</p>
+<p>\({@a_2@}  {@S1(-BB)@} {@S(-AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(-DD)@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt1-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>x_AA_wr_brackects_left</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[It looks like when solving the equation 
+\(({@a_2@})-({@a_1@}) = {@a_3@}-({@a_2@}),\) you have not multiplied out brackets correctly. You probably did<p></p>
+<p>\({@a_2@}  {@S1(BB)@} {@S(AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(-DD)@}\)</p>
+<p>rather than</p>
+<p>\({@a_2@}  {@S1(-BB)@} {@S(-AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(-DD)@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>9</falsenextnode>
+        <falseanswernote>prt1-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>9</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>x_AA_wr_brackects_right</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-10-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[It looks like when solving the equation 
+\(({@a_2@})-({@a_1@}) = {@a_3@}-({@a_2@}),\) you have not multiplied out brackets correctly. You probably did<p></p>
+<p>\({@a_2@}  {@S1(-BB)@} {@S(AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(DD)@}\)</p>
+<p>rather than</p>
+<p>\({@a_2@}  {@S1(-BB)@} {@S(-AA)@}x = {@a_3@} {@S(-CC)@}x {@S1(-DD)@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>10</falsenextnode>
+        <falseanswernote>prt1-10-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>a_1_x:ev(a_1,x=ta1);
+a_2_x:ev(a_2,x=ta1);
+a_3_x:ev(a_3,x=ta1);
+
+/*consistent answers from ans1*/
+a_1_ans:ev(a_1,x=ans1);
+a_2_ans:ev(a_2,x=ans1);
+a_3_ans:ev(a_3,x=ans1);
+d1_cons:a_2_ans-a_1_ans;
+d2_cons:a_3_ans-a_2_ans;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>ta2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Worked solution:</p>
+<p>If \(x={@ta1@}\), the three terms of the sequence \( a_1={@a_1@}\),  \(a_2={@a_2@}\) and \(a_3={@a_3@}\) are</p>
+<p>\(a_1 = {@BB@} {@S1(AA)@} \times {@SP(ta1)@} = {@a_1_x@}\)</p>
+<p>\(a_2 = {@CC@} \times {@SP(ta1)@} {@S1(DD)@} = {@a_2_x@}\)</p>
+<p>\(a_3 = {@EE@} \times {@SP(ta1)@} = {@a_3_x@}\).</p>
+<p>The common difference is the difference between any two consecutive terms. For example, it is the difference between the second and first terms: </p>
+<p>\(d= a_2-a_1= {@a_2_x@} - {@SP(a_1_x)@}= {@ta2@}\)</p>
+or the the difference between the third and second terms:<p></p>
+<p>\(d= a_3-a_2= {@a_3_x@} - {@SP(a_2_x)@}= {@ta2@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>d1_cons</sans>
+        <tans>ans2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>If we consider the incorrect value \(x={@ans1@}\) that you have found, the three terms of the sequence are \( a_1={@a_1@}\),  \(a_2={@a_2@}\) and \(a_3={@a_3@}\) are</p>
+<p>\(a_1 = {@BB@} {@S1(AA)@} \times {@SP(ans1)@} = {@a_1_ans@}\)</p>
+<p>\(a_2 = {@CC@} \times {@SP(ans1)@} {@S1(DD)@} = {@a_2_ans@}\)</p>
+<p>\(a_3 = {@EE@} \times {@SP(ans1)@} = {@a_3_ans@}\).</p>
+<p>The (incorrect) common difference \(d={@ans2@}\) that you gave as an answer is the difference between the second and first terms: </p>
+<p>\(a_2-a_1= {@a_2_ans@} - {@SP(a_1_ans)@}= {@ans2@}\).</p>
+However, \(d={@ans2@}\) does not equal to the difference between the third and second terms (as it should for an arithmetic sequence):<p></p>
+<p>\(a_3-a_2= {@a_3_ans@} - {@SP(a_2_ans)@}= {@d2_cons@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>d2_cons</sans>
+        <tans>ans2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>If we consider the incorrect value \(x={@ans1@}\) that you have found, the three terms of the sequence are \( a_1={@a_1@}\),  \(a_2={@a_2@}\) and \(a_3={@a_3@}\) are</p>
+<p>\(a_1 = {@BB@} {@S1(AA)@} \times {@SP(ans1)@} = {@a_1_ans@}\)</p>
+<p>\(a_2 = {@CC@} \times {@SP(ans1)@} {@S1(DD)@} = {@a_2_ans@}\)</p>
+<p>\(a_3 = {@EE@} \times {@SP(ans1)@} = {@a_3_ans@}\).</p>
+<p>The (incorrect) common difference \(d={@ans2@}\) that you gave as an answer is the difference between the third and second terms: </p>
+<p>\(a_3-a_2= {@a_3_ans@} - {@SP(a_2_ans)@}= {@ans2@}\).</p>
+However, \(d={@ans2@}\) does not equal to the difference between the second and first terms (as it should for an arithmetic sequence):<p></p>
+<p>\(a_2-a_1= {@a_2_ans@} - {@SP(a_1_ans)@}= {@d1_cons@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>-ta2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Close, but the wrong sign!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <tags>
+      <tag><text>Bridging</text>
+</tag>
+      <tag><text>Bridging Week 1</text>
+</tag>
+      <tag><text>Open Bridging</text>
+</tag>
+    </tags>
+  </question>
+</quiz>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Alternate Interior Angles Theorem and Exercise_sec3 (suplimentary angle)</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p><strong>Supplementary Angles and Alternate Exterior Angles</strong></p>
+
+<p>
+Two angles are called <strong>supplementary</strong> if the sum of their measures is \(180^\circ\). 
+When a transversal cuts parallel lines, we often see supplementary pairs 
+(such as interior angles on the same side of the transversal).
+</p>
+
+<p>In the diagram above:</p>
+<ul>
+  <li>\(\angle BO_1Y\) and \(\angle YO_1A\) form a <strong>linear pair</strong>. Therefore, they are supplementary:  
+  \(\angle BO_1Y + \angle YO_1A = 180^\circ\).</li>
+  <li>Similarly, at the lower intersection, \(\angle CO_2X + \angle XO_2D = 180^\circ\).</li>
+</ul>
+
+<p>
+This property helps us connect alternate and corresponding angles too:
+</p>
+<ol>
+  <li>\(\angle BO_1Y = \angle AO_1O_2\) (vertically opposite).</li>
+  <li>\(\angle AO_1O_2 = \angle CO_2X\) (corresponding angles when \(AB \parallel CD\)).</li>
+  <li>Thus, \(\angle BO_1Y = \angle CO_2X\) (alternate exterior angles are equal).</li>
+  <li>Also, both \(\angle BO_1Y\) and \(\angle YO_1A\) are supplementary since they form a straight line at \(O_1\).</li>
+</ol>
+
+<p><strong>Practice:</strong></p>
+<p> Suppose \(\angle BO_1Y = {@angle_alt@}^\circ\). </p>
+<ul>
+  <li>What is the measure of its supplementary angle \(\angle YO_1A\)? [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</li>
+  <li>
+<p>Therefore what will be the measure of  \(\angle DO_2X \) and why?</p> 
+<p> \(\angle DO_2X = \)  [[input:ans2]] [[validation:ans2]] [[feedback:prt2]] </p>
+<p> Choose the correct justification for your answer above  [[input:ans3]] [[validation:ans3]] [[feedback:prt3]]</p>
+  </li>
+</ul>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[angle_alt:10+rand_with_step(30,60,5);
+ta1: 180-angle_alt;
+ta2: ta1;
+
+/* Define all possible justifications with LaTeX strings */
+just1:"\\( \\text{They are corresponding angles formed by a transversal cutting parallel lines.} \\)";
+just2:"\\( \\text{They are alternate exterior angles, which are always equal when lines are parallel.} \\)"; /* correct */
+just3:"\\( \\text{They are supplementary angles because they form a linear pair.} \\)";
+just4:"\\( \\text{They are vertically opposite angles, which are always equal.} \\)";
+
+/* Correct and incorrect pools */
+correct_answer:[just2];
+incorrect_pool:[just1,just3,just4];
+
+/* Randomly select 2 incorrect */
+incorrect_answers:rand_selection(incorrect_pool,2);
+
+/* Combine into answer list with true/false */
+answer_list:append(
+   makelist([x,true],x,correct_answer),
+   makelist([x,false],x,incorrect_answers)
+);
+
+/* Shuffle for display */
+ta3:random_permutation(answer_list);]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="html">
+      <text>{@ta1@}</text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta1</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>ta2</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>radio</type>
+      <tans>ta3</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options>nonotanswered</options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>ta2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>mcq_correct(ta3)[1]</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Please check back on the notes</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>907323404</deployedseed>
+    <deployedseed>1828770415</deployedseed>
+    <deployedseed>756734398</deployedseed>
+    <deployedseed>894243193</deployedseed>
+    <deployedseed>1892826407</deployedseed>
+    <deployedseed>1092810063</deployedseed>
+    <deployedseed>1832640543</deployedseed>
+  </question>
+</quiz>

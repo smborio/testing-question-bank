@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>14.4 Find intercept of perpendicular</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Line <b>\(L\)</b> has equation \({@aa*y@} {@if bb>0 then "-" else "+"@} {@abs(bb)*x@} = {@cc@}\).</p>
+<p>Line <b>\(M\)</b> goes through the point <i>\(A\)</i>\(({@dd@}, {@ee@})\) and the point <i>\(B\)</i>\(({@ff@}, k)\).</p>
+<p><b>\(L\)</b> is perpendicular to <b>\(M\)</b>.<p>
+<p>Follow these steps to find the value of \(k\):</p>
+<p><br>Find the gradient of line <b>\(L\)</b>:</p>
+<p align="right">[[input:ans1]] [[validation:ans1]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt1]]</p>
+<p>Using the fact that it is perpendicular to line <b>\(L\)</b>, find the gradient of line <b>\(M\)</b>:</p>
+<p align="right">[[input:ans2]] [[validation:ans2]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt2]]</p>
+<p>Write an equation involving \(k\) and solve it.</p>
+<p align="right">\(k=\) [[input:ans3]] [[validation:ans3]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt3]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>4</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* L: aa*y - bb*x = cc where -8 <= aa,bb <= 8 exc. -1,0,1 and 10 <= cc <= 40 such that the equation has not got common factors */
+
+aa:rand_with_prohib(-8,8,[-1,0,1]);
+bb:rand_with_prohib(-8,8,[-aa,-1,0,1,aa]);
+
+lcm_ab:lcm(abs(aa),abs(bb));
+cc:rand(30)+10;
+while lcm_ab>1 and integerp(cc/lcm_ab) do (cc:rand(30)+10);
+
+/* Point A: (dd,ee) for -8 <= dd,ee <= 8 exc. 0 */
+
+dd:rand_with_prohib(-8,8,[0]);
+ee:rand_with_prohib(-8,8,[0,dd,-dd]);
+
+/* Point B: (ff, k) such that solving for kk gives and integer, so b/a must divide ff - dd */
+gcd_ab:gcd(abs(aa),abs(bb));
+
+diff_df:(abs(bb)/gcd_ab)*(rand(floor(10/(abs(bb)/gcd_ab)))+2)*rand([1,-1]);
+ff:dd+diff_df;
+
+/* Solutions */
+Lgrad:bb/aa
+Mgrad:-aa/bb
+kk:ee-(aa*(ff-dd)/bb)]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text>1</text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>Lgrad</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>Mgrad</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>kk</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct grading of L */
+/* Node 2: Specific Feedback for giving negative correct gradient */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>Lgrad</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>-Lgrad</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer is the <i>negative</i> of the correct gradient of line <b>{@L@}</b>, which is {@Lgrad@}.</p>
+<p>Be careful when you rearrange the equation into the form \(y=mx+c\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>1/Lgrad</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer is the <i>inverse</i> of the correct gradient of line <b>{@L@}</b>, which is {@Lgrad@}.</p>
+<p>Be careful when you rearrange the equation into the form \(y=mx+c\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>Mgrad</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer is the gradient of line <b>\(M\)</b>. This is the <i>negative inverse</i> of the correct gradient line <b>\(L\)</b>, which is {@Lgrad@}.</p>
+<p>Be careful when you rearrange the equation into the form \(y=mx+c\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Check consistent answer with gradient given for L */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>Mgrad</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>-1/ans1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>This is not the correct gradient of line <b>\(M\)</b>.</p>
+<p>However, you correctly found the negative inverse of the gradient that you gave for line <b>\(L\)</b>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct k */
+/* Node 2: Worked solution (all parts) */
+/* Node 3: Check whether given k is consistent with given gradient of M */
+ecf_k:ee+(ans2*(ff-dd))</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>kk</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>To find the gradient of the line <b>\(L\)</b> we should rearrange the equation to the form \(y=mx+c\).</p>
+<p>\({@aa*y@} {@if bb>0 then "-" else "+"@} {@abs(bb)*x@} = {@cc@}\)</p>
+<p>\({@y@} = {@bb*x@} + {@cc@}\)</p>
+<p>\({@y@} = {@(bb/aa)@}x + {@cc/aa@}\)</p>
+<p>So \(m_L = {@bb/aa@}\)</p>
+<p><br>To find the gradient of <b>\(M\)</b>, which is perpendicular to <b>\(L\)</b>, we take the <i>negative inverse</i> of the gradient of <b>\(L\)</b>.</p>
+<p>\(m_M = {@-aa/bb@}\)</p>
+<p><br>Lastly, to find the value of \(k\), we can find the gradient of the line between the two points on <b>\(M\)</b></p>
+<p>\(\frac{\Delta y}{\Delta x} = \frac{k{@if ee>0 then "-" else "+"@}{@abs(ee)@}}{{@ff@}{@if dd>0 then "-" else "+"@}{@abs(dd)@}}\)</p>
+<p>\(\Rightarrow m_M = \frac{k{@if ee>0 then "-" else "+"@}{@abs(ee)@}}{{@ff-dd@}}\)</p>
+<p><br>By equating our two values for \(m_M\), we are given an equation in \(k\) which we can solve.</p>
+<p>\({@-aa/bb@} = \frac{k{@if ee>0 then "-" else "+"@}{@abs(ee)@}}{{@ff-dd@}}\)</p>
+<p>\( k{@if ee>0 then "-" else "+"@}{@abs(ee)@} = {@(ff-dd)*(-aa/bb)@}\)</p>
+<p>\( k = {@kk@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>ecf_k</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>This answer is not the correct value of \(k\).</p>
+<p>However, it is consistent with the answer that you gave for the gradient of line <b>\(M\)</b>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

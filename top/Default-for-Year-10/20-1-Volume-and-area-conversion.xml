@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>20.1 Volume and area conversion</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>A small and large rectangular box arrive from an online delivery.</p>
+<p><br>The small box has base area of \({@if integerp(smallBoxAreaDisp) then smallBoxAreaDisp else float(smallBoxAreaDisp)@}{@smallBoxAreaUnit@}\) and height of \({@if integerp(smallBoxHeightDisp) then smallBoxHeightDisp else float(smallBoxHeightDisp)@}{@smallBoxHeightUnit@}\).<br>The large box has dimensions \({@if integerp(largeBoxLengthDisp) then largeBoxLengthDisp else float(largeBoxLengthDisp)@}{@largeBoxLengthUnit@} \times {@if integerp(largeBoxWidthDisp) then largeBoxWidthDisp else float(largeBoxWidthDisp)@}{@largeBoxWidthUnit@} \times {@if integerp(largeBoxHeightDisp) then largeBoxHeightDisp else float(largeBoxHeightDisp)@}{@largeBoxHeightUnit@}\).</p>
+<p><br>(a) What is the volume of the small box in \({@aUnits@}\)?</p>
+<p align="right">[[input:ans1]] \({@aUnits@}\) [[validation:ans1]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt1]]</p>
+<p><br>(b) What is the total volume of the boxes in \({@bUnits@}\)?</p>
+<p align="right">[[input:ans2]] \({@bUnits@}\) [[validation:ans2]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt2]]</p>
+<p><br>(c) What is the surface area of the large box in \({@cUnits@}\)?</p> 
+<p align="right">[[input:ans3]] \({@cUnits@}\) [[validation:ans3]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt3]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>5</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* All measurements are multiples of 10cm within given ranges */
+
+smallBoxArea:rand_with_step(80,120,10);
+smallBoxHeight:rand_with_step(100,150,10);
+largeBoxLength:rand_with_step(200,250,10);
+largeBoxWidth:rand_with_step(100,200,10);
+largeBoxHeight:rand_with_step(50,150,10);
+
+smallBoxAreaExp:rand_with_prohib(0,2,[1]);
+smallBoxHeightExp:rand_with_prohib(-1,2,[1, smallBoxAreaExp]);
+largeBoxLengthExp:rand_with_prohib(-1,2,[1]);
+largeBoxWidthExp:rand_with_prohib(-1,2,[1,largeBoxLengthExp]);
+largeBoxHeightExp:rand_with_prohib(-1,2,[1,largeBoxWidthExp]);
+
+smallBoxAreaUnit: if smallBoxAreaExp=0 then "{cm}^2" else "m^2";
+smallBoxHeightUnit: if smallBoxHeightExp=-1 then "mm" else if smallBoxHeightExp=0 then "cm" else "m";
+largeBoxLengthUnit: if largeBoxLengthExp=-1 then "mm" else if largeBoxLengthExp=0 then "cm" else "m";
+largeBoxWidthUnit: if largeBoxWidthExp=-1 then "mm" else if largeBoxWidthExp=0 then "cm" else "m";
+largeBoxHeightUnit: if largeBoxHeightExp=-1 then "mm" else if largeBoxHeightExp=0 then "cm" else "m";
+
+smallBoxAreaDisp:smallBoxArea/(10^smallBoxAreaExp)^2;
+smallBoxHeightDisp:smallBoxHeight/(10^smallBoxHeightExp);
+largeBoxLengthDisp:largeBoxLength/(10^largeBoxLengthExp);
+largeBoxWidthDisp:largeBoxWidth/(10^largeBoxWidthExp);
+largeBoxHeightDisp:largeBoxHeight/(10^largeBoxHeightExp);
+
+/* Unit and solution to (a) */
+aUnitsExp:rand_with_prohib(0,2,[1]);
+aUnits: if aUnitsExp=0 then "{cm}^3" else "m^3";
+aSol:smallBoxArea*smallBoxHeight/(10^aUnitsExp)^3;
+
+/* Unit and solution to (b) */
+bUnitsExp:rand_with_prohib(0,2,[1,aUnitsExp]);
+bUnits: if bUnitsExp=0 then "{cm}^3" else "m^3";
+bSol:(smallBoxArea*smallBoxHeight+largeBoxLength*largeBoxWidth*largeBoxHeight)/(10^bUnitsExp)^3;
+
+/* Unit and solution to (c) */
+cUnitsExp:rand_with_prohib(0,2,[1]);
+cUnits: if cUnitsExp=0 then "{cm}^2" else "m^2";
+cSol:2*(largeBoxLength*largeBoxWidth+largeBoxWidth*largeBoxHeight+largeBoxHeight*largeBoxLength)/(10^cUnitsExp)^2;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text>1</text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>aSol</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>bSol</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>cSol</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+/* Node 3: Check whether answer given in incorrect unit (out of m^3 and cm^3) */
+node3_error: if aUnits="m^3" then aSol*1000000 else aSol/1000000;
+
+/* Node 4: Check whether area conversion used square root of correct multiplier */
+node4_error: if aUnits="m^3" then aSol*100 else aSol/100;
+
+/* Node 5: Check whether answer out by a power of 10, suggests incorrect unit conversion */
+node5_test: if float(floor(decimalplaces(log(ans1/aSol)/log(10),8)))=decimalplaces(log(ans1/aSol)/log(10),8) then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>aSol</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\(V_{small} = {@if integerp(smallBoxAreaDisp) then smallBoxAreaDisp else float(smallBoxAreaDisp)@}{@smallBoxAreaUnit@} \times {@if integerp(smallBoxHeightDisp) then smallBoxHeightDisp else float(smallBoxHeightDisp)@}{@smallBoxHeightUnit@}\)</p>
+<p>\(V_{small} = {@if aUnits="m^3" then float(smallBoxArea/10000) else smallBoxArea@}{@if aUnits="m^3" then "m^2" else "{cm}^2"@} \times {@if aUnits="m^3" then float(smallBoxHeight/100) else smallBoxHeight@}{@if aUnits="m^3" then "m" else "cm"@}\)</p>
+<p>\(V_{small} = {@if aUnits="m^3" then float((smallBoxArea/10000)*(smallBoxHeight/100)) else smallBoxArea*smallBoxHeight@}{@aUnits@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>node3_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>\({@if integerp(node3_error) then node3_error else float(node3_error)@}{@if aUnits="m^3" then "{cm}^3" else "m^3"@}\) is the correct volume of the small box.<br>However, the you should have given the answer in \({@aUnits@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>node4_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You may have converted the area of the small box incorrectly.<br>Remember that \(1m^2 = 100^2{cm^2} = 10000{cm}^2\) and not \(100{cm}^2\).<br>So, \({@if integerp(smallBoxAreaDisp) then smallBoxAreaDisp else float(smallBoxAreaDisp)@}{@smallBoxAreaUnit@} = {@if aUnits="m^3" then float(smallBoxArea/10000) else smallBoxArea@}{@aUnits@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer is out by a magnitude of 10, which suggests you may have converted units incorrectly.<br>Here is a list of unit conversions:</p>
+<p>\(1cm = 10mm\)</p>
+<p>\(1m = 100cm = 1000mm\)</p>
+<p>\(1m^2 = 10000{cm}^2\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+
+/* Node 3: Check ecf from volume in (a) (2) */
+node3_test: if notequal(ans1,aSol) and ((bUnits="{cm}^3" and float(ans2)=float(ans1*1000000+largeBoxLength*largeBoxWidth*largeBoxHeight)) or (bUnits="m^3" and float(ans2)=float((ans1+largeBoxLength*largeBoxWidth*largeBoxHeight)/1000000))) then 1 else 0;
+
+/* Node 4: Check whether answer given in wrong unit (out of m^3 and cm^3) (1) */
+node4_error: if bUnits="m^3" then bSol*1000000 else bSol/1000000;
+
+/* Node 5: Check whether implied volume of large box is correct but small box is out by a power of 10 */
+node5_test: if (bUnits="m^3" and float(floor(decimalplaces(log((1000000*ans2-largeBoxLength*largeBoxWidth*largeBoxHeight)/ans1)/log(10),8)))=decimalplaces(log((1000000*ans2-largeBoxLength*largeBoxWidth*largeBoxHeight)/ans1)/log(10),8)) or (bUnits="{cm}^3" and float(floor(decimalplaces(log((ans2-largeBoxLength*largeBoxWidth*largeBoxHeight)/ans1)/log(10),8)))=decimalplaces(log((ans2-largeBoxLength*largeBoxWidth*largeBoxHeight)/ans1)/log(10),8)) then 1 else 0;
+
+/* Node 6: Check whether implied volume of small box is correct but large box is out by a power of 10 */
+node6_test: if (aUnits="m^3" and float(floor(decimalplaces(log((ans2-1000000*ans1)/(bSol-1000000*aSol))/log(10),8)))=decimalplaces(log((ans2-1000000*ans1)/(bSol-1000000*aSol))/log(10),8)) or (bUnits="m^3" and float(floor(decimalplaces(log((1000000*ans2-ans1)/(1000000*bSol-aSol))/log(10),8)))=decimalplaces(log((1000000*ans2-ans1)/(1000000*bSol-aSol))/log(10),8)) then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>bSol</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\(V_{small} = {@if aUnits="m^3" then float((smallBoxArea/10000)*(smallBoxHeight/100)) else smallBoxArea*smallBoxHeight@}{@aUnits@}\)</p>
+<p>\(V_{small} = {@if aUnits="{cm}^3" then float((smallBoxArea/10000)*(smallBoxHeight/100)) else smallBoxArea*smallBoxHeight@}{@bUnits@}\)</p>
+<p><br>\(V_{large} = {@if integerp(largeBoxLengthDisp) then largeBoxLengthDisp else float(largeBoxLengthDisp)@}{@largeBoxLengthUnit@} \times {@if integerp(largeBoxWidthDisp) then largeBoxWidthDisp else float(largeBoxWidthDisp)@}{@largeBoxWidthUnit@} \times {@if integerp(largeBoxHeightDisp) then largeBoxHeightDisp else float(largeBoxHeightDisp)@}{@largeBoxHeightUnit@}\)</p>
+<p>\(V_{large} = {@if bUnits="m^3" then float(largeBoxLength/100) else largeBoxLength@}{@if bUnits="m^3" then "m" else "cm"@} \times {@if bUnits="m^3" then float(largeBoxWidth/100) else largeBoxWidth@}{@if bUnits="m^3" then "m" else "cm"@} \times {@if bUnits="m^3" then float(largeBoxHeight/100) else largeBoxHeight@}{@if bUnits="m^3" then "m" else "cm"@}\)</p>
+<p>\(V_{large} = {@if bUnits="m^3" then float(largeBoxLength*largeBoxWidth*largeBoxHeight/1000000) else largeBoxLength*largeBoxWidth*largeBoxHeight@}{@bUnits@}\)</p>
+<p><br>\(V_{total} = V_{small} + V_{large}\)</p>
+<p>\(V_{total} = {@if aUnits="{cm}^3" then float((smallBoxArea/10000)*(smallBoxHeight/100)) else smallBoxArea*smallBoxHeight@}{@bUnits@} + {@if bUnits="m^3" then float(largeBoxLength*largeBoxWidth*largeBoxHeight/1000000) else largeBoxLength*largeBoxWidth*largeBoxHeight@}{@bUnits@}\)</p>
+<p>\(V_{total} = {@if aUnits="{cm}^3" then float((smallBoxArea/10000)*(smallBoxHeight/100)+(largeBoxLength*largeBoxWidth*largeBoxHeight/1000000)) else (smallBoxArea*smallBoxHeight)+(largeBoxLength*largeBoxWidth*largeBoxHeight)@}{@bUnits@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly calculated the volume of the large box as \({@if integerp((largeBoxLength*largeBoxWidth*largeBoxHeight)/(10^bUnitsExp)^3) then (largeBoxLength*largeBoxWidth*largeBoxHeight)/(10^bUnitsExp)^3 else float((largeBoxLength*largeBoxWidth*largeBoxHeight)/(10^bUnitsExp)^3)@}{@bUnits@}\).<br>However, your incorrect answer to (a) means that you have calculated the total volume incorrectly.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>node4_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>\({@if integerp(node4_error) then node4_error else float(node4_error)@}{@if bUnits="m^3" then "{cm}^3" else "m^3"@}\) is the correct total volume of the boxes.<br>However, the you should have given the answer in \({@bUnits@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly calculated the volume of the large box as \({@if bUnits="m^3" then float((largeBoxLength*largeBoxWidth*largeBoxHeight)/(10^bUnitsExp)^3) else (largeBoxLength*largeBoxWidth*largeBoxHeight)/(10^bUnitsExp)^3@}{@bUnits@}\).<br>However, have converted the volume of the small box incorrectly from \({@aUnits@}\) to \({@bUnits@}\).<br>Remember, \(1m^3 = 100^3{cm}^3 = 1000000{cm}^3\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>The volume you appear to have calculated for the large box, \({@if bUnits="m^3" then ans2-ans1/1000000 else ans2-ans1*1000000@}{@bUnits@}\), is out by a magnitude of 10, which suggests you may have converted units incorrectly.<br>Here is a list of unit conversions:</p>
+<p>\(1cm = 10mm\)</p>
+<p>\(1m = 100cm = 1000mm\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_error</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have incorrectly converted the units for the volume of either the small box, large box or both into {@bUnits@}.</p>
+<br>Here is a list of unit conversions:</p>
+<p>\(1cm = 10mm\)</p>
+<p>\(1m = 100cm = 1000mm\)</p>
+<p>\(1m^3 = 100^3{cm}^3 = 1000000{cm}^3\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct solution */
+/* Node 2: Worked solution */
+/* Node 3: Check whether answer given in wrong unit (out of m^3 and cm^3) (1) */
+node3_error: if cUnits="m^2" then cSol*10000 else cSol/10000;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>cSol</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\(A_{large} = 2 \times (({@if integerp(largeBoxLengthDisp) then largeBoxLengthDisp else float(largeBoxLengthDisp)@}{@largeBoxLengthUnit@} \times {@if integerp(largeBoxWidthDisp) then largeBoxWidthDisp else float(largeBoxWidthDisp)@}{@largeBoxWidthUnit@}) + ({@if integerp(largeBoxWidthDisp) then largeBoxWidthDisp else float(largeBoxWidthDisp)@}{@largeBoxWidthUnit@} \times {@if integerp(largeBoxHeightDisp) then largeBoxHeightDisp else float(largeBoxHeightDisp)@}{@largeBoxHeightUnit@}) + ({@if integerp(largeBoxHeightDisp) then largeBoxHeightDisp else float(largeBoxHeightDisp)@}{@largeBoxHeightUnit@} \times {@if integerp(largeBoxLengthDisp) then largeBoxLengthDisp else float(largeBoxLengthDisp)@}{@largeBoxLengthUnit@}))\)</p>
+<p>\(A_{large} = 2 \times (({@if cUnits="m^2" then float(largeBoxLength/100) else largeBoxLength@}{@if cUnits="m^2" then "m" else "cm"@} \times {@if cUnits="m^2" then float(largeBoxWidth/100) else largeBoxWidth@}{@if cUnits="m^2" then "m" else "cm"@}) + ({@if cUnits="m^2" then float(largeBoxWidth/100) else largeBoxWidth@}{@if cUnits="m^2" then "m" else "cm"@} \times {@if cUnits="m^2" then float(largeBoxHeight/100) else largeBoxHeight@}{@if cUnits="m^2" then "m" else "cm"@}) + ({@if cUnits="m^2" then float(largeBoxHeight/100) else largeBoxHeight@}{@if cUnits="m^2" then "m" else "cm"@} + {@if cUnits="m^2" then float(largeBoxLength/100) else largeBoxLength@}{@if cUnits="m^2" then "m" else "cm"@}))\)</p>
+<p>\(A_{large} = {@if integerp(cSol) then cSol else float(cSol)@}{@cUnits@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>node3_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>\({@if integerp(node3_error) then node3_error else float(node3_error)@}{@if cUnits="m^2" then "{cm}^2" else "m^2"@}\) is the correct surface area of the large box.<br>However, the you should have given the answer in \({@cUnits@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

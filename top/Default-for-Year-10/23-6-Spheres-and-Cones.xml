@@ -1,0 +1,1111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>23.6 Spheres and Cones</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Here is a diagram of an ice cream cone, made of a cone and a hemisphere:
+<br><i>Diagram not to scale.</i></p>
+
+[[jsxgraph height="400px" width="500px"]]
+
+    var r = {#rad#};
+    var h = {#height#};
+
+    // Set inital display conditions
+    var zoom = 2.5;
+    var cenOfView = [0,-1];
+    var orientation = [Math.PI/2,0.13,0];
+
+    // Creating JSXGraph board: change "jxgbox" to divid for STACK questions
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[cenOfView[0]-zoom*5/4, cenOfView[1]+zoom, cenOfView[0]+zoom*5/4, cenOfView[1]-zoom],
+      showCopyright:false,
+      showNavigation:false,
+    });
+
+    // Function to project point in 3D onto a plane through the origin normal to [xN,yN,zN];
+    function flatten_point([x,y,z]) {
+        return([x,y]);
+    };
+
+    // Functions to rotate point in 3D around x, y and z axes
+    function rotate_x([x,y,z], angle) {
+        return([
+            x,
+            Math.cos(angle)*y - Math.sin(angle)*z,
+            Math.sin(angle)*y + Math.cos(angle)*z
+        ]);
+    };
+
+    function rotate_y([x,y,z], angle) {
+        return([
+            Math.sin(angle)*z + Math.cos(angle)*x,
+            y,
+            Math.cos(angle)*z - Math.sin(angle)*x
+        ]);
+    };
+
+    function rotate_z([x,y,z], angle) {
+        return([
+            Math.cos(angle)*x - Math.sin(angle)*y,
+            Math.sin(angle)*x + Math.cos(angle)*y,
+            z
+        ]);
+    };
+
+    // Function to create a point-projection pair:
+    function make_point([x,y,z], style) {
+
+        // Rotate coordinates by display orientation
+        var coords = rotate_z(rotate_y(rotate_x([x,y,z], orientation[0]), orientation[1]), orientation[2]);
+        
+        // Create point, defined by initial coords, display coords and projected coords
+        var point = {
+            initCoords:coords,
+            dispCoords:coords,
+            proj:board.create("point", flatten_point(coords), style)
+        }
+        elements.push(point);
+        return(point);
+
+    };
+    
+    // List containing all 3D elements to be displayed (used to update position for user movement)
+    var elements = [];
+
+    // CREATE CONE: print_cone(baseRadius, height, baseCentreCoords, rotation, faceStyle, pointStyle)
+    function print_cone(
+        radius = 1,
+        height = 1,
+        [x,y,z] = [0,0,0],
+        [rotX,rotY,rotZ] = [0,0,0],
+        faceStyle = {
+            fixed:true,
+            highlight:false,
+            fillColor:"#00FF00",
+            fillOpacity:0.3,
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        },
+        pointStyle = {visible:false}) {
+        
+
+        // Create cylinder using pyramid method with 30-gon base to be approximately circular
+        var pointList = [];
+        var noSides = 30;
+
+        pointList.push([0, 0, height]);
+        var i;
+        for (i = 0; i < noSides; i++) {
+            pointList.push([
+                Math.cos(2*i*Math.PI/noSides),
+                Math.sin(2*i*Math.PI/noSides),
+                0]);
+        };
+
+        var j;
+        for (i in pointList) {
+            j = rotate_z(rotate_y(rotate_x(pointList[i], rotX), rotY), rotZ);
+            pointList[i] = make_point([
+                x + j[0],
+                y + j[1],
+                z + j[2]
+            ], pointStyle);
+        };
+
+        for (i in pointList.slice(1)) {
+            board.create("polygon", [
+                pointList[0].proj,
+                pointList.slice(1)[i].proj,
+                pointList.slice(1)[(Number(i)+1) % (pointList.length-1)].proj,
+            ], faceStyle)
+        };
+        
+        // Create circular base
+        board.create("conic", [
+            pointList[1],
+            pointList[7],
+            pointList[13],
+            pointList[19],
+            pointList[25],
+        ].map(function(point) {return point.proj}), faceStyle);
+        
+    };
+
+    // CREATE CIRCLE: print_circle(radius, centre, rotation, faceStyle, pointStyle)
+    function print_circle(
+        radius = 1, 
+        [x,y,z] = [0,0,0], 
+        [rotX,rotY,rotZ] = [0,0,0],
+        faceStyle = {
+            fixed:true,
+            highlight:false,
+            fillColor:"#00FF00",
+            fillOpacity:0.3,
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        },
+        pointStyle = {visible:false}) {
+        
+        // Define points on a circle before rotation and translation
+        var pointList = [
+            [radius,0,0],
+            [radius*Math.sqrt(2)/2,radius*Math.sqrt(2)/2,0],
+            [0,radius,0],
+            [-radius,0,0],
+            [0,-radius,0]
+        ];
+
+        // For each defined point; rotate and translate by user specs.
+        var i;
+        var j;
+        for (i in pointList) {
+            j = rotate_z(rotate_y(rotate_x(pointList[i], rotX), rotY), rotZ);
+            pointList[i] = make_point([
+                x + j[0],
+                y + j[1],
+                z + j[2]
+            ], pointStyle);
+        };
+
+        // Print circle as a conic so that it will form an elipse under ro
+        board.create("conic", pointList.map(function(point) {return point.proj}), faceStyle);
+        
+    };
+
+    // CREATE SPHERE: print_sphere(radius, centre, rotation, faceStyle, lineStyle, pointStyle)
+    // (uses print_circle() function)
+    function print_sphere(
+        radius = 1, 
+        [x,y,z] = [0,0,0], 
+        faceStyle = {
+            fixed:true,
+            highlight:false,
+            fillColor:"#00FF00",
+            fillOpacity:0.3,
+            strokeWidth:1,
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        },
+        lineStyle = {
+            fixed:true,
+            highlight:false,
+            fillColor:"none",
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        },
+        pointStyle = {visible:false}) {
+
+        var i;
+        for (i = 0; i < 6; i++) {
+            print_circle(radius, [x,y,z], [
+                Math.PI/2,
+                Math.PI/2,
+                Math.PI*i/6
+            ], lineStyle);
+        };
+
+        var circCen = make_point([x,y,z], pointStyle);
+
+        board.create("circle", [circCen.proj, radius], faceStyle);
+
+    };
+
+    print_cone(1, 3, [0,0,0], [0,0,0.13], {
+            fixed:true,
+            highlight:false,
+            fillColor:"orange",
+            fillOpacity:0.5,
+            layer:2,
+            strokeColor:"orange",
+            borders:{
+                strokeColor:"orange",
+                fixed:true,
+                highlight:false,
+                layer:2
+            }
+        });
+
+    print_sphere(1, [0,0,0], {
+        fixed:true,
+        highlight:false,
+        fillColor:"pink",
+        fillOpacity:0.5,
+        strokeWidth:1,
+        strokeColor:"pink",
+        layer:0,
+        borders:{
+            fixed:true,
+            highlight:false
+        }
+    }, {
+        fixed:true,
+        highlight:false,
+        fillColor:"none",
+        strokeColor:"pink",
+        layer:0,
+        borders:{
+            fixed:true,
+            highlight:false
+        }
+    })
+
+    board.create("polygon", [[1.5,0], [1.5,-1.5], [-1.5,-1.5], [-1.5,0]], {
+        fixed:true,
+        highlight:false,
+        fillColor:"#d9edf7",
+        fillOpacity:1,
+        layer:1,
+        borders:{
+            fixed:true,
+            visible:false
+        },
+        vertices:{
+            fixed:true,
+            visible:false
+        }
+    })
+
+    var lineStyle = {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        withLabel:true,
+        label:{
+            fixed:true,
+            highlight:false,
+            fontSize:15,
+            offset:[15,0],
+            useMathJax:true,
+            parse:false
+        }
+    };
+
+    lineStyle.name = "\\(r=".concat(r,"cm\\)");
+    board.create("segment", [[1.5,1], [1.5,0]], lineStyle);
+
+    lineStyle.name = "\\(h=".concat(h,"cm\\)");
+    lineStyle.label.offset = [-15,0];
+    lineStyle.label.anchorX = "right";
+    board.create("segment", [[-1.5,0], [-1.5,-3]], lineStyle);
+
+[[/jsxgraph]]
+
+<p><br>(a) By dividing the whole shape into a cone and a hemisphere, find the total volume of the ice cream.
+<br><i>Give your answers to 3dp.</i></p>
+<p align="right">\(V_C=\) [[input:ans1]] \(cm^3\) [[validation:ans1]]</p>
+<p align="right">\(V_{HS}=\) [[input:ans2]] \(cm^3\) [[validation:ans2]]</p>
+<p align="right"><br>\(V_T=\) [[input:ans3]] \(cm^3\) [[validation:ans3]]</p>
+<p align="right"><b>(5)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) By dividing the whole shape into a cone and a hemisphere, find the total outer surface area of the ice cream.
+<br><i>Give your answers to 3dp.</i></p>
+<p align="right">\(A_C=\) [[input:ans4]] \(cm^2\) [[validation:ans4]]</p>
+<p align="right">\(A_{HS}=\) [[input:ans5]] \(cm^2\) [[validation:ans5]]</p>
+<p align="right"><br>\(A_T=\) [[input:ans6]] \(cm^2\) [[validation:ans6]]</p>
+<p align="right"><b>(5)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>10</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Randomising measurements */
+rad:rand_with_step(21,29,1)/10;
+height:rand_with_prohib(101,149,[110,120,130,140])/10;
+
+/* Solutions */
+
+V_C:(1/3)*%pi*rad^2*height;
+V_HS:(2/3)*%pi*rad^3;
+V_T:V_C+V_HS;
+
+A_C:%pi*rad*sqrt(rad^2+height^2);
+A_HS:2*%pi*rad^2;
+A_T:A_C+A_HS;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>\(r = {@rad@}\)</p>
+<p>\(h = {@height@}\)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(V_C,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(V_HS,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(V_T,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(A_C,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(A_HS,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans6</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(A_T,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>5.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Correct answers */
+node1_test: if ans1=decimalplaces(V_C,3) and ans2=decimalplaces(V_HS,3) and (ans3=decimalplaces(V_T,3) or ans3=decimalplaces(V_C,3)+decimalplaces(V_HS,3)) then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Correct volume for cone (2) */
+/* Node 4: Correct volume for cone, incorrectly rounded (1) */
+node4_test: if abs(ans1-V_C) <= 0.01 then 1 else 0;
+
+/* Node 5: Correct volume for hemisphere (2) */
+/* Node 6: Correct volume for hemisphere, incorrectly rounded (1) */
+node6_test: if abs(ans2-V_HS) <= 0.01 then 1 else 0;
+
+/* Node 7: Gives volume of full sphere (1) */
+node7_test: if abs(ans2-2*V_HS) <= 0.01 then 1 else 0;
+
+/* Node 8: Correct total volume (1) */
+node8_test: if ans3=decimalplaces(V_T,3) or ans3=decimalplaces(V_C,3)+decimalplaces(V_HS,3) then 1 else 0;
+
+/* Node 9: Correctly summed volumes (1) */
+node9_test: if ans3=decimalplaces(ans1+ans2,3) or ans3=decimalplaces(ans1,3)+decimalplaces(ans2,3) then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>The volume of a cone is given by \(V_C=\pi r^2 h\), where \(r\) is the radius of the circular base and \(h\) is the height of the cone.</p>
+<p>Using the values given:</p>
+<p>\(V_C = {@float(rad)@}^2 \pi \times {@float(height)@}\)</p>
+<p>\(V_C = {@decimalplaces(V_C,5)@}...\)</p>
+<p>\(V_C = {@decimalplaces(V_C,3)@}cm^3\) <i>(to 3dp)</i></p>
+
+<p><br>The volume of a sphere is given by \(V_S=\frac{4}{3} \pi r^3\), where \(r\) is the radius of the sphere.</p>
+<p>Therefore, the volume of hemisphere is given by \(V_S=\frac{2}{3} \pi r^3\)</p>
+<p>Using the values given:</p>
+<p>\(V_{HS} = \frac{2}{3} \pi \times {@float(rad)@}^3\)</p>
+<p>\(V_{HS} = {@decimalplaces(V_HS,5)@}...\)</p>
+<p>\(V_{HS} = {@decimalplaces(V_HS,3)@}cm^3\) <i>(to 3dp)</i></p>
+
+<p><br>The total volume of the ice cream is given by the sum of the volumes of the cone and hemisphere.</p>
+<p>\(V_T = V_C + V_{HS}\)</p>
+<p>\(V_T = {@decimalplaces(V_C,5)@}... + \ {@decimalplaces(V_HS,5)@}...\)</p>
+<p>\(V_T = {@decimalplaces(V_T,3)@}cm^3\) <i>(to 3dp)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>decimalplaces(V_C,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly found the volume of the cone.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the volume of the cone.
+<br>However, you have not rounded your answer correctly to 3dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the volume of the cone is not correct.
+<br>Remember, the volume of a cone is given by \(V_C = \frac{1}{3} \pi r^2 h\), where \(r\) is the radius of the circular base and \(h\) is the height of the cone.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>decimalplaces(V_HS,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly found the volume of the hemisphere.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have found the volume of the hemisphere.
+<br>However, you have not rounded your answer correctly to 3dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have found the volume of a <i>sphere</i> with radius \({@float(rad)@}cm\).
+<br>However, you have forgotten to halve this to find the volume of a <i>hemisphere</i>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer for the volume of the hemisphere is not correct.
+<br>Remember, the volume of a <i>sphere</i> is given by \(V_S = \frac{4}{3} \pi r^3\), where \(r\) is the radius of the sphere.
+<br>The volume of a <i>hemisphere</i> is half of this.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node8_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly found the total volume of the ice cream cone.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt1-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node9_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have not found the correct total volume of the ice cream cone.
+<br>However, you answer is consistent with the volumes which you gave for the cone and hemisphere.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>You have not found the correct total volume of the ice cream cone.
+<br>You also have not correctly summed the volumes which you gave for the cone and hemisphere.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>5.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Correct answers */
+node1_test: if ans4=decimalplaces(A_C,3) and ans5=decimalplaces(A_HS,3) and ans6=decimalplaces(A_T,3) then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Correct area for cone (2) */
+/* Node 4: Correct area or cone, incorrectly rounded (1) */
+node4_test: if abs(ans4-A_C) <= 0.01 then 1 else 0;
+
+/* Node 5: Correct area for cone, but including circular base (1) */
+node5_test: if abs(ans4-A_C-%pi*rad^2) <= 0.01 then 1 else 0;
+
+/* Node 6: Correct area for hemisphere (2) */
+/* Node 7: Correct area for hemisphere, incorrectly rounded (1) */
+node7_test: if abs(ans5-A_HS) <= 0.01 then 1 else 0;
+
+/* Node 8: Correct area for hemisphere, but including circular base (1) */
+node8_test: if abs(ans5-A_HS-%pi*rad^2) <= 0.01 then 1 else 0;
+
+/* Node 9: Gives area of full sphere (1) */
+node9_test: if abs(ans5-2*A_HS) <= 0.01 then 1 else 0;
+
+/* Node 10: Correct total areas (1) */
+node10_test: if ans6=decimalplaces(A_T,3) or ans3=decimalplaces(A_C,3)+decimalplaces(A_HS,3) then 1 else 0;
+
+/* Node 11: Correctly summed areas (1) */
+node11_test: if ans6=decimalplaces(ans4+ans5,3) or ans6=decimalplaces(ans4,3)+decimalplaces(ans5,3) then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>The curved surface area of a cone is given by \(A_C=\pi r l\), where \(r\) is the radius of the circular base and \(l\) is the slanted length along the surface of the cone.</p>
+<p>Using Pythagoras' Theorem:</p>
+<p>\(l^2 = r^2 + h^2\)</p>
+<p>\(l = \sqrt{{@float(rad)@}^2 + {@float(height)@}^2}\)</p>
+<p>\(l = \sqrt{{@float(rad^2+height^2)@}}\)</p>
+<p>Therefore:</p>
+<p>\(A_C = {@float(rad)@} \pi \times \sqrt{{@float(rad^2+height^2)@}}\)</p>
+<p>\(A_C = {@decimalplaces(A_C,5)@}...\)</p>
+<p>\(A_C = {@decimalplaces(A_C,3)@}cm^2\) <i>(to 3dp)</i></p>
+
+<p><br>The surface area of a sphere is given by \(A_S=4 \pi r^2\), where \(r\) is the radius of the sphere.</p>
+<p>Therefore, the curved volume of hemisphere is given by \(A_S=2 \pi r^2\)</p>
+<p>Using the values given:</p>
+<p>\(A_{HS} = 2 \pi \times {@float(rad)@}^2\)</p>
+<p>\(A_{HS} = {@decimalplaces(A_HS,5)@}...\)</p>
+<p>\(A_{HS} = {@decimalplaces(A_HS,3)@}cm^2\) <i>(to 3dp)</i></p>
+
+<p><br>The total surface area of the ice cream is given by the sum of the surface areas of the cone and hemisphere.</p>
+<p>\(A_T = A_C + A_{HS}\)</p>
+<p>\(A_T = {@decimalplaces(A_C,5)@}... + \ {@decimalplaces(A_HS,5)@}...\)</p>
+<p>\(A_T = {@decimalplaces(A_T,3)@}cm^2\) <i>(to 3dp)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>10</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node11_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-11-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have not found the correct total outer surface area of the ice cream cone.
+<br>However, you answer is consistent with the surface areas which you gave for the cone and hemisphere.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-11-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>You have not found the correct total outer surface area of the ice cream cone.
+<br>You also have not correctly summed the surface areas which you gave for the cone and hemisphere.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>decimalplaces(A_C,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly found the outer surface area of the cone.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1000000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the outer surface area of the cone.
+<br>However, you have not rounded your answer correctly to 3dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1000000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the total surface area of the cone.
+<br>However, you have not accounted for the circular face being covered by the hemisphere.
+<br>You should subtract this area to find the <i>outer</i> surface area of the cone.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the outer surface area of the cone is incorrect.
+<br>Remember that the curved surface area of a cone is given by \(A_C=\pi r l\) where \(r\) is the radius of the circular base and \(l\) is the slanted length along the surface of the cone.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans5</sans>
+        <tans>decimalplaces(V_HS,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>9</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly found the outer surface area of the hemisphere.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1000000</truescore>
+        <truepenalty/>
+        <truenextnode>9</truenextnode>
+        <trueanswernote>prt2-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have found the outer surface area of the hemisphere.
+<br>However, you have not rounded your answer correctly to 3dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt2-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node8_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1000000</truescore>
+        <truepenalty/>
+        <truenextnode>9</truenextnode>
+        <trueanswernote>prt2-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have found the total surface area of the hemisphere.
+<br>However, you have not accounted for the circular face being covered by the cone.
+<br>You should subtract this area to find the <i>outer</i> surface area of the hemisphere.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt2-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node9_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1000000</truescore>
+        <truepenalty/>
+        <truenextnode>9</truenextnode>
+        <trueanswernote>prt2-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have found the surface area of a <i>sphere</i> with radius \({@float(rad)@}cm\).
+<br>However, you have forgotten to halve this to find the surface area of a <i>hemisphere</i>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>9</falsenextnode>
+        <falseanswernote>prt2-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer for the outer surface area of the hemisphere is incorrect.
+<br>Remember, the surface area of a <i>sphere</i> is given by \(A_S = 4 \pi r^2\), where \(r\) is the radius of the sphere.
+<br>The curved surface area of a <i>hemisphere</i> is half of this.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>9</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node10_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-10-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly found the total outer surface area of the ice cream cone.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>10</falsenextnode>
+        <falseanswernote>prt2-10-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

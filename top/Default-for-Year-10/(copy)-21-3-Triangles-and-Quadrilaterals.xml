@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>(copy) 21.3 Triangles and Quadrilaterals</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Consider the diagram below with four shapes:
+<br>A RED shape at the bottom-left.
+<br>A GREEN shape at the top-left.
+<br>A BLUE shape at the top-right.
+<br>A PURPLE shape at the bottom-right</p>
+
+[[jsxgraph width="400px" height="400px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    var pointStyle = {
+      fixed:true,
+      visible:false
+    };
+
+    var recType = {#redShape#};
+    var paraType = {#greenShape#};
+    var triType = {#blueShape#};
+    var quadType = {#purpShape#};
+
+
+    var PA = board.create("point", [0,0], pointStyle);
+    var PB = board.create("point", [-2,0], pointStyle);
+
+    if (recType == "square") {
+
+      var PC = board.create("point", [-2,-2], pointStyle);
+      var PD = board.create("point", [0,-2], pointStyle);
+    
+    } else if (recType == "rectangle") {
+    
+      var PC = board.create("point", [-2,-3], pointStyle);
+      var PD = board.create("point", [0,-3], pointStyle);
+    
+    };
+
+    if (paraType == "rhombus") {
+    
+      var PE = board.create("point", [-0.75,Math.sqrt(2.4375)], pointStyle);
+      var PF = board.create("point", [1.25,Math.sqrt(2.4375)], pointStyle);
+    
+    } else if (paraType == "parallelogram") {
+    
+      var PE = board.create("point", [0,4], pointStyle);
+      var PF = board.create("point", [2,4], pointStyle);
+    
+    };
+
+    if (triType == "equilateral") {
+
+      var circleA = board.create("circle", [PA, PF], {visible:false});
+      var circleF = board.create("circle", [PF, PA], {visible:false});
+
+      var PG = board.create("intersection", [circleA,circleF], pointStyle);
+
+    } else if (triType == "isosceles") {
+
+      var pointAF = [PA.X()*1/5 + PF.X()*4/5, PA.Y()*1/5 + PF.Y()*4/5];
+      var circleA = board.create("circle", [PA, pointAF], {visible:false});
+      var circleF = board.create("circle", [PF, PA], {visible:false});
+
+      var PG = board.create("intersection", [circleA,circleF], pointStyle);
+
+    } else if (triType == "right-angled") {
+
+      var midAF = [PA.X()*1/2 + PF.X()*1/2, PA.Y()*1/2 + PF.Y()*1/2];
+      var circleAF = board.create("circle", [midAF, PA], {visible:false});
+
+      var pointAF = [PA.X()*1/5 + PF.X()*4/5, PA.Y()*1/5 + PF.Y()*4/5];
+      var circleA = board.create("circle", [PA, pointAF], {visible:false});
+
+      var PG = board.create("intersection", [circleA, circleAF], pointStyle);
+      board.create("angle", [PF, PG, PA], {
+        fixed:true,
+        highlight:false,
+        radius:0.25,
+        withLabel:false
+      });
+    };
+
+    if (quadType == "kite") {
+    
+      var circleG = board.create("circle", [PG, PA], {visible:false});
+      var circleD = board.create("circle", [PD, PA], {visible:false});
+
+      var PH = board.create("intersection" , [circleD, circleG], pointStyle)
+    
+    } else if (quadType == "trapezium") {
+    
+      if (recType == "square") {
+        var PH = board.create("point", [PG.X(),-3], pointStyle);
+      } else if 
+      (recType == "rectangle") {
+        var PH = board.create("point", [PG.X(),-2], pointStyle);
+      };
+
+    };
+
+    var shapeWidth = Math.max(PG.X(), PH.X()) + 4;
+    var shapeHeight = PE.Y() - Math.min(PD.Y(), PH.Y()) + 2;
+
+    if (shapeWidth >= shapeHeight) {
+
+      board.setBoundingBox([
+        -3,
+        (PE.Y() + Math.min(PD.Y(), PH.Y()) + shapeWidth)/2,
+        shapeWidth - 3,
+        (PE.Y() + Math.min(PD.Y(), PH.Y()) - shapeWidth)/2
+      ]);
+
+    } else if (shapeWidth < shapeHeight) {
+
+      board.setBoundingBox([
+        (Math.max(PG.X(), PH.X()) - 2 - shapeHeight)/2,
+        PE.Y() + 1,
+        (Math.max(PG.X(), PH.X()) - 2 + shapeHeight)/2,
+        Math.min(PD.Y(), PH.Y()) - 1
+      ]);
+
+    }; 
+
+    var polyStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2
+      }
+    };
+
+    polyStyle.fillColor = "red";
+    polyStyle.borders.strokeColor = "red";
+    board.create("polygon", [PA, PB, PC, PD], polyStyle);
+
+    polyStyle.fillColor = "green";
+    polyStyle.borders.strokeColor = "green";
+    board.create("polygon", [PA, PB, PE, PF], polyStyle);
+
+    polyStyle.fillColor = "purple";
+    polyStyle.borders.strokeColor = "purple";
+    board.create("polygon", [PA, PG, PH, PD], polyStyle);
+
+    polyStyle.fillColor = "blue";
+    polyStyle.borders.strokeColor = "blue";
+    board.create("polygon", [PA, PF, PG], polyStyle);
+
+    var angleStyle = {
+      fixed:true,
+      highlight:false,
+      radius:0.5,
+      name:"\\(\\alpha\\)",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        fontSize:15,
+        offset:[10,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    board.create("angle", [PA, PB, PE], angleStyle);
+
+    angleStyle.name = "\\(\\beta\\)";
+    angleStyle.label.offset = [0,-5]; 
+    board.create("angle", [PD, PA, PG], angleStyle);
+    
+    angleStyle.name = "\\(".concat({#triAngle#},"^\\circ\\)");
+    angleStyle.label.offset = [-10,-15]; 
+    board.create("angle", [PA, PF, PG], angleStyle);
+
+[[/jsxgraph]]
+
+<p><i>(Non-right angles are not to scale)</i></p>
+
+<p>The RED shape is a <b>{@redShape@}</b>.
+<br>The BLUE shape is {@if blueShape="right-angled" then "a" else "an"@} <b>{@blueShape@} triangle</b>.</p>
+
+<p><br>(a) Given that the GREEN shape has two pairs of parallel sides, no right-angles and {@if greenShape="rhombus" then "four sides of the same length" else "two different lengths of sides"@}, complete the sentences below.</p>
+<p><br>The GREEN shape is called a [[input:ans1]] [[validation:ans1]]</p>
+<p>The diagonals of the GREEN shape are [[input:ans2]] [[validation:ans2]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) Given that the PURPLE shape has {@if purpShape="kite" then "no parallel sides and two different lengths of sides" else "one pair of parallel sides"@}, complete the sentences below.</p>
+<p><br>The PURPLE shape is called a [[input:ans3]] [[validation:ans3]]</p>
+<p>The diagonals of the PURPLE shape are [[input:ans4]] [[validation:ans4]].</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt2]]</p>
+
+<p><br>(c) Using the properties of the shapes in the diagram, find the value of \(\beta - \alpha\).</p>
+<p align="right">\(\beta - \alpha =\) [[input:ans5]] \(^\circ\) [[validation:ans5]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt3]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>7</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Randomise shapes */
+
+redShape:rand(["square", "rectangle"]);
+greenShape:rand(["rhombus", "parallelogram"]);
+blueShape:rand(["equilateral", "isosceles", "right-angled"]);
+purpShape:rand(["kite", "trapezium"]);
+
+triAngle: if blueShape="equilateral" then 60 else if blueShape="isosceles" then rand_with_step(20,50,10) else rand_with_step(50,80,5);
+
+/* Multiple choice options */
+
+ansList1: random_permutation([["rhombus",is(greenShape="rhombus")], ["parallelogram", is(greenShape="parallelogram")], [rand(["square", "rectangle"]), false], [rand(["kite", "trapezium"]), false]]);
+
+ansList2: [["perpendicular",is(greenShape="rhombus")], ["not perpendicular",is(greenShape="parallelogram")]];
+
+ansList3: random_permutation([["kite",is(purpShape="kite")], ["trapezium", is(purpShape="trapezium")], [rand(["square", "rectangle"]), false], [rand(["rhombus", "parallelogram"]), false]]);
+
+ansList4: [["perpendicular",is(purpShape="kite")], ["not perpendicular",is(purpShape="trapezium")]];
+
+tans2: if greenShape="rhombus" then "perpendicular" else "not perpendicular";
+tans4: if purpShape="kite" then "perpendicular" else "not perpendicular";
+tans5: if blueShape="equilateral" then 30 else if blueShape="isosceles" then (180-triAngle)/2 else triAngle;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>RED: {@redShape@}, BLUE: {@blueShape@}
+<br>GREEN: {@greenShape@}, PURPLE: {@purpShape@}
+<br>angle: {@triAngle@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>dropdown</type>
+      <tans>ansList1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>dropdown</type>
+      <tans>ansList2</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>dropdown</type>
+      <tans>ansList3</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>dropdown</type>
+      <tans>ansList4</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>tans5</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check first part correct */
+
+/* Node 2: Check second part correct */
+
+/* Node 3: Check second part consisted with first */
+node3_test: if ((ans1="square" or ans1="rectangle" or ans1="kite") and ans2="perpendicular") or ((ans1="rhombus" or ans1="parallelogram" or ans1="trapezium") and ans2="not perpendicular") then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>String</answertest>
+        <sans>ans1</sans>
+        <tans>greenShape</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You are correct that the green shape is a {@greenShape@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>You have not given the correct shape.
+<br>The green shape is actually a {@greenShape@}.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>String</answertest>
+        <sans>ans2</sans>
+        <tans>tans2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You are correct that the diagonals of the green shape are {@tans2@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You are correct that the diagonals of a {@ans1@} are {@ans2@}.
+<br>However, since the green shape is a {@greenShape@}, the diagonals are {@tans2@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Since the green shape is a {@greenShape@}, the diagonals are {@tans2@}.
+<br>Additionally, the diagonals of a {@ans1@} are also {@tans2@}.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check first part correct */
+
+/* Node 2: Check second part correct */
+
+/* Node 3: Check second part consisted with first */
+node3_test: if ((ans3="square" or ans3="rectangle" or ans3="kite") and ans4="perpendicular") or ((ans3="rhombus" or ans3="parallelogram" or ans3="trapezium") and ans4="not perpendicular") then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>String</answertest>
+        <sans>ans3</sans>
+        <tans>purpShape</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You are correct that the purple shape is a {@purpShape@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>You have not given the correct shape.
+<br>The purple shape is actually a {@purpShape@}.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>String</answertest>
+        <sans>ans4</sans>
+        <tans>tans4</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You are correct that the diagonals of the purple shape are {@tans4@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You are correct that the diagonals of a {@ans3@} are {@ans4@}.
+<br>However, since the purple shape is a {@purpShape@}, the diagonals are {@tans4@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Since the purple shape is a {@purpShape@}, the diagonals are {@tans4@}.
+<br>Additionally, the diagonals of a {@ans3@} are also {@tans4@}.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans5</sans>
+        <tans>tans5</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>Since the green shape is a {@greenShape@}, the opposite angles are equal and the sum of all the angles is \(360^\circ\).
+<br>Therefore, the green angle at the centre of the diagram is \(\frac{360 - 2\alpha}{2} = 180 - \alpha\)</p>
+
+<p>Since the blue triangle is {@blueShape@}, {@if blueShape="equilateral" then "all the the angles are equal to \\(60^\\circ\\)" else if blueShape="isosceles" then "the two base angles are equal and the sum of all the angles is \\(180^\\circ\\)" else "there is a \\(90^\\circ\\) angle and the sum of all the angles is \\(180^\\circ\\)"@}.
+<br>Therefore the blue angle at the centre of the diagram is \({@if blueShape="equilateral" then "60" else if blueShape="isosceles" then sconcat("\\frac{180-",string(triAngle),"}{2} =",string(90-triAngle/2)) else sconcat("180-90-",string(triAngle)," = ",string(90-triAngle))@}^\circ\).<p>
+
+<p>The four angles at the centre of the diagram form a circle, so they must sum to \(360^\circ\).
+<br>Therefore, \(90 + (180 - \alpha) + {@if blueShape="equilateral" then "60" else if blueShape="isosceles" then 90-triAngle/2 else 90-triAngle@} + \beta = 360\)</p>
+
+<p>Rearranging this gives: \(\beta - \alpha = {@tans5@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>1218447153</deployedseed>
+    <deployedseed>2121985205</deployedseed>
+    <deployedseed>155133069</deployedseed>
+    <deployedseed>674131871</deployedseed>
+    <deployedseed>460937946</deployedseed>
+    <deployedseed>1087110656</deployedseed>
+    <deployedseed>283944522</deployedseed>
+    <deployedseed>1735886620</deployedseed>
+    <deployedseed>1887161119</deployedseed>
+    <deployedseed>2146884821</deployedseed>
+  </question>
+</quiz>

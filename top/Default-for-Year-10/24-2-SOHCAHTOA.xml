@@ -1,0 +1,1047 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>24.2 SOHCAHTOA</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>The following digaram (not drawn to scale) shows triangles \(ABC\) and \(BCD\), where \(AB = {@float(aa)@}\) cm, \(CD = {@float(cc)@}\) cm and angle \(BAC = {@bb@}^{\circ}\).</p>
+<p><centre>
+[[jsxgraph width='600px' height='300px']]
+var board = JXG.JSXGraph.initBoard(divid, {
+  boundingbox: [-5, 20, 18, -5],
+  axis: false,
+  keepaspectratio: true,
+  showNavigation: false,
+  showCopyright: false
+});
+
+var p1 = board.create('point', [0, 0], { //bottom left point (at the origin)
+  name: 'A',
+  size: 0.1,
+  fixed: true,
+  visible: true,
+  strokeColor:'#901B77',
+  fillColor:'#901B77',
+  label: {
+    fontSize: 15,
+    autoPosition: true,
+    offset: [-10, -10]
+  }
+});
+
+var hor_length = {#aa#}; //length of the base -- feed in variable name
+
+var p2 = board.create('point', [p1.X() + hor_length, 0], { //bottom-right corner
+  name: 'B',
+  size: 0.1,
+  fixed: true,
+  visible: true,
+  strokeColor:'#901B77',
+  fillColor:'#901B77',
+  label: {
+    fontSize: 15,
+    autoPosition: true,
+    offset: [0, -10]
+  }
+});
+
+var l1 = board.create('line', [p1, p2], { //base of triangle
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor:'#901B77',
+});
+
+var left_ang = {#bb_for_graph#}; //value of angle at bottom left  -- feed in variable name
+
+// ----- line where hypotenuse is -------
+var t = board.create('transform', [left_ang, p1], { //define a rotation from bottom left of given angle 
+  type: 'rotate'
+});
+var p3 = board.create('point', [0.1, 0], { // dummy point to rotate
+  name: '',
+  visible: false
+});
+var p4 = board.create('point', [p3, t], { // rotated point
+  name: '',
+  visible: false
+});
+var l2 = board.create('line', [p1, p4], { // line fomring given abgle with base
+  fixed: true,
+  straightFirst: true,
+  straightLast: true,
+  strokeWidth: 2,
+  visible: false
+});
+
+// ----- Vertical Height x -------
+var p5 = board.create('point', [p2.X(), 0.1], { // dummy point above right of base
+  name: '',
+  visible: false
+});
+var l3 = board.create('line', [p2, p5], { // vertical line at right of base
+  fixed: true,
+  straightFirst: true,
+  straightLast: true,
+  strokeWidth: 2,
+  visible: false
+});
+var p5 = board.create('intersection', [l2, l3, 0], { // Top right vertex
+  name: 'C',
+  size: 0.1,
+  fixed: true,
+  visible: true,
+  strokeColor:'#901B77',
+  fillColor:'#901B77',
+  label: {
+    fontSize: 15,
+    autoPosition: true,
+    offset: [0, 10]
+  }
+});
+var l4 = board.create('line', [p2, p5], { //height of triangle
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor:'#901B77'
+});
+
+// ----- Outer Hypotenuse -------
+var l4 = board.create('line', [p1, p5], { // Outer hypotenuse
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor:'#901B77'
+});
+
+// ----- Middle  Hypotenuse -------
+var p6 = board.create('point', [p1.X()+{#zz_real#},0], { // point of middle hypotenuse on base
+  name: 'D',
+  size: 0.1,
+  fixed: true,
+  visible: true,
+  strokeColor:'#901B77',
+  fillColor:'#901B77',
+  label: {
+    fontSize: 15,
+    autoPosition: true,
+    offset: [-5, -10]
+  }
+});
+var l4 = board.create('line', [p5, p6], { // middle hypotenuse
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor:'#901B77'
+});
+
+// ----- Labels -------
+var an1 = board.create('angle', [p5, p2, p1], { //right angle
+  name: '',
+  radius: 1,
+  label: {
+    autoPosition: true,
+    offset: [1000, 1000]
+  }
+});
+var an2 = board.create('angle', [p2, p1, p5], { // bottom left angle sector
+  radius: 2,
+  label: {
+    autoPosition: true,
+    offset: [1000, 1000]
+  }
+});
+var an3 = board.create('angle', [p2, p1, p5], { // bottom left angle label   -- feed in variable name: 
+  radius: 2,
+  name: {#bb#},
+  label: {
+    fontSize: 15,
+    strokeColor:'#000000',
+    autoPosition: true,
+    offset: [0,-8]
+  }
+});
+var an5 = board.create('angle', [p2, p6, p5], { // y
+  radius: 2,
+  name: 'y',
+  label: {
+    fontSize: 15,
+    strokeColor:'#000000',
+    autoPosition: true,
+    offset: [0,-8]
+  }
+});
+var txt = board.create('text', [(p1.X()+p2.X())/2-2, -2, p2.X()], { // Length of base
+  fontSize: 15,
+  fixed: true
+});
+var txt = board.create('text', [(p6.X() + p5.X()) / 2, (p6.Y() + p5.Y()) / 2.5, {#cc#}], { // Length of middle hypotenuse   -- feed in variable name
+  fontSize: 15,
+  fixed: true
+});
+var txt = board.create('text', [p2.X() + 1 / 2.5, (p2.Y() + p5.Y()) / 2+1, 'x'], { // x
+  fontSize: 15,
+  fixed: true
+});
+[[/jsxgraph]]
+</centre></p>
+<p>Find x</p>
+<p>Give your answer to 3 significant figures</p>
+<p>[[input:ans1]] [[validation:ans1]]</p>
+<p>[[feedback:prt1]]</p>
+<p>Find y</p>
+<p>Give your answer to 3 significant figures</p>
+<p>[[input:ans2]] [[validation:ans2]]</p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2022071300</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Imagine a right angled triangle with right angle bottom right and a horizontal base */
+/* With another triangle inside by adding a line from somewhere on the horizontal base to the top right vertex */
+
+/* Generate the base length between 10 and 16 with 1d.p */
+aa:rand(6)+10+(rand(9)+1)/10;
+
+/* Generate the bottom left angle between 30 and 50 */
+bb:rand(21)+30;
+bb_for_graph:round(100*bb*pi/180)/100; 
+
+/* Set distance from left of base to the point where it divides in two pieces */
+zz_real:aa/2+(rand(30)-15)/10;
+
+/* Find distance from right of base to the point where it divides in two pieces */
+ww_real:aa-zz_real;
+
+/* Find real height */
+xx_real:aa*tan(bb*pi/180);
+
+/* Generate length of middle hypotenuse cc*/
+cc_real:sqrt(xx_real^2+ww_real^2);
+cc:floor(10*float(cc_real))/10;
+
+/* Find the exact values of the teacher answers with aa, bb and cc as generated */
+xx:xx_real;
+yy:asin(xx/cc)*180/pi;
+
+xx_rounded:significantfigures(xx,3);
+yy_from_rounded:asin(xx_rounded/cc)*180/pi;
+
+/* Make sure randomisation leads to incorrect y answer if rounded x is used and all given lengths have 1 decimal */
+/* --------------------NOTE---------------- */
+/* The while loop did not work and needs further investigation. I generates 35 questions that satisfy the required conditions using the following question note: <p>cc</p><p>significantfigures(yy_from_rounded,3), significantfigures(yy,3), if significantfigures(yy_from_rounded,3)=significantfigures(yy,3) then "" else "different"  </p> */]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>{@if integerp(cc) then "Integer" else ""@}</p>
+<p>{@if significantfigures(yy_from_rounded,3)=significantfigures(yy,3) then "same with rounding" else ""@}  </p>
+<p>{@[dispdp(aa,1),bb,dispdp(cc,1)]@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>dispsf(xx,3)</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>1</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>dispsf(yy,3)</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Calculator in radians*/
+mistake13:aa*tan(bb);
+
+/* Calculator in gradians*/
+mistake14:aa*tan(bb*pi/200);
+
+/*cos instead of tan*/
+mistake15:aa*cos(bb*pi/180);
+
+/*sin instead of tan*/
+mistake16:aa*sin(bb*pi/180);
+
+/*wrong rearrangement*/
+mistake17:aa/tan(bb*pi/180);
+
+/*wrong rearrangement*/
+mistake18:tan(bb*pi/180)/aa;
+
+/*using pythagoras whole side*/
+mistake111:sqrt(cc^2-aa^2);
+
+/*using pythagoras half side*/
+mistake112:sqrt(cc^2-(aa/2)^2);</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>xx</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><b>Worked Solution:</b></p>
+<p>Looking at triangle \(ABC\), we have angle  \(BAC = {@bb@}\) and \(AB = {@float(aa)@}\), which is adjacent to angle \(BAC\), and we want the opposite, so we can use tan (TOA).</p>
+<p>\(\tan{\theta}=\frac{opp}{adj}\)</p>
+<p>\(\tan{{@bb@}}=\frac{x}{{@float(aa)@}}\)</p>
+<p>\(x={@float(aa)@}\times \tan{{@bb@}}\)</p>
+<p>\(x={@dispdp(xx,4)@}...\)</p>
+<p>\(x={@dispsf(xx,3)@}\)cm (to 3 significant figures)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>10</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans1</sans>
+        <tans>mistake111</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-11-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>{@float(aa)@} is the length of the whole side \(AB\), to use Pythagoras you would need the length of side \(AC\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>11</falsenextnode>
+        <falseanswernote>prt1-11-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>11</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans1</sans>
+        <tans>mistake112</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-12-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The line \(CD\) doesn't bisect the side \(AB\), so you can't divide {@float(aa)@} by 2.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-12-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans1</sans>
+        <tans>mistake13</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>I think your calculator is in radian mode - it should be in degrees.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans1</sans>
+        <tans>mistake14</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>I think your calculator is in gradian mode - it should be in degrees.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans1</sans>
+        <tans>mistake15</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have used cos but you should have used tan. You can't use cos as you don't have the hypotenuse.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans1</sans>
+        <tans>mistake16</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have used sin but you should have used tan. You can't use sin as you don't have the hypotenuse.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans1</sans>
+        <tans>mistake17</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have made a mistake with rearranging.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans1</sans>
+        <tans>mistake18</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have made a mistake with rearranging.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt1-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>xx</tans>
+        <testoptions>4</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.8</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Correct so far, but you need to round your answer to 3 significant figures and you gave it to 4.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>9</falsenextnode>
+        <falseanswernote>prt1-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>9</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>xx</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.4</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-10-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer is correct to 2 significant figures, but you were supposed to round your answer to 3 significant figures.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>10</falsenextnode>
+        <falseanswernote>prt1-10-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Calculator in radians*/
+mistake23:asin(xx/cc);
+
+/* Calculator in gradians*/
+mistake24:asin(xx/cc)*(200/pi);
+
+/*cos instead of sin*/
+mistake25:arccos(xx/cc)*180/pi;
+
+/*tan instead of sin*/
+mistake26:arctan(xx/cc)*180/pi;
+
+/*wrong rearrangement*/
+mistake27:arcsin(cc/xx)*180/pi;
+
+/*using sin not arcsin*/
+mistake28:sin(xx/cc)*180/pi;
+
+/*thinking line is bisecting top angle*/
+mistake211:90-(90-bb)/2;
+
+/*Thinking side is half the length*/
+mistake212:atan(xx/(0.5*aa))*180/pi;
+
+/*Follow through part (a)*/
+mistake213:asin(ans1/cc)*180/pi;
+
+/*rounding too early*/
+mistake214:yy_from_rounded;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans2</sans>
+        <tans>yy</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>13</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><b>Worked Solution:</b></p>
+<p>Looking at triangle \(BCD\) we want to find angle \(BDC=y^{\circ}\) and we have the opposite \(x = {@dispsf(xx,3)@}\) and the hypotenuse \(CD = {@float(cc)@}\), so we can use sin (SOH).</p>
+<p>\(\sin{\theta}=\frac{opp}{hyp}\)</p>
+<p>\(\sin{y} =\frac{{@dispsf(xx,3)@}}{{@float(cc)@}}\) (but use ans button on your calculator for {@dispdp(xx,4)@}... or use \({@float(aa)@}\times \tan{{@bb@}}\) again)</p>
+<p>\(y =\sin^{-1} (\frac{{@dispsf(xx,3)@}}{{@float(cc)@}})\)</p>
+<p>\(y={@dispdp(yy,4)@}...\)</p>
+<p>\(y={@dispsf(yy,3)@}^{\circ}\) (to 3 significant figures)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>10</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>mistake211</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-11-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The line doesn't bisect top angle.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>11</falsenextnode>
+        <falseanswernote>prt2-11-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>11</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans2</sans>
+        <tans>mistake212</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-12-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The line \(CD\) doesn't bisect side \(AB\) so you cannot divide {@aa@} by 2.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>12</falsenextnode>
+        <falseanswernote>prt2-12-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>12</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans2</sans>
+        <tans>mistake213</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.8</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-13-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer is consistent with your previous answer.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-13-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>13</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans2</sans>
+        <tans>mistake214</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.8</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-14-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>In this part of the question you have to use your answer for \(x\), which, rounded to 3 significant figures was \(x = {@ans1@}\). However, the actual correct answer was what you obtained in your calculator, including all the decimals. You should use this exact answer in any further calculations rather than {@ans1@} to avoid carrying rounding errors.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-14-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans2</sans>
+        <tans>mistake23</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>I think your calculator is in radian mode - it should be in degrees.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans2</sans>
+        <tans>mistake24</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>I think your calculator is in gradian mode - it should be in degrees.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans2</sans>
+        <tans>mistake25</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have used cos when you should have used sin. You can't use cos as you don't have the adjacent. </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans2</sans>
+        <tans>mistake26</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have used tan when you should have used sin. You can't use tan as you don't have the adjacent. </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans2</sans>
+        <tans>mistake27</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have made a mistake with the rearrangement </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt2-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans2</sans>
+        <tans>mistake28</tans>
+        <testoptions>0.05</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have used sin instead of \(sin^{-1}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt2-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans2</sans>
+        <tans>yy</tans>
+        <testoptions>4</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.8</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Correct so far, but you need to round your answer to 3 significant figures and you gave it to 4.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.8</falsescore>
+        <falsepenalty/>
+        <falsenextnode>9</falsenextnode>
+        <falseanswernote>prt2-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>9</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans2</sans>
+        <tans>yy</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.4</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-10-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer is correct to 2 significant figures, but you were supposed to round your answer to 3 significant figures.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>10</falsenextnode>
+        <falseanswernote>prt2-10-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

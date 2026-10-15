@@ -1,0 +1,1035 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>23.4 Circle Sectors</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Here is a circle divided into a segment:</p>
+
+[[jsxgraph height="300px" width="300px"]]
+
+    var angle = {#angleA#};
+    var radius = {#radA#};
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      strokeWidth:3
+    };
+
+    var origin = board.create("point", [0,0], {visible:false});
+
+    var circ = board.create("circle", [origin,4], lineStyle);
+
+    var line1 = board.create("line", [origin, [1, Math.tan((angle/2)*(Math.PI/180))]], {visible:false});
+    var line2 = board.create("line", [origin, [1, -Math.tan((angle/2)*(Math.PI/180))]], {visible:false});
+
+    var inter1 = board.create("intersection", [line1, circ], {visible:false});
+    var inter2 = board.create("intersection", [line2, circ], {visible:false});
+
+    var secStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"none",
+      fillColor:"#ff94fa",
+      fillOpacity:1
+    };
+
+    var sec = board.create("sector", [origin, inter2, inter1], secStyle);
+
+    var triStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"none",
+      fillColor:"#a2ff85",
+      fillOpacity:1,
+      borders:{
+        highlight:false,
+        strokeColor:"black",
+        strokeWidth:2.5
+      }
+    };
+
+    var tri = board.create("polygon", [origin, inter2, inter1], triStyle);
+
+    var angleStyle = {
+      fixed:true,
+      highlight:false,
+      radius:0.75,
+      name:"\\(".concat(angle,"^\\circ\\)"),
+      orthoType:"sector",
+      withLabel:true,
+      label:{
+        highlight:false,
+        fontSize:15,
+        offset:[-5,-8],
+        strokeColor:"black",
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    var angle = board.create("angle", [inter2, origin, inter1], angleStyle);
+
+    var radStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      strokeWidth:2.5,
+      dash:"3",
+      name:"\\(r=".concat(radius,"cm\\)"),
+      withLabel:true,
+      label:{
+        highlight:false,
+        fontSize:12,
+        offset:[-55,-15],
+        strokeColor:"black",
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    var radius = board.create("segment", [origin, [-2, Math.sqrt(12)]], radStyle);
+
+[[/jsxgraph]]
+
+<p><br>(a) Find the total area of the green and pink regions.
+<br><i>Give your answer to 3sf.</i></p>
+<p align="right">[[input:ans1]] \(cm^2\) [[validation:ans1]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) Find the area of the green triangle.
+<br><i>Give your answer to 3sf.</i></p>
+<p align="right">[[input:ans2]] \(cm^2\) [[validation:ans2]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt2]]</p>
+
+<p><br>(c) Hence, find the area of the pink region only.
+<br><i>Give your answer to 3sf.</i></p>
+<p align="right">[[input:ans3]] \(cm^2\) [[validation:ans3]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt3]]</p>
+
+<p><br>Here is a diagram of two intersecting circles:
+<br><i>Diagram not to scale.</i></p>
+
+[[jsxgraph height="350px" width="500px"]]
+
+    var r1 = {#radB1#};
+    var r2 = {#radB2#};
+    var h = {#heightB#};
+
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox:[-5,3.5,5,-3.5],
+      showNavigation:false,
+      showCopyright:false,
+      keepaspectratio:true
+    });
+
+    var centerStyle = {
+      fixed:true,
+      highlight:false,
+      showInfoBox:false,
+      strokeColor:"black",
+      fillColor:"black",
+      label:{
+        fixed:true,
+        highlight:false,
+        useMathJax:true,
+        parse:false,
+        fontSize:15,
+        anchorX:"middle",
+        anchorY:"middle",
+      }
+    };
+
+    centerStyle.name = "\\(C_1\\)";
+    centerStyle.label.offset = [-5,15];
+    var centerA = board.create("point", [-2.5,0], centerStyle);
+
+    centerStyle.name = "\\(C_2\\)";
+    centerStyle.label.offset = [30,-15];
+    var centerB = board.create("point", [1.5,0], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      strokeWidth:3
+    };
+
+    var circleA = board.create("circle", [centerA,2], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+
+    var arrowStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"blue",
+      strokeWidth:2,
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:12,
+        strokeColor:"blue",
+        anchorX:"middle",
+        position:"cen",
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    arrowStyle.name = "\\(r_1=".concat(r1, "cm\\)");
+    arrowStyle.label.offset = [40,-10];
+    board.create("arrow", [centerA,[-3.914,-1.414]], arrowStyle);
+
+    arrowStyle.name = "\\(r_2=".concat(r2, "cm\\)");
+    arrowStyle.label.offset = [30,-20];
+    board.create("arrow", [centerB,[3.621,2.121]], arrowStyle);
+
+    var circIntersectTop = board.create("intersection", [circleA, circleB, 1], {visible:false});
+    var circIntersectBot = board.create("intersection", [circleA, circleB, 0], {visible:false});
+
+    arrowStyle.strokeColor = "green";
+    arrowStyle.name = "\\(h=".concat(h,"cm\\)");
+    arrowStyle.label.strokeColor = "green";
+    arrowStyle.label.offset = [30,-50];
+    board.create("arrow", [[circIntersectBot.X()+1,0],[circIntersectBot.X()+1,circIntersectBot.Y()]], arrowStyle);
+
+    arrowStyle.name = " ";
+    board.create("arrow", [[circIntersectTop.X()+1,0],[circIntersectTop.X()+1,circIntersectTop.Y()]], arrowStyle);
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      dash:1,
+      strokeColor:"green",
+      strokeWidth:2,
+      withLabel:false,
+    };
+
+    board.create("segment", [circIntersectBot,[circIntersectBot.X()+1.25,circIntersectBot.Y()]], lineStyle);
+    board.create("segment", [circIntersectTop,[circIntersectTop.X()+1.25,circIntersectTop.Y()]], lineStyle);
+
+    var fillStyle = {
+      fixed:true,
+      highlight:false,
+      layer:0,
+      strokeColor:"#ff94fa"
+    };
+
+    var i;
+    for (i = -1.5; i < circIntersectTop.X(); i += 0.02) {
+      var vertLine = board.create("line", [[i,0], [i,1]], {visible:false});
+      var intersectA = board.create("intersection", [vertLine, circleB, 0], {visible:false});
+      var intersectB = board.create("intersection", [vertLine, circleB, 1], {visible:false});
+      board.create("segment", [intersectA, intersectB], fillStyle);
+    };
+
+    for (i = -0.5; i > circIntersectTop.X(); i -= 0.02) {
+      var vertLine = board.create("line", [[i,0], [i,1]], {visible:false});
+      var intersectA = board.create("intersection", [vertLine, circleA, 0], {visible:false});
+      var intersectB = board.create("intersection", [vertLine, circleA, 1], {visible:false});
+      board.create("segment", [intersectA, intersectB], fillStyle);
+    };
+
+[[/jsxgraph]]
+
+<p><br>(d) Find the area, \(A\), and perimeter, \(P\), of the region created by the intersection of the circles.
+<br><i>Give your answer to 3sf.</i></p>
+<p align="right">\(A=\) [[input:ans4]] \(cm^2\) [[validation:ans4]]</p>
+<p align="right">\(P=\) [[input:ans5]] \(cm^2\) [[validation:ans5]]</p>
+<p align="right"><b>(6)</b></p>
+<p>[[feedback:prt4]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>11</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Part (a) randomisation */
+angleA:rand_with_prohib(12,20,[18])*5;
+radA:rand(8)+2;
+
+/* Pard (b) randomisation */
+radB1:rand_with_prohib(5,19,[10])/10;
+radB2:rand_with_prohib(10*radB1+5,29,[10,20])/10;
+heightB:rand_with_step(ceiling(5*radB1), floor(5*sqrt(3)*radB1), 1)/10;
+
+/* Solutions */
+tans1:(angleA/360)*%pi*radA^2;
+
+tans2:(1/2)*radA^2*sin(angleA*(%pi/180));
+
+tans3:tans1-tans2;
+
+angB1:2*asin(heightB/(2*radB1));
+angB2:2*asin(heightB/(2*radB2));
+
+tans4:(1/2)*(angB1 - sin(angB1))*radB1^2 + (1/2)*(angB2 - sin(angB2))*radB2^2;
+
+tans5:radB1*angB1 + radB2*angB2;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>Part (a): angle: {@angleA@}, radius: {@radA@}</p>
+<p>Part (b): r1: {@radB1@}, r2: {@radB2@}, height: {@heightB@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>significantfigures(tans1,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>significantfigures(tans2,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>significantfigures(tans3,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>significantfigures(tans4,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>significantfigures(tans5,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Correct answer */
+/* Node 2: Worked solution */
+
+/* Node 3: Correct answer but incorrect rounding (1) */
+node3_test: if abs(ans1-tans1) <= 1 then 1 else 0;
+
+/* Node 4: No attempt to use sector angle */
+node4_test: if abs(ans1-(pi*radA^2)) <= 1 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>significantfigures(tans1,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The area of a circle segment is given by: \(A = \pi r^2 \times \frac{\theta}{360}\)</p>
+<p>Using the measurements given:</p>
+<p>\(A_{S} = {@radA@}^2 \pi \times \frac{{@angleA@}}{360}\)</p>
+<p>\(A_{S} = {@(angleA/360)*radA^2@} \pi\)</p>
+<p>\(A_{S} = {@decimalplaces(tans1,6)@}...\)</p>
+<p>\(A_{S} = {@significantfigures(tans1,3)@} cm^2\) <i>(3sf)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly found the area of the circle sector.
+<br>However, your answer is not correctly rounded to 3sf.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the area of the whole circle.
+<br>However, to find the area of just the highlighted sector you should multiply this by \(\frac{\theta}{360}\), where \(\theta\) is the angle of the sector.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Correct answer */
+/* Node 2: Worked solution */
+
+/* Node 3: Correct answer but incorrect rounding (1) */
+node3_test: if abs(ans2-tans2) <=1 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>significantfigures(tans2,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The area of a triangle is given by: \(A = \frac{1}{2} ab \sin(\theta)\)</p>
+<p>Using the measurements given:</p>
+<p>\(A_{G} = \frac{1}{2} \times {@radA@}^2 \times \sin({@angleA@})\)</p>
+<p>\(A_{G} = {@(radA^2)/2@} \times \sin({@angleA@})\)</p>
+<p>\(A_{G} = {@decimalplaces(tans2,6)@}...\)</p>
+<p>\(A_{G} = {@significantfigures(tans2,3)@} cm^2\) <i>(3sf)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly found the area of the circle sector.
+<br>However, your answer is not correctly rounded to 3sf.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Correct answer (allow error from intermediate rounding) */
+node1_test: if ans3=significantfigures(tans3,3) or ans3=significantfigures(tans2,3)-significantfigures(tans1,3) then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Ecf (1) */
+node3_test: if ans3=significantfigures(ans2-ans1,3) or ans3=significantfigures(ans2,3)-significantfigures(ans1,3) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions>1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\(A_{S} = A_{G} + A_{P}\)</p>
+<p>Therefore, using the answers from (a) and (b):</p>
+<p>\(A_{P} = {@decimalplaces(tans1,6)@}... - {@decimalplaces(tans2,6)@}...\)</p>
+<p>\(A_{P} = {@decimalplaces(tans1-tans2,6)@}...\)</p>
+<p>\(A_{P} = {@significantfigures(tans1-tans2,3)@}cm^2\) <i>(3sf)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer is not the correct area of the pink region.
+<br>However, it is consistent with the answers that you gave in parts (a) and (b).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt4</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Correct area */
+/* Node 2: Worked solution */
+/* Node 3: Correct area, incorrectly rounded */
+node3_test: if abs(ans4-tans4) <= 1 then 1 else 0;
+
+/* Node 4: Correct perimeter */
+/* Node 5: Correct perimeter, incorrectly rounded */
+node5_test: if abs(ans5-tans5) <= 1 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>significantfigures(tans4,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt4-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly found the area of the shaded region.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt4-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt4-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>Dividing the region with a line between the two intersections of the circles allows the area to be found using the method from the previous parts.</p>
+
+[[jsxgraph height="350px" width="500px"]]
+
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox:[-5,3.5,5,-3.5],
+      showNavigation:false,
+      showCopyright:false,
+      keepaspectratio:true
+    });
+
+    var centerStyle = {
+      fixed:true,
+      highlight:false,
+      showInfoBox:false,
+      strokeColor:"black",
+      fillColor:"black",
+      label:{
+        fixed:true,
+        highlight:false,
+        useMathJax:true,
+        parse:false,
+        fontSize:15,
+        anchorX:"middle",
+        anchorY:"middle",
+      }
+    };
+
+    centerStyle.name = "\\(C_1\\)";
+    centerStyle.label.offset = [-5,15];
+    var centerA = board.create("point", [-2.5,0], centerStyle);
+
+    centerStyle.name = "\\(C_2\\)";
+    centerStyle.strokeColor = "#a3a3a3";
+    centerStyle.fillColor = "#a3a3a3";
+    centerStyle.label.strokeColor = "#a3a3a3";
+    centerStyle.label.offset = [30,-15];
+    var centerB = board.create("point", [1.5,0], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"#a3a3a3",
+      strokeWidth:3
+    };
+
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+
+    circleStyle.strokeColor = "black";
+    var circleA = board.create("circle", [centerA,2], circleStyle);
+
+    var circIntersectTop = board.create("intersection", [circleA, circleB, 1], {visible:false});
+    var circIntersectBot = board.create("intersection", [circleA, circleB, 0], {visible:false});
+    var intersectMid = board.create("midpoint", [circIntersectTop,circIntersectBot], {visible:false});
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      dash:1,
+      strokeColor:"blue",
+      strokeWidth:2.5,
+      withLabel:false,
+      label:{
+        highlight:false,
+        strokeColor:"black",
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    board.create("segment", [centerA, intersectMid], lineStyle);
+    board.create("segment", [centerA, circIntersectTop], lineStyle);
+    board.create("segment", [centerA, circIntersectBot], lineStyle);
+
+    lineStyle.strokeColor = "black";
+    lineStyle.dash = 2;
+    board.create("segment", [circIntersectTop,circIntersectBot], lineStyle);
+
+    var angleStyle = {
+      fixed:true,
+      highlight:false,
+      radius:0.3,
+      withLabel:false,
+      label:{
+        highlight:false,
+        strokeColor:"black",
+        offset:[0,-10],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    board.create("angle", [circIntersectTop, intersectMid, centerA], angleStyle);
+    
+    angleStyle.radius = 0.5;
+    angleStyle.withLabel = true;
+    angleStyle.name = "\\(\\alpha\\)";
+    board.create("angle", [circIntersectBot, centerA, circIntersectTop], angleStyle);
+
+    var fillStyle = {
+      fixed:true,
+      highlight:false,
+      layer:0,
+      strokeColor:"#ff94fa"
+    };
+
+    var i;
+    for (i = -0.5; i > circIntersectTop.X(); i -= 0.02) {
+      var vertLine = board.create("line", [[i,0], [i,1]], {visible:false});
+      var intersectA = board.create("intersection", [vertLine, circleA, 0], {visible:false});
+      var intersectB = board.create("intersection", [vertLine, circleA, 1], {visible:false});
+      board.create("segment", [intersectA, intersectB], fillStyle);
+    };
+
+    fillStyle.strokeOpacity = 0.3;
+    for (i = -1.5; i < circIntersectTop.X(); i += 0.02) {
+      var vertLine = board.create("line", [[i,0], [i,1]], {visible:false});
+      var intersectA = board.create("intersection", [vertLine, circleB, 0], {visible:false});
+      var intersectB = board.create("intersection", [vertLine, circleB, 1], {visible:false});
+      board.create("segment", [intersectA, intersectB], fillStyle);
+    };
+
+[[/jsxgraph]]
+
+<p><br>For the AREA:</p>
+
+<p>The angle \(\alpha\) can be determined using trigonometry:</p>
+<p>\(\sin(\frac{\alpha}{2}) = \frac{{@float(heightB/2)@}}{{@float(radB1)@}}\)</p>
+<p>\(\alpha = 2\sin^{-1}({@heightB/(2*radB1)@})\)</p>
+<p>\(\alpha = {@decimalplaces(angB1*(180/%pi),5)@}...^\circ\)</p>
+
+<p><br>Using the method from parts (a) through (c) of subtracting the area of triangle form the area of the segment:</p>
+<p>\(A_1 = \pi (r_1)^2 \times \frac{\alpha}{360} - \frac{1}{2} (r_1)^2 \sin(\alpha)\)</p>
+<p>\(A_1 = \pi \times {@float(radB1)@}^2 \times \frac{{@decimalplaces(angB1*(180/%pi),2)@}...}{360} - \frac{1}{2} \times {@float(radB1)@}^2 \times \sin({@decimalplaces(angB1*(180/%pi),2)@}...)\)</p>
+<p>\(A_1 = {@decimalplaces((radB1^2)*angB1/2,6)@}... - {@decimalplaces((radB1^2)*sin(angB1)/2,6)@}...\)</p>
+<p>\(A_1 = {@decimalplaces((radB1^2)*angB1/2 - (radB1^2)*sin(angB1)/2,6)@}... cm^2\)</p>
+
+<p><br>Applying the same method to \(C_2\), call the angle of the segment \(\beta\):</p>
+<p>\(\sin(\frac{\beta}{2}) = \frac{{@float(heightB/2)@}}{{@float(radB2)@}}\)</p>
+<p>\(\beta = 2\sin^{-1}({@heightB/(2*radB2)@})\)</p>
+<p>\(\beta = {@decimalplaces(angB2*(180/%pi),5)@}...^\circ\)</p>
+
+<p><br>\(A_2 = \pi (r_2)^2 \times \frac{\beta}{360} - \frac{1}{2} (r_2)^2 \sin(\beta)\)</p>
+<p>\(A_2 = \pi \times {@float(radB2)@}^2 \times \frac{{@decimalplaces(angB2*(180/%pi),2)@}...}{360} - \frac{1}{2} \times {@float(radB2)@}^2 \times \sin({@decimalplaces(angB2*(180/%pi),2)@}...)\)</p>
+<p>\(A_2 = {@decimalplaces((radB2^2)*angB2/2,6)@}... - {@decimalplaces((radB2^2)*sin(angB2)/2,6)@}...\)</p>
+<p>\(A_2 = {@decimalplaces((radB2^2)*angB2/2 - (radB2^2)*sin(angB2)/2,6)@}... cm^2\)</p>
+
+<p><br>So, \(A_{TOT} = A_1 + A_2\)</p>
+<p>\(A_{TOT} = {@decimalplaces((radB1^2)*angB1/2 - (radB1^2)*sin(angB1)/2,6)@}... + {@decimalplaces((radB2^2)*angB2/2 - (radB2^2)*sin(angB2)/2,6)@}...\)</p>
+<p>\(A_{TOT} = {@decimalplaces(tans4,6)@}...\)</p>
+<p>\(A_{TOT} = {@significantfigures(tans4,3)@}cm^2\) <i>(3sf)</i></p>
+
+<p><br>For the PERIMETER:</p>
+
+<p><br>Using the same angles \(\alpha = {@decimalplaces(angB1*(180/%pi),5)@}...^\circ\) and \(\beta = {@decimalplaces(angB2*(180/%pi),5)@}...^\circ\):</p>
+
+<p><br>The length of the arc which is part of \(C_1\) is given by:
+<br>\(2\pi r_1 \times \frac{\alpha}{360} = {@float(2*radB1)@}\pi \times \frac{{@decimalplaces(angB1*(180/%pi),2)@}...}{360} = {@decimalplaces(radB1*angB1,5)@}... cm\)</p>
+
+<p><br>The length of the arc which is part of \(C_2\) is given by:
+<br>\(2\pi r_2 \times \frac{\beta}{360} = {@float(2*radB2)@}\pi \times \frac{{@decimalplaces(angB2*(180/%pi),2)@}...}{360} = {@decimalplaces(radB2*angB2,5)@}... cm\)</p>
+
+<p><br>Therefore, the total perimeter of the shaded region is:
+<br>\({@decimalplaces(radB1*angB1,5)@}... + {@decimalplaces(radB2*angB2,5)@}... = {@decimalplaces(tans5,5)@} = {@significantfigures(tans5,3)@} cm\) <i>(3sf)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt4-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt4-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the area of the shaded region.
+<br>However you have not rounded correctly to 3sf.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt4-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>You have not found the correct area of the shaded region.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans5</sans>
+        <tans>significantfigures(tans5,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly found the perimeter of the shaded region.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt4-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have found the perimeter of the shaded region.
+<br>However you have not rounded correctly to 3sf.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt4-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>You have not found the correct perimeter of the shaded region.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

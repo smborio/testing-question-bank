@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>15.5 Simple quadratic inequality</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>Solve the following quadratic inequality.</p>
+<p>\( {@quest@} >0\)</p>
+
+<p>(a) Factorise the inequality.</p>
+<p>[[input:ans5]] \( > 0 \) [[validation:ans5]] [[feedback:prt5]]</p>
+
+<p>(b) Solve the inequality.</p>
+<p> [[input:ans3]] or [[input:ans4]] [[validation:ans3]] [[validation:ans4]] [[feedback:prt2]] </p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[a1:rand_with_prohib(-6,4,[0]);
+b1:rand_with_prohib(a1+1,6,[-a1,0]);
+
+quest:expand((x-a1)*(x-b1));
+
+ta1_ta2:(x-a1)*(x-b1);
+
+ta3:x<a1;
+ta4:x>b1;
+
+
+
+/*--------------------------------------------------------------------------------------------*/
+/*Define function S(n) that given a number n, returns the string "+n" if positive (or zero) and "-n" if negative, if n=+1 or -1 it returns + or - respectively*/
+
+S(n):= block([], if (n=1) then return("+") elseif (n=-1) then return("-") elseif (n>=0) then return(vconcat("+", abs(n)))  else  return(vconcat("-", abs(n))));
+
+/*Define function S1(n) that given a number n, returns the string "+n" if positive (or zero) and "-n" if negative (1 and -1 are treated as the other numbers)*/
+
+S1(n):= block([], if (n>=0) then return(vconcat("+", abs(n)))  else  return(vconcat("-", abs(n))));
+
+/*Define function SP(n) that given a number n, returns the string "n" if positive (or zero) and "(-n)" if negative*/
+
+SP(n):= block([], if (n>=0) then return(n)  else  return(vconcat("(-", abs(n), ")")));
+
+/*----------------------------------------------------------------------------------------------------*/]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>\({@quest@}>0\)</p>
+<p>Factorise the inequality: {@ta1_ta2@}</p>
+<p>Solutions to inequalities: {@ta3@}  or  {@ta4@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>ta3</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>1</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>ta4</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>1</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>ta1_ta2</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>1</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>1</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[set_sols:set(ta3,ta4); /*set of solutions for ans3 and ans4*/
+set_student_sol:set(ans3,ans4);
+
+/*carrying mistake from part a*/
+s_roots: solve(ans5=0,x);
+mm: multiplicities[1];
+s_root_1:rhs(s_roots[1]);
+s_root_2:if mm=1 then rhs(s_roots[2]) else s_root_1;
+left_x: if s_root_1<s_root_2 then s_root_1 else s_root_2;
+right_x: if s_root_1<s_root_2 then s_root_2 else s_root_1;
+
+/*coefficient of quadratic term*/
+sa_c2:coeff(expand(ans5),x,2);
+set_consistent_answer: if sa_c2>0 then set(x<left_x, x>right_x) else set(x>left_x, x<right_x) 
+
+
+
+/*inequalities wrong  way round*/
+set_wr_ineq:set(x<b1,x>a1);
+
+/*inequalities wrong  sign*/
+set_wr_sign:if abs(a1)<abs(b1) then set(x<-a1,x>b1) else set(x<a1,x>-b1);]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>Sets</answertest>
+        <sans>set_student_sol</sans>
+        <tans>set_sols</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><b>Worked solution.</b></p>
+<p>The solution to the inequality</p>
+<p>\( {@ta1_ta2@} >0 \)</p>
+<p>is  {@ta3@} or {@ta4@}. </p>
+<p> Here is the graph that corresponds to the quadratic inequality. Note that the solution to the inequality is the region (highlighted in red) where the graph is above the \(x\)-axis.</p>
+<p>{@plot([ta1_ta2,[discrete,[[a1 -5,0],[a1,0]]],[discrete,[[a1 -5,0.1],[a1,0.1]]],[discrete,[[a1 -5,-0.1],[a1,-0.1]]],[discrete,[[b1,0],[b1 +5,0]]],[discrete,[[b1,0.1],[b1  +5,0.1]]],[discrete,[[b1,-0.1],[b1 +5,-0.1]]]],[x,a1 -5,b1 +5], [box, false],[yx_ratio, 1],[xtics, a1 -5, 1, b1 + 5],grid2d,[color,blue,red,red,red,red,red,red])@}</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>Sets</answertest>
+        <sans>set_student_sol</sans>
+        <tans>set_wr_ineq</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have inverted the signs of the inequalities!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>Sets</answertest>
+        <sans>set_student_sol</sans>
+        <tans>set_consistent_answer</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer correctly follows from your factorisation in part (a).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>Sets</answertest>
+        <sans>set_student_sol</sans>
+        <tans>set_wr_sign</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Only one of your ranges is correct!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt5</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/*wrong factorisations*/
+wr_sign_1:(x+a1)*(x-b1);
+wr_sign_2:(x-a1)*(x+b1);
+wr_sign_12:(x+a1)*(x+b1);
+
+/*coefficients of quadratic*/
+c1:coeff(quest,x,1);
+c0:coeff(quest,x,0);</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans5</sans>
+        <tans>ta1_ta2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt5-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have factorised correctly!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt5-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>You have not factorised correctly!</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans5</sans>
+        <tans>(x-a)*(x+b)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>-</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt5-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have just entered \( (x+a)  (x+b) \)!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt5-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans5</sans>
+        <tans>quest</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt5-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Actually, you have not factorised the inequailty at all!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt5-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans5</sans>
+        <tans>wr_sign_1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt5-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>There is a wrong sign in your factorisation! It should be </p>
+<p>{@ta1_ta2@}</p>
+<p>rather than</p>
+<p>{@ans5@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt5-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans5</sans>
+        <tans>wr_sign_2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt5-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>There is a wrong sign in your factorisation! It should be </p>
+<p>\({@ta1_ta2@}\)</p>
+<p>rather than</p>
+<p>{@ans5@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt5-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans5</sans>
+        <tans>wr_sign_12</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt5-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The signs in your factorisation are wrong! It should be </p>
+<p>\({@ta1_ta2@}\)</p>
+<p>rather than</p>
+<p>{@ans5@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt5-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt5-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p></p>
+<p><b>Worked solution:</b></p>
+<p>To factorise the quadratic expression, we need to find two numbers that multiply to {@c0@} and add up to {@c1@}. These are {@-a1@} and {@-b1@}, so the solution is:</p>  
+<p>{@ta1_ta2@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt5-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

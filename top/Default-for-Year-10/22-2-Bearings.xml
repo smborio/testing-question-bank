@@ -1,0 +1,1222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>22.2 Bearings</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>You are watching a boat at sea from an observation point, \(O\).</p>
+
+<p>From your location the boat, at point \(B\), is on a bearing of \({@obsBoatAng@}^\circ\).
+<br>You can also see a lighthouse, at point \(L\), on a bearing of \({@obsLightAng@}^\circ\).
+<br>From the boat, the lighthouse is on a bearing of \({@boatLightAng@}^\circ\).</p>
+
+[[jsxgraph width="500px" height="500px"]]
+
+    var obsBoatAng = {#obsBoatAng#};
+    var obsLightAng = {#obsLightAng#};
+    var boatLightAng = {#boatLightAng#};
+    var obsLightDist = {#obsLightDist#};
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-13.8,5.5,16.2,-24.5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    // Points
+
+    var pointStyle = {
+      fixed:true,
+      highlight:false,
+      showInfoBox:false,
+      withLabel:true,
+      name:" ",
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:20,
+        offset:[0,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    pointStyle.name = "\\(O\\)";
+    pointStyle.label.offset = [-30,5];
+    var obsPoint = board.create("point", [0,0], pointStyle);
+
+    pointStyle.name = "\\(L\\)";
+    var lightPoint = board.create("point", [-9.2,-7.7], pointStyle);
+
+    pointStyle.name = "\\(B\\)";
+    pointStyle.label.offset = [15,5];
+    var boatPoint = board.create("point", [11.3,-19.5], pointStyle);
+
+    // Joining points with lines
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      dash:1,
+      name:"",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15,
+        offset:[0,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    board.create("segment", [lightPoint, boatPoint], lineStyle);
+
+    lineStyle.name = "\\(".concat(obsLightDist,"km\\)");
+    lineStyle.label.offset = [-40,20];
+    board.create("segment", [obsPoint, lightPoint], lineStyle);
+
+    lineStyle.name = "\\(x\\)";
+    lineStyle.label.offset = [5,20];
+    board.create("segment", [obsPoint, boatPoint], lineStyle);
+
+    // Adding in north arrows
+
+    var arrowStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      name:"\\(N\\)",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:10,
+        offset:[-5,60],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    var obsNorthPoint = board.create("point", [0,3], {visible:false});
+    var boatNorthPoint = board.create("point", [11.3,-16.5], {visible:false});
+    var lightNorthPoint = board.create("point", [-9.2,-4.7], {visible:false});
+
+    board.create("arrow", [obsPoint, obsNorthPoint], arrowStyle);
+    board.create("arrow", [boatPoint, boatNorthPoint], arrowStyle);
+    board.create("arrow", [lightPoint, lightNorthPoint], arrowStyle);
+
+    // Adding angles
+
+    var angleStyle = {
+      fixed:true,
+      highlight:false,
+      name:" ",
+      radius:1.75,
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        fontSize:12,
+        offset:[0,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    angleStyle.name = "\\(".concat(obsBoatAng, "^\\circ\\)");
+    angleStyle.label.offset = [-5,-15];
+    board.create("angle", [boatPoint, obsPoint, obsNorthPoint], angleStyle);
+
+    angleStyle.radius = 1.25;
+
+    angleStyle.name = "\\(".concat(obsLightAng, "^\\circ\\)");
+    angleStyle.label.offset = [-50,-30];
+    board.create("angle", [lightPoint, obsPoint, obsNorthPoint], angleStyle);
+
+    angleStyle.name = "\\(".concat(boatLightAng, "^\\circ\\)");
+    angleStyle.label.offset = [0,-15];
+    board.create("angle", [lightPoint, boatPoint, boatNorthPoint], angleStyle);
+
+[[/jsxgraph]]
+
+<p><i>Diagram not to scale</i></p>
+
+<p><br>(a) Find the bearing of the boat from the lighthouse.</p>
+<p align="right">[[input:ans1]] \(^\circ\) [[validation:ans1]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) Find the acute angle \(B\hat{L}O\) in degrees.</p>
+<p align="right">[[input:ans2]] \(^\circ\) [[validation:ans2]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt2]]</p>
+
+<p><br>(c) Given you are \({@obsLightDist@}km\) from the lighthouse, find the distance \(x\) between your observation point and the boat. 
+<br><i>Give your answer to 3sf.</i></p>
+<p align="right">[[input:ans3]] \(km\) [[validation:ans3]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt3]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>9</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Randomising bearings */
+obsBoatAng:rand_with_step(110,160,5);
+obsLightAng:rand_with_step(200,250,5);
+boatLightAng:rand_with_step(280,330,5);
+
+/* Randomising distances */
+obsLightDist:rand(10)+11;
+
+/* Solutions */
+
+tans1:boatLightAng-180;
+
+tans2:tans1-(obsLightAng-180);
+
+tans3:obsLightDist*(sin(tans2*%pi/180)/sin((180+obsBoatAng-boatLightAng)*%pi/180));</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>{@obsBoatAng@}, {@obsLightAng@}, {@boatLightAng@}, {@obsLightDist@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>tans1</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>tans2</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>significantfigures(tans3,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correctness */
+/* Node 2: Worked solution */
+
+/* Node 3: Check whether student found BLO or OLB */
+node3_test: if float(ans1)=float(tans2) or float(ans1)=float(360-tans2) then 1 else 0;
+
+/* Node 4: Measuring bearing counter-clockwise */
+node4_test: if float(ans1)=float(540-boatLightAng) then 1 else 0;
+
+/* Node 5: Gives different bearing */
+node5_test: if float(ans1)=float(obsBoatAng) or float(ans1)=float(obsLightAng) or float(ans1)=float(obsLightAng-180) or float(ans1)=float(boatLightAng) or float(ans1)=float(180+obsBoatAng) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>float(ans1)</sans>
+        <tans>float(tans1)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>To simplify the diagram, exclude the observation point:</p>
+
+[[jsxgraph width="280px" height="160px"]]
+
+    var boatLightAng = {#boatLightAng#};
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-7,3,7,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    // Points
+
+    var pointStyle = {
+      fixed:true,
+      highlight:false,
+      showInfoBox:false,
+      withLabel:true,
+      name:" ",
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15,
+        offset:[-25,25],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    pointStyle.name = "\\(L\\)";
+    var lightPoint = board.create("point", [-3,0], pointStyle);
+
+    pointStyle.name = "\\(B\\)";
+    var boatPoint = board.create("point", [3,-2], pointStyle);
+
+    // Joining points with lines
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      dash:1,
+      name:"",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15,
+        offset:[0,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    board.create("line", [lightPoint, boatPoint], lineStyle);
+
+    // Adding in north arrows
+
+    var arrowStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      name:"\\(N\\)",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:10,
+        offset:[-5,50],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    var boatNorthPoint = board.create("point", [3,0], {visible:false});
+    var lightNorthPoint = board.create("point", [-3,2], {visible:false});
+
+    board.create("arrow", [boatPoint, boatNorthPoint], arrowStyle);
+    board.create("arrow", [lightPoint, lightNorthPoint], arrowStyle);
+
+    // Adding angles
+
+    var angleStyle = {
+      fixed:true,
+      highlight:false,
+      name:" ",
+      radius:1,
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        fontSize:12,
+        offset:[0,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    angleStyle.name = "\\(".concat(boatLightAng, "^\\circ\\)");
+    angleStyle.label.offset = [0,-15];
+    board.create("angle", [lightPoint, boatPoint, boatNorthPoint], angleStyle);
+
+    angleStyle.name = " ";
+    angleStyle.fillColor = "purple";
+    angleStyle.strokeColor = "purple";
+    board.create("angle", [boatPoint, lightPoint, lightNorthPoint], angleStyle);
+
+    var anglePoint = board.create("point", [-6,1], {visible:false});
+
+    angleStyle.fillColor = "red";
+    angleStyle.strokeColor = "red";
+    board.create("angle", [anglePoint, lightPoint, boatPoint], angleStyle);
+
+[[/jsxgraph]]
+
+<p>Due to the north lines being parallel, the sum of the purple and pink angles around \(L\) is equal to the sum of the orange angle at \(B\).</p>
+<p>The lower pink angle is that of a straight line, so it is \(180^\circ\).
+<br>The upper purple angle is the bearing for which we are solving.</p>
+<p>Therefore, we find the bearing of \(B\) from \(L\) as: \({@boatLightAng@} - 180 = {@tans1@}^\circ\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the angle between the lines \(OL\) and \(LB\).
+<br>However, bearings must be measured from the north-pointing line.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the angle between the north-pointing line and the line \(LB\), measuring anti-clockwise around \(L\).
+<br>However, a bearing should be measured clockwise.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the bearing of {@if float(ans1)=float(obsBoatAng) then "point \\(B\\) from point \\(O\\)" else if  float(ans1)=float(obsLightAng) then "point \\(L\\) from point \\(O\\)" else if float(ans1)=float(obsLightAng-180) then "point \\(O\\) from point \\(L\\)" else if float(ans1)=float(boatLightAng) then "point \\(L\\) from point \\(B\\)" else if float(ans1)=float(180+obsBoatAng) then "point \\(O\\) from point \\(B\\)"@}.
+<br>However, you should have found the bearing of point \\(B\\) from point \\(L\\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+
+/* Node 3: ECF from (a) (2) */
+ecf: ans1-(obsLightAng-180);
+
+/* Node 4: Takes red angles as summing to 180 (1) */
+node4_test: if float(ans2)=tans1-(360-obsLightAng) then 1 else 0;
+
+/* Node 5: Finding OBL or LOB */
+node5_test: if float(ans2)=float(180+obsBoatAng-boatLightAng) or float(ans2)=float(obsLightAng-obsBoatAng) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>float(ans2)</sans>
+        <tans>float(tans2)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+[[jsxgraph width="280px" height="280px"]]
+
+    var obsLightAng = {#obsLightAng#};
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-13.8,6,16.2,-24],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    // Points
+
+    var pointStyle = {
+      fixed:true,
+      highlight:false,
+      showInfoBox:false,
+      withLabel:true,
+      name:" ",
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15,
+        offset:[0,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    pointStyle.name = "\\(O\\)";
+    pointStyle.label.offset = [-30,5];
+    var obsPoint = board.create("point", [0,0], pointStyle);
+
+    pointStyle.name = "\\(L\\)";
+    var lightPoint = board.create("point", [-9.2,-7.7], pointStyle);
+
+    pointStyle.name = "\\(B\\)";
+    pointStyle.label.offset = [15,5];
+    var boatPoint = board.create("point", [11.3,-19.5], pointStyle);
+
+    // Joining points with lines
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      dash:1,
+      name:"",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15,
+        offset:[0,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    board.create("segment", [lightPoint, boatPoint], lineStyle);
+    board.create("segment", [obsPoint, lightPoint], lineStyle);
+    board.create("segment", [obsPoint, boatPoint], lineStyle);
+
+    // Adding in north arrows
+
+    var arrowStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      name:"\\(N\\)",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:10,
+        offset:[-15,40],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    var obsNorthPoint = board.create("point", [0,4.5], {visible:false});
+    var boatNorthPoint = board.create("point", [11.3,-15], {visible:false});
+    var lightNorthPoint = board.create("point", [-9.2,-3.2], {visible:false});
+
+    var obsSouthPoint = board.create("point", [0,-10], {visible:false});
+
+    board.create("segment", [obsPoint, obsSouthPoint], {
+      fixed:true,
+      highlight:false,
+      dash:3,
+      strokeWidth:1,
+      strokeColor:"black"
+    });
+
+    board.create("arrow", [obsPoint, obsNorthPoint], arrowStyle);
+    board.create("arrow", [boatPoint, boatNorthPoint], arrowStyle);
+    board.create("arrow", [lightPoint, lightNorthPoint], arrowStyle);
+
+    // Adding angles
+
+    var angleStyle = {
+      fixed:true,
+      highlight:false,
+      name:" ",
+      radius:1.75,
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        fontSize:12,
+        offset:[0,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    angleStyle.radius = 2;
+
+    angleStyle.name = "\\(".concat(obsLightAng, "^\\circ\\)");
+    angleStyle.label.offset = [25,10];
+    board.create("angle", [lightPoint, obsPoint, obsNorthPoint], angleStyle);
+
+    angleStyle.name = "\\(".concat({#tans1#}, "^\\circ\\)");
+    angleStyle.label.offset = [0,-5];
+    angleStyle.fillColor = "purple";
+    angleStyle.strokeColor = "purple";
+    board.create("angle", [boatPoint, lightPoint, lightNorthPoint], angleStyle);
+
+    angleStyle.radius = 3;
+    angleStyle.name = " ";
+
+    angleStyle.fillColor = "red";
+    angleStyle.strokeColor = "red";
+    board.create("angle", [obsPoint, lightPoint, lightNorthPoint], angleStyle);
+    board.create("angle", [lightPoint, obsPoint, obsSouthPoint], angleStyle);
+
+[[/jsxgraph]]
+
+<p>Because the north lines are parallel, the alternating red angles are equal in size.
+<br>Looking at point \(O\), the red angle is also \(180^\circ\) less than the bearing of \(L\) from \(O\), and so equals \({@obsLightAng-180@}^\circ\).</p>
+
+<p>The sum of the red angle at point \(L\) and the angle \(B\hat{L}O\) is equal to the bearing of \(B\) from \(L\).
+<br>So, using part (a): \(B\hat{L}O = {@tans1@} - {@obsLightAng-180@} = {@tans2@}^\circ\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>float(ans2)</sans>
+        <tans>float(ecf)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer is not the correct angle \(B\hat{L}O\).
+<br>However, it is consistent with the answer that you gave in part (a).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have incorrectly determined the bearing of \(O\) from \(L\).
+<br>This bearing is an alternate angle to the bearing of \(L\) from \(O\) minus \(180^\deg\).
+<br>Therefore, the bearing of \(O\) from \(L\) is: \({@obsLightAng@} - 180 = {@obsLightAng-180@}^\circ\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the angle \({@if float(ans2)=float(180+obsBoatAng-boatLightAng) then "O\\hat{B}L" else if float(ans2)=float(obsLightAng-obsBoatAng) then "L\\hat{O}B"@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+
+/* Node 3: ECF from (b) (3) */
+ecf:obsLightDist*(sin(ans2*%pi/180)/sin((180+obsBoatAng-boatLightAng)*%pi/180));
+
+/* Node 4: Correct answer, seemingly incorrectly rounded (2) */
+node4_test: if abs(ans3-tans3)<=1 then 1 else 0;
+
+/* Node 5: Consistent answer, seemingly incorrectly rounded (2) */
+node5_test: if abs(ans3-ecf)<=1 then 1 else 0;
+
+/* Node 6: Uses sine rule incorrectly (2) */
+node6_error: obsLightDist/(sin(ans2*%pi/180)/sin((180+obsBoatAng-boatLightAng)*%pi/180));
+
+/* Node 7: Uses sine rule incorrectly and incorrectly rounded (1) */
+node7_test: if abs(ans3-obsLightDist/(sin(ans2*%pi/180)/sin((180+obsBoatAng-boatLightAng)*%pi/180))) then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>significantfigures(tans3,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+[[jsxgraph width="280px" height="280px"]]
+
+    var obsBoatAng = {#obsBoatAng#};
+    var boatLightAng = {#boatLightAng#};
+    var obsLightDist = {#obsLightDist#};
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-13.8,6,16.2,-24],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    // Points
+
+    var pointStyle = {
+      fixed:true,
+      highlight:false,
+      showInfoBox:false,
+      withLabel:true,
+      name:" ",
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15,
+        offset:[0,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    pointStyle.name = "\\(O\\)";
+    pointStyle.label.offset = [-30,5];
+    var obsPoint = board.create("point", [0,0], pointStyle);
+
+    pointStyle.name = "\\(L\\)";
+    var lightPoint = board.create("point", [-9.2,-7.7], pointStyle);
+
+    pointStyle.name = "\\(B\\)";
+    pointStyle.label.offset = [15,5];
+    var boatPoint = board.create("point", [11.3,-19.5], pointStyle);
+
+    // Joining points with lines
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      dash:1,
+      name:"",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:12,
+        offset:[0,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    board.create("segment", [lightPoint, boatPoint], lineStyle);
+
+    lineStyle.name = "\\(".concat(obsLightDist,"km\\)");
+    lineStyle.label.offset = [-30,15];
+    board.create("segment", [obsPoint, lightPoint], lineStyle);
+
+    lineStyle.name = "\\(x\\)";
+    lineStyle.label.offset = [5,20];
+    board.create("segment", [obsPoint, boatPoint], lineStyle);
+
+    // Adding in north arrows
+
+    var arrowStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      name:"\\(N\\)",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:10,
+        offset:[-15,40],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    var obsNorthPoint = board.create("point", [0,4.5], {visible:false});
+    var boatNorthPoint = board.create("point", [11.3,-15], {visible:false});
+    var lightNorthPoint = board.create("point", [-9.2,-3.2], {visible:false});
+
+    var obsSouthPoint = board.create("point", [0,-10], {visible:false});
+
+    board.create("segment", [obsPoint, obsSouthPoint], {
+      fixed:true,
+      highlight:false,
+      dash:3,
+      strokeWidth:1,
+      strokeColor:"black"
+    });
+
+    board.create("arrow", [obsPoint, obsNorthPoint], arrowStyle);
+    board.create("arrow", [boatPoint, boatNorthPoint], arrowStyle);
+    board.create("arrow", [lightPoint, lightNorthPoint], arrowStyle);
+
+    // Adding angles
+
+    var angleStyle = {
+      fixed:true,
+      highlight:false,
+      name:" ",
+      radius:2.5,
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        fontSize:12,
+        offset:[0,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    angleStyle.name = "\\(".concat(obsBoatAng, "^\\circ\\)");
+    angleStyle.label.offset = [25,-15];
+    board.create("angle", [boatPoint, obsPoint, obsNorthPoint], angleStyle);
+
+    angleStyle.name = "\\(".concat(boatLightAng, "^\\circ\\)");
+    angleStyle.label.offset = [0,-15];
+    board.create("angle", [lightPoint, boatPoint, boatNorthPoint], angleStyle);
+
+    angleStyle.name = "\\(".concat({#tans2#}, "^\\circ\\)");
+    angleStyle.label.offset = [-5,10];
+    angleStyle.fillColor = "red";
+    angleStyle.strokeColor = "red";
+    board.create("angle", [boatPoint, lightPoint, obsPoint], angleStyle);
+
+    angleStyle.name = " ";
+    angleStyle.radius = 3;
+    angleStyle.fillColor = "purple";
+    angleStyle.strokeColor = "purple";
+    board.create("angle", [obsSouthPoint, obsPoint, boatPoint], angleStyle);
+    board.create("angle", [boatNorthPoint, boatPoint, obsPoint], angleStyle);
+
+    angleStyle.name = " ";
+    angleStyle.radius = 3.5;
+    angleStyle.fillColor = "green";
+    angleStyle.strokeColor = "green";
+    board.create("angle", [obsPoint, boatPoint, lightPoint], angleStyle);
+
+[[/jsxgraph]]
+
+<p><br>To determine the length \(x\), we wish to use the <i>sine rule</i> and so first we need to find the green angle \(O\hat{B}L\).</p>
+
+<p>Because the north lines are parallel, the alternating purple angles are equal in size.
+<br>Looking at point \(O\), the sum of the purple angle and bearing of \(B\) from \(O\) is also \(180^\circ\), and so the purple angle equals \({@180-obsBoatAng@}^\circ\).</p>
+
+<p>Looking at \(B\), the sum of the green, purple and orange angles is \(360^\circ\) so the green angle is: \(360 - {@boatLightAng@} - {@180-obsBoatAng@} = {@180+obsBoatAng-boatLightAng@}^\circ\).</p>
+
+<p>Now employing the sine rule: \(\frac{x}{sin({@tans2@})} = \frac{{@obsLightDist@}}{sin({@180+obsBoatAng-boatLightAng@})}\)</p>
+
+<p>\(x = {@obsLightDist@} \times \frac{sin({@tans2@})}{sin({@180+obsBoatAng-boatLightAng@})}\)</p>
+<p>\(x = {@float(tans3)@}\)</p>
+<p>\(x = {@significantfigures(tans3,3)@}km\) (to 3sf)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>float(ans3)</sans>
+        <tans>float(ecf)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have not found the correct distance \(OB\).
+<br>However, it is consistent with the answer you gave in part (b).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.6670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the correct distance \(OB\).
+<br>However, you have not rounded your answer correctly to 3sf.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt3-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.6670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have not found the correct distance \(OB\).
+<br>However, it is consistent with the answer you gave in part (b).</p>
+<br>You have also not rounded your answer correctly to 3sf.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt3-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>float(ans3)</sans>
+        <tans>float(node6_error)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.6670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have incorrectly used the sine rule to calculate your answer.
+<br>Remember that for a triangle \(ABC\):</p>
+
+<p>\(\frac{a}{sin(A)} = \frac{b}{sin(B)} = \frac{c}{sin(C)}\)
+<br>Where the lengths \(a,b,c\) are opposite the vertices \(A,B,C\) respectively.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt3-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have incorrectly used the sine rule to calculate your answer.
+<br>Remember that for a triangle \(ABC\):</p>
+
+<p>\(\frac{a}{sin(A)} = \frac{b}{sin(B)} = \frac{c}{sin(C)}\)
+<br>Where the lengths \(a,b,c\) are opposite the vertices \(A,B,C\) respectively.</p>
+
+<p>You have also not rounded your answer correctly to 3sf.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>23.1 Arcs and Sectors</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>The diagram below shows a sector with angle \({@aa@}^{\circ}\) and radius \({@rr@}\) cm. Find the area and perimeter of the sector. Give your answers to 3 significant figures.</p>
+
+<p>[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard(divid, {
+  boundingbox: [-1, 12, 12, -1],
+  axis: false,
+  keepaspectratio: true,
+  showNavigation: false,
+  showCopyright: false
+});
+
+// Angle of the sector
+var sector_angle = {#float(aa_radians)#}; //feed in angle in radians
+
+// centre of the sector
+var p1 = board.create('point', [5, 5], {
+  name: 'C',
+  fixed: true,
+  visible: false
+});
+
+// ----- Construct radii of sector -------
+// point to the left of the centre CL
+var p2 = board.create('point', [p1.X() - 5, p1.Y()], {
+  name: 'CL',
+  fixed: true,
+  visible: false
+});
+// define a rotation of CL anticlockwise of half the sector angle
+var t1 = board.create('transform', [sector_angle / 2, p1], {
+  type: 'rotate'
+});
+// Construct Bottom Right Point BR
+var p3 = board.create('point', [p2, t1], {
+  name: 'BR',
+  visible: false
+});
+// define a rotation of CL clockwise of half the sector angle
+var t2 = board.create('transform', [-sector_angle / 2, p1], {
+  type: 'rotate'
+});
+// Construct Bottom Right Point TR
+var p4 = board.create('point', [p2, t2], {
+  name: 'TR',
+  visible: false
+});
+// bottom radius
+var l1 = board.create('line', [p1, p3], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+});
+// top radius
+var l2 = board.create('line', [p1, p4], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+});
+
+// ----- Construct Arc -------
+var c1 = board.create('arc', [p1, p4, p3], {
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+  visible: true
+});
+
+// ----- Labels -------
+// Angle 
+var anglea = board.create('angle', [p4, p1, p3], {
+  radius: 0.75,
+  name: {#aa#}, // feed here the value of angle in degrees
+  label: {
+    fontSize: 15,
+    strokeColor: '#000000',
+    autoPosition: true,
+    offset: [-10, -10]
+  }
+});
+// radius
+var txt = board.create('text', [(p1.X() + p4.X()) / 2+0.5, (p1.Y() + p4.Y()) / 2 - 0.25, {#rr#}+' cm'], { // feed here the value of the radius
+  fontSize: 15,
+  fixed: true
+});
+[[/jsxgraph]]</p>
+
+
+<p>Area = [[input:ans1]]cm\(^{2} \)[[validation:ans1]] [[feedback:prt1]]</p>
+<p>Perimeter = [[input:ans2]]cm [[validation:ans2]] [[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text>/*radius of sector*/
+rr: rand(10)+10;
+
+/*internal angle of sector*/
+aa:rand_with_prohib(210,330,[210,225,240,270,300,330]);
+aa_radians:aa*pi/180;
+
+/*model solution*/
+sector_area:aa/360*pi*rr^2;
+sector_perimeter:aa/360*2*pi*rr+2*rr;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text>1</text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>cross</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>dispsf(sector_area,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>dispsf(sector_perimeter,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/*possible mistakes*/
+/*Finding formulas made for radians but using them with degrees*/
+ mistake1: 0.5*rr^2*aa;
+
+/*Using the wrong formula in each - 2πr for area*/
+mistake2: aa/360*2*pi*rr;
+
+/*Flipping fraction (360/300)*/
+mistake3: 360/aa*pi*rr^2;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>sector_area</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>mistake1</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>-</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The formula Sector Area \(=\frac{1}{2}*r^{2}*\theta \) does not work when the angle is in degrees, it is used when the angle is given in a different unit called radians..</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>mistake2</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>-</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You used the formula \(2*\pi*r\) for area when it is the formula for the circumference.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>mistake3</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>-</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You divided \(360\) by {@aa@} rather than {@aa@} by \(360\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>sector_perimeter</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>-</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You found the perimeter of the sector instead of the area.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><b>Worked solution.</b></p>
+<p>The area of a sector is found by the formula \( \frac {\theta}{360} \times \pi r^{2}\), where \(r\) is the radius and \(\theta\) is the angle.</p>
+<p>So, Area \(= \frac{@aa@}{360} \times \pi \times {@rr@}^2\)</p>
+<p>\(\quad = {@significantfigures(sector_area,7)@}\)...</p>
+<p>\(\quad = {@significantfigures(sector_area,3)@}\) (to 3 significant figures)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>sector_area</tans>
+        <testoptions>4</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.8000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt1-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answers is correct but you have given it in 4 significant figures!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt1-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>sector_area</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.4000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt1-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answers is correct but have given it in 2 significant figures!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/*possible mistakes*/
+mistake1:rr*aa;
+
+/*Using the wrong formula for πr^2 for perimeter*/
+mistake2: aa/360*pi*rr^2 + 2*rr;
+
+/*Flipping fraction (360/aa)*/
+mistake3: 360/aa*2*pi*rr+2*rr;
+
+/*Using the wrong formula in each - 2πr for area and πr^2 for perimeter*/
+ans2=sector_area;
+
+/*might forget to add the radius*/
+mistake4:aa/360*2*pi*rr;
+
+/*add radius only once*/
+mistake5:aa/360*2*pi*rr+rr;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans2</sans>
+        <tans>sector_perimeter</tans>
+        <testoptions>3</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>mistake2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>-</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You used the formula \(\pi*r^{2}\) for the circumference when it's the formula for the area.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans2</sans>
+        <tans>mistake3</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>-</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You divided \(360\) by {@aa@} rather than {@aa@} by \(360\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans2</sans>
+        <tans>sector_area</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>-</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You found the area of the sector instead of the perimeter.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans2</sans>
+        <tans>mistake4</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2500000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You forgot to add the 2 radii of the sector!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans2</sans>
+        <tans>mistake5</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.4000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You only added the radius of the sector once instead of twice!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans2</sans>
+        <tans>mistake1</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>-</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The formula for arc length \(=r*\theta \) does not work when the angle is given in degrees, it is used with the unit radians instead.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt2-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><b>Worked solution:</b></p>
+<p>The perimeter of a sector is found by the formula \(\frac{\theta}{360}\times 2 \pi r + 2r\)</p>
+<p>So Perimeter \(= \frac{@aa@}{360} \times 2 \times \pi \times {@rr@} + 2\times {@rr@} \)</p>
+<p>\(\quad = {@significantfigures(sector_perimeter,7)@}\)...</p>
+<p>\(\quad = {@significantfigures(sector_perimeter,3)@}\) (to 3 significant figures)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans2</sans>
+        <tans>sector_perimeter</tans>
+        <testoptions>4</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.8000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answers is correct but you have given it in 4 significant figures!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>9</falsenextnode>
+        <falseanswernote>prt2-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>9</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans2</sans>
+        <tans>sector_perimeter</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.4000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-10-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answers is correct but you have given it in 2 significant figures!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt2-10-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

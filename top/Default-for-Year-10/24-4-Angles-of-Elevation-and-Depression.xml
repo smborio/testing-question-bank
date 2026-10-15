@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>24.4 Angles of Elevation and Depression</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Here is an image of a lighthouse and a boat at sea:
+<br><i>Diagram not to scale</i></p>
+
+[[jsxgraph]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    var shapeStyle = {
+      fixed:true,
+      highlight:false,
+      fillOpacity:1,
+      vertices:{
+        fixed:true,
+        visible:false,
+      },
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeColor:"black"
+      }
+    };
+
+    shapeStyle.fillColor = "#9c624f";
+    board.create("polygon", [[-6,1], [-2,1], [-2,-6], [-6,-6]], shapeStyle);
+
+    shapeStyle.fillColor = "#e03838";
+    board.create("polygon", [[-3.5,1], [-3.25,3], [-2.75,3], [-2.5,1]], shapeStyle);
+    board.create("polygon", [[-3.4,4], [-2.6,4], [-3,4.2]], shapeStyle);
+
+    shapeStyle.fillColor = "yellow";
+    board.create("polygon", [[-3.4,4], [-3.4,3], [-2.6,3], [-2.6,4]], shapeStyle);
+
+    shapeStyle.fillColor = "gray";
+    board.create("polygon", [
+      [4.5,-3], [4,-4], [2,-4], [1.5,-3],
+      [3.5,-3], [3.5,-1], [3.2,-1], [2,-1.7], [3.2,-2.4], [3.2,-3]
+    ], shapeStyle);
+
+    shapeStyle.fillColor = "#31b9a5";
+    board.create("polygon", [
+      [-2,-3.5], [-2,-6], [6,-6], [6,-3.5],
+      [4.25,-3.5], [4,-4], [2,-4], [1.75, -3.5]
+    ], shapeStyle);
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      name:"\\(".concat({#distInit#},"m\\)"),
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15,
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    board.create("segment", [[-3,4], [3,-3.5]], lineStyle);
+
+[[/jsxgraph]]
+
+<p><br>The straight-line distance between the boat and the lighthouse is \({@distInit@}m\).</p>
+
+<p><br>(a) Given that the angle of {@angTypeA@} between the {@if angTypeA="depression" then "lighthouse and the boat" else if angTypeA="elevation" then "boat and the lighthouse"@} is \({@angInit@}^\circ\), find the height of the lighthouse above sea level.
+<br><i>Give your answer to the nearest whole metre.</i></p>
+<p align="right">[[input:ans1]] \(m\) [[validation:ans1]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) The boat moves \({@distChange@}m\) away from the lighthouse (directly right in the diagram). At this point, what is the angle of {@angTypeB@} between the {@if angTypeB="depression" then "lighthouse and the boat" else if angTypeB="elevation" then "boat and the lighthouse"@}?
+<br><i>Give your answer to 2dp.</i></p>
+<p align="right">[[input:ans2]] \(^\circ\) [[validation:ans2]]</p>
+<p align="right"><b>(4)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>6</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Randomising question form */
+angTypeA:rand(["elevation","depression"]);
+angTypeB:if angTypeA="elevation" then "depression" else if angTypeA="depression" then "elevation";
+
+/* Randomising the measurements */
+angInit:rand_with_prohib(1,5,[3])*10;
+distInit:rand_with_step(300,600,10);
+distChange:rand_with_step(100,200,10);
+
+/* Solutions */
+tans1:distInit*sin(angInit*%pi/180);
+
+tansA2:atan(tans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi;
+tansB2:atan(round(tans1)/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>Angle of {@angTypeA@} is initially \({@angInit@}^\circ\) and distance is \({@distInit@}m\). 
+<br>Change is \({@distChange@}m\).</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>round(tans1)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(tansA2,2)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+
+/* Node 3: Correct answer, incorrect rounding (1) */
+node3_test: if abs(ans1-tans1)<=1 then 1 else 0;
+
+/* Node 4: Uses tan or cos instead of sin */
+node4_test: if abs(ans1-distInit/sin(angInit*%pi/180))<=1 or abs(ans1-distInit*cos(angInit*%pi/180))<=1 or abs(ans1-distInit/cos(angInit*%pi/180))<=1 or abs(ans1-distInit*tan(angInit*%pi/180))<=1 or abs(ans1-distInit/tan(angInit*%pi/180))<=1 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>round(tans1)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The measurements given can be related with a right-angled triangle:</p>
+
+[[jsxgraph height="200px" width="200px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    var pointStyle = {
+      fixed:true,
+      visible:false
+    };
+
+    var P1 = board.create("point", [-3,4], pointStyle);
+    var P2 = board.create("point", [-3,-4], pointStyle);
+    var P3 = board.create("point", [3,-4], pointStyle);
+    var P4 = board.create("point", [0,4], pointStyle);
+
+    var segmentStyle = {
+      fixed:true,
+      highlight:false,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15,
+        offset:[0,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    segmentStyle.dash = 4;
+    board.create("segment", [P2, P3], segmentStyle);
+    board.create("segment", [P1, P4], segmentStyle);
+
+    segmentStyle.dash = "none";
+    segmentStyle.withLabel = true;
+    segmentStyle.name = "\\(".concat({#distInit#},"m\\)");
+    segmentStyle.label.offset = [10,10];
+
+    board.create("segment", [P1, P3], segmentStyle);
+
+    segmentStyle.name = "\\(h\\)";
+    segmentStyle.label.offset = [-30,0];
+
+    board.create("segment", [P1, P2], segmentStyle);
+
+    var angleStyle = {
+      fixed:true,
+      highlight:false,
+      radius:1.5,
+      name:"\\(".concat({#angInit#},"^\\circ\\)"),
+      label:{
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        fontSize:12,
+        offset:[0,-5],
+        anchorX:"left",
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    board.create("angle", [P3, P1, P4], angleStyle);
+    
+    angleStyle.label.anchorX = "right";
+    board.create("angle", [P1, P3, P2], angleStyle);
+
+[[/jsxgraph]]
+
+<p>Therefore, by using \(\sin(\theta) = \frac{o}{h}\)</p>
+<p>\(\sin({@angInit@}) = \frac{h}{{@distInit@}}\)</p>
+<p>\(h = \sin({@angInit@}) \times  {@distInit@}\)</p>
+<p>\(h = {@decimalplaces(tans1,5)@}...\)</p>
+<p>\(h = {@round(tans1)@}m\) <i>(to the nearest whole metre)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the height of the lighthouse above sea level.
+<br>However, you have not rounded your answer correctly to the nearest metre.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have not used the correct trigonometric function to relate the height, angle and straight-line distance given.</p>
+<p>The height of the lighthouse is <b>opposite</b> the angle of {@angTypeA@}, so you should use \(\sin(\theta) = \frac{o}{h}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>4.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Correct answer */
+node1_test: if ans2=decimalplaces(tansA2,2) or ans2=decimalplaces(tansB2,2) then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: ECF (4) */
+node3_test: if ans2=decimalplaces(atan(ans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi,2)  then 1 else 0;
+
+/* Node 4: Correct answer, incorrectly rounded (3) */
+node4_test: if abs(ans2-tansA2)<=0.1 or abs(ans2-tansB2)<=0.1 then 1 else 0;
+
+/* Node 5: ECF, incorrectly rounded (3) */
+node5_test: if abs(ans2-(atan(ans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi))<=0.1 then 1 else 0;
+
+/* Node 6: Uses one trig function incorrectly (2) */
+node6_test: if abs(ans2-(atan(ans1/(distInit*sin(angInit*%pi/180)+distChange))*180/%pi))<=0.01 or abs(ans2-(atan(tans1/(distInit*sin(angInit*%pi/180)+distChange))*180/%pi))<=0.01 or abs(ans2-(atan(ans1/(distInit*tan(angInit*%pi/180)+distChange))*180/%pi))<=0.01 or abs(ans2-(atan(tans1/(distInit*tan(angInit*%pi/180)+distChange))*180/%pi))<=0.01 or abs(ans2-(atan((distInit*sin(angInit*%pi/180)+distChange)/ans1)*180/%pi))<=0.01 or abs(ans2-(atan((distInit*sin(angInit*%pi/180)+distChange)/tans1)*180/%pi))<=0.01 or abs(ans2-(atan((distInit*tan(angInit*%pi/180)+distChange)/ans1)*180/%pi))<=0.01 or abs(ans2-(atan((distInit*tan(angInit*%pi/180)+distChange)/tans1)*180/%pi))<=0.01 or abs(ans2-(asin(ans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi))<=0.01 or abs(ans2-(asin(tans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi))<=0.01 or abs(ans2-(acos(ans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi))<=0.01 or abs(ans2-(acos(tans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi))<=0.01 or abs(ans2-(asin((distInit*cos(angInit*%pi/180)+distChange)/ans1)*180/%pi))<=0.01 or abs(ans2-(asin((distInit*cos(angInit*%pi/180)+distChange)/tans1)*180/%pi))<=0.01 or abs(ans2-(acos((distInit*cos(angInit*%pi/180)+distChange)/ans1)*180/%pi))<=0.01 or abs(ans2-(acos((distInit*cos(angInit*%pi/180)+distChange)/tans1)*180/%pi))<=0.01 then 1 else 0;
+
+/* Node 7: Uses both trig functions incorrectly (1) */
+node7_test: if abs(ans2-acos(ans1/(distInit*sin(angInit*%pi/180)+distChange))*180/%pi)<=0.01 or abs(ans2-acos(tans1/(distInit*sin(angInit*%pi/180)+distChange))*180/%pi)<=0.01 or abs(ans2-acos(ans1/(distInit*tan(angInit*%pi/180)+distChange))*180/%pi)<=0.01 or abs(ans2-acos(tans1/(distInit*tan(angInit*%pi/180)+distChange))*180/%pi)<=0.01 or abs(ans2-asin(ans1/(distInit*sin(angInit*%pi/180)+distChange))*180/%pi)<=0.01 or abs(ans2-asin(tans1/(distInit*sin(angInit*%pi/180)+distChange))*180/%pi)<=0.01 or abs(ans2-asin(ans1/(distInit*tan(angInit*%pi/180)+distChange))*180/%pi)<=0.01 or abs(ans2-asin(tans1/(distInit*tan(angInit*%pi/180)+distChange))*180/%pi)<=0.01 or abs(ans2-acos((distInit*sin(angInit*%pi/180)+distChange)/ans1)*180/%pi)<=0.01 or abs(ans2-acos((distInit*sin(angInit*%pi/180)+distChange)/tans1)*180/%pi)<=0.01 or abs(ans2-acos((distInit*tan(angInit*%pi/180)+distChange)/ans1)*180/%pi)<=0.01 or abs(ans2-acos((distInit*tan(angInit*%pi/180)+distChange)/tans1)*180/%pi)<=0.01 or abs(ans2-asin((distInit*sin(angInit*%pi/180)+distChange)/ans1)*180/%pi)<=0.01 or abs(ans2-asin((distInit*sin(angInit*%pi/180)+distChange)/tans1)*180/%pi)<=0.01 or abs(ans2-asin((distInit*tan(angInit*%pi/180)+distChange)/ans1)*180/%pi)<=0.01 or abs(ans2-asin((distInit*tan(angInit*%pi/180)+distChange)/tans1)*180/%pi)<=0.01 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>It is useful to draw a diagram of the new situation.</p>
+
+[[jsxgraph height="300px" width="450px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,10,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    var pointStyle = {
+      fixed:true,
+      visible:false
+    };
+
+    var P1 = board.create("point", [-3,4], pointStyle);
+    var P2 = board.create("point", [-3,-4], pointStyle);
+    var P3 = board.create("point", [3,-4], pointStyle);
+    var P4 = board.create("point", [0,4], pointStyle);
+    var P5 = board.create("point", [8,-4], pointStyle);
+
+    var segmentStyle = {
+      fixed:true,
+      highlight:false,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15,
+        offset:[0,0],
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    board.create("segment", [P1, P5], segmentStyle);
+
+    segmentStyle.dash = 4;
+    board.create("segment", [P1, P4], segmentStyle);
+
+    segmentStyle.withLabel = true;
+    segmentStyle.name = "\\(".concat({#distChange#},"m\\)");
+    segmentStyle.label.offset = [0,-20];
+    segmentStyle.label.anchorX = "middle";
+    board.create("segment", [P3, P5], segmentStyle);
+
+    segmentStyle.name = "\\(d\\)";
+    board.create("segment", [P2, P3], segmentStyle);
+
+    segmentStyle.dash = "none";
+    segmentStyle.withLabel = true;
+    segmentStyle.name = "\\(".concat({#distInit#},"m\\)");
+    segmentStyle.label.offset = [10,0];
+    segmentStyle.label.anchorX = "left";
+    board.create("segment", [P1, P3], segmentStyle);
+
+    segmentStyle.name = "\\(".concat({#round(tans1)#},"m\\)");
+    segmentStyle.label.offset = [-10,0];
+    segmentStyle.label.anchorX = "right";
+    board.create("segment", [P1, P2], segmentStyle);
+
+    var angleStyle = {
+      fixed:true,
+      highlight:false,
+      radius:1.5,
+      name:"\\(".concat({#angInit#},"^\\circ\\)"),
+      label:{
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        fontSize:14,
+        anchorX:"right",
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    angleStyle.label.offset = [5,-5];
+    board.create("angle", [P1, P3, P2], angleStyle);
+
+    angleStyle.fillColor = "purple";
+    angleStyle.strokeColor = "purple";
+    angleStyle.name = "\\(\\theta\\)";
+
+    angleStyle.label.offset = [0,-10];
+    board.create("angle", [P1, P5, P3], angleStyle);
+
+    angleStyle.label.offset = [5,0];
+    board.create("angle", [P5, P1, P4], angleStyle);
+
+[[/jsxgraph]]
+
+<p><br>Using either trigonometry or Pythagoras' theorem, we can calculate the initial horizontal distance between the base of the cliff and the boat.</p>
+<p>\(d = {@distInit@} \times \cos({@angInit@})\)</p>
+<p>\(d = {@decimalplaces(distInit*cos(angInit*(%pi/180)),5)@}...\)</p>
+
+<p><br>Now, you can relate the new horizontal distance and the height from part (a) to find the purple angle \(\theta\).</p>
+<p>\(\tan(\theta) = \frac{o}{a}\)</p>
+<p>\(\tan(\theta) = \frac{{@decimalplaces(tans1,5)@}...}{{@distChange@} + {@decimalplaces(distInit*cos(angInit*(%pi/180)),5)@}...}\)</p>
+<p>\(\tan(\theta) = {@decimalplaces(tans1/(distChange + distInit*cos(angInit*(%pi/180))),5)@}...\)</p>
+<p>\(\theta = {@decimalplaces(tansA2,5)@}...\)</p>
+<p>\(\theta = {@decimalplaces(tansA2,2)@}^\circ\) <i>(2dp)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have not found the correct angle of {@angTypeB@} between the {@if angTypeB="depression" then "lighthouse and the boat" else if angTypeB="elevation" then "boat and the lighthouse"@}.
+<br>However, your answer is consistent with the height you gave in part (a).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.7500000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the angle of {@angTypeB@} between the {@if angTypeB="depression" then "lighthouse and the boat" else if angTypeB="elevation" then "boat and the lighthouse"@}.
+<br>However, your have not rounded your answer correctly to 1dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.7500000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have not found the correct angle of {@angTypeB@} between the {@if angTypeB="depression" then "lighthouse and the boat" else if angTypeB="elevation" then "boat and the lighthouse"@}.
+<br>However, your answer is consistent with the height you gave in part (a).
+<br>You have also not rounded your answer correctly to 1dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have not used the correct trigonometric function to find the {@if abs(ans2-(atan(ans1/(distInit*sin(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(atan(tans1/(distInit*sin(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(atan(ans1/(distInit*tan(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(atan(tans1/(distInit*tan(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(atan((distInit*sin(angInit*%pi/180)+distChange)/ans1)*180/%pi))<=0.1 or abs(ans2-(atan((distInit*sin(angInit*%pi/180)+distChange)/tans1)*180/%pi))<=0.1 or abs(ans2-(atan((distInit*tan(angInit*%pi/180)+distChange)/ans1)*180/%pi))<=0.1 or abs(ans2-(atan((distInit*tan(angInit*%pi/180)+distChange)/tans1)*180/%pi))<=0.1 then "initial horizontal distance from the boat to the cliff using the angle and straight-line distance given." else if abs(ans2-(asin(ans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(asin(tans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(acos(ans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(acos(tans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(asin((distInit*cos(angInit*%pi/180)+distChange)/ans1)*180/%pi))<=0.1 or abs(ans2-(asin((distInit*cos(angInit*%pi/180)+distChange)/tans1)*180/%pi))<=0.1 or abs(ans2-(acos((distInit*cos(angInit*%pi/180)+distChange)/ans1)*180/%pi))<=0.1 or abs(ans2-(acos((distInit*cos(angInit*%pi/180)+distChange)/tans1)*180/%pi))<=0.1 then sconcat("angle of ", angTypeB, " using the horizontal distance from the boat to the cliff and the height of the lighthouse.")@}</p>
+
+<p>You should have related these using {@if abs(ans2-(atan(ans1/(distInit*sin(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(atan(tans1/(distInit*sin(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(atan(ans1/(distInit*tan(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(atan(tans1/(distInit*tan(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(atan((distInit*sin(angInit*%pi/180)+distChange)/ans1)*180/%pi))<=0.1 or abs(ans2-(atan((distInit*sin(angInit*%pi/180)+distChange)/tans1)*180/%pi))<=0.1 or abs(ans2-(atan((distInit*tan(angInit*%pi/180)+distChange)/ans1)*180/%pi))<=0.1 or abs(ans2-(atan((distInit*tan(angInit*%pi/180)+distChange)/tans1)*180/%pi))<=0.1 then "\\(\\cos(\\theta) = \\frac{a}{h}\\)" else if abs(ans2-(asin(ans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(asin(tans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(acos(ans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(acos(tans1/(distInit*cos(angInit*%pi/180)+distChange))*180/%pi))<=0.1 or abs(ans2-(asin((distInit*cos(angInit*%pi/180)+distChange)/ans1)*180/%pi))<=0.1 or abs(ans2-(asin((distInit*cos(angInit*%pi/180)+distChange)/tans1)*180/%pi))<=0.1 or abs(ans2-(acos((distInit*cos(angInit*%pi/180)+distChange)/ans1)*180/%pi))<=0.1 or abs(ans2-(acos((distInit*cos(angInit*%pi/180)+distChange)/tans1)*180/%pi))<=0.1 then "\\(\\tan(\\theta) = \\frac{o}{a}\\)"@}</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.2500000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have not used the correct trigonometric function to find the initial horizontal distance from the boat to the cliff using the angle and straight-line distance given.</p>
+<p>You should have related these using \(\cos(\theta) = \frac{a}{h}\)</p>
+<p>You have also used the wrong function to find the angle of {@angTypeB@} using the horizontal distance from the boat to the cliff and the height of the lighthouse.</p>
+<p>You should have related these using \(\tan(\theta) = \frac{o}{a}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

@@ -1,0 +1,1148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>29.3 Vectors in 3D</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Consider the diagram below of a cuboid, where all the angles between edges are \(90^\circ\).
+<br><i>Diagram not to scale.</i></p>
+
+[[jsxgraph width="500px" height="400px"]]
+
+    // Set inital display conditions
+    var zoom = 2;
+    var cenOfView = [-0.1,0];
+    var orientation = [6.02,0.79,6.1];
+
+    // Creating JSXGraph board: change "jxgbox" to divid for STACK questions
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[cenOfView[0]-zoom, cenOfView[1]+zoom-0.5, cenOfView[0]+zoom, cenOfView[1]-zoom+0.3],
+      showCopyright:false,
+      showNavigation:false,
+    })
+
+    // Function to project point in 3D onto a plane through the origin normal to [xN,yN,zN];
+    function flatten_point([x,y,z]) {
+        return([x,y]);
+    };
+
+    // Functions to rotate point in 3D around x, y and z axes
+    function rotate_x([x,y,z], angle) {
+        return([
+            x,
+            Math.cos(angle)*y - Math.sin(angle)*z,
+            Math.sin(angle)*y + Math.cos(angle)*z
+        ]);
+    };
+
+    function rotate_y([x,y,z], angle) {
+        return([
+            Math.sin(angle)*z + Math.cos(angle)*x,
+            y,
+            Math.cos(angle)*z - Math.sin(angle)*x
+        ]);
+    };
+
+    function rotate_z([x,y,z], angle) {
+        return([
+            Math.cos(angle)*x - Math.sin(angle)*y,
+            Math.sin(angle)*x + Math.cos(angle)*y,
+            z
+        ]);
+    };
+
+    // Function to create a point-projection pair:
+    function make_point([x,y,z], style) {
+
+        // Rotate coordinates by display orientation
+        var coords = rotate_z(rotate_y(rotate_x([x,y,z], orientation[0]), orientation[1]), orientation[2]);
+        
+        // Create point, defined by initial coords, display coords and projected coords
+        var point = {
+            initCoords:coords,
+            dispCoords:coords,
+            proj:board.create("point", flatten_point(coords), style)
+        }
+        elements.push(point);
+        return(point);
+
+    };
+    
+    // List containing all 3D elements to be displayed (used to update position for user movement)
+    var elements = [];
+
+    // CREATE CUBOID: print_cuboid(sideLengthX, sideLengthY, sideLengthZ, centreCoords, rotation, faceStyle, pointStyle)
+    function print_cuboid(
+        sideLengthX = 1,
+        sideLengthY = 1,
+        sideLengthZ = 1,
+        [x,y,z] = [0,0,0], 
+        [rotX,rotY,rotZ] = [0,0,0],
+        faceStyle = {
+            fixed:true,
+            highlight:false,
+            layer:0,
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        },
+        pointStyle = {visible:false}) {
+
+        // Define points on a cubeoid before rotation and translation
+        var pointList = [
+            [sideLengthX/2,sideLengthY/2,sideLengthZ/2],
+            [sideLengthX/2,sideLengthY/2,-sideLengthZ/2],
+            [sideLengthX/2,-sideLengthY/2,-sideLengthZ/2],
+            [sideLengthX/2,-sideLengthY/2,sideLengthZ/2],
+            [-sideLengthX/2,-sideLengthY/2,sideLengthZ/2],
+            [-sideLengthX/2,sideLengthY/2,sideLengthZ/2],
+            [-sideLengthX/2,sideLengthY/2,-sideLengthZ/2],
+            [-sideLengthX/2,-sideLengthY/2,-sideLengthZ/2],
+        ];
+        
+        // For each defined point; rotate translate by user specs.
+        var i;
+        var j;
+        for (i in pointList) {
+            j = rotate_z(rotate_y(rotate_x(pointList[i], rotX), rotY), rotZ);
+            pointList[i] = make_point([
+                x + j[0],
+                y + j[1],
+                z + j[2]
+            ], pointStyle);
+        };
+
+        // Define which vertices join together to create faces
+        var faceVertexIndex = [
+            [0,1,2,3],
+            [0,1,6,5],
+            [0,3,4,5],
+            [1,2,7,6],
+            [2,3,4,7],
+            [4,5,6,7]
+        ];
+        
+        // Create faces of cuboid
+        for (i in faceVertexIndex) {
+            if (i == 0) {
+                faceStyle.borders.layer = 8;
+            } else {
+                faceStyle.borders.layer = 1;
+            }
+            board.create("polygon", [
+                pointList[faceVertexIndex[i][0]],
+                pointList[faceVertexIndex[i][1]],
+                pointList[faceVertexIndex[i][2]],
+                pointList[faceVertexIndex[i][3]],
+            ].map(function(point) {return point.proj}),
+            faceStyle);
+        };
+    };
+
+    // CREATE POLYGON: print_plane(pointList, rotation, faceStyle, pointStyle)
+    function print_polygon(
+        pointList = [[-1,-1,0], [1,-1,0], [1,1,0], [-1,1,0]], 
+        [rotX,rotY,rotZ] = [0,0,0],
+        faceStyle = {
+            fixed:true,
+            highlight:false,
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        },
+        pointStyle = {visible:false}
+        ) {
+
+        // From provided point list rotate and translate points
+        var i;
+        var j;
+        for (i in pointList) {
+            j = rotate_z(rotate_y(rotate_x(pointList[i], rotX), rotY), rotZ);
+            pointList[i] = make_point([j[0],j[1],j[2]], pointStyle);
+        };
+
+        // Print polygon
+        board.create("polygon", pointList.map(function(point) {return point.proj}), faceStyle);
+
+    };
+
+    // SCRIPT
+
+    var PO = make_point([-0.5,-1,-1.5], {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        name:"\\(O\\)",
+        fillColor:"black",
+        strokeColor:"black",
+        size:2,
+        layer:3,
+        label:{
+            fixed:true,
+            highlight:false,
+            anchorX:"middle",
+            anchorY:"middle",
+            fontSize:15,
+            offset:[-8,-12]
+        }
+    });
+
+    var PA = make_point([0.5,-1,-1.5], {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        name:"\\(A\\)",
+        fillColor:"black",
+        strokeColor:"black",
+        size:2,
+        layer:1,
+        label:{
+            fixed:true,
+            highlight:false,
+            anchorX:"middle",
+            anchorY:"middle",
+            fontSize:15,
+            offset:[-8,-12]
+        }
+    });
+
+    var PB = make_point([-0.5,1,-1.5], {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        name:"\\(B\\)",
+        fillColor:"black",
+        strokeColor:"black",
+        size:2,
+        layer:1,
+        label:{
+            fixed:true,
+            highlight:false,
+            anchorX:"middle",
+            anchorY:"middle",
+            fontSize:15,
+            offset:[0,15]
+        }
+    });
+
+    var PC = make_point([-0.5,-1,1.5], {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        name:"\\(C\\)",
+        fillColor:"black",
+        strokeColor:"black",
+        size:2,
+        layer:1,
+        label:{
+            fixed:true,
+            highlight:false,
+            anchorX:"middle",
+            anchorY:"middle",
+            fontSize:15,
+            offset:[25,10]
+        }
+    });
+    
+    var PD = make_point([0.5,-1,1.5], {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        name:"\\(D\\)",
+        fillColor:"black",
+        strokeColor:"black",
+        size:2,
+        layer:1,
+        label:{
+            fixed:true,
+            highlight:false,
+            anchorX:"middle",
+            anchorY:"middle",
+            fontSize:15,
+            offset:[25,10]
+        }
+    });
+
+    var PE = make_point([0.5,1,-1.5], {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        name:"\\(E\\)",
+        fillColor:"black",
+        strokeColor:"black",
+        size:2,
+        layer:1,
+        label:{
+            fixed:true,
+            highlight:false,
+            anchorX:"middle",
+            anchorY:"middle",
+            fontSize:15,
+            offset:[0,15]
+        }
+    });
+
+    var PF = make_point([-0.5,1,1.5], {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        name:"\\(F\\)",
+        fillColor:"black",
+        strokeColor:"black",
+        size:2,
+        layer:1,
+        label:{
+            fixed:true,
+            highlight:false,
+            anchorX:"middle",
+            anchorY:"middle",
+            fontSize:15,
+            offset:[25,10]
+        }
+    });
+   
+    var PG = make_point([0.5,1,1.5], {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        name:"\\(G\\)",
+        fillColor:"black",
+        strokeColor:"black",
+        size:2,
+        layer:1,
+        label:{
+            fixed:true,
+            highlight:false,
+            anchorX:"middle",
+            anchorY:"middle",
+            fontSize:15,
+            offset:[25,10]
+        }
+    });
+
+    var xVec = board.create("arrow", [PO.proj, PA.proj], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"blue",
+        strokeWidth:2,
+        name:"\\(\\vec{a}=\\left(\\begin{array}{c}".concat({#first(first(vecA))#},"\\\\",{#first(second(vecA))#},"\\\\",{#first(third(vecA))#},"\\end{array}\\right)\\)"),
+        layer:2,
+        withLabel:true,
+        label:{
+            highlight:false,
+            strokeColor:"blue",
+            fontSize:10,
+            position:"cen",
+            offset:[-50,-20],
+            useMathJax:true,
+            parse:false
+        }
+    });
+
+    var yVec = board.create("arrow", [PO.proj, PB.proj], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"red",
+        strokeWidth:2,
+        name:"\\(\\vec{b}=\\left(\\begin{array}{c}".concat({#first(first(vecB))#},"\\\\",{#first(second(vecB))#},"\\\\",{#first(third(vecB))#},"\\end{array}\\right)\\)"),
+        layer:2,
+        withLabel:true,
+        label:{
+            highlight:false,
+            strokeColor:"red",
+            fontSize:10,
+            position:"cen",
+            offset:[-75,20],
+            useMathJax:true,
+            parse:false
+        }
+    });
+
+    var zVec = board.create("arrow", [PO.proj, PC.proj], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"green",
+        strokeWidth:2,
+        name:"\\(\\vec{c}=\\left(\\begin{array}{c}".concat({#first(first(vecC))#},"\\\\",{#first(second(vecC))#},"\\\\",{#first(third(vecC))#},"\\end{array}\\right)\\)"),
+        layer:2,
+        withLabel:true,
+        label:{
+            highlight:false,
+            strokeColor:"green",
+            fontSize:10,
+            position:"cen",
+            offset:[-20,55],
+            useMathJax:true,
+            parse:false
+        }
+    });
+
+    print_cuboid(1,2,3, [0,0,0], [0,0,0], {
+        fixed:true,
+        highlight:false,
+        fillOpacity:0,
+        borders:{
+            fixed:true,
+            layer:1,
+            highlight:false,
+            strokeColor:"black"
+        }
+    });
+
+    var faceHighlight = {#faceHighlight#};
+    var sidePoint = {#edgePoint#};
+
+    var faceStyle = {
+        fixed:true,
+        highlight:false,
+        fillColor:"pink",
+        fillOpacity:0.8,
+        layer:6,
+        borders:{
+            fixed:true,
+            highlight:false,
+            strokeColor:"black"
+        }
+    };
+
+    var centrePointStyle = {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        name:"\\(Q\\)",
+        fillColor:"black",
+        strokeColor:"black",
+        size:2,
+        layer:7,
+        label:{
+            fixed:true,
+            highlight:false,
+            anchorX:"middle",
+            anchorY:"middle",
+            fontSize:15,
+            offset:[-20,-8]
+        }
+    };
+
+    var edgePointStyle = {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        name:"\\(P\\)",
+        fillColor:"black",
+        strokeColor:"black",
+        size:2,
+        layer:5,
+        label:{
+            fixed:true,
+            highlight:false,
+            anchorX:"middle",
+            anchorY:"middle",
+            fontSize:15,
+        }
+    };
+
+    if (faceHighlight == 1) {
+        // Shading relevant cuboid face
+        print_polygon([
+            [-0.5,1,1.5],
+            [0.5,1,1.5],
+            [0.5,-1,1.5],
+            [-0.5,-1,1.5]
+        ], [0,0,0], faceStyle);
+
+        // Adding centre point of face
+        make_point([0,0,1.5], centrePointStyle);
+
+        // Adding relevant edge point
+        if (sidePoint == 1) {
+            edgePointStyle.label.offset = [-15,10];
+            make_point([-0.5,1,0], edgePointStyle);
+        } else if (sidePoint == 2) {
+            edgePointStyle.label.offset = [-15,10];
+            make_point([0.5,1,0], edgePointStyle);
+        } else if (sidePoint == 3) {
+            edgePointStyle.label.offset = [15,-15];
+            make_point([0.5,-1,0], edgePointStyle);
+        };
+
+    } else if (faceHighlight == 2) {
+        // Shading relevant cuboid face
+        print_polygon([
+            [-0.5,1,1.5],
+            [0.5,1,1.5],
+            [0.5,1,-1.5],
+            [-0.5,1,-1.5]
+        ], [0,0,0], faceStyle);
+
+        // Adding centre point of face
+        make_point([0,1,0], centrePointStyle);
+
+        // Adding relevant edge point
+        if (sidePoint == 1) {
+            edgePointStyle.label.offset = [-15,10];
+            make_point([0.5,0,-1.5], edgePointStyle);
+        } else if (sidePoint == 2) {
+            edgePointStyle.label.offset = [18,-5];
+            make_point([0.5,0,1.5], edgePointStyle);
+        } else if (sidePoint == 3) {
+            edgePointStyle.label.offset = [18,-5];
+            make_point([-0.5,0,1.5], edgePointStyle);
+        };
+
+    } else if (faceHighlight == 3) {
+
+        // Shading relevant cuboid face
+        print_polygon([
+            [0.5,1,-1.5],
+            [0.5,1,1.5],
+            [0.5,-1,1.5],
+            [0.5,-1,-1.5]
+        ], [0,0,0], faceStyle);
+
+        // Adding centre point of face
+        make_point([0.5,0,0], centrePointStyle);
+
+        // Adding relevant edge point
+        if (sidePoint == 1) {
+            edgePointStyle.label.offset = [-10,-20];
+            make_point([0,1,-1.5], edgePointStyle);
+        } else if (sidePoint == 2) {
+            edgePointStyle.label.offset = [18,10];
+            make_point([0,1,1.5], edgePointStyle);
+        } else if (sidePoint == 3) {
+            edgePointStyle.label.offset = [18,10];
+            make_point([0,-1,1.5], edgePointStyle);
+        };
+
+    };
+
+[[/jsxgraph]]
+
+<p><br>\(\vec{a} = {@vecA@}, \ \vec{b} = {@vecB@}, \ \vec{c} = {@vecC@}\)</p>
+
+<p><br>(a) Given \(P\) is the midpoint of \({@edgePointName@}\), find the vector \(\vec{OP}\).</p>
+<h5 align="right">\(\vec{OP} = \) [[input:ans1]] [[validation:ans1]]</h5>
+<p style="text-align:right;"><b>(2)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) Given \(Q\) is the centre of the face \({@faceHighName@}\), find the vector \(\vec{OQ}\).</p>
+<h5 align="right">\(\vec{OQ} = \) [[input:ans2]] [[validation:ans2]]</h5>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt2]]</p>
+
+<p><br>(c) Therefore, find the vector \(\vec{PQ}\).</p>
+<h5 align="right">\(\vec{PQ} = \) [[input:ans3]] [[validation:ans3]]</h5>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt3]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>5</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Randomising vectors */
+
+vecA:matrix([rand([1,1,-1])*(rand(2)+1)],[rand([1,1,-1])*(rand(2)+1)],[rand([1,1,-1])*(rand(2)+1)]);
+
+vecBx:rand([1,1,-1])*(rand(3)+2);
+vecBy:rand([1,1,-1])*(rand_with_prohib(2,4,[abs(vecBx)]));
+vecBz:-(first(first(vecA))*vecBx + first(second(vecA))*vecBy)/first(third(vecA));
+
+vecB:matrix([vecBx*first(third(vecA))],[vecBy*first(third(vecA))],[vecBz*first(third(vecA))]);
+
+vecCx:determinant(matrix([first(second(vecA)),first(third(vecA))], [first(second(vecB)),first(third(vecB))]));
+vecCy:determinant(matrix([first(third(vecA)),first(first(vecA))], [first(third(vecB)),first(first(vecB))]));
+vecCz:determinant(matrix([first(first(vecA)),first(second(vecA))], [first(first(vecB)),first(second(vecB))]));
+
+vecC:matrix([vecCx],[vecCy],[vecCz]);
+
+/* Randomising the choice of face and edge */
+
+faceHighlight:rand(3)+1;
+faceHighName: if faceHighlight=1 then "CDFG" else if faceHighlight=2 then "BEGF" else "ADGE";
+
+edgePoint:rand(3)+1;
+edgePointName: if faceHighlight=1 then (if edgePoint=1 then "BF" else if edgePoint=2 then "EG" else "AD") else if faceHighlight=2 then (if edgePoint=1 then "AE" else if edgePoint=2 then "DG" else "CF") else (if edgePoint=1 then "BE" else if edgePoint=2 then "FG" else "CD");
+
+/* Solutions */
+
+tans1: if faceHighlight=1 then (if edgePoint=1 then vecB+vecC/2 else if edgePoint=2 then vecA+vecB+vecC/2 else vecA+vecC/2) else if faceHighlight=2 then (if edgePoint=1 then vecA+vecB/2 else if edgePoint=2 then vecA+vecB/2+vecC else vecB/2+vecC) else (if edgePoint=1 then vecA/2+vecB else if edgePoint=2 then vecA/2+vecB+vecC else vecA/2+vecC);
+
+tans2: if faceHighlight=1 then vecA/2+vecB/2+vecC else if faceHighlight=2 then vecA/2+vecB+vecC/2 else vecA+vecB/2+vecC/2;
+
+tans3:tans2-tans1;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>\(\vec{a} = {@vecA@}, \ \vec{b} = {@vecB@}, \ \vec{c} = {@vecC@}\)</p>
+<p>\(P\) is midpoint of \({@edgePointName@}\), \(Q\) is centre of \({@faceHighName@}\)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>(</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>matrix</type>
+      <tans>tans1</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>matrix</type>
+      <tans>tans2</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>matrix</type>
+      <tans>tans3</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+
+/* Node 3: Finds vector to midpoint of OE as instead of AE or similar (1) */
+node3_error: if faceHighlight=1 then (if edgePoint=1 then (vecB+vecC)/2 else if edgePoint=2 then (vecA+vecB+vecC)/2 else (vecA+vecC)/2) else if faceHighlight=2 then (if edgePoint=1 then (vecA+vecB)/2 else if edgePoint=2 then (vecA+vecB+vecC)/2 else (vecB+vecC)/2) else (if edgePoint=1 then (vecA+vecB)/2 else if edgePoint=2 then (vecA+vecB+vecC)/2 else (vecA+vecC)/2);
+
+/* Node 4: Finds vector AP instead of OP or similar (1) */
+node4_error: if faceHighlight=1 then vecC/2 else if faceHighlight=2 then vecB/2 else vecA/2;
+
+/* Node 5: 2/3 of vector components correct (1) */
+node5_test: if length(intersection({float(first(first(ans1))), float(first(second(ans1))), float(first(third(ans1)))}, {float(first(first(tans1))), float(first(second(tans1))), float(first(third(tans1)))}))=2 then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>tans1</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>\(\vec{OP} = {@if faceHighlight=1 then (if edgePoint=1 then "\\vec{OB} + \\frac{1}{2}\\vec{BF}" else if edgePoint=2 then "\\vec{OA} + \\vec{AE} + \\frac{1}{2}\\vec{EG}" else "\\vec{OA} + \\frac{1}{2}\\vec{AD}") else if faceHighlight=2 then (if edgePoint=1 then "\\vec{OA} + \\frac{1}{2}\\vec{AE}" else if edgePoint=2 then "\\vec{OA} + \\vec{AD} + \\frac{1}{2}\\vec{DG}" else "\\vec{OC} + \\frac{1}{2}\\vec{CF}") else (if edgePoint=1 then "\\vec{OB} + \\frac{1}{2}\\vec{BE}" else if edgePoint=2 then "\\vec{OB} + \\vec{BF} + \\frac{1}{2}\\vec{FG}" else "\\vec{OC} + \\frac{1}{2}\\vec{CD}")@}\)</p>
+
+<p>\(\vec{OP} = {@if faceHighlight=1 then (if edgePoint=1 then "\\vec{b} + \\frac{1}{2}\\vec{c}" else if edgePoint=2 then "\\vec{a} + \\vec{b} + \\frac{1}{2}\\vec{c}" else "\\vec{a} + \\frac{1}{2}\\vec{c}") else if faceHighlight=2 then (if edgePoint=1 then "\\vec{a} + \\frac{1}{2}\\vec{b}" else if edgePoint=2 then "\\vec{a} + \\vec{c} + \\frac{1}{2}\\vec{b}" else "\\vec{c} + \\frac{1}{2}\\vec{b}") else (if edgePoint=1 then "\\vec{b} + \\frac{1}{2}\\vec{a}" else if edgePoint=2 then "\\vec{b} + \\vec{c} + \\frac{1}{2}\\vec{a}" else "\\vec{c} + \\frac{1}{2}\\vec{a}")@}\)</p>
+
+<p>\(\vec{OP} = {@simp:false, if faceHighlight=1 then (if edgePoint=1 then vecB+(1/2)*vecC else if edgePoint=2 then vecA+vecB+(1/2)*vecC else vecA+(1/2)*vecC) else if faceHighlight=2 then (if edgePoint=1 then vecA+(1/2)*vecB else if edgePoint=2 then vecA+vecC+(1/2)*vecB else vecC+(1/2)*vecB) else (if edgePoint=1 then vecB+(1/2)*vecA else if edgePoint=2 then vecB+vecC+(1/2)*vecA else vecC+(1/2)*vecA)@}\)</p>
+
+<p>\(\vec{OP} = {@tans1@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>node3_error</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the vector to the midpoint of \({@if faceHighlight=1 then (if edgePoint=1 then "OF" else if edgePoint=2 then "OG" else "OD") else if faceHighlight=2 then (if edgePoint=1 then "OE" else if edgePoint=2 then "OG" else "OF") else (if edgePoint=1 then "OE" else if edgePoint=2 then "OG" else "OD")@}\).
+
+<br>However, the point \(P\) is actually the midpoint of \({@edgePointName@}\).
+
+<br>So, you should not have halved the vector \({@if faceHighlight=1 then (if edgePoint=1 then "\\vec{OB}" else if edgePoint=2 then "\\vec{OE} = \\vec{OA} + \\vec{OB}" else "\\vec{OA}") else if faceHighlight=2 then (if edgePoint=1 then "\\vec{OA}" else if edgePoint=2 then "\\vec{OD} = \\vec{OA} + \\vec{OC}" else "\\vec{OC}") else (if edgePoint=1 then "\\vec{OB}" else if edgePoint=2 then "\\vec{OF} = \\vec{OB} + \\vec{OC}" else "\\vec{OC}")@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>node4_error</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the vector \({@if faceHighlight=1 then (if edgePoint=1 then "\\vec{BP}" else if edgePoint=2 then "\\vec{EP}" else "\\vec{AP}") else if faceHighlight=2 then (if edgePoint=1 then "\\vec{AP}" else if edgePoint=2 then "\\vec{DP}" else "\\vec{CP}") else (if edgePoint=1 then "\\vec{BP}" else if edgePoint=2 then "\\vec{FP}" else "\\vec{CP}")@}\).
+
+<br>However, you have forgotten to add the vector \({@if faceHighlight=1 then (if edgePoint=1 then "\\vec{OB}" else if edgePoint=2 then "\\vec{OE} = \\vec{OA} + \\vec{OB}" else "\\vec{OA}") else if faceHighlight=2 then (if edgePoint=1 then "\\vec{OA}" else if edgePoint=2 then "\\vec{OD} = \\vec{OA} + \\vec{OC}" else "\\vec{OC}") else (if edgePoint=1 then "\\vec{OB}" else if edgePoint=2 then "\\vec{OF} = \\vec{OB} + \\vec{OC}" else "\\vec{OC}")@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>The \({@if float(first(first(ans1)))=float(first(first(tans1))) then "x" else "y"@}\) and \({@if float(first(third(ans1)))=float(first(third(tans1))) then "z" else "y"@}\) components of your vector are correct.
+
+<br>However, the other component is not.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+
+/* Node 3: Finds vector to midpoint of OG as instead of BG or similar (1) */
+node3_error: (vecA+vecB+vecC)/2;
+
+/* Node 4: Finds vector BQ instead of OQ or similar (1) */
+node4_error: if faceHighlight=1 then (vecA+vecB)/2 else if faceHighlight=2 then (vecA+vecC)/2 else (vecB+vecC)/2;
+
+/* Node 5: 2/3 of vector components correct (1) */
+node5_test: if length(intersection({float(first(first(ans2))), float(first(second(ans2))), float(first(third(ans2)))}, {float(first(first(tans2))), float(first(second(tans2))), float(first(third(tans2)))}))=2 then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>tans2</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>\(\vec{OQ} = {@if faceHighlight=1 then "\\vec{OC} + \\frac{1}{2}(\\vec{CD} + \\vec{DG})" else if faceHighlight=2 then "\\vec{OB} + \\frac{1}{2}(\\vec{BE} + \\vec{EG})" else "\\vec{OA} + \\frac{1}{2}(\\vec{AE} + \\vec{EG})"@}\)</p>
+
+<p>\(\vec{OQ} = {@if faceHighlight=1 then "\\vec{c} + \\frac{1}{2}(\\vec{a} + \\vec{b})" else if faceHighlight=2 then "\\vec{b} + \\frac{1}{2}(\\vec{a} + \\vec{c})" else "\\vec{a} + \\frac{1}{2}(\\vec{b} + \\vec{c})"@}\)</p>
+
+<p>\(\vec{OQ} = {@simp:false, if faceHighlight=1 then vecC + (1/2)*vecA + (1/2)*vecB else if faceHighlight=2 then vecB + (1/2)*vecA + (1/2)*vecC else vecA + (1/2)*vecB + (1/2)*vecC@}\)</p>
+
+<p>\(\vec{OQ} = {@tans2@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>node3_error</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the vector to the midpoint of \(OG\).
+
+<br>However, the point \(Q\) is actually the centre of \({@faceHighName@}\).
+
+<br>So, you should not have halved the vector \({@if faceHighlight=1 then "\\vec{OC}" else if faceHighlight=2 then "\\vec{OB}" else "\\vec{OA}"@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>node4_error</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the vector \({@if faceHighlight=1 then "\\vec{CQ}" else if faceHighlight=2 then "\\vec{BQ}" else "\\vec{AQ}"@}\).
+
+<br>However, you have forgotten to add the vector \({@if faceHighlight=1 then "\\vec{OC}" else if faceHighlight=2 then "\\vec{OB}" else "\\vec{OA}"@}\) in order to find \(\vec{OQ}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>The \({@if float(first(first(ans2)))=float(first(first(tans2))) then "x" else "y"@}\) and \({@if float(first(third(ans2)))=float(first(third(tans2))) then "z" else "y"@}\) components of your vector are correct.
+
+<br>However, the other component is not.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+
+/* Node 3: Check ecf (1) */
+ecf3:ans2-ans1;
+
+/* Node 4: Calculating QP instead of PQ */
+
+/* Node 5: Summing vectors from (a) and (b) instead of subtracting */
+node5_error:ans2+ans1;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>tans3</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\(\vec{PQ} = \vec{PO} + \vec{OQ}\)</p>
+<p>\(\vec{PQ} = -\vec{OP} + \vec{OQ}\)</p>
+<p>\(\vec{PQ} = -{@tans1@} + {@tans2@}\)</p>
+<p>\(\vec{PQ} = {@tans3@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>ecf3</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer is not the correct vector \(\vec{PQ}\).
+
+<br>However, it is consistent which the answers that you gave to parts (a) and (b).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>-ecf3</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have attempted to find the vector \(\vec{QP}\) rather than \(\vec{PQ}\).
+
+<br>Since \(\vec{PQ} = \vec{OQ} - \vec{OP}\), you should have subtracted your answer for (a) <i>from</i> your answer for (b).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt3-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>node5_error</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have summed your answers from parts (a) and (b).
+
+<br>However, you should have found the difference between them.
+
+<br>Remember \(\vec{PQ} = \vec{PO} + \vec{OQ} = -\vec{OP} + \vec{OQ}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

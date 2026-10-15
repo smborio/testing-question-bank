@@ -1,0 +1,1332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>32.1 Three circle Venn diagram</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>There are {@FnCnT+FnConly+CnTonly+TnFonly+Fonly+Conly+Tonly+noSports@} students filled out a survey of which sports they play.
+<br>In total there were {@FnCnT+FnConly+TnFonly+Fonly@} students who played Football, {@FnCnT+FnConly+CnTonly+Conly@} who played Cricket and {@FnCnT+CnTonly+TnFonly+Tonly@} who played Tennis.
+<br>There were {@TnFonly@} who play Tennis and Football only.
+<br>There were {@FnConly@} who play Football and Cricket only.
+<br>There were {@CnTonly@} who play Tennis and Cricket only.
+<br>There were just {@FnCnT@} students who played all three sports.</p>
+<p><br>(a) How many students played exactly one sport?</p>
+<p align="right">[[input:ans1]] [[validation:ans1]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt1]]</p>
+<p><br>(b) How many more students are there who don’t play any sports than students who play all three?</p>
+<p align="right">[[input:ans2]] [[validation:ans2]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>5</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Generating random variables for question text */
+/* Intersection of all between 1 and 9 */
+FnCnT:rand(9)+1;
+/* Intersection of any two only between 11 and 30 */
+FnConly:rand(20)+11;
+CnTonly:rand_with_prohib(11,30,[FnConly]);
+TnFonly:rand_with_prohib(11,30,[FnConly,CnTonly]);
+/* Any single sport only between 31 and 60 */
+Fonly:rand(30)+31;
+Conly:rand_with_prohib(31,60,[Fonly]);
+Tonly:rand_with_prohib(31,60,[Fonly,Conly]);
+/* No sports between 11 and 30 */
+noSports:rand(20)+11;
+
+/* Solution to (a) */
+aSol:Fonly+Conly+Tonly;
+
+/* Solution to (b) */
+bSol:noSports-FnCnT;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text>1</text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>aSol</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>bSol</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+/* Node 3: Summing totals of each sport */
+node3_error:3*FnCnT+2*(FnConly+CnTonly+TnFonly)+Fonly+Conly+Tonly;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>aSol</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>It will be useful to write the information in the question as a Venn Diagram:</p>
+
+<p>From the question, the number of students who play all three sports is {@FnCnT@}.</p>
+
+[[jsxgraph height="200px" width="200px"]]
+
+    // CONTROLS:
+
+    // Set background color of Venn Diagram and Highlight color using "colorName" or "#hexCode"
+    var backgroundColor = "white";
+    var highlightColor = "pink";
+
+    // Adjust the labels for the three sections of the Venn Diagram. For LaTeX, use \\(..\\)
+    var factorLabelsOn = true;
+    var factorAName = "Football";
+    var factorBName = "Tennis";
+    var factorCName = "Cricket";
+    var factorFontSize = 10;
+
+    // Adjust the values in each section of the Venn Diagram. For LaTeX, use \\(..\\)
+    var secLabelsOn = true;
+    var secAnBnCVal = {#FnCnT#};
+    var secFontSize = 15;
+
+    // Adjust which sections of the Venn Diagram are highlighted
+    var highNone = false;
+    var highAnBnC = true;
+
+    // SCRIPT
+
+    // Board:
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-6, 6, 6, -6],
+      keepaspectratio:true,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    // Venn Diagram:
+
+    var centerStyle = {
+      fixed:true,
+      visible:false
+    };
+    var centerA = board.create("point", [0,1.732], centerStyle);
+    var centerB = board.create("point", [-1.5,-0.866], centerStyle);
+    var centerC = board.create("point", [1.5,-0.866], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+    };
+
+    var circleA = board.create("circle", [centerA,3], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+    var circleC = board.create("circle", [centerC,3], circleStyle);
+
+    // Factor Labels:
+
+    var labelStyle = {
+      visible:factorLabelsOn,
+      fontSize:factorFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle"
+    };
+
+    var labelA = board.create("text",[0,5.2,factorAName], labelStyle);
+    var labelB = board.create("text",[-2.2,-4.4,factorBName], labelStyle);
+    var labelC = board.create("text",[2.2,-4.4,factorCName], labelStyle);
+
+    // Values for each section of diagram:
+
+    var secStyle = {
+      visible:secLabelsOn,
+      fontSize:secFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle",
+    };
+
+    var secAnBnC = board.create("text", [0,0.1,secAnBnCVal], secStyle);
+
+    // Highlighting:
+
+    var interStyle = {
+      visible:false,
+      fixed:true
+    };
+    var outerInterAB = board.create("intersection", [circleA, circleB, 0], interStyle);
+    var outerInterAC = board.create("intersection", [circleA, circleC, 1], interStyle);
+    var outerInterBC = board.create("intersection", [circleB, circleC, 0], interStyle);
+
+    // Highlighting AnBnC:
+
+    var AnBnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:3
+    };
+
+    if (highAnBnC) {
+      AnBnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnBnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerC, centerA, centerB], AnBnCfillStyle);
+    board.create("sector", [centerA, centerB, centerC], AnBnCfillStyle);
+    board.create("sector", [centerB, centerC, centerA], AnBnCfillStyle);
+
+    // Highlighting A' n B' n C':
+
+    var backStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2,
+        strokeColor:"black"
+      },
+      vertices:{
+        fixed:true,
+        visible:false
+      },
+      fillOpacity:1,
+      layer:0
+    };
+
+    if (highNone) {
+      backStyle.fillColor = highlightColor;
+    } else {
+      backStyle.fillColor = backgroundColor;
+    }
+
+    var background = board.create("polygon", [[-5.2,5.8],[5.2,5.8],[5.2,-5.2],[-5.2,-5.2]], backStyle);
+
+[[/jsxgraph]]
+
+<p>The number of students who play Tennis and Football is {@FnCnT+TnFonly@}.<br>So, the number of students who play Tennis and Football but not Cricket is \({@FnCnT+TnFonly@} - {@FnCnT@} = {@TnFonly@}\).</p>
+
+[[jsxgraph height="200px" width="200px"]]
+
+    // CONTROLS:
+
+    // Set background color of Venn Diagram and Highlight color using "colorName" or "#hexCode"
+    var backgroundColor = "white";
+    var highlightColor = "pink";
+
+    // Adjust the labels for the three sections of the Venn Diagram. For LaTeX, use \\(..\\)
+    var factorLabelsOn = true;
+    var factorAName = "Football";
+    var factorBName = "Tennis";
+    var factorCName = "Cricket";
+    var factorFontSize = 10;
+
+    // Adjust the values in each section of the Venn Diagram. For LaTeX, use \\(..\\)
+    var secLabelsOn = true;
+    var secAnBVal = {#TnFonly#};
+    var secAnBnCVal = {#FnCnT#};
+    var secFontSize = 15;
+
+    // Adjust which sections of the Venn Diagram are highlighted
+    var highNone = false;
+    var highAnB = true;
+    var highAnBnC = false;
+
+    // SCRIPT
+
+    // Board:
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-6, 6, 6, -6],
+      keepaspectratio:true,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    // Venn Diagram:
+
+    var centerStyle = {
+      fixed:true,
+      visible:false
+    };
+    var centerA = board.create("point", [0,1.732], centerStyle);
+    var centerB = board.create("point", [-1.5,-0.866], centerStyle);
+    var centerC = board.create("point", [1.5,-0.866], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+    };
+
+    var circleA = board.create("circle", [centerA,3], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+    var circleC = board.create("circle", [centerC,3], circleStyle);
+
+    // Factor Labels:
+
+    var labelStyle = {
+      visible:factorLabelsOn,
+      fontSize:factorFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle"
+    };
+
+    var labelA = board.create("text",[0,5.2,factorAName], labelStyle);
+    var labelB = board.create("text",[-2.2,-4.4,factorBName], labelStyle);
+    var labelC = board.create("text",[2.2,-4.4,factorCName], labelStyle);
+
+    // Values for each section of diagram:
+
+    var secStyle = {
+      visible:secLabelsOn,
+      fontSize:secFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle",
+    };
+
+    var secAnB = board.create("text", [-1.8,1.2,secAnBVal], secStyle);
+    var secAnBnC = board.create("text", [0,0.1,secAnBnCVal], secStyle);
+
+    // Highlighting:
+
+    var interStyle = {
+      visible:false,
+      fixed:true
+    };
+    var outerInterAB = board.create("intersection", [circleA, circleB, 0], interStyle);
+    var outerInterAC = board.create("intersection", [circleA, circleC, 1], interStyle);
+    var outerInterBC = board.create("intersection", [circleB, circleC, 0], interStyle);
+
+    // Highlighting AnBnC:
+
+    var AnBnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:3
+    };
+
+    if (highAnBnC) {
+      AnBnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnBnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerC, centerA, centerB], AnBnCfillStyle);
+    board.create("sector", [centerA, centerB, centerC], AnBnCfillStyle);
+    board.create("sector", [centerB, centerC, centerA], AnBnCfillStyle);
+
+    // Highlighting AnB/AnC/BnC:
+
+    var AnBfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    if (highAnB) {
+      AnBfillStyle.fillColor = highlightColor;
+    } else {
+      AnBfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAB, centerC], AnBfillStyle);
+    board.create("sector", [centerB, centerC, outerInterAB], AnBfillStyle);
+
+    // Highlighting A' n B' n C':
+
+    var backStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2,
+        strokeColor:"black"
+      },
+      vertices:{
+        fixed:true,
+        visible:false
+      },
+      fillOpacity:1,
+      layer:0
+    };
+
+    if (highNone) {
+      backStyle.fillColor = highlightColor;
+    } else {
+      backStyle.fillColor = backgroundColor;
+    }
+
+    var background = board.create("polygon", [[-5.2,5.8],[5.2,5.8],[5.2,-5.2],[-5.2,-5.2]], backStyle);
+
+[[/jsxgraph]]
+
+<p>Similarly, the number of students who play Football and Cricket but not Tennis is {@FnConly@}.<br>And, the number of students who play Tennis and Cricket but not Football is {@CnTonly@}.</p>
+
+[[jsxgraph height="200px" width="200px"]]
+
+    // CONTROLS:
+
+    // Set background color of Venn Diagram and Highlight color using "colorName" or "#hexCode"
+    var backgroundColor = "white";
+    var highlightColor = "pink";
+
+    // Adjust the labels for the three sections of the Venn Diagram. For LaTeX, use \\(..\\)
+    var factorLabelsOn = true;
+    var factorAName = "Football";
+    var factorBName = "Tennis";
+    var factorCName = "Cricket";
+    var factorFontSize = 10;
+
+    // Adjust the values in each section of the Venn Diagram. For LaTeX, use \\(..\\)
+    var secLabelsOn = true;
+    var secAnBVal = {#TnFonly#};
+    var secAnCVal = {#FnConly#};
+    var secBnCVal = {#CnTonly#};
+    var secAnBnCVal = {#FnCnT#};
+    var secFontSize = 15;
+
+    // Adjust which sections of the Venn Diagram are highlighted
+    var highNone = false;
+    var highAnC = true;
+    var highBnC = true;
+    var highAnBnC = false;
+
+    // SCRIPT
+
+    // Board:
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-6, 6, 6, -6],
+      keepaspectratio:true,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    // Venn Diagram:
+
+    var centerStyle = {
+      fixed:true,
+      visible:false
+    };
+    var centerA = board.create("point", [0,1.732], centerStyle);
+    var centerB = board.create("point", [-1.5,-0.866], centerStyle);
+    var centerC = board.create("point", [1.5,-0.866], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+    };
+
+    var circleA = board.create("circle", [centerA,3], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+    var circleC = board.create("circle", [centerC,3], circleStyle);
+
+    // Factor Labels:
+
+    var labelStyle = {
+      visible:factorLabelsOn,
+      fontSize:factorFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle"
+    };
+
+    var labelA = board.create("text",[0,5.2,factorAName], labelStyle);
+    var labelB = board.create("text",[-2.2,-4.4,factorBName], labelStyle);
+    var labelC = board.create("text",[2.2,-4.4,factorCName], labelStyle);
+
+    // Values for each section of diagram:
+
+    var secStyle = {
+      visible:secLabelsOn,
+      fontSize:secFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle",
+    };
+
+    var secAnB = board.create("text", [-1.8,1.2,secAnBVal], secStyle);
+    var secAnC = board.create("text", [1.8,1.2,secAnCVal], secStyle);
+    var secBnC = board.create("text", [0,-2,secBnCVal], secStyle);
+    var secAnBnC = board.create("text", [0,0.1,secAnBnCVal], secStyle);
+
+    // Highlighting:
+
+    var interStyle = {
+      visible:false,
+      fixed:true
+    };
+    var outerInterAB = board.create("intersection", [circleA, circleB, 0], interStyle);
+    var outerInterAC = board.create("intersection", [circleA, circleC, 1], interStyle);
+    var outerInterBC = board.create("intersection", [circleB, circleC, 0], interStyle);
+
+    // Highlighting AnBnC:
+
+    var AnBnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:3
+    };
+
+    if (highAnBnC) {
+      AnBnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnBnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerC, centerA, centerB], AnBnCfillStyle);
+    board.create("sector", [centerA, centerB, centerC], AnBnCfillStyle);
+    board.create("sector", [centerB, centerC, centerA], AnBnCfillStyle);
+
+    // Highlighting AnB/AnC/BnC:
+
+    var AnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var BnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    if (highAnC) {
+      AnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnCfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highBnC) {
+      BnCfillStyle.fillColor = highlightColor;
+    } else {
+      BnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerC, outerInterAC, centerB], AnCfillStyle);
+    board.create("sector", [centerA, centerB, outerInterAC], AnCfillStyle);
+
+    board.create("sector", [centerB, outerInterBC, centerA], BnCfillStyle);
+    board.create("sector", [centerC, centerA, outerInterBC], BnCfillStyle);
+
+    // Highlighting A' n B' n C':
+
+    var backStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2,
+        strokeColor:"black"
+      },
+      vertices:{
+        fixed:true,
+        visible:false
+      },
+      fillOpacity:1,
+      layer:0
+    };
+
+    if (highNone) {
+      backStyle.fillColor = highlightColor;
+    } else {
+      backStyle.fillColor = backgroundColor;
+    }
+
+    var background = board.create("polygon", [[-5.2,5.8],[5.2,5.8],[5.2,-5.2],[-5.2,-5.2]], backStyle);
+
+[[/jsxgraph]]
+
+<p>The number of students who play Football is {@FnCnT+FnConly+TnFonly+Fonly@}.<br>So, the number of student who play only Football is \({@FnCnT+FnConly+TnFonly+Fonly@} - {@TnFonly@} - {@FnConly@} - {@FnCnT@} = {@Fonly@}\).</p>
+<p>Similarly, the number of students who play only Cricket is {@Conly@}.<br>And, the number of students who play only Tennis is {@Tonly@}.</p>
+
+[[jsxgraph height="200px" width="200px"]]
+
+    // CONTROLS:
+
+    // Set background color of Venn Diagram and Highlight color using "colorName" or "#hexCode"
+    var backgroundColor = "white";
+    var highlightColor = "pink";
+
+    // Adjust the labels for the three sections of the Venn Diagram. For LaTeX, use \\(..\\)
+    var factorLabelsOn = true;
+    var factorAName = "Football";
+    var factorBName = "Tennis";
+    var factorCName = "Cricket";
+    var factorFontSize = 10;
+
+    // Adjust the values in each section of the Venn Diagram. For LaTeX, use \\(..\\)
+    var secLabelsOn = true;
+    var secAVal = {#Fonly#};
+    var secBVal = {#Tonly#};
+    var secCVal = {#Conly#};
+    var secAnBVal = {#TnFonly#};
+    var secAnCVal = {#FnConly#};
+    var secBnCVal = {#CnTonly#};
+    var secAnBnCVal = {#FnCnT#};
+    var secFontSize = 15;
+
+    // Adjust which sections of the Venn Diagram are highlighted
+    var highNone = false;
+    var highA = true;
+    var highB = true;
+    var highC = true;
+    var highAnB = false;
+    var highAnC = false;
+    var highBnC = false;
+
+    // SCRIPT
+
+    // Board:
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-6, 6, 6, -6],
+      keepaspectratio:true,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    // Venn Diagram:
+
+    var centerStyle = {
+      fixed:true,
+      visible:false
+    };
+    var centerA = board.create("point", [0,1.732], centerStyle);
+    var centerB = board.create("point", [-1.5,-0.866], centerStyle);
+    var centerC = board.create("point", [1.5,-0.866], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+    };
+
+    var circleA = board.create("circle", [centerA,3], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+    var circleC = board.create("circle", [centerC,3], circleStyle);
+
+    // Factor Labels:
+
+    var labelStyle = {
+      visible:factorLabelsOn,
+      fontSize:factorFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle"
+    };
+
+    var labelA = board.create("text",[0,5.2,factorAName], labelStyle);
+    var labelB = board.create("text",[-2.2,-4.4,factorBName], labelStyle);
+    var labelC = board.create("text",[2.2,-4.4,factorCName], labelStyle);
+
+    // Values for each section of diagram:
+
+    var secStyle = {
+      visible:secLabelsOn,
+      fontSize:secFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle",
+    };
+
+    var secA = board.create("text", [0,3,secAVal], secStyle);
+    var secB = board.create("text", [-2.8,-1.4,secBVal], secStyle);
+    var secC = board.create("text", [2.8,-1.4,secCVal], secStyle);
+    var secAnB = board.create("text", [-1.8,1.2,secAnBVal], secStyle);
+    var secAnC = board.create("text", [1.8,1.2,secAnCVal], secStyle);
+    var secBnC = board.create("text", [0,-2,secBnCVal], secStyle);
+    var secAnBnC = board.create("text", [0,0.1,secAnBnCVal], secStyle);
+
+    // Highlighting:
+
+    var interStyle = {
+      visible:false,
+      fixed:true
+    };
+    var outerInterAB = board.create("intersection", [circleA, circleB, 0], interStyle);
+    var outerInterAC = board.create("intersection", [circleA, circleC, 1], interStyle);
+    var outerInterBC = board.create("intersection", [circleB, circleC, 0], interStyle);
+
+    // Highlighting AnB/AnC/BnC:
+
+    var AnBfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var AnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var BnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    if (highAnB) {
+      AnBfillStyle.fillColor = highlightColor;
+    } else {
+      AnBfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highAnC) {
+      AnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnCfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highBnC) {
+      BnCfillStyle.fillColor = highlightColor;
+    } else {
+      BnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAB, centerC], AnBfillStyle);
+    board.create("sector", [centerB, centerC, outerInterAB], AnBfillStyle);
+
+    board.create("sector", [centerC, outerInterAC, centerB], AnCfillStyle);
+    board.create("sector", [centerA, centerB, outerInterAC], AnCfillStyle);
+
+    board.create("sector", [centerB, outerInterBC, centerA], BnCfillStyle);
+    board.create("sector", [centerC, centerA, outerInterBC], BnCfillStyle);
+
+  // Highlighting A/B/C:
+
+  var AfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var BfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var CfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    if (highA) {
+      AfillStyle.fillColor = highlightColor;
+    } else {
+      AfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highB) {
+      BfillStyle.fillColor = highlightColor;
+    } else {
+      BfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highC) {
+      CfillStyle.fillColor = highlightColor;
+    } else {
+      CfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAC, outerInterAB], AfillStyle);
+    board.create("sector", [centerB, outerInterAB, outerInterBC], BfillStyle);
+    board.create("sector", [centerC, outerInterBC, outerInterAC], CfillStyle);
+
+    // Highlighting A' n B' n C':
+
+    var backStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2,
+        strokeColor:"black"
+      },
+      vertices:{
+        fixed:true,
+        visible:false
+      },
+      fillOpacity:1,
+      layer:0
+    };
+
+    if (highNone) {
+      backStyle.fillColor = highlightColor;
+    } else {
+      backStyle.fillColor = backgroundColor;
+    }
+
+    var background = board.create("polygon", [[-5.2,5.8],[5.2,5.8],[5.2,-5.2],[-5.2,-5.2]], backStyle);
+
+[[/jsxgraph]]
+
+<p><br>Therefore, the number of students who play exactly one sport is \({@Fonly@} + {@Conly@} + {@Tonly@} = {@aSol@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>node3_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have summed the number of students who play each sport.<br>However these students do not necessarily only play these sports <i>only</i>, some will play multiple sports.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+/* Node 3: Forgetting to subtract FnCnT (1) */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>bSol</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>To complete the Venn Diagram from the previous part:</p>
+<p>There are {@FnCnT+FnConly+CnTonly+TnFonly+Fonly+Conly+Tonly+noSports@} student in total. So, the number of student who play no sports is \({@FnCnT+FnConly+CnTonly+TnFonly+Fonly+Conly+Tonly+noSports@} - {@FnCnT@} - {@FnConly@} - {@CnTonly@} - {@TnFonly@} - {@Fonly@} - {@Conly@} - {@Tonly@} = {@noSports@}\)</p>
+
+[[jsxgraph height="200px" width="200px"]]
+
+    // CONTROLS:
+
+    // Set background color of Venn Diagram and Highlight color using "colorName" or "#hexCode"
+    var backgroundColor = "white";
+    var highlightColor = "pink";
+
+    // Adjust the labels for the three sections of the Venn Diagram. For LaTeX, use \\(..\\)
+    var factorLabelsOn = true;
+    var factorAName = "Football";
+    var factorBName = "Tennis";
+    var factorCName = "Cricket";
+    var factorFontSize = 10;
+
+    // Adjust the values in each section of the Venn Diagram. For LaTeX, use \\(..\\)
+    var secLabelsOn = true;
+    var secNoneVal = {#noSports#};
+    var secAVal = {#Fonly#};
+    var secBVal = {#Tonly#};
+    var secCVal = {#Conly#};
+    var secAnBVal = {#TnFonly#};
+    var secAnCVal = {#FnConly#};
+    var secBnCVal = {#CnTonly#};
+    var secAnBnCVal = {#FnCnT#};
+    var secFontSize = 15;
+
+    // Adjust which sections of the Venn Diagram are highlighted
+    var highNone = true;
+    var highA = false;
+    var highB = false;
+    var highC = false;
+    var highAnB = false;
+    var highAnC = false;
+    var highBnC = false;
+    var highAnBnC = false;
+
+    // SCRIPT
+
+    // Board:
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-6, 6, 6, -6],
+      keepaspectratio:true,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    // Venn Diagram:
+
+    var centerStyle = {
+      fixed:true,
+      visible:false
+    };
+    var centerA = board.create("point", [0,1.732], centerStyle);
+    var centerB = board.create("point", [-1.5,-0.866], centerStyle);
+    var centerC = board.create("point", [1.5,-0.866], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+    };
+
+    var circleA = board.create("circle", [centerA,3], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+    var circleC = board.create("circle", [centerC,3], circleStyle);
+
+    // Factor Labels:
+
+    var labelStyle = {
+      visible:factorLabelsOn,
+      fontSize:factorFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle"
+    };
+
+    var labelA = board.create("text",[0,5.2,factorAName], labelStyle);
+    var labelB = board.create("text",[-2.2,-4.4,factorBName], labelStyle);
+    var labelC = board.create("text",[2.2,-4.4,factorCName], labelStyle);
+
+    // Values for each section of diagram:
+
+    var secStyle = {
+      visible:secLabelsOn,
+      fontSize:secFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle",
+    };
+
+    var secNone = board.create("text", [3.5,4.4,secNoneVal], secStyle);
+    var secA = board.create("text", [0,3,secAVal], secStyle);
+    var secB = board.create("text", [-2.8,-1.4,secBVal], secStyle);
+    var secC = board.create("text", [2.8,-1.4,secCVal], secStyle);
+    var secAnB = board.create("text", [-1.8,1.2,secAnBVal], secStyle);
+    var secAnC = board.create("text", [1.8,1.2,secAnCVal], secStyle);
+    var secBnC = board.create("text", [0,-2,secBnCVal], secStyle);
+    var secAnBnC = board.create("text", [0,0.1,secAnBnCVal], secStyle);
+
+    // Highlighting:
+
+    var interStyle = {
+      visible:false,
+      fixed:true
+    };
+    var outerInterAB = board.create("intersection", [circleA, circleB, 0], interStyle);
+    var outerInterAC = board.create("intersection", [circleA, circleC, 1], interStyle);
+    var outerInterBC = board.create("intersection", [circleB, circleC, 0], interStyle);
+
+    // Highlighting AnBnC:
+
+    var AnBnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:3
+    };
+
+    if (highAnBnC) {
+      AnBnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnBnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerC, centerA, centerB], AnBnCfillStyle);
+    board.create("sector", [centerA, centerB, centerC], AnBnCfillStyle);
+    board.create("sector", [centerB, centerC, centerA], AnBnCfillStyle);
+
+    // Highlighting AnB/AnC/BnC:
+
+    var AnBfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var AnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var BnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    if (highAnB) {
+      AnBfillStyle.fillColor = highlightColor;
+    } else {
+      AnBfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highAnC) {
+      AnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnCfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highBnC) {
+      BnCfillStyle.fillColor = highlightColor;
+    } else {
+      BnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAB, centerC], AnBfillStyle);
+    board.create("sector", [centerB, centerC, outerInterAB], AnBfillStyle);
+
+    board.create("sector", [centerC, outerInterAC, centerB], AnCfillStyle);
+    board.create("sector", [centerA, centerB, outerInterAC], AnCfillStyle);
+
+    board.create("sector", [centerB, outerInterBC, centerA], BnCfillStyle);
+    board.create("sector", [centerC, centerA, outerInterBC], BnCfillStyle);
+
+  // Highlighting A/B/C:
+
+  var AfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var BfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var CfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    if (highA) {
+      AfillStyle.fillColor = highlightColor;
+    } else {
+      AfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highB) {
+      BfillStyle.fillColor = highlightColor;
+    } else {
+      BfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highC) {
+      CfillStyle.fillColor = highlightColor;
+    } else {
+      CfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAC, outerInterAB], AfillStyle);
+    board.create("sector", [centerB, outerInterAB, outerInterBC], BfillStyle);
+    board.create("sector", [centerC, outerInterBC, outerInterAC], CfillStyle);
+
+    // Highlighting A' n B' n C':
+
+    var backStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2,
+        strokeColor:"black"
+      },
+      vertices:{
+        fixed:true,
+        visible:false
+      },
+      fillOpacity:1,
+      layer:0
+    };
+
+    if (highNone) {
+      backStyle.fillColor = highlightColor;
+    } else {
+      backStyle.fillColor = backgroundColor;
+    }
+
+    var background = board.create("polygon", [[-5.2,5.8],[5.2,5.8],[5.2,-5.2],[-5.2,-5.2]], backStyle);
+
+[[/jsxgraph]]
+
+<p>Since there are {@noSports@} students who play no sports and {@FnCnT@} who play all three.<br>So, \({@noSports@} - {@FnCnT@} = {@bSol@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>noSports</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly calculated the number of students who do not play a sport.<br>However, you have forgotten to subtract the number of students who play all three sports.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

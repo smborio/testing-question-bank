@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>21.1 Interior/exterior angles of polygons</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>The diagram shows a regular {@poly@} on top of a square. Find angle \(x\) in degrees.</p>
+
+[[jsxgraph]]
+
+JXG.Options.text.useMathJax=true; 
+
+var board = JXG.JSXGraph.initBoard(divid, {boundingbox:{@box@}, keepaspectratio:true, showCopyright:false, showNavigation:false, zoomFactor:{@zoom@}});
+
+var pointStyle = {name:"", visible:false, fixed:true};
+
+var point1 = board.create("point", [1,-3], pointStyle);
+var point2 = board.create("point", [1,-1], pointStyle);
+var point3 = board.create("point", {@anglePoint@}, pointStyle);
+
+var angleStyle = {name:"", fixed:true, highlight:false, label:{visible:false}};
+
+var angle = board.create("angle", [point1, point2, point3], angleStyle);
+
+var textStyle = {anchor:point2, fixed:true, highlight:false, fontSize:15, useMathJax:true, parse:false};
+
+var angleLab = board.create("text", [0.65,-0.1,"\\(x\\)"], textStyle);
+
+var polyStyle = {fillOpacity:"0", withLabel:false, highlight:false, vertices:{withLabel:false, fixed:true, highlight:false, showInfobox:false, visible:false}, borders:{highlight:false, strokeOpacity:"1", strokeColor:"black", strokeWidth:"3"}};
+
+var square = board.create("regularpolygon", [[1,-1], [-1,-1],4], polyStyle);
+var polygon = board.create("regularpolygon", [[-1,-1], [1,-1],{@string(sides)@}], polyStyle);
+
+[[/jsxgraph]]
+
+<p><i>If appropriate, give your answer to the nearest whole degree.</i></p>
+<p align="right">\(x =\) [[input:ans1]] \(^\circ\) [[validation:ans1]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>3</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[sides:rand(4)+5;
+poly: if sides=5 then "pentagon" else if sides=6 then "hexagon" else if sides=7 then "heptagon" else "octagon";
+
+/* Point lying on polygon edge forming angle */
+anglePoint: if sides=5 then "[2.24,2.8]" else if sides=6 then "[2.5,1.6]" else if sides=7 then "[4.1,2.9]" else "[2,0]";
+
+/* Display settings */
+zoom: if sides=5 then "1.6" else if sides=6 then "1.5" else if sides=7 then "1.35" else "1.25";
+box: if sides=5 then "[-5,4,5,-6]" else if sides=6 then "[-5,4.35,5,-5.65]" else if sides=7 then "[-5,5,5,-5]" else "[-5,5.3,5,-4.7]";
+
+/* Solution */
+sol:floor((360/sides)+90);]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text>{@sides@}</text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>sol</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+/* Node 3: Check if sum of interior angles given (2) */
+node3_error: 360-sol;
+
+/* Node 4: FOR HEPTAGON ONLY: Check if answer given as decimal or rounded incorrectly (2) */
+node4_test: if sides=7 and ceiling(ans1)=142 then 1 else 0;
+
+/* Node 5: FOR HEPTAGON ONLY: Check if sum of interior angles given as decimal or rounded incorrectly (1) */
+node5_test: if sides=7 and floor(ans1)=218 then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>sol</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\(x\) is the sum of the exterior angles of the square and {@poly@}.</p>
+<p>To find the exterior angle of a polygon: \(\theta_{\mathsf{ext}} = \frac{360^\circ}{\mathsf{number\:of\:sides}}\)</p>
+<p>Exterior angle of a square: \(\frac{360}{4} = 90^\circ\)</p>
+<p>Exterior angle of a {@poly@}: \(\frac{360}{{@sides@}} = {@if sides=7 then dispdp(360/7,3) else 360/sides@}^\circ\)</p>
+<p>Therefore, \(x = 90 + {@if sides=7 then dispdp(360/7,3) else 360/sides@} = {@sol@}^\circ\) {@if sides=7 then "to the nearest whole degree." else ""@}</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>node3_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.6670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the sum of the <i>interior</i> angles as opposed to \(x\), the sum of the <i>exterior</i> angles.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.6670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>The exact value of \(x\) is \(\frac{990}{7} = 141.4285...\)<br>Rounded to the nearest whole degree, this is \(141^\circ\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have attempted to find the sum of the <i>interior</i> angles as opposed to \(x\), the sum of the <i>exterior</i> angles.<br>The exact sum of the <i>interior</i> angles is \(\frac{1530}{7} = 218.5714...\)<br>Rounded to the nearest whole degree, this is \(219^\circ\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

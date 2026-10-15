@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>15.4 Quadratic inequality from money</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Jack, Jill and Simon all have some money.</p>
+<p><br>Jack has \(£{@nn@}\) more than Jill.
+<br>Simon has \(£{@mm@}\) less than Jill.
+<br>The product of Jack and Simon's money is at most \(£{@LL@}\) more than Jill's.</p>
+
+<p><br>(a) Write this information as a quadratic inequality in \(x\), where \(£x\) is the amount of money Jill has.
+<br>Give you answer as an expression on the left hand side in the form \(x^2+bx+c\) where \(b,c\) are integers without a common factor. Select the correct inequality from the drop down list on the right hand side.</p> 
+<p align="right"><br>[[input:ans1]] [[input:ans2]]</p>
+<p align="right"><i>Note that "<=" and ">=" denote \(\leq\) and \(\geq\) symbols respectively.</i>[[validation:ans1]] [[validation:ans2]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) What is the minimum and maximum amount of money Jack can have?<br>Round your answers to the nearest whole pound which lies within the range of possible values.</p>
+<p align="right">MAXIMUM: \(£\) [[input:ans3]] [[validation:ans3]]</p>
+<p align="right">MINIMUM: \(£\) [[input:ans4]] [[validation:ans4]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>5</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Where Jack has nn more than Jill and Simon has mm less that Jill, valid question is given by product of Jack and Simon at most LL >= 2mm + 3nn + 6 (gives gap of at least £3 between higher root and mm) */
+nn:rand(10)+1;
+mm:rand_with_prohib(1,10,[nn,nn-1]);
+LL:rand_with_prohib(ceiling((2*mm+3*nn+6)/10),3*ceiling((2*mm+3*nn+6)/10),[])*10;
+
+/* Solutions */
+tans1:x^2+(nn-mm-1)*x-nn*mm-LL;
+
+tans3:floor(max(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))+nn;
+
+tans4: mm+nn+1;
+/* (since Simon must have more that £0) */]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text>{@nn@} {@mm@} {@LL@}</text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>tans1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>1</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>1</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>dropdown</type>
+      <tans><![CDATA[[["<= 0",true],[">= 0",false],["< 0",false],["> 0",false]]]]></tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options>LaTeXdisplaystyle</options>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>tans3</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>tans4</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[sansA: if ans2="<= 0" then ans1<=0 else if ans2=">= 0" then ans1>=0 else if ans2="< 0" then ans1<0 else ans1>0;
+tansA: tans1<=0;
+
+/* Node 1: Check correct answer in correct form */
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check if expression is in correct apart from form (1) */
+
+/* Node 4: Check correct expression with incorrect sign (1) */
+
+/* Node 5: Check non-simplified expression with incorrect sign */
+
+/* Node 6: Ignored the "more than" in forming their expression */
+
+/* Node 7: Check correct symbol */]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>sansA</sans>
+        <tans>tansA</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>If Jill has \(£x\), then Jack has \(£(x+{@nn@})\) and Simon has \(£(x-{@mm@})\).</p>
+<p>So, the product of Jack and Simon's money is \((x+{@nn@})(x-{@mm@})\), which is at most \(x+{@LL@}\)</p>
+<p>Together, this gives:</p>
+<p>\((x+{@nn@})(x-{@mm@}) \leq x + {@LL@}\)</p>
+<p>\(x^2 {@if nn>mm then "+" else "-"@} {@abs(nn-mm)@}x - {@nn*mm@} \leq x + 90\)</p>
+<p>\(x^2 {@if nn>mm+1 then "+" else "-"@} {@abs(nn-mm-1)@}x - {@nn*mm+LL@} \leq 0\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>sansA</sans>
+        <tans>tansA</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer is correct.
+<br>However you have not given it in form required in the question.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>CasEqual</answertest>
+        <sans>ans1</sans>
+        <tans>tans1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your quadratic expression is correct and in the form required by the question.
+<br>However, you have chosen the wrong inequality sign to represent <i>at most.</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1=0</sans>
+        <tans>tans1=0</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your quadratic expression is correct, however it is not in the form required by the question.
+<br>Also, you have chosen the wrong inequality sign to represent <i>at most.</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1=0</sans>
+        <tans>tans1+x=0</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You written your expression by treating the product of Jack and Simon's money as at most \(£90\).<br>However, this product should be at most \(£90\) <i>more than</i> Jill's, ie. \(x + 90\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>String</answertest>
+        <sans>ans2</sans>
+        <tans><![CDATA["<= 0"]]></tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>You have chosen the wrong inequality sign to represent <i>at most.</i></p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Decide whether checking answers for correctness or consistency with incorrect (a) */
+sansA: if ans2="<= 0" then ans1<=0 else if ans2=">= 0" then ans1>=0 else if ans2="< 0" then ans1<0 else ans1>0;
+tansA: tans1<=0;
+
+/* Node 2: Worked solution */
+
+/* For Correct (a) */
+
+/* Node 3: Check both answers correct */
+node3_test: if ans3=tans3 and ans4=tans4 then 1 else 0;
+
+/* Node 4: Check maximum correct (1) */
+
+/* Node 5: Check maximum correct but unrounded */
+node5_test: if float(ans3)=float(floor(10*max(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10+nn) or float(ans3)=float(floor(100*max(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/100+nn) or float(ans3)=float(floor(1000*max(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/1000+nn) or float(ans3)=float(floor(10000*max(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10000+nn) then 1 else 0;
+
+/* Node 6: Check maximum correct but rounded up not down */
+node6_test: if ans3=ceiling(max(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))+nn or float(ans3)=float(ceiling(10*max(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10+nn) or float(ans3)=float(ceiling(100*max(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/100+nn) or float(ans3)=float(ceiling(1000*max(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/1000+nn) or float(ans3)=float(ceiling(10000*max(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10000+nn) then 1 else 0;
+
+/* Node 7: Check maximum found for Jill / Simon */
+node7_test: if ans3=floor(max(rhs(first(solve(tans1))),rhs(second(solve(tans1))))) or ans3=floor(max(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))-mm then 1 else 0;
+
+/* Node 8: Check minimum correct (2) */
+
+/* Node 9: Check minimum not rounded up (ie Simon has £0) (1) */
+
+/* Node 10: Check impossible minimum given (where Simon has negative money) (1) */
+node10_test: if ans4=ceiling(min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))+nn or ans4=floor(min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))+nn or float(ans4)=float(ceiling(10*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10+nn) or float(ans4)=float(floor(10*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10+nn) or float(ans4)=float(ceiling(100*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/100+nn) or float(ans4)=float(floor(100*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/100+nn) then 1 else 0;
+
+/* Node 11: Check minimum found for Jill / Simon */
+node11_test: if ans4=1 or ans4=mm+1 then 1 else 0;
+
+/* Node 12: Check impossible minimum found for Jill / Simon */
+node12_test: if ans4=ceiling(min(rhs(first(solve(tans1))),rhs(second(solve(tans1))))) or ans4=floor(min(rhs(first(solve(tans1))),rhs(second(solve(tans1))))) or float(ans4)=float(ceiling(10*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10) or float(ans4)=float(floor(10*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10) or float(ans4)=float(ceiling(100*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/100) or float(ans4)=float(floor(100*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/100) or ans4=ceiling(min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))-mm or ans4=floor(min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))-mm or float(ans4)=float(ceiling(10*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10-mm) or float(ans4)=float(floor(10*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10-mm) or float(ans4)=float(ceiling(100*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/100-mm) or float(ans4)=float(floor(100*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/100-mm) then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>sansA</sans>
+        <tans>tansA</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>From (a): \(x^2 {@if nn>mm+1 then "+" else "-"@} {@abs(nn-mm-1)@}x - {@nn*mm+LL@} \leq 0\)</p>
+
+<p><br>Start by completing the square:</p>
+<p>\(({@x + (nn-mm-1)/2@})^2 - {@(nn-mm-1)^2/4@} - {@nn*mm+LL@} \leq 0\)</p>
+<p>\(({@x + (nn-mm-1)/2@})^2 \leq {@(nn-mm-1)^2/4 + nn*mm+LL@}\)</p>
+
+<p><br>Now taking the square root:</p>
+<p>\(-\sqrt{{@(nn-mm-1)^2/4 + nn*mm+LL@}} \leq {@x + (nn-mm-1)/2@} \leq \sqrt{{@(nn-mm-1)^2/4 + nn*mm+LL@}}\)</p>
+
+<p><br>And rearranging to find the boundaries of \(x\):</p>
+<p>\( -{@(nn-mm-1)/2@} - {@sqrt((nn-mm-1)^2/4 + nn*mm+LL)@} \leq x \leq -{@(nn-mm-1)/2@} + {@sqrt((nn-mm-1)^2/4 + nn*mm+LL)@}\)</p>
+<p>\( {@dispdp(-(nn-mm-1)/2 - sqrt((nn-mm-1)^2/4 + nn*mm+LL),4)@}... \leq x \leq {@dispdp(-(nn-mm-1)/2 + sqrt((nn-mm-1)^2/4 + nn*mm+LL),4)@}...\)</p>
+
+<p><br>At the upper bound:<br>Since Jack has \(£{@nn@}\) more than Jill, the maximum amount of money Jack can have is \(£{@dispdp(-(nn-mm-1)/2 + sqrt((nn-mm-1)^2/4 + nn*mm+LL)+nn,4)@}...\).<br>To the nearest pound within the valid range, this is \(£{@tans3@}\).</p>
+
+<p><br>At the lower bound:<br>Since all of Jack, Jill and Simon have some money, Jill cannot have \(-£{@dispdp(abs(-(nn-mm-1)/2 - sqrt((nn-mm-1)^2/4 + nn*mm+LL)),4)@}...\).<br>In reality, since Simon has strictly more than \(£0\), Jill must have strictly more than \(£{@mm@}\) and Jack must have strictly more than \(£{@nn+mm@}\).<br>To the nearest pound in this range, this is \(£{@tans4@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>10</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node11_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-11-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly found the maximum amount of money that {@if ans4=1 then "Simon" else "Jill"@} can have.<br>However, to find the maximum amount of money <b>Jack</b> can have, you needed to add \(£{@if ans4=1 then nn+mm else nn@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>11</falsenextnode>
+        <falseanswernote>prt2-11-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>11</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node12_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-12-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly solved the quadratic equation to find the smaller root as \({@dispdp(min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))),5)@}...\)<br>However, since Jill and Simon must have some money, this case is not possible.<br>Instead, the minimum amount of money Jack can have (to the whole pound) occurs where Simon has \(£1\).<p>
+<p>You have also attempted to find the maximum amount of money that {@if ans4=ceiling(min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))-mm or ans4=floor(min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))-mm or ans4=ceiling(10*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10-mm or ans4=floor(10*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10-mm or ans4=ceiling(100*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/100-mm or ans4=floor(100*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/100-mm then "Simon" else "Jill"@} can have.<br>However, to find the maximum amount of money <b>Jack</b> can have, you needed to add \(£{@if ans4=ceiling(min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))-mm or ans4=floor(min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))-mm or ans4=ceiling(10*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10-mm or ans4=floor(10*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/10-mm or ans4=ceiling(100*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/100-mm or ans4=floor(100*min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))/100-mm then nn+mm else nn@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-12-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the minimum amount of money is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>tans3</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the maximum amount of money is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the correct maximum amount of money as \(£{@dispdp(float(max(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))+nn,5)@}...\)
+<br>However, you have not rounded your answer to a whole pound.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the correct maximum amount of money as \(£{@dispdp(float(max(rhs(first(solve(tans1))),rhs(second(solve(tans1)))))+nn,5)@}...\)
+<br>However, you have rounded your answer <b>up</b> which means it lies above this maximum amount of money.<br>Your answer should have been rounded down.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly found the maximum amount of money that {@if ans3=floor(max(rhs(first(solve(tans1))),rhs(second(solve(tans1))))) then "Jill" else "Simon"@} can have.<br>However, to find the maximum amount of money <b>Jack</b> can have, you needed to add \(£{@if ans3=floor(max(rhs(first(solve(tans1))),rhs(second(solve(tans1))))) then nn else nn+mm@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt2-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the maximum amount of money is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>tans4</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.6660000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the minimum amount of money is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt2-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>tans4-1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the minimum amount of money would imply that Simon has \({@tans4-1@} - {@nn@} - {@mm@} = £0\).<br>However, since we know Simon has some money, this cannot be the case.<br>Your should have rounded your answer <b>up</b> to \(£{@tans4@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>9</falsenextnode>
+        <falseanswernote>prt2-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>9</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node10_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-10-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly solved the quadratic equation to find the smaller root as \({@dispdp(min(rhs(first(solve(tans1))),rhs(second(solve(tans1)))),5)@}...\)<br>However, since Jill and Simon must have some money, this case is not possible.<br>Instead, the minimum amount of money Jack can have (to the whole pound) occurs where Simon has \(£1\).<p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>10</falsenextnode>
+        <falseanswernote>prt2-10-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

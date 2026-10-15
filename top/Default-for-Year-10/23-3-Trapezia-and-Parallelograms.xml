@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>23.3 Trapezia and Parallelograms</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>(a) Here is a {@shapeA@}:</p>
+
+[[jsxgraph height="300px" width="450px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,4,5,-4],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    var shape = {#shapeA#};
+
+    if (shape == "trapezium") {
+
+      var a = {#trapA#};
+      var b = {#trapB#};
+      var h = {#trapH#};
+
+      var pointStyle = {
+        fixed:true,
+        visible:false
+      };
+
+      var p1 = board.create("point", [-a/2, h/2], pointStyle);
+      var p2 = board.create("point", [a/2, h/2], pointStyle);
+      var p3 = board.create("point", [-b/2, -h/2], pointStyle);
+      var p4 = board.create("point", [b/2, -h/2], pointStyle);
+
+      var edgeStyle = {
+        fixed:true,
+        highlight:false,
+        name:"",
+        withLabel:true,
+        label:{
+          fixed:true,
+          highlight:false,
+          anchorX:"middle",
+          fontSize:15,
+          offset:[0,0],
+          useMathJax:true,
+          parse:false
+        }
+      };
+
+      var diag1 = board.create("segment", [p1,p3], edgeStyle);
+      var diag2 = board.create("segment", [p2,p4], edgeStyle);
+
+      board.create("hatch", [diag1,2]);
+      board.create("hatch", [diag2,2]);
+
+
+      edgeStyle.name = "\\(a =".concat(a,"cm\\)");
+      edgeStyle.label.offset = [0,20];
+      board.create("segment", [p1,p2], edgeStyle);
+
+      edgeStyle.name = "\\(b =".concat(b,"cm\\)");
+      edgeStyle.label.offset = [0,-20];
+      board.create("segment", [p3,p4], edgeStyle);
+
+      var heightStyle = {
+        fixed:true,
+        highlight:false,
+        dash:3,
+        strokeColor:"black",
+        strokeWidth:1,
+        name:"\\(h =".concat(h,"cm\\)"),
+        withLabel:true,
+        label:{
+          fixed:true,
+          highlight:false,
+          fontSize:15,
+          useMathJax:true,
+          parse:false
+        }
+      };
+
+      board.create("segment", [[-0.5,h/2],[-0.5,-h/2]], heightStyle);
+
+    } else if (shape == "parallelogram") {
+
+      var b = {#paraB#};
+      var l = {#paraL#};
+      var h = {#paraH#};
+
+      var pointStyle = {
+        fixed:true,
+        visible:false
+      };
+
+      var p1 = board.create("point", [-(l+b)/2, -h/2], pointStyle);
+      var p2 = board.create("point", [(b-l)/2, -h/2], pointStyle);
+      var p3 = board.create("point", [(l-b)/2, h/2], pointStyle);
+      var p4 = board.create("point", [(l+b)/2, h/2], pointStyle);
+
+      var edgeStyle = {
+        fixed:true,
+        highlight:false,
+        name:"",
+        withLabel:true,
+        label:{
+          fixed:true,
+          highlight:false,
+          anchorX:"middle",
+          fontSize:15,
+          offset:[0,0],
+          useMathJax:true,
+          parse:false
+        }
+      };
+
+      board.create("segment", [p2,p4], edgeStyle);
+      board.create("segment", [p3,p4], edgeStyle);
+      board.create("segment", [p1,p3], edgeStyle);
+
+      edgeStyle.name = "\\(b =".concat(b,"cm\\)");
+      edgeStyle.label.offset = [0,-20];
+      board.create("segment", [p1,p2], edgeStyle);
+
+      var heightStyle = {
+        fixed:true,
+        highlight:false,
+        dash:3,
+        strokeColor:"black",
+        strokeWidth:1,
+        name:"",
+        withLabel:true,
+        label:{
+          fixed:true,
+          highlight:false,
+          fontSize:15,
+          offset:[0,0],
+          useMathJax:true,
+          parse:false
+        }
+      };
+
+      heightStyle.name = "\\(h =".concat(h,"cm\\)");
+      heightStyle.label.offset = [10,0];
+      board.create("segment", [p4,[p4.X(),p4.Y() - h]], heightStyle);
+
+      heightStyle.name = "\\(l =".concat(l,"cm\\)");
+      heightStyle.label.offset = [-30,-20];
+      board.create("segment", [p2,[p4.X(),p4.Y() - h]], heightStyle);
+
+    };
+
+[[/jsxgraph]]
+
+<p>Find the area, \(A\), and perimeter, \(P\), of the {@shapeA@}.
+<br>Give your answer exactly, using "sqrt(n)" for \(\sqrt{n}\) if required.</p>
+<p align="right">\(A =\) [[input:ans1]] \(cm^2\) [[validation:ans1]]</p>
+<p align="right">\(P =\) [[input:ans2]] \(cm\) [[validation:ans2]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) Here is a {@shapeB@}:</p>
+
+[[jsxgraph height="300px" width="450px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,4,5,-4],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    var shape = {#shapeB#};
+
+    if (shape == "trapezium") {
+
+      var a = {#trapA#};
+      var b = {#trapB#};
+      var h = {#trapH#};
+
+      var pointStyle = {
+        fixed:true,
+        visible:false
+      };
+
+      var p1 = board.create("point", [-a/2, h/2], pointStyle);
+      var p2 = board.create("point", [a/2, h/2], pointStyle);
+      var p3 = board.create("point", [-b/2, -h/2], pointStyle);
+      var p4 = board.create("point", [b/2, -h/2], pointStyle);
+
+      var edgeStyle = {
+        fixed:true,
+        highlight:false,
+        name:"",
+        withLabel:true,
+        label:{
+          fixed:true,
+          highlight:false,
+          anchorX:"middle",
+          fontSize:15,
+          offset:[0,0],
+          useMathJax:true,
+          parse:false
+        }
+      };
+
+      var diag1 = board.create("segment", [p1,p3], edgeStyle);
+      var diag2 = board.create("segment", [p2,p4], edgeStyle);
+
+      board.create("hatch", [diag1,2]);
+      board.create("hatch", [diag2,2]);
+
+      edgeStyle.name = "\\(x\\)";
+      edgeStyle.label.offset = [0,20];
+      board.create("segment", [p1,p2], edgeStyle);
+
+      edgeStyle.name = "\\(y\\)";
+      edgeStyle.label.offset = [0,-20];
+      board.create("segment", [p3,p4], edgeStyle);
+
+      var heightStyle = {
+        fixed:true,
+        highlight:false,
+        dash:3,
+        strokeColor:"black",
+        strokeWidth:1,
+        name:"\\(h =".concat(h,"cm\\)"),
+        withLabel:true,
+        label:{
+          fixed:true,
+          highlight:false,
+          fontSize:15,
+          useMathJax:true,
+          parse:false
+        }
+      };
+
+      board.create("segment", [[-0.5,h/2],[-0.5,-h/2]], heightStyle);
+
+    } else if (shape == "parallelogram") {
+
+      var b = {#paraB#};
+      var l = {#paraL#};
+      var h = {#paraH#};
+
+      var pointStyle = {
+        fixed:true,
+        visible:false
+      };
+
+      var p1 = board.create("point", [-(l+b)/2, -h/2], pointStyle);
+      var p2 = board.create("point", [(b-l)/2, -h/2], pointStyle);
+      var p3 = board.create("point", [(l-b)/2, h/2], pointStyle);
+      var p4 = board.create("point", [(l+b)/2, h/2], pointStyle);
+
+      var edgeStyle = {
+        fixed:true,
+        highlight:false,
+        name:"",
+        withLabel:true,
+        label:{
+          fixed:true,
+          highlight:false,
+          anchorX:"middle",
+          fontSize:15,
+          offset:[0,0],
+          useMathJax:true,
+          parse:false
+        }
+      };
+
+      board.create("segment", [p2,p4], edgeStyle);
+      board.create("segment", [p3,p4], edgeStyle);
+      board.create("segment", [p1,p3], edgeStyle);
+
+      edgeStyle.name = "\\(x\\)";
+      edgeStyle.label.offset = [0,-20];
+      board.create("segment", [p1,p2], edgeStyle);
+
+      var heightStyle = {
+        fixed:true,
+        highlight:false,
+        dash:3,
+        strokeColor:"black",
+        strokeWidth:1,
+        name:"",
+        withLabel:true,
+        label:{
+          fixed:true,
+          highlight:false,
+          fontSize:15,
+          offset:[0,0],
+          useMathJax:true,
+          parse:false
+        }
+      };
+
+      heightStyle.name = "\\(h =".concat(h,"cm\\)")
+      heightStyle.label.offset = [10,0];
+      board.create("segment", [p4,[p4.X(),p4.Y() - h]], heightStyle);
+
+      heightStyle.name = "\\(y\\)";
+      heightStyle.label.offset = [0,-20];
+      board.create("segment", [p2,[p4.X(),p4.Y() - h]], heightStyle);
+
+    };
+
+[[/jsxgraph]]
+
+<p>Given that the area of the {@shapeB@} is \({@if shapeB="trapezium" then trapArea else if shapeB="parallelogram" then paraArea@} \ cm^2\) and the perimeter is \({@if shapeB="trapezium" then sconcat("\\sqrt{",4*(trapH^2)+(trapB-trapA)^2,"}+",trapA+trapB) else if shapeB="parallelogram" then sconcat("\\sqrt{",4*(paraL^2+paraH^2),"}+", 2*paraB)@} \ cm\), find the lengths \(x\) and \(y\).
+<br>{@if shapeB="trapezium" then "As in the diagram, \\(y>x\\)." else ""@}</p>
+<p align="right">\(x =\) [[input:ans3]] \(cm\) [[validation:ans3]]</p>
+<p align="right">\(y =\) [[input:ans4]] \(cm\) [[validation:ans4]]</p>
+<p align="right"><b>(4)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>7</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[shapes:random_permutation(["trapezium", "parallelogram"]);
+shapeA:first(shapes);
+shapeB:second(shapes);
+
+/* Trapezium */
+trapA:rand(4)+3;
+trapB:rand_with_step(trapA+1,9,1);
+trapH:rand(4)+3;
+
+trapArea:trapH*(trapA+trapB)/2
+trapPer:trapA+trapB+2*sqrt(trapH^2 + (trapB-trapA)^2/4);
+
+/* Parallelogram */
+paraB:rand(4)+3;
+paraL:rand_with_step(1,8-paraB,1);
+paraH:rand(4)+3;
+
+paraArea:paraB*paraH;
+paraPer:2*paraB+2*sqrt(paraL^2+paraH^2);
+
+/* Solutions */
+
+tans1: if shapeA="trapezium" then trapArea else if shapeA="parallelogram" then paraArea;
+tans2: if shapeA="trapezium" then trapPer else if shapeA="parallelogram" then paraPer;
+
+tans3: if shapeB="trapezium" then trapA else if shapeB="parallelogram" then paraB;
+tans4: if shapeB="trapezium" then trapB else if shapeB="parallelogram" then paraL;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>(a) {@shapeA@}: \(a = {@trapA@}, b = {@trapB@}, h = {@trapH@}\)</p>
+<p>(a) {@shapeB@}: \(b = {@paraB@}, l = {@paraL@}, h = {@paraH@}\)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>tans1</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>tans2</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>tans3</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>tans4</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check area correct (1) */
+
+/* Node 2: Check perimeter correct (2) */
+
+/* Node 3: Worked solution */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>tans1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the area of the {@shapeA@} is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the area of the {@shapeA@} is incorrect.
+<br>Remember that the area for the area of a {@shapeA@} is {@if shapeA="trapezium" then "\\(\\frac{a+b}{2} \\times h\\), where \\(a\\) and \\(b\\) are the lengths of the parallel sides and \\(h\\) is the height." else if shapeA="parallelogram" then "\\(b \\times h\\), where \\(b\\) is the length of the base and \\(h\\) is the height."@}</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>tans2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.6670000</truescore>
+        <truepenalty/>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer for the perimeter of the {@shapeA@} is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the perimeter of the {@shapeA@} is incorrect.
+<br>You should use Pythagoras' Theorem to find the lengths of the slanted edges and sum these with the lengths of the parallel sides which you are given.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>String</answertest>
+        <sans>shapeA</sans>
+        <tans><![CDATA["trapezium"]]></tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>The expression for the area of a trapezium is: \(\frac{a+b}{2} \times h\)
+<br>Therefore, \(A = \frac{{@trapA@}+{@trapB@}}{2} \times {@trapH@} = {@tans1@} \ cm^2\)</p>
+
+<p>Using Pythagoras, the slanted lengths of the trapezium each have length: \(\sqrt{{@trapH@}^2 + (\frac{{@trapB@}-{@trapA@}}{2})^2} = \sqrt{{@trapH^2 + ((trapB-trapA)/2)^2@}} \ cm\)
+<br>Therefore, \(P = (2 \times \sqrt{{@trapH^2 + ((trapB-trapA)/2)^2@}}) + {@trapA@} + {@trapB@} = {@sconcat("\\sqrt{",4*(trapH^2)+(trapB-trapA)^2,"}+",trapA+trapB)@} \ cm\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>The expression for the area of a parallelogram is: \(b \times h\)
+<br>Therefore, \(A ={@paraB@} \times {@paraH@} = {@tans1@} \ cm^2\)</p>
+
+<p>Using Pythagoras, the slanted lengths of the parallelogram each have length: \(\sqrt{{@paraL@}^2 + {@paraH@}^2} = \sqrt{{@paraL^2 + paraH^2@}} \ cm\)
+<br>Therefore, \(P = (2 \times \sqrt{{@paraL^2 + paraH^2@}}) +( 2 \times {@paraB@}) = {@sconcat("\\sqrt{",4*(paraL^2+paraH^2),"}+", 2*paraB)@} \ cm\)</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check x correct (2) */
+
+/* Node 2: Check y correct (2) */
+
+/* Node 3: Worked solution */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>tans3</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for length \(x\) is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for length \(x\) is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>tans4</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer for length \(y\) is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer for length \(y\) is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>String</answertest>
+        <sans>shapeB</sans>
+        <tans><![CDATA["trapezium"]]></tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>The expression for the area of a trapezium is: \(\frac{a+b}{2} \times h\)</p>
+
+<p>Therefore, \({@trapArea@} = \frac{x+y}{2} \times {@trapH@}\)</p>
+
+<p>\(x + y = {@2*trapArea/trapH@}\)</p>
+
+<p><br>Using Pythagoras, the slanted lengths of the trapezium each have length: \(\sqrt{{@trapH@}^2 + (\frac{y-x}{2})^2}\)</p>
+
+<p>Therefore, \({@sconcat("\\sqrt{",4*(trapH^2)+(trapB-trapA)^2,"}+",trapA+trapB)@} = 2 \times \sqrt{{@trapH@}^2 + (\frac{y-x}{2})^2} + x + y\)</p>
+
+<p><br>Using the fact that \(x + y = {@2*trapArea/trapH@}\):</p>
+
+<p>\({@sconcat("\\sqrt{",4*(trapH^2)+(trapB-trapA)^2,"}+",trapA+trapB)@} = 2 \times \sqrt{{@trapH^2@} + \frac{(y-x)^2}{4}} + {@2*trapArea/trapH@}\)</p>
+
+<p>\({@sconcat("\\sqrt{",4*(trapH^2)+(trapB-trapA)^2,"}")@} = \sqrt{{@4*trapH^2@} + (y-x)^2}\)</p>
+
+<p><br>Squaring both sides:</p>
+<p>\({@(trapPer-2*trapArea/trapH)^2@} = {@4*trapH^2@} + (y-x)^2\)</p>
+<p>\((y-x)^2 = {@(trapPer-2*trapArea/trapH)^2-4*trapH^2@}\)</p>
+<p>\(y - x = {@sqrt((trapPer-2*trapArea/trapH)^2-4*trapH^2)@} \ \ \ \) <i>\((y>x)\)</i></p>
+
+<p><br>Solving \(x + y = {@2*trapArea/trapH@}\) and \(y - x = {@sqrt((trapPer-2*trapArea/trapH)^2-4*trapH^2)@}\) simultaneously gives:</p>
+
+<p>\(x = {@tans3@} \ cm\)</p>
+<p>\(y = {@tans4@} \ cm\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>The expression for the area of a parallelogram is: \(b \times h\).</p>
+
+<p>Therefore, \({@paraH@}x = {@paraArea@}\).</p>
+
+<p>So, \(x = {@tans3@} \ cm\)</p>
+
+<p><br>Using Pythagoras, the slanted lengths of the parallelogram each have length: \(\sqrt{{@paraH@}^2 + y^2}\)</p>
+
+<p>Therefore, \({@sconcat("\\sqrt{",4*(paraL^2+paraH^2),"}+", 2*paraB)@} = 2 \times \sqrt{{@paraH@}^2 + y^2} + 2x\)</p>
+
+<p>\({@sconcat("\\sqrt{",paraL^2+paraH^2,"}+", paraB)@} = \sqrt{{@paraH@}^2 + y^2} + x\)</p>
+
+<p><br>Using the fact that \(x = {@tans3@}\):</p>
+
+<p>\({@sconcat("\\sqrt{",paraL^2+paraH^2,"}")@} = \sqrt{{@paraH^2@} + y^2}\)</p>
+
+<p><br>Squaring both sides:</p> 
+
+<p>\({@paraL^2+paraH^2@} = {@paraH^2@} + y^2\)</p>
+
+<p>\(y = {@tans4@} \ cm \ \ \ \) <i>\((y>0)\)</i></p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

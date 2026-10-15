@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>test distance in 3d</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<h3 style="text-align:center;">
+Distance between two points in \(\mathbb{R}^3\)
+</h3>
+
+<p style="text-align:center;">
+Let \(A={@A@}\) and \(B={@B@}\). Compute the distance \(\,|AB|\).
+</p>
+
+<p style="text-align:center;">
+\[
+|AB|=\sqrt{(x_B-x_A)^2+(y_B-y_A)^2+(z_B-z_A)^2}.
+\]
+</p>
+
+<p style="text-align:center;">
+Answer: [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]
+</p>
+
+<hr>
+
+<p style="text-align:center;"><b>3D visualisation</b></p>
+
+[[jsxgraph]]
+  var board = JXG.JSXGraph.initBoard(divid, {
+    boundingbox: [-6, 6, 6, -6],
+    axis: false,
+    showCopyright: false,
+    showNavigation: true
+  });
+
+  // 3D view: position/size + ranges for x,y,z
+  var view = board.create('view3d',
+    [[-6,-6],[12,12],[[-6,6],[-6,6],[-6,6]]],
+    { xPlaneRear: {visible:false}, yPlaneRear: {visible:false}, zPlaneRear: {visible:false} }
+  );
+
+  view.create('axes3d', []);
+
+  var ax = parseFloat('{#ax#}'), ay = parseFloat('{#ay#}'), az = parseFloat('{#az#}');
+  var bx = parseFloat('{#bx#}'), by = parseFloat('{#by#}'), bz = parseFloat('{#bz#}');
+
+  var A = view.create('point3d', [ax, ay, az], {name: 'A', fixed: true});
+  var B = view.create('point3d', [bx, by, bz], {name: 'B', fixed: true});
+
+  view.create('segment3d', [A, B], {strokeWidth: 3});
+[[/jsxgraph]]]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Random 3D points A and B in R^3 (keep them distinct) */
+ax: rand(9)-4;  ay: rand(9)-4;  az: rand(9)-4;
+bx: rand(9)-4;  by: rand(9)-4;  bz: rand(9)-4;
+
+while (ax=bx and ay=by and az=bz) do (
+  bx: rand(9)-4, by: rand(9)-4, bz: rand(9)-4
+);
+
+/* Nice display as ordered triples */
+A: ntuple(ax,ay,az);
+B: ntuple(bx,by,bz);
+
+/* Distance */
+dx: bx-ax; dy: by-ay; dz: bz-az;
+dist2: dx^2+dy^2+dz^2;
+ta: sqrt(dist2); /* teacher's answer */
+</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="html">
+      <text>1</text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

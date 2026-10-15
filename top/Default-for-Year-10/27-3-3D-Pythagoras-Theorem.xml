@@ -1,0 +1,1102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>27.3 3D Pythagoras' Theorem</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Here is a diagram of a rectangular-based pyramid.
+<br><i>Diagram not to scale.</i></p>
+
+[[jsxgraph height="500px" width="500px"]]
+
+    // Set inital display conditions
+    var orientation = [4.58,5.76,0.08];
+
+    // Creating JSXGraph board: change "jxgbox" to divid for STACK questions
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-2, 3, 2, -1],
+      showCopyright:false,
+      showNavigation:false,
+    });
+
+    // Function to project point in 3D onto a plane through the origin normal to [xN,yN,zN];
+    function flatten_point([x,y,z]) {
+        return([x,y]);
+    };
+
+    // Functions to rotate point in 3D around x, y and z axes
+    function rotate_x([x,y,z], angle) {
+        return([
+            x,
+            Math.cos(angle)*y - Math.sin(angle)*z,
+            Math.sin(angle)*y + Math.cos(angle)*z
+        ]);
+    };
+
+    function rotate_y([x,y,z], angle) {
+        return([
+            Math.sin(angle)*z + Math.cos(angle)*x,
+            y,
+            Math.cos(angle)*z - Math.sin(angle)*x
+        ]);
+    };
+
+    function rotate_z([x,y,z], angle) {
+        return([
+            Math.cos(angle)*x - Math.sin(angle)*y,
+            Math.sin(angle)*x + Math.cos(angle)*y,
+            z
+        ]);
+    };
+
+    // Function to create a point-projection pair:
+    function make_point([x,y,z], style) {
+
+        // Rotate coordinates by display orientation
+        var coords = rotate_z(rotate_y(rotate_x([x,y,z], orientation[0]), orientation[1]), orientation[2]);
+        
+        // Create point, defined by initial coords, display coords and projected coords
+        var point = {
+            initCoords:coords,
+            dispCoords:coords,
+            proj:board.create("point", flatten_point(coords), style)
+        }
+        elements.push(point);
+        return(point);
+
+    };
+    
+    // List containing all 3D elements to be displayed (used to update position for user movement)
+    var elements = [];
+
+    // CREATE POLYGON-BASED PYRAMID
+    function print_pyram(
+        noSides = 4,
+        sideLength = 2,
+        height = 2.5,
+        [x,y,z] = [0,0,0], 
+        [rotX,rotY,rotZ] = [0,0,0],
+        faceStyle = {
+            fixed:true,
+            highlight:false,
+            fillOpacity:1,
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        },
+        pointStyle = {visible:false}) {
+
+        var pointList = [];
+        
+        // Create top point without rotation or translation
+        pointList.push([0, 0, height]);
+
+        // Create points in n-gon base without rotation or translation
+        var i;
+        for (i = 0; i < noSides; i++) {
+            pointList.push([
+                Math.cos(2*i*Math.PI/noSides)*sideLength/Math.sqrt(2*(1-Math.cos(2*Math.PI/noSides))),
+                Math.sin(2*i*Math.PI/noSides)*sideLength/Math.sqrt(2*(1-Math.cos(2*Math.PI/noSides))),
+                0]);
+        };
+
+        // For each defined point; rotate and translate by user specs.
+        var j;
+        for (i in pointList) {
+            j = rotate_z(rotate_y(rotate_x(pointList[i], rotX), rotY), rotZ);
+            pointList[i] = make_point([
+                x + j[0],
+                y + j[1],
+                z + j[2]
+            ], pointStyle);
+        };
+
+        // Create polygon base
+        board.create("polygon", pointList.slice(1).map(function(point) {return point.proj}), faceStyle);
+
+        // Create sloping triangular faces
+        for (i in pointList.slice(1,4)) {
+            if (i == 0) {
+              faceStyle.fillColor = "#50D8FF";
+            } else {
+              faceStyle.fillColor = "#69FF78";
+            };
+            board.create("polygon", [
+                pointList[0].proj,
+                pointList.slice(1)[i].proj,
+                pointList.slice(1)[(Number(i)+1) % (pointList.length-1)].proj,
+            ], faceStyle)
+        };
+
+    };
+
+    print_pyram();
+
+    // Measurement lines
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15,
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    lineStyle.name = "\\(".concat({#height#},"cm\\)");
+    board.create("segment", [
+      make_point([-1.2,-1.2,0], {visible:false}).proj,
+      make_point([-1.2,-1.2,2.5], {visible:false}).proj
+    ], lineStyle);
+
+    lineStyle.name = "\\(".concat({#depth#},"cm\\)");
+    lineStyle.label.offset = [5,-15];
+    board.create("segment", [
+      make_point([0.05, Math.sqrt(2)+0.05, -0.1], {visible:false}).proj,
+      make_point([Math.sqrt(2)+0.05, 0.05, -0.1], {visible:false}).proj
+    ], lineStyle);
+
+    lineStyle.name = "\\(".concat({#width#},"cm\\)");
+    lineStyle.label.offset = [0,-15];
+    lineStyle.label.anchorX = "middle";
+    board.create("segment", [
+      make_point([-Math.sqrt(2)-0.05, -0.05, -0.1], {visible:false}).proj,
+      make_point([0.05, Math.sqrt(2)+0.05, -0.1], {visible:false}).proj
+    ], lineStyle);
+
+    lineStyle.name = "\\(l\\)";
+    lineStyle.strokeColor = "red";
+    lineStyle.label.offset = [10,5];
+    lineStyle.label.anchorX = "left";
+    lineStyle.label.strokeColor = "red";
+    board.create("segment", [
+      make_point([0.1, 0.1, 2.5], {visible:false}).proj,
+      make_point([Math.sqrt(2)+0.1, 0.1, 0], {visible:false}).proj
+    ], lineStyle);
+
+    var dashStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      dash:1
+    };
+    
+    board.create("segment", [
+      make_point([0,0,0], {visible:false}).proj,
+      make_point([-1.2,-1.2,0], {visible:false}).proj
+    ], dashStyle);
+
+    board.create("segment", [
+      make_point([0,0,2.5], {visible:false}).proj,
+      make_point([-1.2,-1.2,2.5], {visible:false}).proj
+    ], dashStyle);
+
+[[/jsxgraph]]
+
+<p>(a) Find the length, \(l\), of the sloped edge.
+<br><i>Give your answer to 1dp.</i></p>
+<p align="right">\(l =\) [[input:ans1]] \(cm\) [[validation:ans1]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) Find the area, \(A\), of the blue face of the pyramid.
+<br><i>Give your answer to 1dp.</i></p>
+<p align="right">\(A =\) [[input:ans2]] \(cm^2\) [[validation:ans2]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>6</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[round_prop(num) := block(if num-floor(num)<0.5 then return(floor(num)) else return(ceiling(num)));
+
+/* Randomising lengths */
+depth:rand_with_step(3,7,1);
+width:rand_with_step(depth+1,depth+5,1);
+height:rand_with_step(width+1,width+5,1);
+
+/* Solutions */
+tans1:sqrt((depth/2)^2 + (width/2)^2 + height^2);
+tans2:(1/2)*depth*sqrt((width/2)^2 + height^2);]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>\(d={@depth@}, w={@width@}, h={@height@}\)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>float(round_prop(10*tans1)/10)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>float(round_prop(10*tans2)/10)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Correct solution */
+/* Node 2: Worked solution */
+/* Node 3: Incorrect rounding (2) */
+node3_test: if abs(ans1-tans1)<=0.1 then 1 else 0;
+
+/* Node 4: Forgets to square root answer (1) */
+node4_error:(depth/2)^2+(width/2)^2+height^2;
+
+/* Node 5: Doesn't halve width or depth (1) */
+node5_errorA:sqrt(depth^2 + width^2 + height^2);
+node5_errorB:sqrt((depth/2)^2 + width^2 + height^2);
+node5_errorC:sqrt(depth^2 + (width/2)^2 + height^2);
+
+node5_test: if ans1=float(round_prop(10*node5_errorA)/10) or ans1=float(round_prop(10*node5_errorA)/10) or float(round_prop(10*node5_errorA)/10) then 1 else 0;
+
+/* Node 6: Halves height (1) */
+node6_error:sqrt((depth/2)^2 + (width/2)^2 + (height/2)^2);
+
+/* Node 7: Does any of N4-6 and also rounds incorrectly (feedback) */
+node7_test: if abs(ans1-node4_error)<=0.1 or abs(ans1-node5_errorA)<=0.1 or abs(ans1-node5_errorB)<=0.1 or abs(ans1-node5_errorC)<=0.1 or abs(ans1-node6_error)<=0.1 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>float(round_prop(10*tans1)/10)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The length \(l\) can be divided into perpendicular components along each of the given measurements:</p>
+
+[[jsxgraph width="350px" height="360px"]]
+
+    // Set inital display conditions
+    var orientation = [4.58,5.76,0.08];
+
+    // Creating JSXGraph board: change "jxgbox" to divid for STACK questions
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-1.75, 2.8, 1.75, -0.8],
+      showCopyright:false,
+      showNavigation:false,
+    });
+
+    // Function to project point in 3D onto a plane through the origin normal to [xN,yN,zN];
+    function flatten_point([x,y,z]) {
+        return([x,y]);
+    };
+
+    // Functions to rotate point in 3D around x, y and z axes
+    function rotate_x([x,y,z], angle) {
+        return([
+            x,
+            Math.cos(angle)*y - Math.sin(angle)*z,
+            Math.sin(angle)*y + Math.cos(angle)*z
+        ]);
+    };
+
+    function rotate_y([x,y,z], angle) {
+        return([
+            Math.sin(angle)*z + Math.cos(angle)*x,
+            y,
+            Math.cos(angle)*z - Math.sin(angle)*x
+        ]);
+    };
+
+    function rotate_z([x,y,z], angle) {
+        return([
+            Math.cos(angle)*x - Math.sin(angle)*y,
+            Math.sin(angle)*x + Math.cos(angle)*y,
+            z
+        ]);
+    };
+
+    // Function to create a point-projection pair:
+    function make_point([x,y,z], style) {
+
+        // Rotate coordinates by display orientation
+        var coords = rotate_z(rotate_y(rotate_x([x,y,z], orientation[0]), orientation[1]), orientation[2]);
+        
+        // Create point, defined by initial coords, display coords and projected coords
+        var point = {
+            initCoords:coords,
+            dispCoords:coords,
+            proj:board.create("point", flatten_point(coords), style)
+        }
+        elements.push(point);
+        return(point);
+
+    };
+    
+    // List containing all 3D elements to be displayed (used to update position for user movement)
+    var elements = [];
+
+
+    // Measurement lines
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15,
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    lineStyle.name = "\\(".concat({#depth#},"cm\\)");
+    lineStyle.label.offset = [5,-15];
+    board.create("segment", [
+      make_point([0, Math.sqrt(2), 0], {visible:false}).proj,
+      make_point([Math.sqrt(2), 0, 0], {visible:false}).proj
+    ], lineStyle);
+
+    lineStyle.name = "\\(".concat({#width#},"cm\\)");
+    lineStyle.label.offset = [0,-15];
+    lineStyle.label.anchorX = "middle";
+    board.create("segment", [
+      make_point([-Math.sqrt(2), 0, 0], {visible:false}).proj,
+      make_point([0, Math.sqrt(2), 0], {visible:false}).proj
+    ], lineStyle);
+
+    lineStyle.name = "\\(".concat({#height#},"cm\\)");
+    lineStyle.label.offset = [-10,0];
+    lineStyle.label.anchorX = "right";
+    board.create("segment", [
+      make_point([0,0,0], {visible:false}).proj,
+      make_point([0,0,2.5], {visible:false}).proj
+    ], lineStyle);
+
+    lineStyle.name = "\\(".concat("l","\\)");
+    lineStyle.strokeColor = "red";
+    lineStyle.label.offset = [10,5];
+    lineStyle.label.anchorX = "left";
+    lineStyle.label.strokeColor = "red";
+    board.create("segment", [
+      make_point([0, 0, 2.5], {visible:false}).proj,
+      make_point([Math.sqrt(2), 0, 0], {visible:false}).proj
+    ], lineStyle);
+
+    var dashStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      dash:1
+    };
+
+    board.create("segment", [
+      make_point([0,0,0], {visible:false}).proj,
+      make_point([-Math.sqrt(2)/2,Math.sqrt(2)/2,0], {visible:false}).proj
+    ], dashStyle);
+
+    board.create("segment", [
+      make_point([Math.sqrt(2)/2,-Math.sqrt(2)/2,0], {visible:false}).proj,
+      make_point([Math.sqrt(2),0,0], {visible:false}).proj
+    ], dashStyle);
+
+    dashStyle.strokeColor = "red";
+    
+    board.create("segment", [
+      make_point([Math.sqrt(2)/2,-Math.sqrt(2)/2,0], {visible:false}).proj,
+      make_point([0,0,0], {visible:false}).proj
+    ], dashStyle);
+
+    board.create("segment", [
+      make_point([0,0,0], {visible:false}).proj,
+      make_point([Math.sqrt(2)/2,Math.sqrt(2)/2,0], {visible:false}).proj
+    ], dashStyle);
+
+[[/jsxgraph]]
+
+<p>Using Pythagoras' theorem in 3-dimensions:</p>
+<p>\(l = \sqrt{{@height@}^2 + (\frac{{@width@}}{2})^2 + (\frac{{@depth@}}{2})^2}\)</p>
+<p>\(l = \sqrt{{@height^2 + (width/2)^2 + (depth/2)^2@}}\)</p>
+<p>\(l = {@decimalplaces(sqrt(height^2 + (width/2)^2 + (depth/2)^2),5)@}...\)</p>
+<p>\(l = {@float(round_prop(10*tans1)/10)@}cm\) <i>(to 1dp)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.6670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly calculated the length of \(l\).
+<br>However, you have not rounded your answer correctly to 1dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>float(round_prop(10*node4_error)/10)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the value of \(l^2\) by summing the squares of the components of \(l\).
+<br>To calculate \(l\), you should use: \(\sqrt{{@height@}^2 + (\frac{{@width@}}{2})^2 + (\frac{{@depth@}}{2})^2}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>While using Pythagoras' theorem, you have not halved the {@if ans1=decimalplaces(node5_errorA,1) then "width and depth of the pyramid's base" else if ans1=decimalplaces(node5_errorB,1) "width of the pyramid's base" else if ans1=decimalplaces(node5_errorC,1) then "depth of the pyramid's base"@}.
+<br>To calculate \(l\), you should use: \(\sqrt{{@height@}^2 + (\frac{{@width@}}{2})^2 + (\frac{{@depth@}}{2})^2}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>float(round_prop(10*node6_error)/10)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>While using Pythagoras' theorem, you have halved the height of the pyramid.
+<br>To calculate \(l\), you should use: \(\sqrt{{@height@}^2 + (\frac{{@width@}}{2})^2 + (\frac{{@depth@}}{2})^2}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>{@if abs(ans1-node4_error)<=0.1 then "You have found the value of \\(l^2\\) by summing the squares of the components of \\(l\\)." else if  abs(ans1-node5_errorA)<=0.1 then "While using Pythagoras' theorem, you have not halved the width and depth of the pyramid's base." else if  abs(ans1-node5_errorB)<=0.1 then "While using Pythagoras' theorem, you have not halved the width of the pyramid's base." else if abs(ans1-node5_errorC)<=0.1 then "While using Pythagoras' theorem, you have not halved the depth of the pyramid's base." else if abs(ans1-node6_error)<=0.1 then "While using Pythagoras' theorem, you have halved the height of the pyramid."@}
+<br>To calculate \(l\), you should use: \(\sqrt{{@height@}^2 + (\frac{{@width@}}{2})^2 + (\frac{{@depth@}}{2})^2}\)
+<br>You have also rounded your answer incorrectly to 1dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Correct solution */
+/* Node 2: Worked solution */
+/* Node 3: Incorrect rounding (2) */
+node3_test: if abs(ans2-tans2)<=0.1 then 1 else 0;
+
+/* Node 4: Forgets to square root slanted height (1) */
+node4_error:(1/2)*depth*((width/2)^2 + height^2),1;
+
+/* Node 5: Doesn't halve width in slanted height calculation (1) */
+node5_error: (1/2)*depth*sqrt(width^2 + height^2);
+
+/* Node 6: Halves height in slanted height calculation (1) */
+node6_error:(1/2)*depth*sqrt((width/2)^2 + (height/2)^2);
+
+/* Node 7: Uses depth in place of width to calculate slanted height (feedback) */
+node7_error:(1/2)*depth*sqrt((depth/2)^2 + height^2);
+
+/* Node 8: Does any of N4-7 and also rounds incorrectly (feedback) */
+node8_test: if abs(ans2-node4_error)<=0.1 or abs(ans2-node5_error)<=0.1 or abs(ans2-node6_error)<=0.1 or abs(ans2-node7_error)<=0.1 then 1 else 0;
+
+/* Node 9: Calculates area using vertical height as opposed to slanted height (feedback) */
+node9_test: if abs(ans2-(1/2)*depth*height)<=0.1 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>float(round_prop(10*tans2)/10)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The area of a triangle is given by \(A = \frac{1}{2} b h\):</p>
+
+[[jsxgraph width="350px" height="360px"]]
+
+    // Set inital display conditions
+    var orientation = [4.58,5.76,0.08];
+
+    // Creating JSXGraph board: change "jxgbox" to divid for STACK questions
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-1.75, 2.8, 1.75, -0.8],
+      showCopyright:false,
+      showNavigation:false,
+    });
+
+    // Function to project point in 3D onto a plane through the origin normal to [xN,yN,zN];
+    function flatten_point([x,y,z]) {
+        return([x,y]);
+    };
+
+    // Functions to rotate point in 3D around x, y and z axes
+    function rotate_x([x,y,z], angle) {
+        return([
+            x,
+            Math.cos(angle)*y - Math.sin(angle)*z,
+            Math.sin(angle)*y + Math.cos(angle)*z
+        ]);
+    };
+
+    function rotate_y([x,y,z], angle) {
+        return([
+            Math.sin(angle)*z + Math.cos(angle)*x,
+            y,
+            Math.cos(angle)*z - Math.sin(angle)*x
+        ]);
+    };
+
+    function rotate_z([x,y,z], angle) {
+        return([
+            Math.cos(angle)*x - Math.sin(angle)*y,
+            Math.sin(angle)*x + Math.cos(angle)*y,
+            z
+        ]);
+    };
+
+    // Function to create a point-projection pair:
+    function make_point([x,y,z], style) {
+
+        // Rotate coordinates by display orientation
+        var coords = rotate_z(rotate_y(rotate_x([x,y,z], orientation[0]), orientation[1]), orientation[2]);
+        
+        // Create point, defined by initial coords, display coords and projected coords
+        var point = {
+            initCoords:coords,
+            dispCoords:coords,
+            proj:board.create("point", flatten_point(coords), style)
+        }
+        elements.push(point);
+        return(point);
+
+    };
+    
+    // List containing all 3D elements to be displayed (used to update position for user movement)
+    var elements = [];
+
+    // CREATE POLYGON: print_plane(pointList, rotation, faceStyle, pointStyle)
+    function print_polygon(
+        pointList = [[0,0,2.5],[0, Math.sqrt(2), 0],[Math.sqrt(2), 0, 0]], 
+        [rotX,rotY,rotZ] = [0,0,0],
+        faceStyle = {
+            fixed:true,
+            highlight:false,
+            fillColor:"#50D8FF",
+            fillOpacity:1,
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        },
+        pointStyle = {visible:false}
+        ) {
+
+        // From provided point list rotate and translate points
+        var i;
+        var j;
+        for (i in pointList) {
+            j = rotate_z(rotate_y(rotate_x(pointList[i], rotX), rotY), rotZ);
+            pointList[i] = make_point([j[0],j[1],j[2]], pointStyle);
+        };
+
+        // Print polygon
+        board.create("polygon", pointList.map(function(point) {return point.proj}), faceStyle);
+
+    };
+
+    print_polygon();
+
+    // Measurement lines
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15,
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    lineStyle.name = "\\(".concat({#depth#},"cm\\)");
+    lineStyle.label.offset = [5,-15];
+    board.create("segment", [
+      make_point([0, Math.sqrt(2), 0], {visible:false}).proj,
+      make_point([Math.sqrt(2), 0, 0], {visible:false}).proj
+    ], lineStyle);
+
+    lineStyle.name = "\\(".concat({#width#},"cm\\)");
+    lineStyle.label.offset = [0,-15];
+    lineStyle.label.anchorX = "middle";
+    board.create("segment", [
+      make_point([-Math.sqrt(2), 0, 0], {visible:false}).proj,
+      make_point([0, Math.sqrt(2), 0], {visible:false}).proj
+    ], lineStyle);
+
+    lineStyle.name = "\\(".concat({#height#},"cm\\)");
+    lineStyle.label.offset = [-10,0];
+    lineStyle.label.anchorX = "right";
+    board.create("segment", [
+      make_point([0,0,0], {visible:false}).proj,
+      make_point([0,0,2.5], {visible:false}).proj
+    ], lineStyle);
+
+    var dashStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      dash:1
+    };
+    
+    board.create("segment", [
+      make_point([0,0,0], {visible:false}).proj,
+      make_point([-Math.sqrt(2)/2,Math.sqrt(2)/2,0], {visible:false}).proj
+    ], dashStyle);
+
+    board.create("segment", [
+      make_point([0,0,0], {visible:false}).proj,
+      make_point([Math.sqrt(2)/2,Math.sqrt(2)/2,0], {visible:false}).proj
+    ], dashStyle);
+
+    dashStyle.strokeColor = "#0900F4";
+    dashStyle.dash = 3;
+
+    board.create("segment", [
+      make_point([0,0,2.5], {visible:false}).proj,
+      make_point([Math.sqrt(2)/2,Math.sqrt(2)/2,0], {visible:false}).proj
+    ], dashStyle);
+
+[[/jsxgraph]]
+
+<p>The base of the triangle is given as \({@depth@}cm\).</p>
+<p>The height of the triangle is slanted, and can be determined using Pythagoras' theorem:
+<br>\(h = \sqrt{{@height@}^2 + (\frac{{@width@}}{2})^2}\)
+<br>\(h = \sqrt{{@height^2+(width/2)^2@}}\)</p>
+<p>Therefore, the area of the blue face is given by:
+<br>\(A = \frac{{@depth@}}{2} \times \sqrt{{@height^2+(width/2)^2@}}\)
+<br>\(A = {@decimalplaces(tans2,5)@}...\)
+<br>\(A = {@float(round_prop(10*tans2)/10)@}cm\) <i>(to 1dp)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.6670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly calculated the area of the blue face.
+<br>However, you have not rounded your answer correctly to 1dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>float(round_prop(10*node4_error)/10)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have calculated the <b>square</b> of the slanted height of the blue triangle.
+<br>To calculate the slanted height, you should use: \(\sqrt{{@height@}^2 + (\frac{{@width@}}{2})^2}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>float(round_prop(10*node5_error)/10)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>While using Pythagoras' theorem to find the slanted height of the blue triangle, you have not halved the width of the pyramid's base.
+<br>To calculate the slanted height, you should use: \(\sqrt{{@height@}^2 + (\frac{{@width@}}{2})^2}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>float(round_prop(10*node6_error)/10)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>While using Pythagoras' theorem to find the slanted height of the blue triangle, you have halved the height of the pyramid.
+<br>To calculate the slanted height, you should use: \(\sqrt{{@height@}^2 + (\frac{{@width@}}{2})^2}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>float(round_prop(10*node7_error)/10)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>While using Pythagoras' theorem to find the slanted height of the blue triangle, you have used the depth of the pyramid's base where you should have used the width.
+<br>To calculate the slanted height, you should use: \(\sqrt{{@height@}^2 + (\frac{{@width@}}{2})^2}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt2-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node8_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>{@if abs(ans2-node4_error)<=0.1 then "You have calculated the <b>square</b> of the slanted height of the blue triangle." else if abs(ans2-node5_error)<=0.1 then "While using Pythagoras' theorem to find the slanted height of the blue triangle, you have not halved the width of the pyramid's base." else if abs(ans2-node6_error)<=0.1 then "While using Pythagoras' theorem to find the slanted height of the blue triangle, you have halved the height of the pyramid." else if abs(ans2-node7_error)<=0.1 then "While using Pythagoras' theorem to find the slanted height of the blue triangle, you have used the depth of the pyramid's base where you should have used the width."@}
+<br>To calculate the slanted height, you should use: \(\sqrt{{@height@}^2 + (\frac{{@width@}}{2})^2}\)
+<br>You have also rounded incorrectly to 1dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt2-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node9_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have calculated the area of the blue triangle using the vertical height of the pyramid.
+<br>However, you should have used the <b>slanted height</b> of the blue triangle.
+<br>To calculate the slanted height, you should use: \(\sqrt{{@height@}^2 + (\frac{{@width@}}{2})^2}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>145252887</deployedseed>
+  </question>
+</quiz>

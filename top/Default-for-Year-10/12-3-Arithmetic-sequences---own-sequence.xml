@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>12.3 Arithmetic sequences - own sequence</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Write down the first four terms of an arithmetic sequence whose fourth term is {@kk@} times the first term. </p>
+<p>First Term = [[input:ans1]] [[validation:ans1]]</p>
+<p>Second Term = [[input:ans2]] [[validation:ans2]]</p>
+<p>Third Term = [[input:ans3]] [[validation:ans3]]</p>
+<p>Fourth Term = [[input:ans4]] [[validation:ans4]]</p>
+<p>[[feedback:prt1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* First we define a random factor of the fourth term */
+kk:rand(4)+2;
+/* to determine model answers for this question */
+/* We first need a value of d */
+d_mod_ans:rand(4)+1;
+/**/
+
+/* We then need a value of a, calculated from k and d*/
+a_mod_ans:3*d_mod_ans/(kk-1);
+
+/* We want to make sure our model answer is nice */
+while (integerp(a_mod_ans)=false) do (d_mod_ans:rand(4)+1,a_mod_ans:3*d_mod_ans/(kk-1)); 
+
+/* Use values from above to calculate the 2nd, 3rd and 4th terms */
+a_mod_ans_2:a_mod_ans+d_mod_ans;
+a_mod_ans_3:a_mod_ans+2*d_mod_ans;
+a_mod_ans_4:a_mod_ans+3*d_mod_ans;
+
+/*Simplified values of the terms a */
+a_simp:3*d_mod_ans/(kk-1)</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>Random factor is {@kk@}</p>
+<p>The model answer is \(a= {@a_mod_ans@}\)</p>
+<p>The model value of \(d={@d_mod_ans@}\)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>a_mod_ans</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>a_mod_ans_2</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>a_mod_ans_3</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>a_mod_ans_4</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Calculate the supposed student common differences */
+stud_cd_1:ans2-ans1;
+stud_cd_2:ans3-ans2;
+stud_cd_3:ans4-ans3;
+
+/* Check if all common differences are the same */
+eq_stud_cd:if (stud_cd_1=stud_cd_2 and stud_cd_2=stud_cd_3) then 1 else 0;
+
+/*simplifying the solution*/
+sol1:kk*ans1;
+stud_d:(sol1-ans1)/3;
+sol2:ans1+stud_d;
+sol3:ans1+2*stud_d;
+
+work_sol_last: if kk=2 then "" else a=3*d/(kk-1);
+work_sol_last2: if kk=4 then "a" else "";]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>kk*ans1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Well done, your fourth term is {@kk@} times your first term.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>+</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Unfortunately, your fourth term is not {@kk@} times your first term.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>eq_stud_cd</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Well done, your sequence is an arithmetic sequence.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Unfortunately, your sequence is not arithmetic. Make sure that the difference between any two consecutive terms is the same.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> </p><p>
+</p><p> <b>Worked solution:</b></p>
+
+<p>An arithmetic sequence takes the form  \(a,\, a+d,\, a+2d,\, a+3d, \dots\)
+where \(a\) is the first term and \(d\) is the common difference.
+The \(n\)th term of the sequence can be obtained by substituting the first term and common difference in the general formula  \(a_n=a+(n-1)d\).</p>
+<p>  In this case, the fourth term in the sequence should be {@kk@} times the first term, that is  \(a_4= {@kk@}a\). </p>
+<p>If we use the formula for the \(n\)th term to write \(a_4= a+3d\), we obtain the equation \( a+3d={@kk@}a\). Solving the equation for \(a\) we get 
+</p><p>\( a+3d= {@kk@} a \)</p>
+<p>\({@kk@}a-a=3d\)</p>
+<p>\( {@(kk-1)*a@}=3d\)</p>
+<p>\( {@work_sol_last@}\)</p>
+<p>This equation has infinitely many solutions and any solution would lead to a correct answer. For example, we can choose \(d={@d_mod_ans@}\), so that \(a={@a_mod_ans@}\). </p>
+<p>The first 4 terms of the sequence will then be</p>
+<p>\( a = {@a_mod_ans@} \)</p>
+<p>\( a_2 = {@a_mod_ans@}+{@d_mod_ans@}= {@a_mod_ans_2@} \)</p>
+<p>\( a_3 = {@a_mod_ans@}+2 \times {@d_mod_ans@}= {@a_mod_ans_3@} \)</p>
+<p>\( a_4 = {@a_mod_ans@}+3 \times {@d_mod_ans@}= {@a_mod_ans_4@}. \)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <tags>
+      <tag><text>Open Bridging</text>
+</tag>
+      <tag><text>Bridging</text>
+</tag>
+      <tag><text>Bridging Week 1</text>
+</tag>
+    </tags>
+  </question>
+</quiz>

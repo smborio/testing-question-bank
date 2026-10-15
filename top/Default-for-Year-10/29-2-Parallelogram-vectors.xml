@@ -1,0 +1,894 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>29.2 Parallelogram vectors</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Consider the following figure:</p>
+
+[[jsxgraph]]
+
+JXG.Options.text.useMathJax=true; 
+
+var board = JXG.JSXGraph.initBoard(divid, {boundingbox:[-5,5,5,-5], keepaspectratio:true, showCopyright:false, showNavigation:false});
+
+var paraStyle = {fixed:true, highlight:false, fillColor:"red", fillOpacity:0.1, borders:{strokeColor:"red", strokeOpacity:0.5, strokeWidth:2, fixed:true, highlight:false}, vertices:{visible:false}};
+var lineStyle = {strokeColor:"red", strokeOpacity:0.5, strokeWidth:2, fixed:true, highlight:false};
+var longDiagStyle = {strokeColor:"green", strokeOpacity:0.5, strokeWidth:2, fixed:true, highlight:false, dash:2};
+var shortDiagStyle = {strokeColor:"blue", strokeOpacity:0.5, strokeWidth:2, fixed:true, highlight:false, dash:2};
+var arrowStyle = {fixed:true, highlight:false, strokeColor:"black"};
+var pointLabStyle = {fixed:true, highlight:false, fontSize:15, anchorX:"center", anchorY:"center", useMathJax:true, parse:false};
+var vecLabStyle = {fixed:true, highlight:false, fontSize:15, anchorX:"center", anchorY:"center", useMathJax:true, parse:false};
+
+var paraOEHD = board.create("polygon", [[-4,-3], [4,-3], [6,3], [-2,3]], paraStyle);
+var segBF = board.create("segment", [[0,-3],[2,3]], lineStyle);
+var segAG = board.create("segment", [[-3,0],[5,0]], lineStyle);
+var diagAH = board.create("segment", [[-4,-3],[6,3]], longDiagStyle);
+var diagDE = board.create("segment", [[-2,3],[4,-3]], shortDiagStyle);
+var arrowOA = board.create("arrow", [[-4,-3], [-3,0]], arrowStyle);
+var arrowOB = board.create("arrow", [[-4,-3], [0,-3]], arrowStyle);
+
+var labO = board.create("text", [-4.6,-3, "\\(O\\)"], pointLabStyle);
+var labA = board.create("text", [-3.7,0.2, "\\(A\\)"], pointLabStyle);
+var labB = board.create("text", [-0.4,-3.2, "\\(B\\)"], pointLabStyle);
+var labC = board.create("text", [0.7,0.8, "\\(C\\)"], pointLabStyle);
+var labD = board.create("text", [-2.6,3.5, "\\(D\\)"], pointLabStyle);
+var labE = board.create("text", [4.2,-3.1, "\\(E\\)"], pointLabStyle);
+var labF = board.create("text", [2,3.6, "\\(F\\)"], pointLabStyle);
+var labG = board.create("text", [5.3,0.2, "\\(G\\)"], pointLabStyle);
+var labH = board.create("text", [6.3,3.4, "\\(H\\)"], pointLabStyle);
+
+var labOA = board.create("text", [-4,-1.3, "\\(\\vec{a}\\)"], vecLabStyle);
+var labOB = board.create("text", [-2.3,-3.1, "\\(\\vec{b}\\)"], vecLabStyle);
+
+[[/jsxgraph]]
+
+<p><i>Diagram is not to scale.</i></p>
+
+<p><br>Let  \(\vec{a} = \left( \begin{array}{c} {@aX@} \\ {@aY@} \end{array} \right)\) and \(\vec{b} = \left( \begin{array}{c} {@bX@} \\ 0 \end{array} \right)\)</p> 
+<p>Let \(X\) be the midpoint of \({@midX@}\) and \(Y\) be the midpoint of \({@midY@}\)</p>
+<p><br>(a) Describe \(\overrightarrow{OX}\) in terms of \(\vec{a}\) and \(\vec{b}.\)</p>
+<p align="right"><br>\(\overrightarrow{OX} = \) [[input:ans1]] \(\vec{a} +\) [[input:ans2]] \(\vec{b}\) [[validation:ans1]] [[validation:ans2]]</p>
+<p>[[feedback:prt1]]</p>
+<p align="right"><b>(1)</b></p>
+
+<p><br>(b) What is the magnitude of \(\overrightarrow{OX}?\)<br><i>Give your answer in exactly an exact form.</i></p>
+<p align="right"><br>\(\vert\overrightarrow{OX}\vert = \) [[input:ans3]] [[validation:ans3]]</p>
+<p>[[feedback:prt2]]</p>
+<p align="right"><b>(1)</b></p>
+
+<p><br>(c) Write a vector in terms of \(\vec{a}\) and \(\vec{b}\) that is the reflection of \(\overrightarrow{YX}\) in \(DE.\)</p> 
+<p align="right"><br>[[input:ans4]] \(\vec{a} +\) [[input:ans5]] \(\vec{b}\) [[validation:ans4]] [[validation:ans5]]</p>
+<p>[[feedback:prt3]]</p>
+<p align="right"><b>(2)</b></p>
+
+<p>(d) How many times longer is the diagonal \(OH\) than \(DE?\)<br><i>Give your answer in an exact form.</i></p>
+<p align="right"><br>[[input:ans6]] [[validation:ans6]]</p>
+<p>[[feedback:prt4]]</p>
+<p align="right"><b>(2)</b></p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>6</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Generate vectors a and b */
+bX:rand(5)+4;
+aX:rand(bX-2)+1;
+aY:rand(5)+1
+
+/* Generating midpoints X and Y */
+midX:rand(["DF","FH","CF","CG","GH","EG"]);
+midY:rand(["OA","OB"]);
+
+/* OX */
+tans1: if midX="EG" then 1/2 else if midX="CG" then 1 else if (midX="CF" or midX="GH") then 3/2 else if (midX="FH" or midX="DF") then 2;
+tans2: if midX="DF" then 1/2 else if midX="CF" then 1 else if (midX="FH" or midX="CG") then 3/2 else if (midX="GH" or midX="EG") then 2;
+
+tans3: sqrt((tans1*aX+tans2*bX)^2+(tans1*aY)^2);
+
+/* YX reflected in DE */
+aXref: if midX="EG" or midX="GH" then 0 else if midX="CG" or midX="FH" then 1/2 else if midX="CF" then 1 else 3/2;
+bXref: if midX="DF" or midX="FH" then 0 else if midX="CF" or midX="GH" then 1/2 else if midX="CG" then 1 else 3/2;
+
+aYref: if midY="OA" then 2 else 3/2;
+bYref: if midY="OA" then 3/2 else 2;
+
+tans4:aXref-aYref;
+tans5:bXref-bYref;
+
+tans6: sqrt((4*(bX+aX)^2+4*aY^2)/(4*(bX-aX)^2+4*aY^2));]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p><br>\(\vec{a} = \left (\begin{array}{c} {@aX@} \\ {@aY@} \end{array} \right)\) and \(\vec{b} = \left( \begin{array}{c} {@bX@} \\ 0 \end{array} \right)\)</p> 
+<p>\(X\) is the midpoint of \({@midX@}\) and \(Y\) is the midpoint of \({@midY@}\)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>tans1</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint>0</syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>tans2</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint>0</syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>tans3</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint>0</syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>tans4</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint>0</syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>tans5</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint>0</syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans6</name>
+      <type>algebraic</type>
+      <tans>tans6</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint>0</syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correctness */
+node1_test: if ans1=tans1 and ans2=tans2 then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Check if a coeff is correct */
+
+/* Check if b coeff is correct */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\(\overrightarrow{OX} = {@if midX="DF" then "\\overrightarrow{OD}" else if midX="HF" then "\\overrightarrow{OF}" else if midX="EG" then "\\overrightarrow{OE}" else if midX="GH" then "\\overrightarrow{OG}" else "\\overrightarrow{OC}"@} + {@if midX="DF" then "\\overrightarrow{DX}" else if midX="HF" then "\\overrightarrow{FX}" else if midX="EG" then "\\overrightarrow{EX}" else if midX="GH" then "\\overrightarrow{GX}" else "\\overrightarrow{CX}"@}\)</p>
+
+<p>\(\overrightarrow{OX} = {@if midX="DF" then "\\overrightarrow{OD}" else if midX="HF" then "\\overrightarrow{OF}" else if midX="EG" then "\\overrightarrow{OE}" else if midX="GH" then "\\overrightarrow{OG}" else "\\overrightarrow{OC}"@} + \frac{1}{2}\overrightarrow{{@midX@}}\)</p>
+
+<p>\(\overrightarrow{OX} = ({@if midX="DF" then "2\\vec{a}" else if midX="HF" then "2\\vec{a} + \\vec{b}" else if midX="EG" then "2\\vec{b}" else if midX="GH" then "\\vec{a} + 2\\vec{b}" else "\\vec{a} + \\vec{b}"@}) + \frac{1}{2}({@if midX="DF" or midX="FH" or midX="CG" then "\\vec{b}" else "\\vec{a}"@})\)</p>
+
+<p>\(\overrightarrow{OX} = {@if notequal(tans1,1) then tans1 else ""@}\vec{a} + {@if notequal(tans2,1) then tans2 else ""@}\vec{b}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>tans1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your coefficient of \(\vec{a}\) is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your coefficient of \(\vec{a}\) is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>tans2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your coefficient of \(\vec{b}\) is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your coefficient of \(\vec{b}\) is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+
+/* Node 3: Check whether answer consistent with (a) */
+node3_error: sqrt((ans1*aX+ans2*bX)^2+(ans1*aY)^2);
+
+/* Node 4: Check whether correct answer is given approximately */
+node4_test: if tans3-0.1<ans3 and ans3<tans3+0.1 and floatnump(ans3) then 1 else 0;
+
+/* Node 5: Check whether consistent answer is given approximately */
+node5_test: if node3_error-0.1<ans3 and ans3<node3_error+0.1 and floatnump(ans3) then 1 else 0;
+
+/* Node 6: Check whether they have just summed magnitudes of a and b times respective constants */
+node6_error: ans1*sqrt(aX^2+aY^2) + ans2*bX;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>tans3</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\(\overrightarrow{OX} = {@if tans1=1 then "" else tans1@}\vec{a} + {@if tans2=1 then "" else tans2@}\vec{b}\)</p>
+
+<p>\(\overrightarrow{OX} = {@if tans1=1 then "" else tans1@}\left( \begin{array}{c} {@aX@} \\ {@aY@} \end{array} \right) + {@if tans2=1 then "" else tans2@}\left( \begin{array}{c} {@bX@} \\ 0 \end{array} \right)\)</p>
+
+<p>\(\overrightarrow{OX} = \left( \begin{array}{c} {@tans1*aX+tans2*bX@} \\ {@tans1*aY@} \end{array} \right)\)</p>
+
+<p>\(\vert\overrightarrow{OX}\vert = \sqrt{{@tans1*aX+tans2*bX@}^2 + {@tans1*aY@}^2}\)</p>
+<p>\(\vert\overrightarrow{OX}\vert = {@sqrt((tans1*aX+tans2*bX)^2 + (tans1*aY)^2)@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>node3_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer is not the correct magnitude of \(\overrightarrow{OX}\).<br>However, it is consistent with the answer that you gave for (a).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer is correct.<br>However, you have given your answer approximately when you should have given an exact answer.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer is not correct, however it is consistent with your answer in (a).<br>You have also given your answer approximately when you should have given an exact answer.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>node6_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have used an incorrect method to determine the magnitude of \(\overrightarrow{OX}\).<br>You have summed the magnitudes of \(\vec{a}\) and \(\vec{b}\) multiplied by their respective constants.<br>However, you should find the vector \(\overrightarrow{OX}\) first and then determine the magnitude.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct answer */
+node1_test: if ans4=tans4 and ans5=tans5 then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check whether found reflection of XY (1) */
+node3_test: if ans4=-tans4 and ans5=-tans5 then 1 else 0;
+
+/* Node 4: Check whether either of a or b coeff is correct (1) */
+node6_test: if ans4=tans4 or ans5=tans5 then 1 else 0;
+
+/* Node 5: Check whether student has found YX but not reflected (1) */
+node5_test: if (midY="OA" and ans4=tans1-1/2 and ans5=tans2) or (midY="OB" and ans4=tans1 and ans5=tans2-1/2) then 1 else 0;
+
+/* Node 6: Check whether student has found YX consistent with (a) but not reflected (1) */
+node6_test: if (midY="OA" and ans4=ans1-1/2 and ans5=ans2) or (midY="OB" and ans4=ans1 and ans5=ans2-1/2) then 1 else 0;
+
+/* Node 7: Check whether student has found XY but not reflected */
+node7_test: if (midY="OA" and ans4=1/2-tans1 and ans5=tans2) or (midY="OB" and ans4=tans1 and ans5=1/2-tans2) then 1 else 0;
+
+/* Node 8: Check whether student has found XY consistent with (a) but not reflected */
+node8_test: if (midY="OA" and ans4=1/2-ans1 and ans5=ans2) or (midY="OB" and ans4=ans1 and ans5=1/2-ans2) then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>Letting \(X'\) and \(Y'\) be the reflections of \(X\) and \(Y\) respectively in \(DE\)</p>
+
+<p>\(X'\) is the midpoint of \({@if midX="DF" then "AD" else if midX="FH" then "OA" else if midX="CF" then "AC" else if midX="CG" then "BC" else if midX="GH" then "OB" else "BE"@}\).</p>
+
+<p>\(Y'\) is the midpoint of \({@if midY="OA" then "FH" else "GH"@}\).</p>
+
+<p>Therefore \(\overrightarrow{OX'} = {@if aXref=1 or aXref=0 then "" else aXref@}{@if aXref=0 then "" else "\\vec{a} +"@} {@if bXref=1 then "" else bXref@}\vec{b}\) and \(\overrightarrow{OY'} = {@if aYref=1 then "" else aYref@}\vec{a} + {@if bYref=1 then "" else bYref@}\vec{b}\)<p>
+
+<p>\(\overrightarrow{Y'X'} = \overrightarrow{OX'} - \overrightarrow{OY'}\)</p>
+
+<p>\(\overrightarrow{Y'X'} = ({@if aXref=1 or aXref=0 then "" else aXref@}{@if aXref=0 then "" else "\\vec{a} +"@} {@if bXref=1 then "" else bXref@}\vec{b}) - ({@if aYref=1 then "" else aYref@}\vec{a} + {@if bYref=1 then "" else bYref@}\vec{b})\)</p>
+
+<p>\(\overrightarrow{Y'X'} = {@if tans4=1 or tans4=0 then "" else tans4@}{@if tans4=0 then "" else "\\vec{a}"@} {@if tans5<0 then "-" else if tans5=0 then "" else "+"@} {@if tans5=1 or ans5=0 then "" else abs(tans5)@}{@if tans5=0 then "" else "\\vec{b}"@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the reflection of \(overrightarrow{XY}\) in the line \(DE\), which is in the opposite direction to the reflection of \(overrightarrow{YX}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your coefficient of \({@if ans4=tans4 then "\\vec{a}" else "\\vec{b}"@}\) is correct.<br>However, your coefficient of \({@if ans4=tans4 then "\\vec{b}" else "\\vec{a}"@}\) is incorrect.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt3-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the vector \(\overrightarrow{YX}\) to reflect it in the line \(DE\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt3-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have attempted to find the vector \(\overrightarrow{YX}\), however you have used incorrect values form (a).<br>You have also forgotten to reflect it in the line \(DE\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt3-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the vector \(\overrightarrow{XY}\) however you have used incorrect values form (a).<br>You should have found the vector \(\overrightarrow{YX}\) and you have also forgotten to reflect then vector in the line \(DE\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt3-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node8_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have attempted to find the vector \(\overrightarrow{XY}\) however you should have found \(\overrightarrow{YX}\).<br>You have also forgotten to reflect then vector in the line \(DE\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt4</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check whether student used incorrect method to find mag(OH) and mag(DE) (summing mag(a) and mag(b) multiplied by coefficients) */
+node3_error: (sqrt(aX^2+aY^2)+bX)/(-sqrt(aX^2+aY^2)+bX);</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans6</sans>
+        <tans>tans6</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt4-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt4-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\(\overrightarrow{OH} = 2\vec{a} + 2\vec{b}\) and \(\overrightarrow{DE} = 2\vec{b} - 2\vec{a}\)</p>
+
+<p>\(\overrightarrow{OH} = \left( \begin{array}{c} {@2*aX+2*bX@} \\ {@2*aY@} \end{array} \right)\) and \(\overrightarrow{DE} = \left( \begin{array}{c} {@2*bX-2*aX@} \\ {@-2*aY@} \end{array} \right)\)</p>
+
+<p>\(\vert\overrightarrow{OH}\vert = \sqrt{{@2*aX+2*bX@}^2 + {@2*aY@}^2}\) and \(\vert\overrightarrow{DE}\vert = \sqrt{{@2*bX-2*aX@}^2 + ({@-2*aY@})^2}\)</p>
+
+<p>So, \(\frac{\vert\overrightarrow{OH}\vert}{\vert\overrightarrow{DE}\vert} = \frac{{@sqrt((2*aX+2*bX)^2 + (2*aY)^2)@}}{{@sqrt((2*bX-2*aX)^2 + (-2*aY)^2)@}}\)</p>
+
+<p>\(\frac{\vert\overrightarrow{OH}\vert}{\vert\overrightarrow{DE}\vert} = {@tans6@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt4-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans6</sans>
+        <tans>node3_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You correctly identified that \(\overrightarrow{OH} = 2\vec{a} + 2\vec{b}\) and \(\overrightarrow{DE} = 2\vec{b} - 2\vec{a}\).<br>However, you have used an incorrect method to determine the magnitudes of \(\overrightarrow{OH}\) and \(\overrightarrow{DE}\).<br>You have summed the magnitudes of \(\vec{a}\) and \(\vec{b}\) multiplied by their respective constants.<br>You should find the vectors \(\overrightarrow{OH}\) and \(\overrightarrow{DE}\) first and then determine the magnitude.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt4-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

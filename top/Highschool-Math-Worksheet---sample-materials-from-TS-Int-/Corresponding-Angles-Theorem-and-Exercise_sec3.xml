@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Corresponding Angles Theorem and Exercise_sec3</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>Two parallel lines <strong>AB</strong> and <strong>CD</strong> are cut by a transversal <strong>XY</strong>. The intersections are <strong>O<sub>1</sub></strong> and <strong>O<sub>2</sub></strong>. One pair of corresponding angles is shown in the diagram.</p>
+
+<p><em>Recall:</em> When a transversal crosses two parallel lines, corresponding angles are equal.</p>
+
+<br>
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-1, 7, 8, -1],
+    axis: false,
+    showCopyright: false,
+    showNavigation: false,
+    keepAspectRatio: true
+});
+
+// Points for parallel lines
+var A = board.create('point', [0,5], {name:'A', size:2, fixed:true});
+var B = board.create('point', [7,5], {name:'B', size:2, fixed:true});
+var C = board.create('point', [0,2], {name:'C', size:2, fixed:true});
+var D = board.create('point', [7,2], {name:'D', size:2, fixed:true});
+
+// Parallel lines
+var lineAB = board.create('line', [A, B], {straightFirst:false, straightLast:false, strokeWidth:2});
+var lineCD = board.create('line', [C, D], {straightFirst:false, straightLast:false, strokeWidth:2});
+
+// Transversal points
+var X = board.create('point', [1,0], {name:'X', size:2, fixed:true});
+var Y = board.create('point', [4,6], {name:'Y', size:2, fixed:true});
+var transversal = board.create('line', [X,Y], {straightFirst:false, straightLast:false, strokeWidth:2, dash:2});
+
+// Intersection points
+var O1 = board.create('intersection', [lineAB, transversal, 0], {name:'O₁', size:2, visible:true});
+var O2 = board.create('intersection', [lineCD, transversal, 0], {name:'O₂', size:2, visible:true});
+
+// Label all four angles at O1
+board.create('angle', [B, O1, Y], {radius:0.5, name: ' ',  fillColor:'lightblue', fillOpacity:0.5, strokeColor:'red', visible:true});
+board.create('angle', [Y, O1, A], {radius:0.5, name: ' ', fillColor:'lightgreen', fillOpacity:0.5, strokeColor:'green', visible:false});
+board.create('angle', [A, O1, X], {radius:0.5, name: ' ', fillColor:'pink', fillOpacity:0.5, strokeColor:'red', visible:false});
+board.create('angle', [X, O1, B], {radius:0.5, name: ' ', fillColor:'orange', fillOpacity:0.5, strokeColor:'orange', visible:false});
+
+// Label all four angles at O2
+board.create('angle', [D, O2, O1], {radius:0.5, name: ' ', fillColor:'lightblue', fillOpacity:0.5, strokeColor:'blue', visible:true});
+board.create('angle', [O1, O2, C], {radius:0.5, name: ' ', fillColor:'lightgreen', fillOpacity:0.5, strokeColor:'green', visible:false});
+board.create('angle', [C, O2, X], {radius:0.5, name: ' ', fillColor:'pink', fillOpacity:0.5, strokeColor:'red', visible:false});
+board.create('angle', [X, O2, D], {radius:0.5, name: ' ', fillColor:'orange', fillOpacity:0.5, strokeColor:'orange', visible:false});
+
+// Optional: label pairs
+board.create('text', [O1.X()+0.6, O1.Y()+0.4, '{#angl_corres_1#} '], {fontSize:12});
+board.create('text', [O2.X()+0.5, O2.Y()+0.3, '{#angl_corres_2#} '], {fontSize:12});
+board.create('text', [O1.X()-0.8, O1.Y()+0.2, '  '], {fontSize:12});
+board.create('text', [O2.X()-0.8, O2.Y()+0.2, '  '], {fontSize:12});
+board.create('text', [O1.X()-0.8, O1.Y()-0.3, '  '], {fontSize:12});
+board.create('text', [O2.X()-0.8, O2.Y()-0.3, '  '], {fontSize:12});
+board.create('text', [O1.X()+0.3, O1.Y()-0.3, '  '], {fontSize:12});
+board.create('text', [O2.X()+0.3, O2.Y()-0.3, '  '], {fontSize:12});
+[[/jsxgraph]]
+
+<p><strong>Instructions:</strong></p>
+<p>. </p>
+<hr>
+
+<ol>
+<li>
+<p> Calculate the value of \(x\).</p>
+<p> \( x = \) [[input:ans1]] </p>
+<p>[[validation:ans1]] [[feedback:prt1]]</p>
+</li>
+<p></p>
+
+<li>
+<p> Substitute your value of \(x\) to find the actual sizes of the angles:</p>
+
+<ol type="i">
+  <li>\(\angle BO_{1}Y =\) [[input:ans_angle1]] \(^{\circ}\) [[validation:ans_angle1]] [[feedback:prt_ans_angle1]]</li>
+<p></p>
+  <li>\(\angle DO_{2}O_{1} =\) [[input:ans_angle2]] \(^{\circ}\) [[validation:ans_angle2]] [[feedback:prt_ans_angle2]]</li>
+<p></p>
+  <li>\(\angle AO_{1}O_{2}=\) [[input:ans_angle3]] \(^{\circ}\) [[validation:ans_angle3]] [[feedback:prt_ans_angle3]]</li>
+<p></p>
+  <li>\(\angle CO_{2}X =\) [[input:ans_angle4]] \(^{\circ}\) [[validation:ans_angle4]] [[feedback:prt_ans_angle4]]</li>
+<p></p>
+  <li>\(\angle O_{2}O_{1}B =\) [[input:ans_angle5]] \(^{\circ}\) [[validation:ans_angle5]] [[feedback:prt_ans_angle5]]</li>
+<p></p>
+  <li>\(\angle XO_{2}D =\) [[input:ans_angle6]] \(^{\circ}\) [[validation:ans_angle6]] [[feedback:prt_ans_angle6]]</li>
+</ol>
+</ol>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text><![CDATA[<h3>Worked Solution</h3>
+
+<p>Because they are corresponding angles, we set</p>
+<p>\(
+\angle BO_1Y = \angle DO_2O_1 \quad \Rightarrow \quad {@angl_corres_1@} = {@angl_corres_2@}
+\)</p>
+
+<p>Solving for \(x\) we get \( x = {@soln_x@} \)</p>
+
+<p>Now we substitute this value of \(x\) into the angle expressions:</p>
+
+<ul>
+  <li>\(\angle BO_1Y = {@angl_corres_1@} = {@angl_corres_11@}^\circ\)   <em>(Given by construction)</em></li>
+  <li>\(\angle DO_2O_1  = {@angl_corres_22@}^\circ\)   <em>(Corresponding to \(\angle BO_1Y\))</em></li>
+
+  <li>\(\angle AO_1O_2 =  {@angl_corres_11@}^\circ\)   <em>(Vertical opposite to \(\angle BO_1Y\))</em></li>
+  <li>\(\angle CO_2X  = {@angl_corres_22@}^\circ\)   <em>(Vertical opposite to \(\angle DO_2O_1\))</em></li>
+  <li>\(\angle O_2O_1B = 180^\circ - {@angl_corres_11@} = {#angl_O2O1B#}^\circ\)   <em>(Linear pair with \(\angle BO_1Y\))</em></li>
+  <li>\(\angle XO_2B = 180^\circ - \left ( {@angl_corres_22@} \right) = {#angl_XO2B#}^\circ\)   <em>(Linear pair with \(\angle DO_2O_1\))</em></li>
+</ul>
+
+
+<br>
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-1, 7, 8, -1],
+    axis: false,
+    showCopyright: false,
+    showNavigation: false,
+    keepAspectRatio: true
+});
+
+// Points for parallel lines
+var A = board.create('point', [0,5], {name:'A', size:2, fixed:true});
+var B = board.create('point', [7,5], {name:'B', size:2, fixed:true});
+var C = board.create('point', [0,2], {name:'C', size:2, fixed:true});
+var D = board.create('point', [7,2], {name:'D', size:2, fixed:true});
+
+// Parallel lines
+var lineAB = board.create('line', [A, B], {straightFirst:false, straightLast:false, strokeWidth:2});
+var lineCD = board.create('line', [C, D], {straightFirst:false, straightLast:false, strokeWidth:2});
+
+// Transversal points
+var X = board.create('point', [1,0], {name:'X', size:2, fixed:true});
+var Y = board.create('point', [4,6], {name:'Y', size:2, fixed:true});
+var transversal = board.create('line', [X,Y], {straightFirst:false, straightLast:false, strokeWidth:2, dash:2});
+
+// Intersection points
+var O1 = board.create('intersection', [lineAB, transversal, 0], {name:'O₁', size:2, visible:true});
+var O2 = board.create('intersection', [lineCD, transversal, 0], {name:'O₂', size:2, visible:true});
+
+// Label all four angles at O1
+board.create('angle', [B, O1, Y], {radius:0.5, name: ' ',  fillColor:'lightblue', fillOpacity:0.5, strokeColor:'red', visible:true});
+board.create('angle', [Y, O1, A], {radius:0.5, name: ' ', fillColor:'lightgreen', fillOpacity:0.5, strokeColor:'green', visible:false});
+board.create('angle', [A, O1, X], {radius:0.5, name: ' ', fillColor:'pink', fillOpacity:0.5, strokeColor:'black', visible:true});
+board.create('angle', [X, O1, B], {radius:0.5, name: ' ', fillColor:'orange', fillOpacity:0.5, strokeColor:'orange', visible:true});
+
+// Label all four angles at O2
+board.create('angle', [D, O2, O1], {radius:0.5, name: ' ', fillColor:'lightblue', fillOpacity:0.5, strokeColor:'blue', visible:true});
+board.create('angle', [O1, O2, C], {radius:0.5, name: ' ', fillColor:'lightgreen', fillOpacity:0.5, strokeColor:'green', visible:false});
+board.create('angle', [C, O2, X], {radius:0.5, name: ' ', fillColor:'pink', fillOpacity:0.5, strokeColor:'red', visible:true});
+board.create('angle', [X, O2, D], {radius:0.5, name: ' ', fillColor:'orange', fillOpacity:0.5, strokeColor:'orange', visible:true});
+
+// Optional: label pairs
+board.create('text', [O1.X()+0.6, O1.Y()+0.4, '{#angl_corres_11#} '], {fontSize:12});
+board.create('text', [O2.X()+0.5, O2.Y()+0.3, '{#angl_corres_22#} '], {fontSize:12});
+board.create('text', [O1.X()-0.8, O1.Y()+0.2, '  '], {fontSize:12});
+board.create('text', [O2.X()-0.8, O2.Y()+0.2, '  '], {fontSize:12});
+board.create('text', [O1.X()-0.8, O1.Y()-0.3, ' {#angl_corres_11#} '], {fontSize:12});
+board.create('text', [O2.X()-0.8, O2.Y()-0.3, ' {#angl_corres_22#} '], {fontSize:12});
+board.create('text', [O1.X()+0.3, O1.Y()-0.3, ' {#angl_O2O1B#} '], {fontSize:12});
+board.create('text', [O2.X()+0.3, O2.Y()-0.3, ' {#angl_XO2B#}'], {fontSize:12});
+[[/jsxgraph]]]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* choose a random solution for x */
+soln_x: 2 + rand_with_step(1,5,1); /* integer x between 1 and 10 */
+ta1: soln_x; 
+
+/* coefficients */
+var1: rand_with_step(5,20,1); 
+var2: rand_with_step(5,20,1); 
+
+/* build expressions so they match */
+angl_corres_1: var1*x + 5;
+/* define var3 so equality holds exactly when x=soln_x */
+var3: var2*soln_x - (var1*soln_x + 5);
+angl_corres_2: var2*x - var3;
+
+/* actual angle values when x=soln_x */
+angl_BO_1Y: decimalplaces(float(subst(x=soln_x, angl_corres_1)),2);
+angl_DO_2O_1: decimalplaces(float(subst(x=soln_x, angl_corres_2)),2);
+
+/* Solutions of the actual angles */
+angl_corres_11: var1*soln_x + 5;
+angl_corres_22: var2*soln_x  - var3;
+
+angl_AO1O2: angl_corres_11;          /* vertical opposite with ∠BO1Y */ 
+angl_CO2X: angl_corres_22;           /* vertical opposite with ∠DO2O1 */ 
+angl_O2O1B: 180 - angl_corres_11;    /* linear pair with ∠BO1Y */ 
+angl_XO2B:  180 - angl_corres_22;    /* linear pair with ∠DO2O1 */</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="html">
+      <text><![CDATA[<p>Corresponding angles</p>
+<p> {@angl_corres_1@}</p>
+<p> {@angl_corres_2@}</p>
+<p>Because they are corresponding, \(\displaystyle {@angl_corres_1@}= {@angl_corres_2@}\)</p>
+<p> Solving for x we have \(\displaystyle x= {@soln_x@}\)</p>
+<p>Therefore the size of the angles will be as follows</p>
+<p> \(\angle BO_1Y  =  \displaystyle {@angl_corres_1@} \)  will be \( {@angl_BO_1Y@}\)</p>
+<p>So will, </p>
+<p> \(\angle DO_2O_1  =  \displaystyle {@angl_corres_2@} \)  will be \( {@angl_DO_2O_1@}\)</p>
+<br>
+
+<br>
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-1, 7, 8, -1],
+    axis: false,
+    showCopyright: false,
+    showNavigation: false,
+    keepAspectRatio: true
+});
+
+// Points for parallel lines
+var A = board.create('point', [0,5], {name:'A', size:2, fixed:true});
+var B = board.create('point', [7,5], {name:'B', size:2, fixed:true});
+var C = board.create('point', [0,2], {name:'C', size:2, fixed:true});
+var D = board.create('point', [7,2], {name:'D', size:2, fixed:true});
+
+// Parallel lines
+var lineAB = board.create('line', [A, B], {straightFirst:false, straightLast:false, strokeWidth:2});
+var lineCD = board.create('line', [C, D], {straightFirst:false, straightLast:false, strokeWidth:2});
+
+// Transversal points
+var X = board.create('point', [1,0], {name:'X', size:2, fixed:true});
+var Y = board.create('point', [4,6], {name:'Y', size:2, fixed:true});
+var transversal = board.create('line', [X,Y], {straightFirst:false, straightLast:false, strokeWidth:2, dash:2});
+
+// Intersection points
+var O1 = board.create('intersection', [lineAB, transversal, 0], {name:'O₁', size:2, visible:true});
+var O2 = board.create('intersection', [lineCD, transversal, 0], {name:'O₂', size:2, visible:true});
+
+// Label all four angles at O1
+board.create('angle', [B, O1, Y], {radius:0.5, name: ' ',  fillColor:'lightblue', fillOpacity:0.5, strokeColor:'red', visible:true});
+board.create('angle', [Y, O1, A], {radius:0.5, name: ' ', fillColor:'lightgreen', fillOpacity:0.5, strokeColor:'green', visible:false});
+board.create('angle', [A, O1, X], {radius:0.5, name: ' ', fillColor:'pink', fillOpacity:0.5, strokeColor:'red', visible:false});
+board.create('angle', [X, O1, B], {radius:0.5, name: ' ', fillColor:'orange', fillOpacity:0.5, strokeColor:'orange', visible:false});
+
+// Label all four angles at O2
+board.create('angle', [D, O2, O1], {radius:0.5, name: ' ', fillColor:'lightblue', fillOpacity:0.5, strokeColor:'blue', visible:true});
+board.create('angle', [O1, O2, C], {radius:0.5, name: ' ', fillColor:'lightgreen', fillOpacity:0.5, strokeColor:'green', visible:false});
+board.create('angle', [C, O2, X], {radius:0.5, name: ' ', fillColor:'pink', fillOpacity:0.5, strokeColor:'red', visible:false});
+board.create('angle', [X, O2, D], {radius:0.5, name: ' ', fillColor:'orange', fillOpacity:0.5, strokeColor:'orange', visible:false});
+
+// Optional: label pairs
+board.create('text', [O1.X()+0.6, O1.Y()+0.4, '{#angl_corres_1#} '], {fontSize:12});
+board.create('text', [O2.X()+0.5, O2.Y()+0.3, '{#angl_corres_2#} '], {fontSize:12});
+board.create('text', [O1.X()-0.8, O1.Y()+0.2, '∠2 '], {fontSize:12});
+board.create('text', [O2.X()-0.8, O2.Y()+0.2, '∠6 '], {fontSize:12});
+board.create('text', [O1.X()-0.8, O1.Y()-0.3, '∠3 '], {fontSize:12});
+board.create('text', [O2.X()-0.8, O2.Y()-0.3, '∠7 '], {fontSize:12});
+board.create('text', [O1.X()+0.3, O1.Y()-0.3, '∠4 '], {fontSize:12});
+board.create('text', [O2.X()+0.3, O2.Y()-0.3, '∠8 '], {fontSize:12});
+[[/jsxgraph]]]]></text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans_angle1</name>
+      <type>algebraic</type>
+      <tans>angl_corres_11</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans_angle2</name>
+      <type>algebraic</type>
+      <tans>angl_corres_22</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans_angle3</name>
+      <type>algebraic</type>
+      <tans>angl_AO1O2</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans_angle4</name>
+      <type>algebraic</type>
+      <tans>angl_CO2X</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans_angle5</name>
+      <type>algebraic</type>
+      <tans>angl_O2O1B</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans_angle6</name>
+      <type>algebraic</type>
+      <tans>angl_XO2B</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta1</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt_ans_angle1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans_angle1</sans>
+        <tans>angl_corres_11</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt_ans_angle1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt_ans_angle1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt_ans_angle2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans_angle2</sans>
+        <tans>angl_corres_22</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt_ans_angle2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt_ans_angle2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt_ans_angle3</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans_angle3</sans>
+        <tans>angl_AO1O2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt_ans_angle3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt_ans_angle3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt_ans_angle4</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans_angle4</sans>
+        <tans>angl_CO2X</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt_ans_angle4-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt_ans_angle4-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt_ans_angle5</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans_angle5</sans>
+        <tans>angl_O2O1B</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt_ans_angle5-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt_ans_angle5-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt_ans_angle6</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans_angle6</sans>
+        <tans>angl_XO2B</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt_ans_angle6-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt_ans_angle6-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>1263930053</deployedseed>
+    <deployedseed>1517953459</deployedseed>
+    <deployedseed>1332611730</deployedseed>
+    <deployedseed>1556272740</deployedseed>
+    <deployedseed>1233373882</deployedseed>
+    <deployedseed>1148434877</deployedseed>
+    <deployedseed>1614994581</deployedseed>
+    <deployedseed>1948146753</deployedseed>
+    <deployedseed>1943238367</deployedseed>
+    <deployedseed>1251310244</deployedseed>
+  </question>
+</quiz>

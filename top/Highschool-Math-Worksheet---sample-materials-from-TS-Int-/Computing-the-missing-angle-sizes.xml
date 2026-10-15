@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Computing the missing angle sizes</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>Find the size of angle  \(\angle BCA\) in the diagram below </p>
+
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-8, 12, 16, -5],
+    keepAspectRatio: false,
+    showCopyright: false,
+    showNavigation: false,
+    axis: false
+});
+
+const A = board.create('point', [-1, -1], { name: 'A', size: 2, fixed: true });
+const B = board.create('point', [-5,10], { name: 'B', size: 2, fixed: true });
+const C = board.create('point', [12,5], { name: 'C', size: 2, fixed: true });
+
+/* Put angle text labels */
+board.create('text', [0, 0.5, '{#A#}°'], {fontSize: 12});
+board.create('text', [-4, 9, '{#B#}°'], {fontSize: 12});
+board.create('text', [10, 5,' '], {fontSize: 12});
+
+
+// Angle at C (between points B-C-A)
+board.create('angle', [B, C, A], { radius: 1, name: ' ',  type: 'sector', orthoSensitivity: false, fillColor: 'lightblue', strokeColor: 'blue' });
+
+
+// Angle at B (between points A-B-C)
+board.create('angle', [A, B, C], { radius: 1, name: ' ',type: 'sector', orthoSensitivity: false, fillColor: 'lightgreen', strokeColor: 'green' });
+
+// Angle at A (between rays AB and AC)
+board.create('angle', [C, A, B], { radius: 1, name: ' ',  type: 'sector', fillColor: 'lightblue', strokeColor: 'blue' });
+
+
+
+board.create('polygon', [A,B,C], {
+    borders: { strokeWidth: 1, strokeColor: 'blue' },
+    fillColor: 'none'
+});
+
+
+[[/jsxgraph]]
+
+<br>
+
+<p> \(\angle BCA = \)  [[input:ans1]]  [[validation:ans1]][[feedback:prt1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text><![CDATA[<h3>Worked solution</h3>
+
+<p>Recall that the sum of the interior angles in any triangle is 180°.</p>
+
+<p>From the question, the angles need to add upto 180°:</p>
+
+<p> \( {@A@}+{@B@}+ x = 180° \) </p>
+<p> \( x = 180°- {@A+B@} \) </p>
+<p>\( x= {@C@}\)</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Generate two random angles between 30 and 120 */
+C: 1+ rand_with_step(20,50,5);
+B: 4+ rand_with_step(50,70,5);
+
+/* Make sure the third angle is valid */
+A: 180 - (C + B);
+
+ta: C;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<h3>Worked solution</h3>
+<p>We are finding the hypotenuse {@letters@} of a right-angled triangle.</p>
+<p>Angle 1: {@A@}</p>
+<p>Angle 2: {@B@}</p>
+<p>Angle 3: {@C@} </p>
+<p>sum : {@A+B+C@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta</tans>
+      <boxsize>4</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description>Checks for correct hypoteneus.</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>395591570</deployedseed>
+    <deployedseed>1444284842</deployedseed>
+    <deployedseed>163815387</deployedseed>
+    <deployedseed>191104791</deployedseed>
+    <deployedseed>1182138259</deployedseed>
+    <deployedseed>81487484</deployedseed>
+    <deployedseed>862084172</deployedseed>
+    <deployedseed>818854439</deployedseed>
+    <deployedseed>420411581</deployedseed>
+    <deployedseed>1957180794</deployedseed>
+    <deployedseed>1419059299</deployedseed>
+  </question>
+</quiz>

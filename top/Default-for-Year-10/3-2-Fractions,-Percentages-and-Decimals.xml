@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>3.2: Fractions, Percentages and Decimals</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>There are three lotteries in town:</p>
+<p><b>BIG WIN:</b> costs £{@dispdp(float(bigWinCost),2)@} per ticket and the chance of winning £{@bigWinPrize@} is {@float(bigWinRate*100)@}%.</p>
+<p><b>LITTLE LUCKY:</b> costs {@littleLuckyCostFrac@} of the price of BIG WIN per ticket, and the chance of winning £{@littleLuckyPrize@} is {@float(littleLuckyRate)@}.</p>
+<p><b>ALL IN ONE:</b> costs £{@allInOneTicketNo*allInOneCost@} for {@allInOneTicketNo@} tickets, and the chance of winning £{@allInOnePrize@} on a single ticket is {@allInOneRate@}.</p>
+<p align="right"><b>(4)</b></p>
+<p>Which lottery gives you the most profit-per-prize on average?</p>
+<p>[[input:ans1]] [[validation:ans1]]</p>
+<p>How much profit is it?</p>
+<p>£ [[input:ans2]] [[validation:ans2]]</p>
+<p>[[feedback:prt1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>4</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* BIG WIN */
+bigWinPrize:rand_with_step(110,200,10);
+bigWinCost:rand_with_step(30,42,3)/10;
+bigWinRate:rand([2,12/5,5/2,3])/100;
+
+bigWinProfit:float(bigWinPrize-(bigWinCost/bigWinRate));
+
+/* LITTLE LUCKY */
+littleLuckyPrize:rand_with_step(10,50,10);
+littleLuckyCostFrac: if integerp(bigWinCost*(5/3)) then 1/rand([5,6,10,12]) else 1/rand([5,6,10]);
+littleLuckyCost:littleLuckyCostFrac*bigWinCost;
+littleLuckyRate: if integerp(littleLuckyCost*(25/3)) then rand([6,8])/100 else if integerp(littleLuckyCost*10) then rand([5,8])/100 else if integerp(littleLuckyCost*(100/3)) then rand([5,6])/100 else 1/20;
+
+littleLuckyProfit:float(littleLuckyPrize-(littleLuckyCost/littleLuckyRate));
+
+/* To insure there is always a unique correct answer, redo LITTLE LUCKY if it is has the same profit as BIG WIN */
+
+while littleLuckyProfit=bigWinProfit do ((littleLuckyPrize:rand_with_step(10,50,10)) and (littleLuckyCostFrac: if integerp(bigWinCost*(5/3)) then 1/rand([5,6,10,12]) else 1/rand([5,6,10])) and (littleLuckyCost:littleLuckyCostFrac*bigWinCost) and (littleLuckyRate: if integerp(littleLuckyCost*(25/3)) then rand([6,8])/100 else if integerp(littleLuckyCost*10) then rand([5,8])/100 else if integerp(littleLuckyCost*(100/3)) then rand([5,6])/100 else 1/20) and (littleLuckyProfit:float(littleLuckyPrize-(littleLuckyCost/littleLuckyRate))));
+
+/* ALL IN ONE */
+allInOnePrize:rand_with_step(60,90,10);
+allInOneCost:rand([6/5,7/5,3/2,8/5,9/5,11/5,12/5,5/2,13/5,14/5]);
+allInOneTicketNo: if integerp(allInOneCost*2) then rand([6,8,12,14]) else rand([10,15]);
+allInOneRate: if integerp(allInOneCost*(100/3)) then rand_with_prohib(3,5,[littleLuckyRate*100])/100 else rand_with_prohib(4,5,[littleLuckyRate*100])/100;
+
+allInOneProfit:float(allInOnePrize-(allInOneCost/allInOneRate));
+
+/* To insure there is always a unique correct answer, redo ALL IN ONE if it is has the same profit as BIG WIN or LITTLE LUCKY */
+
+while (allInOneProfit=bigWinProfit or allInOneProfit=littleLuckyProfit) do ((allInOnePrize:rand_with_step(60,100,10)) and (allInOneCost:rand([6/5,7/5,3/2,8/5,9/5,11/5,12/5,5/2,13/5,14/5])) and (allInOneTicketNo: if integerp(allInOneCost*2) then rand([6,8,12,14]) else rand([10,15])) and (allInOneRate: if integerp(allInOneCost*(100/3)) then rand_with_prohib(3,5,[littleLuckyRate*100])/100 else rand_with_prohib(4,5,[littleLuckyRate*100])/100) and (allInOneProfit:float(allInOnePrize-(allInOneCost/allInOneRate))));
+
+/* Best Lottery and respective profit */
+bigWinBest: if bigWinProfit>=littleLuckyProfit and bigWinProfit>=allInOneProfit then true else false;
+littleLuckyBest: if littleLuckyProfit>=allInOneProfit and littleLuckyProfit>=bigWinProfit then true else false;
+allInOneBest: if allInOneProfit>=bigWinProfit and allInOneProfit>=littleLuckyProfit then true else false;
+
+bestLottery: if bigWinBest then "BIG WIN" else if littleLuckyBest then "LITTLE LUCKY" else "ALL IN ONE";
+bestProfit: if bigWinBest then bigWinProfit else if littleLuckyBest then littleLuckyProfit else allInOneProfit;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p><b>BIG WIN:</b> cost: {@dispdp(float(bigWinCost),2)@} prize: {@bigWinPrize@} win-rate: {@bigWinRate@} profit-per-prize: {@bigWinProfit@}</p>
+<p><b>LITTLE LUCKY:</b> cost: {@dispdp(float(littleLuckyCost),2)@} prize: {@littleLuckyPrize@} win-rate: {@littleLuckyRate@} profit-per-prize: {@littleLuckyProfit@}</p>
+<p><b>ALL IN ONE:</b> cost: {@dispdp(float(allInOneCost),2)@} prize: {@allInOnePrize@} win-rate: {@allInOneRate@} profit-per-prize: {@allInOneProfit@}</p>
+<p><i>{@if bigWinBest then "BIG WIN" else if littleLuckyBest then "LITTLE LUCKY" else "All IN ONE"@}</i></p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>dropdown</type>
+      <tans><![CDATA[[["BIG WIN",bigWinBest],["LITTLE LUCKY",littleLuckyBest],["ALL IN ONE",allInOneBest]]]]></tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>bestProfit</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>4.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check Correct Lottery (+1) */
+
+/* Node 2: Worked Solution */
+
+/* Node 3: If lottery correct, check correct largest profit (+3) */
+
+/* Node 4: If lottery incorrect, check correct largest profit (+3) */
+
+/* Node 5: If lottery and largest profit incorrect, check if given largest profit matches given lottery (+2) */
+studentProfit: if ans1="BIG WIN" then bigWinProfit else if ans1="LITTLE LUCKY" then littleLuckyProfit else allInOneProfit;
+
+/* Node 6: Check whether student has calculated average profit per ticket of given lottery (+1) */
+bigWinProfitPerTicket:bigWinPrize*bigWinRate-bigWinCost;
+littleLuckyProfitPerTicket:littleLuckyPrize*littleLuckyRate-littleLuckyCost;
+allInOneProfitPerTicket:allInOnePrize*allInOneRate-allInOneCost;
+studentProfitPerTicket: if ans1="BIG WIN" then bigWinProfitPerTicket else if ans1="LITTLE LUCKY" then littleLuckyProfitPerTicket else allInOneProfitPerTicket;
+
+/* Node 7: Conversion mistake on BIG WIN; treating 2% as 1/2, etc. */
+node7_test: if ans1="BIG WIN" and decimalplaces(ans2,2)=decimalplaces(bigWinPrize-(bigWinCost*100*bigWinRate),2) then 1 else 0;
+
+/* Node 8: Common mistake on LITTLE LUCKY, treating 0.05 as 1/5, etc. */
+node8_test: if ans1="LITTLE LUCKY" and decimalplaces(ans2,2)=decimalplaces(littleLuckyPrize-(littleLuckyCost*100*littleLuckyRate),2) then 1 else 0;
+
+/* Node 9: Common mistake on ALL IN ONE, treating 1/25 as 0.25, etc. */
+node9_test: if ans1="ALL IN ONE" and decimalplaces(ans2,2)=decimalplaces(allInOnePrize-(allInOneCost*100*allInOneRate),2) then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>String</answertest>
+        <sans>ans1</sans>
+        <tans>bestLottery</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2500000</truescore>
+        <truepenalty/>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p><b>BIG WIN:</b></p>
+<p>The chance of winning in this lottery is \({@float(bigWinRate*100)@}\% = {@bigWinRate@}\) so we should expect to win, on average, once in every \(\frac{{@1@}}{({@bigWinRate@})} = {@1/bigWinRate@}\) tickets.</p>
+<p>This means that for every \(£{@bigWinPrize@}\) that you win, on average you will have spent \({@1/bigWinRate@} \times £{@dispdp(bigWinCost,2)@} = £{@dispdp(bigWinCost/bigWinRate,2)@}\).</p>
+<p>This gives an average win-per-prize of \(£{@bigWinPrize@} - £{@dispdp(bigWinCost/bigWinRate,2)@} = {@if bigWinProfit<0 then "-" else ""@}£{@dispdp(abs(bigWinProfit),2)@}\).</p>
+<p><br><b>LITTLE LUCKY:</b></p>
+<p>The chance of winning in this lottery is \({@float(littleLuckyRate)@} = {@littleLuckyRate@}\) so we should expect to win, on average, once in every \(\frac{{@1@}}{({@littleLuckyRate@})} = {@1/littleLuckyRate@}\) tickets.</p>
+<p>Each ticket costs \({@dispdp(bigWinCost,2)@} \times {@littleLuckyCostFrac@} = {@dispdp(littleLuckyCost,2)@}\). This means that for every \(£{@littleLuckyPrize@}\) that you win, on average you will have spent \({@1/littleLuckyRate@} \times £{@dispdp(littleLuckyCost,2)@} = £{@dispdp(littleLuckyCost/littleLuckyRate,2)@}\).</p>
+<p>This gives an average win-per-prize of \(£{@littleLuckyPrize@} - £{@dispdp(littleLuckyCost/littleLuckyRate,2)@} = {@if littleLuckyProfit<0 then "-" else ""@}£{@dispdp(abs(littleLuckyProfit),2)@}\).</p>
+<p><br><b>ALL IN ONE:</b></p>
+<p>The chance of winning in this lottery is {@allInOneRate@} so we should expect to win, on average, once in every \(\frac{{@1@}}{({@allInOneRate@})} = {@1/allInOneRate@}\) tickets.</p>
+<p>The the cost of each ticket is \(\frac{£{@allInOneCost*allInOneTicketNo@}}{{@allInOneTicketNo@}} = £{@dispdp(allInOneCost,2)@}\). This means that for every \(£{@allInOnePrize@}\) that you win, on average you will have spent \({@1/allInOneRate@} \times £{@dispdp(allInOneCost,2)@} = £{@dispdp(allInOneCost/allInOneRate,2)@}\).</p>
+<p>This gives an average win-per-prize of \(£{@allInOnePrize@} - £{@dispdp(allInOneCost/allInOneRate,2)@} = {@if allInOneProfit<0 then "-" else ""@}£{@dispdp(abs(allInOneProfit),2)@}\).</p>
+<p><br>This means that <b>{@bestLottery@}</b> has the highest profit-per-prize at \({@if bestProfit<0 then "-" else ""@}£{@dispdp(abs(bestProfit),2)@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>bestProfit</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.7500000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>You are correct that <b>{@ans1@}</b> is lottery with the largest profit-per-prize. <br>However, the profit-per-prize is not \({@if ans2<0 then "-" else ""@}£{@dispdp(abs(ans2),2)@}\).</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>bestProfit</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.7500000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly calculated the best profit-per-prize of the three lotteries. <br>However, the lottery which gives this profit-per-prize is <b>{@bestLottery@}</b>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>studentProfit</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly calculated the profit-per-prize of <b>{@ans1@}</b>. <br>However, this is not the largest profit-per-prize of the three lotteries.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>studentProfitPerTicket</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2500000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You may have calculated the expected profit-per-<i>ticket</i> of <b>{@ans1@}</b> instead of the profit-per-<i>prize</i>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You may have treated the percentage \({@float(100*bigWinRate)@}\%\) as the fraction \(\frac{1}{{@float(100*bigWinRate)@}}\) when it is actually \(\frac{{@float(100*bigWinRate)@}}{100} = {@bigWinRate@}\) or \({@float(bigWinRate)@}\).<br>Remember that you can read a \(\%\) sign as <i>"over 100"</i>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node8_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You may have treated the decimal \({@float(littleLuckyRate)@}\) as the fraction \(\frac{1}{{@100*littleLuckyRate@}}\) when it is actually \(\frac{{@100*littleLuckyRate@}}{100} = {@littleLuckyRate@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt1-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node9_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You may have treated the fraction \({@allInOneRate@}\) as the decimal \({@float(1/(100*allInOneRate))@}\) when it is actually \({@float(allInOneRate)@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

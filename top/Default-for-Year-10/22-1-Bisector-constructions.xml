@@ -1,0 +1,1070 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>22.1 Bisector constructions</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>For these questions, you must make the construction lines otherwise your answer may not be registered.
+<br>Also, your browser may ask whether you want to "leave the page". In this case, you should click leave and your answer will be saved.</p>
+
+<p><br>(a) By moving the red points in the diagram below, place the blue line so that is a perpendicular bisector to the black line.</p>
+<p><br></p>
+
+<center>
+[[jsxgraph width="600px" height="400px" input-ref-ans1="sR1" input-ref-ans2="sR2" input-ref-ans3="sR3" input-ref-ans4="sR4" input-ref-ans5="sR5" input-ref-ans6="sR6" input-ref-ans7="sR7" input-ref-ans8="sR8" input-ref-ans9="sR9"]]
+
+    // Create board
+
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-6,4,6,-4],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    // Create immovable reference line
+
+    var refLine = board.create("segment", [[-2,0], [2,0]], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black"
+    })
+
+    // Construct movable points
+
+    var pointStyle = {
+      showInfoBox:false,
+      withLabel:false
+    };
+
+    var cenA = board.create("point", [-4.5,2.75], pointStyle);
+    var radA = board.create("point", [-3.5,2.75], pointStyle);
+
+    var cenB = board.create("point", [-2,2.75], pointStyle);
+    var radB = board.create("point", [-1,2.75], pointStyle);
+
+    var linePoint1 = board.create("point", [-4.5,1.25], pointStyle);
+    var linePoint2 = board.create("point", [-2,1.25], pointStyle);
+
+    // From movable points form constructing tools
+
+    var circleA = board.create("circle", [cenA, radA], {
+      dash:1
+    });
+    var circleB = board.create("circle", [cenB, radB], {
+      dash:1
+    });
+
+    var constLine = board.create("segment", [linePoint1, linePoint2]);
+
+    // Points implied by students construction
+
+    var circInter1 = board.create("intersection", [circleA, circleB, 0], {
+      visible:false,
+      showInfoBox:false
+    });
+
+    var circInter2 = board.create("intersection", [circleA, circleB, 1], {
+      visible:false,
+      showInfoBox:false
+    });
+
+    var lineInter = board.create("intersection", [refLine, constLine], {
+      visible:false,
+      showInfoBox:false
+    });
+
+    // Points needed to check validity of student line
+    stack_jxg.bind_point(sR1, lineInter);
+    stack_jxg.bind_point(sR2, linePoint1);
+    stack_jxg.bind_point(sR3, linePoint2);
+
+    // Points needed to check student's construction
+    stack_jxg.bind_point(sR4, cenA);
+    stack_jxg.bind_point(sR5, cenB);
+    stack_jxg.bind_point(sR6, radA);
+    stack_jxg.bind_point(sR7, radB);
+    stack_jxg.bind_point(sR8, circInter1);
+    stack_jxg.bind_point(sR9, circInter2);
+
+    board.unsuspendUpdate();
+
+[[/jsxgraph]]
+</center>
+
+<p hidden>[[input:ans1]] [[input:ans2]] [[input:ans3]] [[input:ans4]] [[input:ans5]] [[input:ans6]] [[input:ans7]] [[input:ans8]] [[input:ans9]]
+[[validation:ans1]] [[validation:ans2]] [[validation:ans3]] [[validation:ans4]] [[validation:ans5]] [[validation:ans6]] [[validation:ans7]] [[validation:ans8]] [[validation:ans9]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) By moving the red points in the diagram below, place the blue line so that it bisects the acute angle between the two black lines.</p>
+<p><br></p>
+
+<center>
+[[jsxgraph width="600px" height="400px" input-ref-ans10="sR10" input-ref-ans11="sR11" input-ref-ans12="sR12" input-ref-ans13="sR13" input-ref-ans14="sR14" input-ref-ans15="sR15" input-ref-ans16="sR16" input-ref-ans17="sR17" input-ref-ans18="sR18" input-ref-ans19="sR19"]]
+
+    // Create board
+
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-6,4,5,-4],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    // Create immovable reference lines
+
+    var fixedPoint = board.create("point", [-2,0], {
+      fixed:true,
+      showInfoBox:false,
+      visible:false
+    });
+
+    var refLine1 = board.create("segment", [fixedPoint, [2,-1.5]], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black"
+    })
+
+    var refLine2 = board.create("segment", [fixedPoint, [3,3]], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black"
+    })
+
+    // Construct movable points
+
+    var pointStyle = {
+      showInfoBox:false,
+      withLabel:false
+    };
+
+    var cenA = board.create("point", [-4.5,2.75], pointStyle);
+    var radA = board.create("point", [-3.5,2.75], pointStyle);
+
+    var cenB = board.create("point", [-2,2.75], pointStyle);
+    var radB = board.create("point", [-1,2.75], pointStyle);
+
+    var radC = board.create("point", [-1.5,0], pointStyle);
+
+    var movLinePoint = board.create("point", [-3,0], pointStyle);
+
+    // From movable points form constructing tools
+
+    var circleA = board.create("circle", [cenA, radA], {
+      dash:1
+    });
+    var circleB = board.create("circle", [cenB, radB], {
+      dash:1
+    });
+    var circleC = board.create("circle", [fixedPoint, radC], {
+      dash:1
+    });
+
+    var constLine = board.create("segment", [fixedPoint, movLinePoint]);
+
+    // Points implied by students contruction
+
+    var circLineInter1 = board.create("intersection", [circleC, refLine1], {
+      visible:false,
+      showInfoBox:false
+    });
+
+    var circLineInter2 = board.create("intersection", [circleC, refLine2], {
+      visible:false,
+      showInfoBox:false
+    });
+
+    var circCircInter1 = board.create("intersection", [circleA, circleB, 0], {
+      visible:false,
+      showInfoBox:false
+    });
+
+    var circCircInter2 = board.create("intersection", [circleA, circleB, 1], {
+      visible:false,
+      showInfoBox:false
+    });
+
+    // Point needed to check validity of student line
+    stack_jxg.bind_point(sR10, movLinePoint);
+
+    // Points moved by student for construction
+    stack_jxg.bind_point(sR11, cenA);
+    stack_jxg.bind_point(sR12, cenB);
+    stack_jxg.bind_point(sR13, radA);
+    stack_jxg.bind_point(sR14, radB);
+    stack_jxg.bind_point(sR15, radC);
+
+    // Implied points formed by students construction
+    stack_jxg.bind_point(sR16, circLineInter1);
+    stack_jxg.bind_point(sR17, circLineInter2);
+    stack_jxg.bind_point(sR18, circCircInter1);
+    stack_jxg.bind_point(sR19, circCircInter2);
+
+    board.unsuspendUpdate();
+
+[[/jsxgraph]]
+</center>
+
+<p hidden>[[input:ans10]] [[input:ans11]] [[input:ans12]] [[input:ans13]] [[input:ans14]] [[input:ans15]] [[input:ans16]] [[input:ans17]] [[input:ans18]] [[input:ans19]]
+[[validation:ans10]] [[validation:ans11]] [[validation:ans12]] [[validation:ans13]] [[validation:ans14]] [[validation:ans15]] [[validation:ans16]] [[validation:ans17]] [[validation:ans18]] [[validation:ans19]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>6</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text/>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text/>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>[0,0]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans10</name>
+      <type>algebraic</type>
+      <tans>[sqrt(34)*(5/17)+sqrt(73)*(16/73)-2, sqrt(34)*(3/17)-sqrt(73)*(6/73)]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans11</name>
+      <type>algebraic</type>
+      <tans>[sqrt(34)*(5/17)-2, sqrt(34)*(3/17)]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans12</name>
+      <type>algebraic</type>
+      <tans>[sqrt(73)*(16/73)-2, -sqrt(73)*(6/73)]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans13</name>
+      <type>algebraic</type>
+      <tans>[-2,0]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans14</name>
+      <type>algebraic</type>
+      <tans>[-2,0]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans15</name>
+      <type>algebraic</type>
+      <tans>[0,0]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans16</name>
+      <type>algebraic</type>
+      <tans>[sqrt(34)*(5/17)-2, sqrt(34)*(3/17)]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans17</name>
+      <type>algebraic</type>
+      <tans>[sqrt(73)*(16/73)-2, -sqrt(73)*(6/73)]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans18</name>
+      <type>algebraic</type>
+      <tans>[-2,0]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans19</name>
+      <type>algebraic</type>
+      <tans>[sqrt(34)*(5/17)+sqrt(73)*(16/73)-2, sqrt(34)*(3/17)-sqrt(73)*(6/73)]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>[0,sqrt(12)]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>[0,-sqrt(12)]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>[-2,0]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>[2,0]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans6</name>
+      <type>algebraic</type>
+      <tans>[2,0]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans7</name>
+      <type>algebraic</type>
+      <tans>[-2,0]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans8</name>
+      <type>algebraic</type>
+      <tans>[0,sqrt(12)]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans9</name>
+      <type>algebraic</type>
+      <tans>[0,-sqrt(12)]</tans>
+      <boxsize>1</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Test whether the student line intersects sufficiently close to the the midpoint */
+bisErr:abs(first(ans1));
+
+bisTest: if bisErr<0.05 then 1 else 0;
+
+/* Test whether the student line creates an angle sufficiently close to 90 deg */
+aa:sqrt((first(ans2)-2)^2 + second(ans2)^2);
+bb:sqrt((first(ans2)-first(ans1))^2 + (second(ans2)-second(ans1))^2);
+cc:abs(first(ans1)-2);
+angleErr:abs(acos((bb^2+cc^2-aa^2)/(2*bb*cc)) - %pi/2);
+
+angTest: if angleErr<0.01 then 1 else 0;
+
+/* Test whether the circle centres are sufficiently close to the ends of the line */
+centErr:min((sqrt((first(ans4)-2)^2 + second(ans4)^2) + sqrt((first(ans5)+2)^2 + second(ans5)^2))/2, (sqrt((first(ans4)+2)^2 + second(ans4)^2) + sqrt((first(ans5)-2)^2 + second(ans5)^2))/2);
+
+centTest: if centErr<0.05 then 1 else 0;
+
+/* Test whether the constructing circles have sufficiently similar radii */
+radErr:abs(sqrt((first(ans4)-first(ans6))^2 + (second(ans4)-second(ans6))^2) - sqrt((first(ans5)-first(ans7))^2 + (second(ans5)-second(ans7))^2));
+
+radTest: if radErr<0.05 then 1 else 0;
+
+/* Test whether the points on the line lie sufficiently close to the intersections of the circles */
+interErr:min((sqrt((first(ans2)-first(ans8))^2 + (second(ans2)-second(ans8))^2) + sqrt((first(ans3)-first(ans9))^2 + (second(ans3)-second(ans9))^2))/2,(sqrt((first(ans2)-first(ans9))^2 + (second(ans2)-second(ans9))^2) + sqrt((first(ans3)-first(ans8))^2 + (second(ans3)-second(ans8))^2))/2);
+
+interTest: if interErr<0.05 then 1 else 0;
+
+/* NODE 1: For a correct answer, either bisTest*angTest=1 or centTest*radTest*interTest=1 */
+node1_test: if bisTest*angTest=1 or centTest*radTest*interTest=1 then 1 else 0;
+
+/* NODE 2: Worked solution */
+
+/* NODE 3-5: One mark for each of centTest, radTest and interTest = 1 */]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>The line you have constructed is not sufficiently close to a perpendicular bisector of the black line:</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>There are three steps to constructing the perpendicular bisector of a line:</p>
+<p>(1) Construct two circles centred at each end of the black line.</p>
+<p>(2) Ensure the radii of the circles are the same and greater than half the length of the black line. The easiest way to achieve this is to place the points on the radii at the opposite ends of the black line to their respective centres.</p>
+<p>(3) Place the perpendicular bisector so that it passes through both of the intersection points of the circles.</p>
+
+<p><br><i>Here is what your finished construction should look like:</i></p>
+
+[[jsxgraph width="300px" height="200px"]]
+
+    // Create board
+
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-6,4,6,-4],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    // Create immovable reference line
+
+    var refLine = board.create("segment", [[-2,0], [2,0]], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black"
+    })
+
+    // Construct points in correct positions
+
+    var pointStyle = {
+      fixed:true,
+      highlight:false
+      visible:false,
+      showInfoBox:false,
+      withLabel:false
+    };
+
+    var cenA = board.create("point", [-2,0], pointStyle);
+    var radA = board.create("point", [2,0], pointStyle);
+
+    var cenB = board.create("point", [2,0], pointStyle);
+    var radB = board.create("point", [-2,0], pointStyle);
+
+    var linePoint1 = board.create("point", [0,sqrt(12)], pointStyle);
+    var linePoint2 = board.create("point", [0,-sqrt(12)], pointStyle);
+
+    // From points form constructing tools
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      dash:1
+    };
+
+    var circleA = board.create("circle", [cenA, radA], circleStyle);
+    var circleB = board.create("circle", [cenB, radB], circleStyle);
+
+    var constLine = board.create("segment", [linePoint1, linePoint2], {
+      fixed:true,
+      highlight:false
+    });
+
+[[/jsxgraph]]]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>centTest</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly placed the centres of each circle at the ends of the line.]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>You have not placed the centres of each circle sufficiently close to the ends of the line.]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>radTest</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<br>You have correctly constructed circles of equal radii.]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<br>You have not created circles with sufficiently equal radii. To do this, you should ensure each circle passes through the centre point of the other.]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>interTest</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<br>You have correctly placed the points of your line on the intersections between the two circles.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<br>You have not placed the points of your line sufficiently close to the intersections between the two circles.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Test for angles created by student line being equal */
+aa:sqrt((first(ans10)-3)^2 + (second(ans10)-3)^2);
+bb:sqrt((first(ans10)+2)^2 + second(ans10)^2);
+cc:sqrt(34)
+
+angErr:abs(acos((bb^2+cc^2-aa^2)/(2*bb*cc)) - acos(31/sqrt(2482))/2);
+
+angTest: if angErr<0.007 then 1 else 0;
+
+/* Test whether centres of mobile circles are placed on intersection between immobile circle and lines */
+
+centErr:min((sqrt((first(ans11)-first(ans16))^2 + (second(ans11)-second(ans16))^2) + sqrt((first(ans12)-first(ans17))^2 + (second(ans12)-second(ans17))^2))/2,(sqrt((first(ans11)-first(ans17))^2 + (second(ans11)-second(ans17))^2) + sqrt((first(ans12)-first(ans16))^2 + (second(ans12)-second(ans16))^2))/2);
+
+centTest: if centErr<0.05 then 1 else 0;
+
+/* Test whether the two mobile circles have the same radii */
+radErr:abs(sqrt((first(ans11)-first(ans13))^2 + (second(ans11)-second(ans13))^2) - sqrt((first(ans12)-first(ans14))^2 + (second(ans12)-second(ans14))^2));
+
+radTest: if radErr<0.05 then 1 else 0;
+
+/* Test whether the student line passes through the intersection of the two mobile circles */
+
+interErr: if first(ans10)=2 or (first(ans18)=2 and first(ans19)=2) then 1 else if first(ans18)=2 then second(ans10)/(first(ans10)+2)-second(ans19)/(first(ans19)+2) else if first(ans19)=2 then second(ans10)/(first(ans10)+2)-second(ans18)/(first(ans18)+2) else min(second(ans10)/(first(ans10)+2)-second(ans18)/(first(ans18)+2),second(ans10)/(first(ans10)+2)-second(ans19)/(first(ans19)+2));
+
+interTest: if interErr<0.05 then 1 else 0;
+
+/* NODE 1: For a correct answer, either angTest=1 or centTest*radTest*interTest=1 */
+node1_test: if angTest=1 or centTest*radTest*interTest=1 then 1 else 0;
+
+/* NODE 2: Worked solution */
+
+/* NODE 3-5: One mark for each of centTest, radTest and interTest = 1 */]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>The line you have constructed is not sufficiently close to a bisector of the angle between the black lines:</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>There are four steps to constructing the bisector of an angle:</p>
+<p>(1) Construct a circle centred at the intersection of the lines which forms the angle. This is done for you, but it is helpful to make the circle larger for a more accurate bisector.</p>
+<p>(2) Construct two additional circles which are centred at the intersections between the first circle and the black lines.</p>
+<p>(3) Ensure the radii of the additional two circles are the same and large enough for the circles to intersect. The easiest way to achieve this is to place the points on the radii at the intersection between the black lines.</p>
+<p>(4) Place the perpendicular bisector so that it passes through the intersection points of the two circles.</p>
+
+<p><br><i>Here is what your finished construction should look like:</i></p>
+
+[[jsxgraph width="300px" height="200px"]]
+
+    // Create board
+
+    var board = JXG.JSXGraph.initBoard("jxgbox", {
+      boundingBox:[-6,4,6,-4],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    // Create immovable reference lines
+
+    var fixedPoint = board.create("point", [-2,0], {
+      fixed:true,
+      showInfoBox:false,
+      visible:false
+    });
+
+    var refLine1 = board.create("segment", [fixedPoint, [2,-1.5]], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black"
+    })
+
+    var refLine2 = board.create("segment", [fixedPoint, [3,3]], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black"
+    })
+
+    // Construct fixed points in the correct positions
+
+    var pointStyle = {
+      fixed:true,
+      highlight:false
+      visible:false,
+      showInfoBox:false,
+      withLabel:false
+    };
+
+    var cenA = board.create("point", [sqrt(34)*(5/17)-2, sqrt(34)*(3/17)], pointStyle);
+    var radA = board.create("point", [-2,0], pointStyle);
+
+    var cenB = board.create("point", [sqrt(73)*(16/73)-2, -sqrt(73)*(6/73)], pointStyle);
+    var radB = board.create("point", [-2,0], pointStyle);
+
+    var radC = board.create("point", [0,0], pointStyle);
+
+    var movLinePoint = board.create("point", [sqrt(34)*(5/17)+sqrt(73)*(16/73)-2, sqrt(34)*(3/17)-sqrt(73)*(6/73)], pointStyle);
+
+    // From points form constructing tools
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      dash:1
+    };
+
+    var circleA = board.create("circle", [cenA, radA], circleStyle);
+    var circleB = board.create("circle", [cenB, radB], circleStyle);
+    var circleC = board.create("circle", [fixedPoint, radC],circleStyle);
+
+    var constLine = board.create("segment", [fixedPoint, movLinePoint]);
+
+[[/jsxgraph]]]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>centTest</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly placed the centres of each movable circle at the intersections of the immovable circle and the black lines.]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>You have not placed the centres of each movable circle sufficiently close to the intersections of the immovable circle and the black lines.]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>radTest</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<br>You have correctly constructed circles of equal radii.]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<br>You have not created circles with sufficiently equal radii. To do this, you should ensure each circle passes through the centre point of the other or the intersection of the two black lines.]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>interTest</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<br>You have correctly placed the your line such that is passes through the intersections between the two circles.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<br>You have not placed the your line such that it passes sufficiently close to the intersections between the two circles.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

@@ -1,0 +1,1101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>30.2 Cumulative Frequency Table</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>For this question, your browser may ask whether you want to "leave the page". In this case, you should click leave and your answer will be saved.</p>
+
+<p><br>(a) A student collects data on the height of flowers in a garden, they put the data into a table.
+<br>Fill in the cumulative frequency column of the table:</p>
+<p><br></p>
+
+<center>
+<table style="width:500px; border:1px solid black; text-align:left">
+  <tr style="height:70px; border-bottom:1px solid black">
+    <th style="padding:10px">Range \([cm]\)</th>
+    <th style="padding:10px">Frequency</th>
+    <th style="padding:10px">Cumulative Frequency</th>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\(0 < x \leq {@first(p1)@}\)</td>
+    <td style="padding:10px">\(0\)</td>
+    <td style="padding:10px">\(0\)</td>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\({@first(p1)@} < x \leq {@first(p2)@}\)</td>
+    <td style="padding:10px">\({@second(p2)-second(p1)@}\)</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans1]]</td>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\({@first(p2)@} < x \leq {@first(p3)@}\)</td>
+    <td style="padding:10px">\({@second(p3)-second(p2)@}\)</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans2]]</td>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\({@first(p3)@} < x \leq {@first(p4)@}\)</td>
+    <td style="padding:10px">\({@second(p4)-second(p3)@}\)</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans3]]</td>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\({@first(p4)@} < x \leq {@first(p5)@}\)</td>
+    <td style="padding:10px">\({@second(p5)-second(p4)@}\)</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans4]]</td>
+  </tr>
+  <tr style="height:70px">
+    <td style="padding:10px">\({@first(p5)@} < x \leq {@first(p6)@}\)</td>
+    <td style="padding:10px">\({@second(p6)-second(p5)@}\)</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans5]]</td>
+  </tr>
+</table>
+</center>
+<p hidden>[[validation:ans1]] [[validation:ans2]] [[validation:ans3]] [[validation:ans4]] [[validation:ans5]]</p>
+<p align="right"><br><b>(5)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) By moving the points on the grid below, represent the data above as a cumulative frequency diagram.
+<br><i>You should place the points in the same order left to right as they appear initially, so the green point should be the furthest left on your diagram.</i></p>
+<p><br></p>
+
+<center>
+[[jsxgraph width="600px" height="750px" input-ref-ans6="sR1" input-ref-ans7="sR2" input-ref-ans8="sR3" input-ref-ans9="sR4" input-ref-ans10="sR5" input-ref-ans11="sR6"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,55,45,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepAspectRatio:false,
+      grid:true
+    });
+
+    // Defining axes
+
+    var yAxis = board.create("axis", [[0,0], [0,50]], {
+      highlight:false,
+      name:"\\(cf\\)",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        position:"rt",
+        offset:[-15,-15],
+        anchorX:"right",
+        fontSize:15,
+        useMathJax:true,
+        parse:false
+      },
+      ticks:{
+        label:{
+          highlight:false,
+          anchorX:"right",
+          offset:[-10,0]
+        }
+      }
+    });
+
+    var xAxis = board.create("axis", [[0,0], [40,0]], {
+      highlight:false,
+      name:"\\(h \\ [cm]\\)",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        position:"rt",
+        offset:[-5,-35],
+        anchorX:"right",
+        fontSize:15,
+        useMathJax:true,
+        parse:false
+      },
+      ticks:{
+        label:{
+          highlight:false,
+          anchorX:"middle",
+          offset:[0,-15]
+        }
+      }
+    });
+
+    var pointStyle = {
+      showInfoBox:false,
+      snapToGrid:true,
+      size:4,
+      fillColor:"#28ee2b",
+      strokeColor:"#28ee2b",
+      withLabel:false
+    };
+
+    var segStyle = {
+      fixed:true,
+      highlight:false
+    };
+
+    var coordList = [
+      [10,10],
+      [15,15],
+      [20,20],
+      [25,25],
+      [30,30],
+      [35,35]
+    ];
+
+    var i;
+    var pointList = [];
+
+    for (i in coordList) {
+      pointList.push(board.create("point", coordList[i], pointStyle));
+      pointStyle.fillColor = "red";
+      pointStyle.strokeColor = "red";
+    };
+
+    for (i = 0; i < 5; i++) {
+      board.create("segment", [pointList[i], pointList[i+1]], segStyle);
+    };
+
+    stack_jxg.bind_point(sR1, pointList[0]);
+    stack_jxg.bind_point(sR2, pointList[1]);
+    stack_jxg.bind_point(sR3, pointList[2]);
+    stack_jxg.bind_point(sR4, pointList[3]);
+    stack_jxg.bind_point(sR5, pointList[4]);
+    stack_jxg.bind_point(sR6, pointList[5]);
+
+    board.unsuspendUpdate();
+
+[[/jsxgraph]]
+</center>
+<p hidden>[[input:ans6]] [[input:ans7]] [[input:ans8]] [[input:ans9]] [[input:ans10]] [[input:ans11]]</p>
+<p hidden>[[validation:ans6]] [[validation:ans7]] [[validation:ans8]] [[validation:ans9]] [[validation:ans10]] [[validation:ans11]]</p>
+<p align="right"><br><b>(6)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>11</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Randomising points on frequency table */
+p1:[rand(6)+5,0];
+p2:[rand_with_step(first(p1)+6,first(p1)+10,1), rand(5)+2];
+p3:[rand_with_step(first(p2)+4,first(p2)+8,1), rand_with_step(second(p2)+5,second(p2)+10,1)];
+p4:[rand_with_step(first(p3)+2,first(p3)+6,1), rand_with_step(second(p3)+15,second(p3)+20,1)];
+p5:[rand_with_step(first(p4)+4,first(p4)+8,1), rand_with_step(second(p4)+5,second(p4)+10,1)];
+p6:[40, rand_with_step(second(p5)+3,second(p5)+4,1)];</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>{@p1@}, {@p2@}, {@p3@}, {@p4@}, {@p5@}, {@p6@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>second(p2)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans10</name>
+      <type>algebraic</type>
+      <tans>p5</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans11</name>
+      <type>algebraic</type>
+      <tans>p6</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>second(p3)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>second(p4)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>second(p5)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>second(p6)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans6</name>
+      <type>algebraic</type>
+      <tans>p1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans7</name>
+      <type>algebraic</type>
+      <tans>p2</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans8</name>
+      <type>algebraic</type>
+      <tans>p3</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans9</name>
+      <type>algebraic</type>
+      <tans>p4</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>5.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Correct answer */
+node1_test: if ans1=second(p2) and ans2=second(p3) and ans3=second(p4) and ans4=second(p5) and ans5=second(p6) then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check ans1 correct */
+
+/* Node 4: Check ans2 correct */
+/* Node 5: Check ans2 consistent with ans1 */
+
+/* Node 6: Check ans3 correct */
+/* Node 7: Check ans3 consistent with ans2 */
+
+/* Node 8: Check ans4 correct */
+/* Node 9: Check ans4 consistent with ans3 */
+
+/* Node 10: Check ans5 correct */
+/* Node 11: Check ans5 consistent with ans4 */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>To find the cumulative frequency at a particular range, you sum the individual frequencies of each range up to and including the particular one.</p>
+<p>Therefore, the answers for each range are:</p>
+
+<p>\({@first(p1)@} < x \leq {@first(p2)@}: {@second(p2)@}\)</p>
+
+<p>\({@first(p2)@} < x \leq {@first(p3)@}: {@second(p2)@} + {@second(p3)-second(p2)@} = {@second(p3)@}\)</p>
+
+<p>\({@first(p3)@} < x \leq {@first(p4)@}: {@second(p2)@} + {@second(p3)-second(p2)@} + {@second(p4)-second(p3)@} = {@second(p4)@}\)</p>
+
+<p>\({@first(p4)@} < x \leq {@first(p5)@}: {@second(p2)@} + {@second(p3)-second(p2)@} + {@second(p4)-second(p3)@} + {@second(p5)-second(p4)@} = {@second(p5)@}\)</p>
+
+<p>\({@first(p5)@} < x \leq {@first(p6)@}: {@second(p2)@} + {@second(p3)-second(p2)@} + {@second(p4)-second(p3)@} + {@second(p5)-second(p4)@} + {@second(p6)-second(p5)@} = {@second(p6)@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>10</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans5-ans4</sans>
+        <tans>second(p6)-second(p5)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-11-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p6)@} < x \leq {@first(p5)@}\) range is <b>incorrect</b>.
+<br>However, it is consistent with the answer that you gave for the \({@first(p5)@} < x \leq {@first(p4)@}\) range.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-11-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p6)@} < x \leq {@first(p5)@}\) range is <b>incorrect</b>.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>second(p2)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p2)@} < x \leq {@first(p1)@}\) range is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p2)@} < x \leq {@first(p1)@}\) range is <b>incorrect</b>.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>second(p3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p3)@} < x \leq {@first(p2)@}\) range is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2-ans1</sans>
+        <tans>second(p3)-second(p2)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p3)@} < x \leq {@first(p2)@}\) range is <b>incorrect</b>.
+<br>However, it is consistent with the answer that you gave for the \({@first(p2)@} < x \leq {@first(p1)@}\) range.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p3)@} < x \leq {@first(p2)@}\) range is <b>incorrect</b>.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>second(p4)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p4)@} < x \leq {@first(p3)@}\) range is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3-ans2</sans>
+        <tans>second(p4)-second(p3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p4)@} < x \leq {@first(p3)@}\) range is <b>incorrect</b>.
+<br>However, it is consistent with the answer that you gave for the \({@first(p3)@} < x \leq {@first(p2)@}\) range.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p4)@} < x \leq {@first(p3)@}\) range is <b>incorrect</b>.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>second(p5)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>9</truenextnode>
+        <trueanswernote>prt1-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p5)@} < x \leq {@first(p4)@}\) range is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt1-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4-ans3</sans>
+        <tans>second(p5)-second(p4)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>9</truenextnode>
+        <trueanswernote>prt1-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p5)@} < x \leq {@first(p4)@}\) range is <b>incorrect</b>.
+<br>However, it is consistent with the answer that you gave for the \({@first(p4)@} < x \leq {@first(p3)@}\) range.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>9</falsenextnode>
+        <falseanswernote>prt1-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p5)@} < x \leq {@first(p4)@}\) range is <b>incorrect</b>.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>9</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans5</sans>
+        <tans>second(p6)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-10-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the \({@first(p6)@} < x \leq {@first(p5)@}\) range is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>10</falsenextnode>
+        <falseanswernote>prt1-10-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>6.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Correct answer */
+node1_test: if ans6=p1 and ans7=p2 and ans8=p3 and ans9=p4 and ans10=p5 and ans11=p6 then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check ans6 correct */
+
+/* Node 4: Check ans7 correct */
+/* Node 5: Check ans7 consistent with (a) */
+
+/* Node 6: Check ans8 correct */
+/* Node 7: Check ans8 consistent with (a) */
+
+/* Node 9: Check ans9 correct */
+/* Node 9: Check ans9 consistent with (a) */
+
+/* Node 10: Check ans10 correct */
+/* Node 11: Check ans10 consistent with (a) */
+
+/* Node 12: Check ans11 correct */
+/* Node 13: Check ans11 consistent with (a) */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>On a cumulative frequency diagram, you should plot the upper bound of the range on the \(x\) axis against the cumulative frequency on the \(y\) axis.</p>
+<p>Therefore, the points on the diagram (in order) should be:</p>
+<p>{@p1@}, {@p2@}, {@p3@}, {@p4@}, {@p5@}, {@p6@}</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>10</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans10</sans>
+        <tans>[first(p5), ans4]</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1670000</truescore>
+        <truepenalty/>
+        <truenextnode>11</truenextnode>
+        <trueanswernote>prt2-11-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your fifth point is placed <b>incorrectly</b>.
+<br>However, it is consistent with your answer in part (a).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>11</falsenextnode>
+        <falseanswernote>prt2-11-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your fifth point is placed <b>incorrectly</b>.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>11</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans11</sans>
+        <tans>p6</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-12-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your sixth point is placed correctly.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>12</falsenextnode>
+        <falseanswernote>prt2-12-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>12</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans11</sans>
+        <tans>[first(p6), ans5]</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-13-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your sixth point is placed <b>incorrectly</b>.
+<br>However, it is consistent with your answer in part (a).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-13-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your sixth point is placed <b>incorrectly</b>.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans6</sans>
+        <tans>p1</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1670000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your first point is placed correctly.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your first point is placed <b>incorrectly</b>.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans7</sans>
+        <tans>p2</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1670000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your second point is placed correctly.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans7</sans>
+        <tans>[first(p2), ans1]</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1670000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your second point is placed <b>incorrectly</b>.
+<br>However, it is consistent with your answer in part (a).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your second point is placed <b>incorrectly</b>.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans8</sans>
+        <tans>p3</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1670000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your third point is placed correctly.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans8</sans>
+        <tans>[first(p3), ans2]</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1670000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your third point is placed <b>incorrectly</b>.
+<br>However, it is consistent with your answer in part (a).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt2-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your third point is placed <b>incorrectly</b>.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans9</sans>
+        <tans>p4</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1670000</truescore>
+        <truepenalty/>
+        <truenextnode>9</truenextnode>
+        <trueanswernote>prt2-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your fourth point is placed correctly.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt2-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans9</sans>
+        <tans>[first(p4), ans3]</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1670000</truescore>
+        <truepenalty/>
+        <truenextnode>9</truenextnode>
+        <trueanswernote>prt2-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your fourth point is placed <b>incorrectly</b>.
+<br>However, it is consistent with your answer in part (a).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>9</falsenextnode>
+        <falseanswernote>prt2-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your fourth point is placed <b>incorrectly</b>.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>9</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans10</sans>
+        <tans>p5</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1670000</truescore>
+        <truepenalty/>
+        <truenextnode>11</truenextnode>
+        <trueanswernote>prt2-10-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your fifth point is placed correctly.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>10</falsenextnode>
+        <falseanswernote>prt2-10-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

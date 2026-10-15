@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Using Trig ratios to Find the Base  (copy) (copy)</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>A ladder of length <strong>{@LL@}</strong> metres leans against a vertical wall,
+making an angle of <strong>{@theta@}°</strong> with the ground.</p>
+
+<p>Find the height the ladder reaches up the wall. 
+Give your answer in <strong>exact form</strong> (no decimals).</p>
+
+
+<p>Height reached: [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text><![CDATA[<h3>Worked Solution</h3>
+
+<p>We want the vertical height that the ladder reaches on the wall.</p>
+
+<p>The ladder of length <strong>{@LL@}</strong> m makes an angle of <strong>{@theta@}°</strong> with the ground.  
+This forms a right-angled triangle, where:</p>
+
+<ul>
+  <li>the ladder is the <strong>hypotenuse</strong></li>
+  <li>the height up the wall is the <strong>opposite side</strong></li>
+</ul>
+
+<br>
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-2, 12, 12, -2],
+    axis: false,
+    keepAspectRatio: true,
+    showNavigation: false,
+    showCopyright: false
+});
+
+/* Right-angle triangle coordinates */
+const A = board.create('point', [0, 0], {
+    name: '',
+    fixed: true,
+    size: 2
+}); // right angle
+
+const B = board.create('point', [10, 0], {
+    name: '',
+    fixed: true,
+    size: 2
+}); // bottom right (angle theta)
+
+const C = board.create('point', [0, 10], {
+    name: '',
+    fixed: true,
+    size: 2
+}); // top
+
+/* Triangle edges */
+board.create('segment', [A, B]);
+board.create('segment', [A, C]);
+board.create('segment', [B, C]);
+
+/* Right-angle marker at A */
+board.create('polygon', [
+    board.create('point', [0, 0], { visible: false }),
+    board.create('point', [1, 0], { visible: false }),
+    board.create('point', [1, 1], { visible: false }),
+    board.create('point', [0, 1], { visible: false })
+], {
+    fillColor: 'white',
+    fillOpacity: 1,
+    borders: { strokeColor: 'black' }
+});
+
+/* Labels */
+board.create('text', [5, -0.5, 'x'], { fontSize: 14 });  
+board.create('text', [5, 6, '{#LL#}'], { fontSize: 14 }); // hypotenuse
+
+/* Angle at B */
+board.create('angle', [C, B, A], {
+    radius: 1.2,
+    name: '{#theta#}°',
+    fontSize: 14,
+    withLabel: true,
+    strokeWidth: 2,
+    color: 'blue'
+});
+[[/jsxgraph]]
+<p></p>
+
+<p>Using trigonometry:</p>
+
+<p><strong>height = hypotenuse × sin(angle)</strong></p>
+
+<p>So:</p>
+
+<p><strong>height = {@LL@} × sin({@theta@}°)</strong></p>
+
+<p>Using exact trigonometric values:</p>
+<ul>
+  <li>\( \sin(30°) = \frac{1}{2} \) </li>
+  <li>\(\displaystyle  \sin(45°) = \frac{\sqrt(2)} {2} \) </li>
+  <li>\(\displaystyle   \sin(60°) = \frac{\sqrt(3)}{2} \) </li>
+</ul>
+
+<p>Therefore:</p>
+
+<p><strong>height = {@height@}</strong></p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text>LL : rand([3,4,5,6,8,10,12]);
+theta : rand([30,45,60]);
+height : LL*sin(theta*pi/180);
+ta: height ;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>Find the length of the base (adjacent side) of the right-angled triangle.</p>
+<p>Angle at B: {@ theta @}°</p>
+<p>Hypotenuse: {@ hyp @}</p>
+<p>Give your answer in exact form (do not convert to decimals).</p>
+<br> Answer - {@ta@}]]></text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description>Checks for correct hypoteneus.</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>1348752527</deployedseed>
+    <deployedseed>1480243162</deployedseed>
+    <deployedseed>1874625621</deployedseed>
+    <deployedseed>1852412797</deployedseed>
+    <deployedseed>1479423793</deployedseed>
+  </question>
+</quiz>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Corresponding Angles Theorem and Exercise_sec2</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p> Given the diagram below</p>
+
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-1, 7, 8, -1],
+    axis: false,
+    showCopyright: false,
+    showNavigation: false,
+    keepAspectRatio: true
+});
+
+// Points for parallel lines
+var A = board.create('point', [0,5], {name:'A', size:2, fixed:true});
+var B = board.create('point', [7,5], {name:'B', size:2, fixed:true});
+var C = board.create('point', [0,2], {name:'C', size:2, fixed:true});
+var D = board.create('point', [7,2], {name:'D', size:2, fixed:true});
+
+// Parallel lines
+var lineAB = board.create('line', [A, B], {straightFirst:false, straightLast:false, strokeWidth:2});
+var lineCD = board.create('line', [C, D], {straightFirst:false, straightLast:false, strokeWidth:2});
+
+// Transversal points
+var X = board.create('point', [1,0], {name:'X', size:2, fixed:true});
+var Y = board.create('point', [4,6], {name:'Y', size:2, fixed:true});
+var transversal = board.create('line', [X,Y], {straightFirst:false, straightLast:false, strokeWidth:2, dash:2});
+
+// Intersection points
+var O1 = board.create('intersection', [lineAB, transversal, 0], {name:'O₁', size:2, visible:false});
+var O2 = board.create('intersection', [lineCD, transversal, 0], {name:'O₂', size:2, visible:false});
+
+// Label all four angles at O1
+board.create('angle', [B, O1, Y], {radius:0.5, name: ' ',  fillColor:'lightblue', fillOpacity:0.5, strokeColor:'blue', visible:false });
+board.create('angle', [Y, O1, A], {radius:0.5, name: ' ', fillColor:'lightgreen', fillOpacity:0.5, strokeColor:'green', visible:false});
+board.create('angle', [A, O1, X], {radius:0.5, name: ' ', fillColor:'pink', fillOpacity:0.5, strokeColor:'red', visible:false});
+board.create('angle', [X, O1, B], {radius:0.5, name: ' ', fillColor:'orange', fillOpacity:0.5, strokeColor:'orange', visible:false});
+
+// Label all four angles at O2
+board.create('angle', [D, O2, O1], {radius:0.5, name: ' ', fillColor:'lightblue', fillOpacity:0.5, strokeColor:'blue', visible:false});
+board.create('angle', [O1, O2, C], {radius:0.5, name: ' ', fillColor:'lightgreen', fillOpacity:0.5, strokeColor:'green', visible:false});
+board.create('angle', [C, O2, X], {radius:0.5, name: ' ', fillColor:'pink', fillOpacity:0.5, strokeColor:'red', visible:false});
+board.create('angle', [X, O2, D], {radius:0.5, name: ' ', fillColor:'orange', fillOpacity:0.5, strokeColor:'orange', visible:false});
+
+// Optional: label pairs
+board.create('text', [O1.X()+0.3, O1.Y()+0.3, '∠a '], {fontSize:12});
+board.create('text', [O2.X()+0.3, O2.Y()+0.3, '∠e '], {fontSize:12});
+board.create('text', [O1.X()-0.8, O1.Y()+0.2, '∠b '], {fontSize:12});
+board.create('text', [O2.X()-0.8, O2.Y()+0.2, '∠f '], {fontSize:12});
+board.create('text', [O1.X()-0.8, O1.Y()-0.3, '∠c '], {fontSize:12});
+board.create('text', [O2.X()-0.8, O2.Y()-0.3, '∠g '], {fontSize:12});
+board.create('text', [O1.X()+0.3, O1.Y()-0.3, '∠d '], {fontSize:12});
+board.create('text', [O2.X()+0.3, O2.Y()-0.3, '∠h '], {fontSize:12});
+[[/jsxgraph]]
+
+<p><strong>Instructions:</strong></p>
+<p>Using the Corresponding Angles Theorem, select all pairs of angles that are corresponding. </p>
+  
+<p> [[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text><![CDATA[<p><strong>Worked Solution:</strong></p>
+
+<p>From the diagram, the two lines <em>AB</em> and <em>CD</em> are parallel, and <em>XY</em> is a transversal cutting across them.</p>
+
+<p>By the <strong>Corresponding Angles Theorem</strong>, corresponding angles are equal when a transversal intersects two parallel lines.</p>
+
+<p>The correct pairs of corresponding angles are:</p>
+
+<ul>
+  <li>\(\angle a = \angle e\)</li>
+  <li>\(\angle b = \angle f\)</li>
+  <li>\(\angle c = \angle g\)</li>
+  <li>\(\angle d = \angle h\)</li>
+</ul>
+
+<p>Therefore, any other listed pairs are <em>not</em> corresponding.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Define all possible angle pairs with LaTeX strings */
+pair1:"\\( \\angle a \\text{ and } \\angle e \\)";   /* correct */
+pair2:"\\( \\angle b \\text{ and } \\angle f \\)";   /* correct */
+pair3:"\\( \\angle c \\text{ and } \\angle g \\)";   /* correct */
+pair4:"\\( \\angle d \\text{ and } \\angle h \\)";   /* correct */
+
+pair5:"\\( \\angle a \\text{ and } \\angle b \\)";   /* incorrect */
+pair6:"\\( \\angle c \\text{ and } \\angle d \\)";   /* incorrect */
+pair7:"\\( \\angle e \\text{ and } \\angle f \\)";   /* incorrect */
+pair8:"\\( \\angle g \\text{ and } \\angle h \\)";   /* incorrect */
+pair9:"\\( \\angle a \\text{ and } \\angle c \\)";   /* incorrect */
+pair10:"\\( \\angle b \\text{ and } \\angle d \\)";  /* incorrect */
+
+/* Make correct and incorrect pools */
+correct_answer:[pair1,pair2,pair3,pair4];
+incorrect_pool:[pair5,pair6,pair7,pair8,pair9,pair10];
+
+/* Randomly select 3 incorrect */
+incorrect_answers:rand_selection(incorrect_pool,3);
+
+/* Combine into answer list with true/false */
+answer_list:append(
+   makelist([x,true],x,correct_answer),
+   makelist([x,false],x,incorrect_answers)
+);
+
+/* Shuffle for display */
+ta:random_permutation(answer_list);]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="html">
+      <text>{@ta1@}</text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>checkbox</type>
+      <tans>ta</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options>nonotanswered</options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>mcq_correct(ta)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>434388980</deployedseed>
+  </question>
+</quiz>

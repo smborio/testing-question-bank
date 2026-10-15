@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>31.1 Mean Median Mode and IQR</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>A set of 5 positive integers has mean = mode = median = range = {@aa@}. Find a possibility for the five numbers.</p>
+<p>[[input:ans1]] &nbsp;[[input:ans2]] &nbsp;[[input:ans3]] &nbsp;[[input:ans4]] &nbsp;[[input:ans5]] [[validation:ans1]] [[validation:ans2]] [[validation:ans3]] [[validation:ans4]] [[validation:ans5]]</p>
+
+[[feedback:prt1]]]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text>aa:rand_with_prohib(5,13,[6]);
+
+/*model solution*/
+first_num:floor(((1/3)*aa)+1);
+sec_num:aa
+third_num:aa
+fifth_num:aa+first_num;
+fourth_num:(5*aa) - (first_num+sec_num+third_num+fifth_num);
+
+ta_list:sort([first_num,sec_num,third_num,fourth_num,fifth_num]);
+
+
+/*   ------------------   Mode function   ---------------------   */
+/*  mode(n) returns a list of all the modal elements in the list n */
+
+mode(n):=block([i,j,count_elements,counts,highest_count,mode_set],count_elements:makelist(0,i,1,length(n)),for i:1 thru length(n) do (for j:1 thru length(n) do(if n[i]=n[j] then count_elements[i]:count_elements[i]+1)),counts:listify(setify(count_elements)),highest_count:counts[length(counts)],mode_set:{},for i:1 thru length(n) do (if count_elements[i]=highest_count then mode_set:union(mode_set,{n[i]})),mode_set:listify(mode_set),return(mode_set));
+
+/* --------------------------------------------------------------------------------- */</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>If Mean=Mode=Range=Median={@aa@}</p>
+<p>{@ta_list@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>first_num</tans>
+      <boxsize>3</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>sec_num</tans>
+      <boxsize>3</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>third_num</tans>
+      <boxsize>3</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>fourth_num</tans>
+      <boxsize>3</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>fifth_num</tans>
+      <boxsize>3</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[ans_list:[ans1,ans2,ans3,ans4,ans5];
+ans_list:sort(ans_list);
+
+ans_mean:mean(ans_list);
+ans_median:median(ans_list);
+ans_range:range(ans_list);
+ans_mode:mode(ans_list)[1];
+
+Sans_mn: if ans_mean=aa then 1 else 0;
+Sans_med: if ans_median=aa then 1 else 0;
+Sans_range: if ans_range=aa then 1 else 0;
+Sans_mode: if ans_mode=aa then 1 else 0;
+
+Sans_mn_feedback:if Sans_mn=1 then "which is correct." else "which is incorrect."
+Sans_med_feedback:if Sans_med=1 then "which is correct." else "which is incorrect."
+Sans_range_feedback:if Sans_range=1 then "which is correct." else "which is incorrect."
+Sans_mode_feedback:if Sans_mode=1 then "which is correct." else "which is incorrect."
+
+/*all 4 equal*/
+ta:Sans_mn*Sans_med*Sans_range*Sans_mode; 
+
+/* check how many are correct (ie equal to aa) */
+answer_check_list:[ans_mean,ans_median,if length(mode(ans_list))>1 then 0.001 else ans_mode,ans_range];
+number_correct:0
+for i:1 thru 4 do (if answer_check_list[i]=aa then number_correct:number_correct+1);
+
+/* Check if all are equal */
+all_equal:if cardinality({ans_mean,ans_median,ans_mode,ans_range})=1 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ta</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ta</sans>
+        <tans>0</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The mean of your numbers is {@if integerp(ans_mean) then ans_mean else float(ans_mean)@} {@Sans_mn_feedback@}</p>
+<p>The median of your numbers is {@ans_median@} {@Sans_med_feedback@}</p>
+<p>The mode of your numbers is {@ans_mode@} {@Sans_mode_feedback@}</p>
+<p>The range of your numbers is {@ans_range@} {@Sans_range_feedback@}</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>number_correct</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2500000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>number_correct</sans>
+        <tans>2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>number_correct</sans>
+        <tans>3</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.7500000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>all_equal</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The mean, median, mode and range of your numbers are all equal to each other but they are not equal to {@aa@}!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><b>Worked solution:</b></p>
+<p><b>There are many ways to approach this question and the solutions are not unique. Here is one method to answer the question (can you think of any others?):</b></p>
+
+<p> We start with the median. Let the median \(=\) {@third_num@}.</p>
+<p> \( \_,\_,{@third_num@},\_,\_.\)</p>
+
+<p> We know that {@third_num@} is also the mode, so there will have to be a {@sec_num@} before or after. Let us choose before.</p>
+<p> \( \_,{@third_num@},{@third_num@},\_,\_.\)</p>
+
+<p> We know that the first and last numbers need to be {@aa@} apart and that the sum of the numbers has to be \(5 \times {@aa@} = {@ev(5*aa)@}\) because the mean is {@aa@}. Try:</p>
+<p> \( {@first_num-1@},{@third_num@},{@third_num@},\_,{@fifth_num-1@}.\)</p>
+
+<p>These add up to {@first_num-1@}+{@third_num@}+{@third_num@}+{@fifth_num-1@} ={@ev(first_num-1+third_num+third_num+fifth_num-1)@}, so the missing number would have to be {@ev(5*aa)@} - {@ev(first_num-1+third_num+third_num+fifth_num-1)@} = {@ev((5*aa)-(first_num-1+third_num+third_num+fifth_num-1))@}. But this will mess up our range as it is bigger than {@fifth_num-1@} which is meant to be our largest number! So it cannot be {@first_num-1@} and {@fifth_num-1@}. We need bigger numbers. Try:</p>
+<p> \( {@first_num@},{@third_num@},{@third_num@},\_,{@fifth_num@}.\)</p>
+
+<p>These add up to {@first_num@}+{@third_num@}+{@third_num@}+{@fifth_num@} ={@ev(first_num+third_num+third_num+fifth_num)@}, so the missing number would have to be {@ev(5*aa)@} - {@ev(first_num+third_num+third_num+fifth_num)@} = {@ev((5*aa)-(first_num+third_num+third_num+fifth_num))@}. </p>
+
+
+<p> So the five numbers are {@ta_list@}.</p>
+
+<p>There is more than one solution.</p>
+
+
+
+
+
+
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p.</p>
+<p></p>
+<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>9</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>length(mode(ans_list))</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>0</truenextnode>
+        <trueanswernote>prt1-10-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>0</falsenextnode>
+        <falseanswernote>prt1-10-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your values have more than one mode, please make sure that your values have a unique mode. For the sake of testing your answer, we have taken {@ans_mode@} as the mode even though it is not unique.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

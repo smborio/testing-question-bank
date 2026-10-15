@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>17.2 Simultaneous linear unguided</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Solve the following system of simultaneous equations:</p>
+<p>\(\displaystyle {@eq1@} \quad \quad (1)\) </p>
+<p>\(\displaystyle {@eq2@} \quad \quad (2)\) </p>
+<p>\(x= \) [[input:ans1]][[validation:ans1]]</p>
+<p> \(y= \) [[input:ans2]][[validation:ans2]][[feedback:prt1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/*--------------------------------------------------------------------------------------------*/
+/*Define function S(n) that given a number n, returns the string "+n" if positive (or zero) and "-n" if negative, if n=+1 or -1 it returns + or - respectively*/
+
+S(n):= block([], if (n=1) then return("+") elseif (n=-1) then return("-") elseif (n>=0) then return(vconcat("+", abs(n)))  else  return(vconcat("-", abs(n))));
+
+/*Define function S1(n) that given a number n, returns the string "+n" if positive (or zero) and "-n" if negative (1 and -1 are treated as the other numbers)*/
+
+S1(n):= block([], if (n>=0) then return(vconcat("+", abs(n)))  else  return(vconcat("-", abs(n))));
+
+/*Define function SP(n) that given a number n, returns the string "n" if positive (or zero) and "(-n)" if negative*/
+
+SP(n):= block([], if (n>=0) then return(n)  else  return(vconcat("(-", abs(n), ")")));
+
+/*----------------------------------------------------------------------------------------------------*/
+
+
+
+/*random coefficients of the equations*/
+ordergreat(x,y);
+sig_x_1:rand([-1,1]);
+coef_x_1:sig_x_1*(rand(5)+ 2);
+coef_x_2:rand_with_prohib(2,8,[coef_x_1]);
+coef_y_1:rand_with_prohib(2,8,[coef_x_1]);
+sig_y_2:rand([-1,1]);
+coef_y_2:sig_y_2*rand_with_prohib(2,8,[coef_y_1,coef_x_2,coef_x_2*coef_y_1/coef_x_1]);
+
+/*Getting the values of the x,y for the rhs*/
+ta_x:rand_with_prohib(-4,4,[0]);
+non_zero_1:(-coef_x_1*ta_x)/coef_y_1;
+non_zero_2:(-coef_x_2*ta_x)/coef_y_2;
+ta_y:rand_with_prohib(-4,4, [ta_x,0,non_zero_1,non_zero_2]);
+
+/*forming the left eprerssion*/
+exp1:coef_x_1*x+coef_y_1*y;
+exp2:coef_x_2*x+coef_y_2*y;
+
+/*Genrating the RHS*/
+rhs_1:coef_x_1*ta_x + coef_y_1*ta_y;
+rhs_2:coef_x_2*ta_x + coef_y_2*ta_y;
+
+/* Generate equations 1 and 2: */
+eq1:exp1=rhs_1;
+eq2:exp2=rhs_2;
+
+/*eliminate x unknown term*/
+eq3:expand(coef_x_2*exp1) = rhs_1*coef_x_2;
+eq4:expand(coef_x_1*exp2) = rhs_2*coef_x_1;
+elim_oper1:if coeff(lhs(eq3),x) = coeff(lhs(eq4),x) then 1 else 0;
+eq5:if elim_oper1=1 then eq4-eq3 else eq3+eq4;
+
+/*eliminate y unknown term*/
+y_const_eq1:abs(lcm(coef_y_1,coef_y_2)/coef_y_1);
+y_const_eq2:abs(lcm(coef_y_1,coef_y_2)/coef_y_2);
+
+eq6:expand(y_const_eq1*exp1) = rhs_1*y_const_eq1;
+eq7:expand(y_const_eq2*exp2) = rhs_2*y_const_eq2;
+
+relation_y: if coef_y_1*coef_y_2>0 then "equal" else "opposite";
+operation_y:if coef_y_1*coef_y_2>0 then "substract" else "add"
+prepos_y:if coef_y_1*coef_y_2>0 then "from" else "to"; 
+
+eq8:if operation_y="substract" then eq6-eq7 else eq6+eq7;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>The two simultaneous equations are {@eq1@} and {@eq2@}</p>
+<p>Solution to the equations: \(x=\){@ta_x@},\(y=\){@ta_y@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta_x</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>ta_y</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>set_Sans:{ans1,ans2};
+set_Tans:{ta_x,ta_y};</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>Sets</answertest>
+        <sans>set_Sans</sans>
+        <tans>set_Tans</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta_x</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>+</falsescoremode>
+        <falsescore>0.8000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>It looks like you swapped the solutions for \(x\) and \(y\).</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta_x</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your solution for \(x\) is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your solution for \(x\) is not correct.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>ta_y</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your solution for \(y\) is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>+</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your solution for \(y\) is not correct.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><b>Worked solution: </b> </p>
+<p>Using the elimination method, we want to eliminate one of the unknown terms in the equation, either the \(x\)-term or the \(y\)-term. To do this we need to multiply each of the original equations by a constant such that the value of one of the unknown terms adds or subtracts to zero when you add or subtract the two equations.</p>
+<p>For example, we can eliminate the \(y\)-term from the equations as follows. First, we multiply equation \((1)\) by {@y_const_eq1@} and equation \( (2)\) by {@y_const_eq2@}, so that we obtain </p>
+<p>\({@eq6@} \quad \quad (3) \)</p>
+<p>\({@eq7@} \quad \quad (4) \)</p>
+Note that equation \((3)\) and equation \((4)\) have {@relation_y@} \(y\)-terms. Next, we {@operation_y@} equation \((4)\) {@prepos_y@} equation \((3)\) to obtain
+<p>\({@eq8@} \quad \quad (5)\).</p>
+<p>Note that equation \((5)\) is in terms of \(x\) only. Solving for \(x\) we obtain</p>
+<p> \(x={@ta_x@}\).</p>
+<p>Finally, we we need to substitute our answer \(x={@ta_x@}\) in one of the two original equations to find the value of y. If we substitute it in equation \((1)\),  we obtain: </p>
+<p>\( {@coef_x_1@} \times {@SP(ta_x)@} {@S(coef_y_1)@}y={@rhs_1@}\)</p>
+<p>\( {@coef_x_1*ta_x@} {@S(coef_y_1)@}y={@rhs_1@}\)</p>
+<p>\( {@coef_y_1*y@}={@rhs_1@}  {@S1(-coef_x_1*ta_x)@}\)</p>
+<p>\( {@coef_y_1*y@}={@rhs_1-coef_x_1*ta_x@}\)</p>
+<p>\( y={@ta_y@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <tags>
+      <tag><text>Open Bridging</text>
+</tag>
+      <tag><text>Bridging</text>
+</tag>
+      <tag><text>Bridging Week 1</text>
+</tag>
+    </tags>
+  </question>
+</quiz>

@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Exercise Q1 Alternating interior angles and Corresponding angles</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<ol>
+<p>Determine the value of \(x\) for both angles shown in the diagram below.</p>
+<li>
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-1, 7, 8, -1],
+    axis: false,
+    showCopyright: false,
+    showNavigation: false,
+    keepAspectRatio: true
+});
+
+// Define points for parallel lines
+var A = board.create('point', [0,5], {name:'A', size:2, fixed:true, visible:false});
+var B = board.create('point', [7,5], {name:'B', size:2, fixed:true, visible:false});
+var C = board.create('point', [0,2], {name:'C', size:2, fixed:true, visible:false});
+var D = board.create('point', [7,2], {name:'D', size:2, fixed:true, visible:false});
+
+// Draw parallel lines AB and CD
+var lineAB = board.create('line', [A, B], {straightFirst:false, straightLast:false, strokeWidth:2});
+var lineCD = board.create('line', [C, D], {straightFirst:false, straightLast:false, strokeWidth:2});
+
+// Define points for transversal
+var X = board.create('point', [1,0], {name:'X', size:2, fixed:true, visible:false});
+var Y = board.create('point', [4,6], {name:'Y', size:2, fixed:true, visible:false});
+
+// Draw transversal XY
+var transversal = board.create('line', [X,Y], {straightFirst:false, straightLast:false, strokeWidth:2, dash:2});
+
+// Intersection points of transversal with parallel lines
+var O1 = board.create('intersection', [lineAB, transversal, 0], {name:'O₁', size:2});
+var O2 = board.create('intersection', [lineCD, transversal, 0], {name:'O₂', size:2});
+
+// Highlight alternate angle at O1
+board.create('angle', [A,O1,O2], { 
+    radius: 0.6,      
+    name: '{#angle_alt#}°',
+    type: 'sector', 
+    fillColor: 'lightblue', 
+    fillOpacity: 0.6, 
+    strokeColor: 'blue', 
+    strokeWidth: 1
+});
+
+// Highlight alternate angle at O2
+board.create('angle', [D,O2,O1], { 
+    radius: 0.6, 
+    name: ' x',
+    type: 'sector', 
+    fillColor: 'lightblue', 
+    fillOpacity: 0.6, 
+    strokeColor: 'blue', 
+    strokeWidth: 1
+});
+
+[[/jsxgraph]]
+
+<p>Write your answer here \(x = \) [[input:ans1]] [[validation:ans1]] [[feedback:prt1]] \(^\circ\) </p>
+<p>Give a reason for your answer.  [[input:ans4]] [[validation:ans4]] [[feedback:prt4]] </p>
+<p></p> 
+</li>
+
+<li>
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-1, 7, 8, -1],
+    axis: false,
+    showCopyright: false,
+    showNavigation: false,
+    keepAspectRatio: true
+});
+
+// Define points for parallel lines
+var A = board.create('point', [0,5], {name:'A', size:2, fixed:true, visible:false});
+var B = board.create('point', [7,5], {name:'B', size:2, fixed:true, visible:false});
+var C = board.create('point', [0,2], {name:'C', size:2, fixed:true, visible:false});
+var D = board.create('point', [7,2], {name:'D', size:2, fixed:true, visible:false});
+
+// Draw parallel lines AB and CD
+var lineAB = board.create('line', [A, B], {straightFirst:false, straightLast:false, strokeWidth:2});
+var lineCD = board.create('line', [C, D], {straightFirst:false, straightLast:false, strokeWidth:2});
+
+// Define points for transversal
+var X = board.create('point', [1,0], {name:'X', size:2, fixed:true, visible:false});
+var Y = board.create('point', [4,6], {name:'Y', size:2, fixed:true, visible:false});
+
+// Draw transversal XY
+var transversal = board.create('line', [X,Y], {straightFirst:false, straightLast:false, strokeWidth:2, dash:2});
+
+// Intersection points of transversal with parallel lines
+var O1 = board.create('intersection', [lineAB, transversal, 0], {name:'O₁', size:2});
+var O2 = board.create('intersection', [lineCD, transversal, 0], {name:'O₂', size:2});
+
+// Highlight alternate angle at O1
+board.create('angle', [O2, O1,B], { 
+    radius: 0.6,      
+    name: 'x',
+    type: 'sector', 
+    fillColor: 'lightblue', 
+    fillOpacity: 0.6, 
+    strokeColor: 'blue', 
+    strokeWidth: 1
+});
+
+// Highlight alternate angle at O2
+board.create('angle', [X,O2,D], { 
+    radius: 0.6, 
+    name: '{#angle_corresponding#}°',
+    type: 'sector', 
+    fillColor: 'lightblue', 
+    fillOpacity: 0.6, 
+    strokeColor: 'blue', 
+    strokeWidth: 1
+});
+
+[[/jsxgraph]]
+<p>Write your answer here \(x = \) [[input:ans3]] [[validation:ans3]] [[feedback:prt3]] \(^\circ\) </p>
+<p>Give a reason for your answer. [[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</p>
+</li>
+</ol>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[angle_alt:10+rand_with_step(30,60,5);
+angle_corresponding : 30 + rand_with_step(30,60,5);
+ta1: angle_alt;
+
+ta2:random_permutation([["The angles are corresponding angles.",true],["They are co-interior angles.",false],["Vertically opposite angles are equal.",false]]);
+
+ta4:random_permutation([
+  ["The angles are alternate interior angles formed by a transversal cutting parallel lines, and alternate interior angles are equal.", true],
+  ["They are co-interior angles.", false],
+  ["Vertically opposite angles are equal.", false]
+]);]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="html">
+      <text>{@angle_alt@}
+{@angle_corresponding@}
+{@ta2@}
+{@ta4@}</text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta1</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>radio</type>
+      <tans>ta2</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options>nonotanswered</options>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>angle_corresponding</tans>
+      <boxsize>7</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>radio</type>
+      <tans>ta4</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options>nonotanswered</options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> Please refer to the notes in the question</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>mcq_correct(ta2)[1]</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> Please refer to the notes in the question</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>angle_corresponding</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> Please refer to the notes in the question</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt4</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>mcq_correct(ta4)[1]</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt4-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt4-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> Please refer to the notes in the question</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>907323404</deployedseed>
+    <deployedseed>1828770415</deployedseed>
+    <deployedseed>756734398</deployedseed>
+    <deployedseed>894243193</deployedseed>
+    <deployedseed>1892826407</deployedseed>
+    <deployedseed>1092810063</deployedseed>
+    <deployedseed>1832640543</deployedseed>
+  </question>
+</quiz>

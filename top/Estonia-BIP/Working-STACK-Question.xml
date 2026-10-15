@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Working STACK Question</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p></p>
+
+<p>
+  [[jsxgraph]]
+  var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-8, 9, 9, -8],
+    keepaspectratio: true,
+    showCopyright: false,
+    axis: true,
+    showNavigation: true
+  });
+
+  // triangle 1
+  var A = board.create('point', [{#x1#}, {#y1#}], { name: 'A', size: 2, fixed: true, visible: true});
+  var B = board.create('point', [{#x2#}, {#y2#}], { name: 'B', size: 2, fixed: true, visible: true});
+  var C = board.create('point', [{#x3#}, {#y3#}], { name: 'C', size: 2, fixed: true, visible: true});
+
+// Create a polygon using the defined points
+  var triangle1 = board.create('polygon', [A,B,C], { borders: { strokeColor: 'blue' }, fillColor: 'lightblue' });
+
+  // triangle 2
+  var A1 = board.create('point', [{#xx1#}, {#yy1#}], { name: 'A_1', size: 2, fixed: true, visible: true});
+  var B1 = board.create('point', [{#xx2#}, {#yy2#}], { name: 'B_1', size: 2, fixed: true, visible: true});
+  var C1 = board.create('point', [{#xx3#}, {#yy3#}], { name: 'C_1', size: 2, fixed: true, visible: true});
+
+// Create a polygon using the defined points
+var triangle2 = board.create('polygon', [A1, B1, C1], { borders: { strokeColor: 'blue' }, fillColor: 'red' });
+  [[/jsxgraph]]
+</p>
+
+
+
+<p>[[input:ans1]] [[validation:ans1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text>obj_1:matrix([2, 1, 4], [4, 2, 1]);  /*triangle 1*/
+obj_2:matrix([2, 3, 5], [2, 7, 1]);  /*triangle 2*/
+obj_3:matrix([1, 4, 5], [4, 2, 3]);  /*triangle 3*/
+obj_4:matrix([4, 1, 2], [4, 2, -1]); /*triangle 4*/
+obj_5:matrix([2, 4, 5], [-2, 3, 0]); /*triangle 5*/
+obj_6:matrix([2, 4, 5], [-1, -3, 2]); /*triangle 6*/
+obj:rand([obj_1,obj_2,obj_3,obj_4,obj_5,obj_6]);
+x1:row(col(obj,1),1)[1][1]; y1:row(col(obj,1),2)[1][1];
+x2:row(col(obj,2),1)[1][1]; y2:row(col(obj,2),2)[1][1];  
+x3:row(col(obj,3),1)[1][1]; y3:row(col(obj,3),2)[1][1]; 
+
+
+
+ta1:?;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text>[[feedback:prt1]]</text>
+    </specificfeedback>
+    <questionnote format="html">
+      <text>{@ta1@}</text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

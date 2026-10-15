@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>20.2 Speed, Distance and Time units</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>(a) A car drives for {@if questionType="time" then sconcat("\\(", float(distA), "km\\)") else sconcat("\\(", float(timeA), "hrs\\)")@} at an average speed of {@if integerp(speedA) then speedA else float(speedA)@}\(m/s\).</p>
+<p>Find the  {@if questionType="time" then "time taken for this journey in hours." else "distance of this journey in kilometres."@}</p>
+<p align="right">[[input:ans1]] {@if questionType="time" then "\\(hrs\\)" else "\\(km\\)"@} [[validation:ans1]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p>(b) A snail travels \({@if integerp(distBdisp) then distBdisp else float(distBdisp)@}{@distBunits@}\) between \({@timeHour@}:{@timeStart@}\) and \({@timeHour+1@}:{@if timeEnd<10 then sconcat("0",timeEnd) else timeEnd@}\).</p>
+<p>Find the average speed of the snail in \(km/h\).</p>
+<p align="right">[[input:ans2]] \(km/h\) [[validation:ans2]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>4</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Part (a) */
+questionType:rand(["time", "distance"]);
+speedA:rand_with_step(100,200,5)/10;
+timeA:(rand(31)+10)/10;
+distA:speedA*timeA*18/5;
+
+tansA: if questionType="time" then timeA else distA;
+
+/* Part (b) */
+speedB:rand_with_step(10,50,5)/1000;
+timeB:rand_with_step(15,30,3);
+
+distBmet:speedB*timeB*50/3;
+distBunits:rand(["m","cm","mm"]);
+distBdisp:if distBunits="mm" then distBmet*1000 else if distBunits="cm" then distBmet*100 else distBmet;
+
+timeStart:60-rand(timeB-1)-1;
+timeEnd:timeStart+timeB-60;
+timeHour:rand(7)+10;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>(a) Find the {@questionType@}. Speed: {@speedA@}, Time: {@timeA@}</p>
+<p>(a) Distance: {@distBdisp@}\({@distBunits@}\), Time: {@timeB@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>float(tansA)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>float(speedB)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+
+/* Node 3: Check whether speed is converted incorrectly, divided by 3.6 instead of multiplying (1) */
+node3_test: if (questionType="time" and abs(ans1-3.6*distA/speedA)<10^(-4)) or (questionType="distance" and abs(ans1-timeA*speedA/3.6)<10^(-4)) then 1 else 0;
+
+/* Node 4: Check whether student used incorrect SDT equation, S=DT or S=T/D (1) */
+node4_test: if (questionType="time" and (abs(ans1-speedA*3.6/distA)<10^(-4) or abs(ans1-speedA*3.6*distA)<10^(-4))) or (questionType="distance" and (abs(ans1-speedA*3.6/timeA)<10^(-4) or abs(ans1-timeA/(speedA*3.6))<10^(-4))) then 1 else 0;
+
+/* Node 5: Check whether used speed as given without conversion */
+node5_test: if (questionType="time" and abs(ans1-distA/speedA)<10^(-4)) or (questionType="distance" and abs(ans1-timeA*speedA)<10^(-4)) then 1 else 0;
+
+/* Node 6: node3 and node5 errors combined */
+node6_test: if (questionType="time" and (abs(ans1-speedA/(3.6*distA))<10^(-4) or abs(ans1-speedA*distA/3.6)<10^(-4))) or (questionType="distance" and (abs(ans1-speedA/(3.6*timeA))<10^(-4) or abs(ans1-3.6*timeA/speedA)<10^(-4))) then 1 else 0;
+
+/* Node 7: node4 and node5 errors combined */
+node7_test: if (questionType="time" and (abs(ans1-speedA/distA)<10^(-4) or abs(ans1-speedA*distA)<10^(-4))) or (questionType="distance" and (abs(ans1-speedA/timeA)<10^(-4) or abs(ans1-timeA/speedA)<10^(-4))) then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>tansA</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>String</answertest>
+        <sans>questionType</sans>
+        <tans><![CDATA["time"]]></tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>To convert \(m/s\) into \(km/h\), multiply by \(3600\) (seconds in an hour) and divide by \(1000\) (metres in a kilometre).</p>
+<p>This is equivalent to multiplying by \(\frac{18}{5}\) or \(3.6\)</p>
+
+<p><br>\({@float(speedA)@} m/s \ \ (\times \frac{18}{5}) = {@float(speedA*18/5)@} km/h\)</p>
+
+<p>\(T = \frac{D}{S}\)</p>
+<p>\(\Rightarrow T = \frac{{@float(distA)@}}{{@float(speedA*18/5)@}}\)</p>
+<p>\(\Rightarrow T = {@float(timeA)@}hrs\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>To convert \(m/s\) into \(km/h\), multiply by \(3600\) (seconds in an hour) and divide by \(1000\) (metres in a kilometre).</p>
+<p>This is equivalent to multiplying by \(\frac{18}{5}\) or \(3.6\)</p>
+
+<p><br>\({@float(speedA)@} m/s \ \ (\times \frac{18}{5}) = {@float(speedA*18/5)@} km/h\)</p>
+
+<p>\(D = S \times T\)</p>
+<p>\(\Rightarrow D = {@float(speedA*18/5)@} \times {@float(timeA)@}\)</p>
+<p>\(\Rightarrow D = {@float(distA)@}km\)</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have used the correct equation to relate speed, distance and time.
+<br>However, you have converted incorrectly between \(m/s\) and \(km/h\).
+<br>To go from \(m/s\) to \(km/h\) you should multiply by \(3.6\), whereas you have divided.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly converted \({@float(speedA)@}m/s\) to have units \(km/h\).
+<br>However, you have not used the correct equation to relate speed, distance and time.
+<br>Remember that \(S = \frac{D}{T}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have used the correct equation to relate speed, distance and time.
+<br>However, you have not converted \({@float(speedA)@}m/s\) to be in \(km/h\), so the units in your equation do not match.
+<br>To go from \(m/s\) to \(km/h\) you should multiply by \(3.6\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have converted incorrectly between \(m/s\) and \(km/h\).
+<br>To go from \(m/s\) to \(km/h\) you should multiply by \(3.6\), whereas you have divided.</p>
+<p>You have also not used the correct equation to relate speed, distance and time.
+<br>Remember that \(S = \frac{D}{T}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have not converted \({@float(speedA)@}m/s\) to be in \(km/h\), so the units in your equation do not match.
+<br>To go from \(m/s\) to \(km/h\) you should multiply by \(3.6\).</p>
+<br>You have also not used the correct equation to relate speed, distance and time.
+<br>Remember that \(S = \frac{D}{T}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+/* Node 3: Incorrect SDT equation used (1) */
+node3_test: if abs(ans2-(distBmet/1000)*(timeB/60))<10^(-4) or abs(ans2-(timeB/60)/(distBmet/1000))<10^(-4) then 1 else 0;
+
+/* Node 4: Units of time not converted or converted incorrectly (1) */
+node4_test: if abs(ans2-(distBmet/1000)/timeB)<10^(-4) or abs(ans2-(distBmet/1000)/(timeB*60))<10^(-4) then 1 else 0;
+
+/* Node 5: Units of distance not converted or converted incorrectly (1) */
+node5_test: if abs(ans2-distBdisp/(timeB/60))<10^(-4) or (distBunits="m" and abs(ans2-(distBmet*1000)/(timeB/60))<10^(-4)) or (distBunits="cm" and (abs(ans2-(distBmet*100)/(timeB/60))<10^(-4) or abs(ans2-(distBmet*100000)/(timeB/60))<10^(-4))) or (distBunits="mm" and (abs(ans2-(distBmet*1000)/(timeB/60))<10^(-4) or abs(ans2-(distBmet*1000000)/(timeB/60))<10^(-4))) then 1 else 0;
+
+/* Node 6: Neither units converted or both converted incorrectly */
+node6_test: if abs(ans2-distBdisp/timeB)<10^(-4) or (distBunits="m" and abs(ans2-(distBmet*1000)/timeB)<10^(-4)) or (distBunits="cm" and (abs(ans2-(distBmet*100)/timeB)<10^(-4) or abs(ans2-(distBmet*100000)/timeB)<10^(-4))) or (distBunits="mm" and (abs(ans2-(distBmet*1000)/timeB)<10^(-4) or abs(ans2-(distBmet*1000000)/timeB)<10^(-4))) or abs(ans2-distBdisp/(timeB*60))<10^(-4) or (distBunits="m" and abs(ans2-(distBmet*1000)/(timeB*60))<10^(-4)) or (distBunits="cm" and (abs(ans2-(distBmet*100)/(timeB*60))<10^(-4) or abs(ans2-(distBmet*100000)/(timeB*60))<10^(-4))) or (distBunits="mm" and (abs(ans2-(distBmet*1000)/(timeB*60))<10^(-4) or abs(ans2-(distBmet*1000000)/(timeB*60))<10^(-4))) then 1 else 0;
+
+/* Node 7: Incorrect unit conversion and incorrect SDT equation */
+node7_test: if abs(ans2-distBdisp*timeB)<10^(-4) or (distBunits="m" and abs(ans2-(distBmet*1000)*timeB)<10^(-4)) or (distBunits="cm" and (abs(ans2-(distBmet*100)*timeB)<10^(-4) or abs(ans2-(distBmet*100000)*timeB)<10^(-4))) or (distBunits="mm" and (abs(ans2-(distBmet*1000)*timeB)<10^(-4) or abs(ans2-(distBmet*1000000)*timeB)<10^(-4))) or abs(ans2-distBdisp*(timeB*60))<10^(-4) or (distBunits="m" and abs(ans2-(distBmet*1000)*(timeB*60))<10^(-4)) or (distBunits="cm" and (abs(ans2-(distBmet*100)*(timeB*60))<10^(-4) or abs(ans2-(distBmet*100000)*(timeB*60))<10^(-4))) or (distBunits="mm" and (abs(ans2-(distBmet*1000)*(timeB*60))<10^(-4) or abs(ans2-(distBmet*1000000)*(timeB*60))<10^(-4))) or abs(ans2-timeB/distBdisp)<10^(-4) or (distBunits="m" and abs(ans2-(timeB/distBmet*1000))<10^(-4)) or (distBunits="cm" and (abs(ans2-timeB/(distBmet*100))<10^(-4) or abs(ans2-timeB/(distBmet*100000))<10^(-4))) or (distBunits="mm" and (abs(ans2-timeB/(distBmet*1000))<10^(-4) or abs(ans2-timeB/(distBmet*1000000))<10^(-4))) or abs(ans2-(timeB*60)/distBdisp)<10^(-4) or (distBunits="m" and abs(ans2-(timeB*60)/(distBmet*1000))<10^(-4)) or (distBunits="cm" and (abs(timeB*60)/(ans2-(distBmet*100))<10^(-4) or abs(ans2-(timeB*60)/(distBmet*100000))<10^(-4))) or (distBunits="mm" and (abs(ans2-(timeB*60)/(distBmet*1000))<10^(-4) or abs(ans2-(timeB*60)/(distBmet*1000000))<10^(-4))) then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>speedB</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The time over which the snail is moving is {@timeB@} minutes, which is {@float(timeB/60)@} hours.</p>
+<p>The distance travelled is \({@if integerp(distBdisp) then distBdisp else float(distBdisp)@}{@distBunits@}\), which is \({@float(distBmet/1000)@}km\).</p>
+
+<p><br>\(S = \frac{D}{T}\)</p>
+<p>\(\Rightarrow S = \frac{{@float(timeB/60)@}}{{@float(distBmet/1000)@}}\)</p>
+<p>\(\Rightarrow S = {@float(speedB)@}km/h\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly converted the distance and time into \(km\) and \(hrs\) respectively.
+<br>However, you have not used the correct equation to relate speed, distance and time.
+<br>Remember that \(S = \frac{D}{T}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly converted the distance into \(km\) and related speed, distance and time using the right equation.
+<br>However, you not converted the time correctly into hours.
+<br>\({@timeB@}min = {@float(timeB/60)@}hrs\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly converted the time into \(hrs\) and related speed, distance and time using the right equation.
+<br>However, you not converted the distance correctly into \(km\).
+<br>\({@distBdisp@}{@distBunits@} = {@float(distBmet/1000)@}km\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have related speed, distance and time using the right equation.
+<br>However, you not converted the distance and time into \(km\) and \(hrs\) respectively.
+<br>\({@timeB@}min = {@float(timeB/60)@}hrs\)
+<br>\({@distBdisp@}{@distBunits@} = {@float(distBmet/1000)@}km\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have not used the correct equation to relate speed, distance and time.
+<br>Remember that \(S = \frac{D}{T}\)</p>
+<p>You have also not converted the distance and time into \(km\) and \(hrs\) respectively.
+<br>\({@timeB@}min = {@float(timeB/60)@}hrs\)
+<br>\({@distBdisp@}{@distBunits@} = {@float(distBmet/1000)@}km\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>1333567119</deployedseed>
+    <deployedseed>327107129</deployedseed>
+    <deployedseed>21337956</deployedseed>
+    <deployedseed>1031138852</deployedseed>
+    <deployedseed>697155621</deployedseed>
+    <deployedseed>2064943121</deployedseed>
+    <deployedseed>1191384934</deployedseed>
+    <deployedseed>1789363849</deployedseed>
+    <deployedseed>1685071180</deployedseed>
+    <deployedseed>842596910</deployedseed>
+  </question>
+</quiz>

@@ -1,0 +1,907 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>10.3 Composing and inverses</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>Let \(f(x) = {@fm*x+fc@}\) and \(g(x) = {@ga*x^2+gc@}\).</p>
+
+<p><br>(a) Let \(h(x) = f(g(x))\). What is \(h({@h1@})\) and \(h({@h2@})\)?</p>
+<p align="right">\(h({@h1@}) =\) [[input:ans1]] [[validation:ans1]]</p>
+<p align="right">\(h({@h2@}) =\) [[input:ans2]] [[validation:ans2]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) Let \(k(x) = g(f(x))\). What is \(k({@k1@})\) and \(k({@k2@})\)?</p>
+<p align="right">\(k({@k1@}) =\) [[input:ans3]] [[validation:ans3]]</p>
+<p align="right">\(k({@k2@}) =\) [[input:ans4]] [[validation:ans4]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt2]]</p>
+
+<p><br>(c) Write down the two possible formulae of \(h^{-1}(x)\)?</p>
+<p align="right">\(h^{-1}(x) =\) [[input:ans5]] [[validation:ans5]]</p>
+<p align="right">\(h^{-1}(x) =\) [[input:ans6]] [[validation:ans6]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt3]]</p>
+
+<p><br>(d) Write down the two possible formulae of \(k^{-1}(x)\)?</p>
+<p align="right">\(k^{-1}(x) =\) [[input:ans7]] [[validation:ans7]]</p>
+<p align="right">\(k^{-1}(x) =\) [[input:ans8]] [[validation:ans8]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt4]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>6</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Randomising equations */
+fm:rand(5)+1;
+fc:rand_with_prohib(-5,5,[0]);
+ga:rand(3)+1
+gc:rand_with_prohib(-5,5,[0]);
+
+f(n) := block(return(fm*n+fc));
+g(n) := block(return(ga*n^2+gc));
+
+/* Randomising points of evaluation */
+
+h1:rand(6)+1;
+h2:-rand_with_prohib(1,6,[h1]);
+k1:rand_with_prohib(1,6,[h1,-h2]);
+k2:-rand_with_prohib(1,6,[h1,-h2,k1]);
+
+/* Solutions */
+
+tans1:f(g(h1));
+tans2:f(g(h2));
+tans3:g(f(k1));
+tans4:g(f(k2));
+
+tans5:sqrt((x-gc*fm-fc)/(ga*fm));
+tans6:-sqrt((x-gc*fm-fc)/(ga*fm));
+
+tans7:(-fc*ga+sqrt(ga*(x-gc)))/(ga*fm);
+tans8:(-fc*ga-sqrt(ga*(x-gc)))/(ga*fm);</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>\(f(x) = {@fm*x+fc@}\) and \(g(x) = {@ga*x^2+gc@}\).</p>
+<p>Find \(h({@h1@})\), \(h({@h2@})\), \(k({@k1@})\), \(k({@k2@})\).</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>tans1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>tans2</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>tans3</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>tans4</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>tans5</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans6</name>
+      <type>algebraic</type>
+      <tans>tans6</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans7</name>
+      <type>algebraic</type>
+      <tans>tans7</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans8</name>
+      <type>algebraic</type>
+      <tans>tans8</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check both correct */
+node1_test: if ans1=tans1 and ans2=tans2 then 1 else 0;
+
+/* Node 2: Worked solution */
+/* Node 3: Check whether one answer correct */
+node3_test: if ans1=tans1 or ans2=tans2 then 1 else 0;
+
+/* Node 4: Check whether composition applied backwards for both */
+node4_test: if ans1=g(f(h1)) and ans2=g(f(h2)) then 1 else 0;
+
+/* Node 5: Check whether composition applied backwards for either */
+node5_test: if (notequal(ans1,tans1) and ans1=g(f(h1))) or (notequal(ans2,tans2) and ans2=g(f(h2))) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p><br>\(h({@h1@}) = f(g({@h1@}))\)</p>
+<p>\(h({@h1@}) = f({@g(h1)@})\)</p>
+<p>\(h({@h1@}) = {@f(g(h1))@}\)</p>
+
+<p><br>\(h({@h2@}) = f(g({@h2@}))\)</p>
+<p>\(h({@h2@}) = f({@g(h2)@})\)</p>
+<p>\(h({@h2@}) = {@f(g(h2))@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for {@if ans1=tans1 then sconcat("\\(h(",h1,")\\)") else sconcat("\\(h(",h2,")\\)")@} is correct.<br>However, your answer for {@if ans1=tans1 then sconcat("\\(h(",h2,")\\)") else sconcat("\\(h(",h1,")\\)")@} is not. </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Neither of your answers are correct.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have applied the functions \(f\) and \(g\) in the wrong order for both of your answers.<br>Remember that when you are computing a composite function, you start from the inside and work out.<br>In this case, you should apply the function \(g\) and then \(f\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have applied the functions \(f\) and \(g\) in the wrong order for {@if (notequal(ans1,tans1) and ans1=g(f(h1))) then sconcat("\\(h(",h1,")\\)") else sconcat("\\(h(",h2,")\\)")@}.<br>Remember that when you are computing a composite function, you start from the inside and work out.<br>In this case, you should apply the function \(g\) and then \(f\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check both correct */
+node1_test: if ans3=tans3 and ans4=tans4 then 1 else 0;
+
+/* Node 2: Worked solution */
+/* Node 3: Check whether one answer correct */
+node3_test: if ans3=tans3 or ans4=tans4 then 1 else 0;
+
+/* Node 4: Check whether composition applied backwards for both */
+node4_test: if ans3=f(g(k1)) and ans4=f(g(k2)) then 1 else 0;
+
+/* Node 5: Check whether composition applied backwards for both in (a) and (b) */
+node5_test: if node4_test=1 and ans1=g(f(h1)) and ans2=g(f(h2)) then 1 else 0;
+
+/* Node 6: Check whether composition applied backwards for either */
+node6_test: if (notequal(ans3,tans3) and ans3=f(g(k1))) or (notequal(ans4,tans4) and ans4=f(g(k2))) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p><br>\(k({@k1@}) = g(f({@k1@}))\)</p>
+<p>\(k({@k1@}) = g({@f(k1)@})\)</p>
+<p>\(k({@k1@}) = {@g(f(k1))@}\)</p>
+
+<p><br>\(k({@h2@}) = g(f({@k2@}))\)</p>
+<p>\(k({@k2@}) = g({@f(k2)@})\)</p>
+<p>\(k({@k2@}) = {@g(f(k2))@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for {@if ans3=tans3 then sconcat("\\(k(",k1,")\\)") else sconcat("\\(k(",k2,")\\)")@} is correct.<br>However, your answer for {@if ans3=tans3 then sconcat("\\(k(",k2,")\\)") else sconcat("\\(k(",k1,")\\)")@} is not. </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have applied the functions \(f\) and \(g\) in the wrong order for both of your answers as you did for part (a).<br>Remember that when you are computing a composite function, you start from the inside and work out.<br>In this case, you should apply the function \(f\) and then \(g\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have applied the functions \(f\) and \(g\) in the wrong order for both of your answers.<br>Remember that when you are computing a composite function, you start from the inside and work out.<br>In this case, you should apply the function \(f\) and then \(g\).</p>
+
+<p><br><i>Since you made the same mistake in (a) and (b), you have gained 1 mark.</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>You have applied the functions \(f\) and \(g\) in the wrong order for {@if (notequal(ans3,tans3) and ans3=f(g(k1))) then sconcat("\\(h(",k1,")\\)") else sconcat("\\(h(",k2,")\\)")@}.<br>Remember that when you are computing a composite function, you start from the inside and work out.<br>In this case, you should apply the function \(f\) and then \(g\).</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check both equations correct */
+node1_test: if {ans5,ans6}={tans5,tans6} then 1 else 0;
+
+/* Node 2: Worked solution */
+/* Node 3: Check both equations using from composition (1) */
+node3_test: if {ans5,ans6}={tans7,tans8} then 1 else 0;
+
+/* Node 4: Check either equation correct (1) */
+node4_test: if elementp(ans5,{tans5,tans6}) or elementp(ans6,{tans5,tans6}) then 1 else 0;
+
+/* Node 5: Check either equation using wrong composition */
+node5_test: if elementp(ans5,{tans7,tans8}) or elementp(ans6,{tans7,tans8}) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>First, we need to find the equation for \(h(x)\).</p>
+<p>\(h(x) = f(g(x))\)</p>
+<p>\(h(x) = f({@ga*x^2+gc@})\)</p>
+<p>\(h(x) = {@if fm=1 then "" else fm@}({@ga*x^2+gc@}) {@if fc<0 then "-" else "+"@} {@abs(fc)@}\)</p>
+<p>\(h(x) = {@fm*ga*x^2+fm*gc+fc@}\)</p>
+
+<p><br>Then, rearranging for \(x\).</p>
+<p>\(x^2 = {@(h(x)-(fm*gc+fc))/(fm*ga)@}\)</p>
+<p>\(x = \pm \sqrt{{@(h(x)-(fm*gc+fc))/(fm*ga)@}}\)</p>
+
+<p><br>So, to find \(h^{-1}(x)\).</p>
+<p>\(h^{-1}(x) = \pm \sqrt{{@(x-(fm*gc+fc))/(fm*ga)@}}\)</p>
+
+<p><br>And the two possible equations for \(h^{-1}(x)\) are:</p>
+<p>\(h^{-1}(x) = \sqrt{{@(x-(fm*gc+fc))/(fm*ga)@}}\) and \(h^{-1}(x) = -\sqrt{{@(x-(fm*gc+fc))/(fm*ga)@}}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have applied the functions \(f\) and \(g\) in the wrong order.<br>Remember that when you are computing a composite function, you start from the inside and work out.<br>In this case, you should apply the function \(g\) and then \(f\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt3-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>One of your equations, {@if elementp(ans5,{tans5,tans6}) then ans5 else ans6@} is correct.<br>However, the other equation is not.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt3-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>For your equation, {@if elementp(ans5,{tans7,tans8}) then ans5 else ans6@}, you have applied the functions \(f\) and \(g\) in the wrong order.<br>Remember that when you are computing a composite function, you start from the inside and work out.<br>In this case, you should apply the function \(g\) and then \(f\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt4</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check both equations correct */
+node1_test: if {ans7,ans8}={tans7,tans8} then 1 else 0;
+
+/* Node 2: Worked solution */
+/* Node 3: Check both equations using from composition (1) */
+node3_test: if {ans7,ans8}={tans5,tans6} then 1 else 0;
+
+/* Node 4: Check either equation correct (1) */
+node4_test: if elementp(ans7,{tans7,tans8}) or elementp(ans8,{tans7,tans8}) then 1 else 0;
+
+/* Node 5: Check either equation using wrong composition */
+node5_test: if elementp(ans7,{tans5,tans6}) or elementp(ans8,{tans5,tans6}) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt4-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt4-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>First, we need to find the equation for \(k(x)\).</p>
+<p>\(k(x) = g(f(x))\)</p>
+<p>\(k(x) = g({@fm*x+fc@})\)</p>
+<p>\(k(x) = {@if ga=1 then "" else ga@}({@fm*x+fc@})^2 {@if gc<0 then "-" else "+"@} {@abs(gc)@}\)</p>
+<p><i>(You could expand the bracket here, but for this question its actually easier to leave \(k(x)\) in this form)</i></p>
+
+<p><br>Then, rearranging for \(x\).</p>
+<p>\(({@fm*x+fc@})^2 = {@(k(x)-gc)/ga@}\)</p>
+<p>\(x = {@-fc/fm@} \pm {@(sqrt(k(x)-gc)/ga)/fm@}\)</p>
+
+<p><br>So, to find \(k^{-1}(x)\).</p>
+<p>\(k^{-1}(x) = {@-fc/fm@} \pm {@(sqrt(x-gc)/ga)/fm@}\)</p>
+
+<p><br>And the two possible equations for \(h^{-1}(x)\) are:</p>
+<p>\(k^{-1}(x) = {@-fc/fm@} + {@(sqrt(x-gc)/ga)/fm@}\) and \(k^{-1}(x) = {@-fc/fm@} - {@(sqrt(x-gc)/ga)/fm@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt4-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have applied the functions \(f\) and \(g\) in the wrong order.<br>Remember that when you are computing a composite function, you start from the inside and work out.<br>In this case, you should apply the function \(f\) and then \(g\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt4-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt4-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>One of your equations, {@if elementp(ans7,{tans7,tans8}) then ans7 else ans8@} is correct.<br>However, the other equation is not.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt4-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>For your equation, {@if elementp(ans7,{tans5,tans6}) then ans7 else ans8@}, you have applied the functions \(f\) and \(g\) in the wrong order.<br>Remember that when you are computing a composite function, you start from the inside and work out.<br>In this case, you should apply the function \(f\) and then \(g\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt4-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

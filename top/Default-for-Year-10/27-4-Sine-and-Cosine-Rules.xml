@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>27.4 Sine and Cosine Rules</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Here is a diagram of a triangle \(A,B,C\):</p>
+
+[[jsxgraph]]
+
+    var baseLen = {#lenAB#};
+    var sideLen = {#lenAC#};
+    var ang = {#angCAB#};
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[0,1,1,0],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    var pointStyle = {
+      fixed:true,
+      highlight:false,
+      showInfoBox:false,
+      fillColor:"none",
+      strokeColor:"none",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15,
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    pointStyle.name = "\\(A\\)";
+    pointStyle.label.anchorX = "right";
+    pointStyle.label.anchorY = "top";
+    pointStyle.label.offset = [-10,5];
+    var pA = board.create("point", [0,0], pointStyle);
+
+    pointStyle.name = "\\(B\\)";
+    pointStyle.label.anchorX = "left";
+    pointStyle.label.offset = [5,5];
+    var pB = board.create("point", [1,0], pointStyle);
+
+    var conCirc = board.create("circle", [pA, sideLen/baseLen], {visible:false});
+    var conLine = board.create("line", [pA, [
+      pA.X()+Math.cos(ang*Math.PI/180), 
+      pA.Y()+Math.sin(ang*Math.PI/180)
+    ]], {visible:false});
+
+    pointStyle.name = "\\(C\\)";
+    pointStyle.label.anchorX = "middle";
+    pointStyle.label.anchorY = "bottom";
+    pointStyle.label.offset = [0,0];
+    var pC = board.create("intersection", [conCirc, conLine], pointStyle);
+
+    board.setBoundingBox([
+      -0.1, 
+      pC.Y()+(1.2-(pC.Y()-pA.Y()))/2, 
+      1.1, 
+      pA.Y()-(1.2-(pC.Y()-pA.Y()))/2
+    ]);
+
+    board.create("polygon", [pA, pB, pC], {
+      fixed:true,
+      highlight:false,
+      fillColor:"red",
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        strokeWidth:2
+      }
+    });
+
+    var angStyle = {
+      fixed:true,
+      highlight:false,
+      radius:0.1,
+      fillColor:"blue",
+      strokeColor:"blue",
+      orthoType:"sector",
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:15
+      }
+    };
+
+    angStyle.name = "\\(".concat(ang, "^\\circ\\)");
+    board.create("angle", [pB, pA, pC], angStyle);
+
+    angStyle.name = " ";
+    board.create("angle", [pA, pC, pB], angStyle);
+
+    var edgeStyle = {
+      fixed:true,
+      highlight:false,
+      showInfoBox:false,
+      fillColor:"none",
+      strokeColor:"none",
+      label:{
+        fixed:true,
+        highlight:false,
+        anchorX:"middle",
+        anchorY:"top",
+        fontSize:15
+      }
+    };
+
+    edgeStyle.name = "\\(".concat(baseLen, "cm\\)");
+    edgeStyle.label.offset = [0,-10];
+    board.create("midpoint", [pA, pB], edgeStyle);
+
+    edgeStyle.name = "\\(".concat(sideLen, "cm\\)");
+    edgeStyle.label.offset = [-10,0];
+    edgeStyle.label.anchorX = "right";
+    edgeStyle.label.anchorY = "bottom";
+    board.create("midpoint", [pA, pC], edgeStyle);
+
+[[/jsxgraph]]
+
+<p>\(AB = {@float(lenAB)@}cm\)
+<br>\(AC = {@float(lenAC)@}cm\)
+<br>\(CAB = {@angCAB@}^\circ\)</p>
+
+<p><br>(a) Find the length of \(BC\)
+<br><i>Give your answer to 2dp.</i></p>
+<p align="right">\(BC =\) [[input:ans1]] \(cm\) [[validation:ans1]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) Find the angle \(BCA\) given that it is <b>{@if angBCA<0 then "obtuse" else "acute"@}</b>.
+<br><i>Give your answer to 1dp.</i></p>
+<p align="right">\(BCA =\) [[input:ans2]] \(^\circ\) [[validation:ans2]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>5</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[dp(num, dp) := block(if num*10^dp-floor(num*10^dp)<0.5 then return(float(floor(num*10^dp)/(10^dp))) else return(float(ceiling(num*10^dp)/(10^dp))));
+
+/* Randomising measurements */
+
+lenAB:rand_with_prohib(1,49,[10,20,30,40])/10+10;
+lenAC:rand_with_prohib(1,49,[10,20,30,40])/10+5;
+angCAB:rand_with_prohib(1,14,[5,10])*2+50;
+
+/* Solutions */
+
+tans1:sqrt(lenAB^2 + lenAC^2 - 2*lenAB*lenAC*cos(angCAB*%pi/180));
+
+angBCA:arctan(lenAB*sin(angCAB*%pi/180)/(lenAC-lenAB*cos(angCAB*%pi/180)))*180/%pi;
+
+tans2: if angBCA<0 then angBCA+180 else angBCA;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>\(AB = {@lenAB@}\)
+<br>\(AC = {@lenAC@}\)
+<br>\(CAB = {@angCAB@}\)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>dp(tans1,2)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>dp(tans2,1)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Correct answer (2) */
+/* Node 2: Worked solution */
+/* Node 3: Correct answer, incorrectly rounded (1) */
+node3_test: if abs(ans1-tans1)<=0.01 then 1 else 0;
+
+/* Node 4: Finds square of BC (1) */
+node4_error: lenAB^2 + lenAC^2 - 2*lenAB*lenAC*cos(angCAB*%pi/180);
+
+/* Node 5: Uses sine instead of cosine (1) */
+node5_error: sqrt(lenAB^2 + lenAC^2 - 2*lenAB*lenAC*sin(angCAB*%pi/180));
+
+/* Node 6: N4-5 errors with incorrect rounding (feedback) */
+node6_test: if abs(ans1-node4_error)<=0.01 or abs(ans1-node5_error)<=0.01 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>dp(tans1,2)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>Using the cosine rule: \({BC}^2 = {AB}^2 + {AC}^2 - 2 \times AB \times AC \times \cos(A)\)</p>
+<p>\({BC}^2 = {@float(lenAB)@}^2 + {@float(lenAC)@}^2 - 2 \times {@float(lenAB)@} \times {@float(lenAC)@} \times \cos({@angCAB@})\)</p>
+<p>\({BC}^2 = {@dp(tans1^2,5)@}...\)</p>
+<p>\(BC = {@dp(tans1,5)@}...\)</p>
+<p>\(BC = {@dp(tans1,2)@}\) <i>(to 2dp)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the correct length of \(BC\).
+<br>However, you have not rounded your answer correctly to 2dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>dp(node4_error,2)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the <b>square</b> of the length of \(BC\).
+<br>Remember that the cosine rule is: \(a^2 = b^2 + c^2 - 2bc \cos(A)\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>dp(node5_error,2)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have used the <b>sine</b> of the angle \(CAB\) to calculate the length \(BC\).
+<br>Remember that the cosine rule is: \(a^2 = b^2 + c^2 - 2bc \cos(A)\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>{@if abs(ans1-node4_error)<=0.01 then "You have found the square of the length of \\(BC\\)." else if abs(ans1-node5_error)<=0.01 then "You have used the <b>sine</b> of the angle \\(CAB\\) to calculate the length \\(BC\\)."@}
+<br>Remember that the cosine rule is: \(a^2 = b^2 + c^2 - 2bc \cos(A)\)</p>
+<p>You have also not rounded your answer correctly to 2dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Correct answer */
+/* Node 2: Worked solution */
+/* Node 3: ECF (3) */
+ecf_angBCA:arcsin(sin(angCAB*%pi/180)*lenAB/ans1)*180/%pi;
+ecf2: if angBCA<0 then 180-ecf_angBCA else angBCA;
+
+/* Node 4: Correct answer, incorrect rounding (2) */
+node4_test: if abs(ans2-tans2)<=0.1 then 1 else 0;
+
+/* Node 5: ECF, incorrect rounding (2) */
+node5_test: if abs(ans2-ecf2)<=0.1 then 1 else 0;
+
+/* Node 6: Gives acute/obtuse angle incorrectly (1) */
+node6_test: if abs(ans2-(180-tans2))<=0.1 then 1 else 0;
+
+/* Node 7: ECF, gives acute/obtuse angle incorrectly (1) */
+node7_test: if abs(ans2-(180-ecf2))<=0.1 then 1 else 0;
+
+/* Node 8: Uses sine rule incorrectly (a*sin(A)=b*sin(B) or a/sin(A) = sin(B)/b) (feedback) */
+node8_errorA: arcsin(sin(angCAB*%pi/180)*ans1/lenAB)*180/%pi;
+node8_errorB: arcsin(ans1*lenAB/sin(angCAB*%pi/180))*180/%pi;
+node8_test: if abs(ans2-node8_errorA)<=0.1 or abs(ans2-(180-node8_errorA))<=0.1 or abs(ans2-node8_errorB)<=0.1 or abs(ans2-(180-node8_errorB))<=0.1 then 1 else 0;
+
+/* Node 9: Uses cosine in place of sine (feedback) */
+node9_error: arccos(cos(angCAB*%pi/180)*lenAB/ans1)*180/%pi;
+node9_test: if abs(ans2-node9_error)<=0.1 or abs(ans2-(180-node9_error))<=0.1 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>dp(tans2,1)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>Using the sine rule: \(\frac{\sin(BCA)}{{@float(lenAB)@}} = \frac{\sin({@angCAB@})}{{@dp(tans1,5)@}...}\)</p>
+<p>\(\sin(BCA) = {@float(lenAB)@} \times \frac{\sin({@angCAB@})}{{@dp(tans1,5)@}...}\)</p>
+<p>\(\sin(BCA) = {@dp(lenAB*sin(angCAB*%pi/180)/tans1,5)@}...\)</p>
+
+<p><br>Since \(BCA\) is {@if angBCA<0 then "obtuse" else "acute"@}:</p>
+<p>\(BCA = {@dp(asin(lenAB*sin(angCAB*%pi/180)/tans1)*180/%pi,5)@}...\)</p>
+<p>\(BCA = {@dp(asin(lenAB*sin(angCAB*%pi/180)/tans1)*180/%pi,1)@}^\circ\) <i>(to 1dp)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>dp(ecf2,1)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your have not given the correct angle \(BCA\).
+<br>However, your answer is consistent with the answer that you gave to part (a).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.6670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have found the correct angle \(BCA\).
+<br>However, you have not rounded your answer correctly to 1pd.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.6670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your have not given the correct angle \(BCA\).
+<br>However, your answer is consistent with the answer that you gave to part (a).</p>
+<p>You have also not rounded correctly to 1pd.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly determined the value of \(\sin(CAB)\).
+<br>However, you have given an <b>{@if angBCA<0 then "acute" else "obtuse"@}</b> angle instead of an <b>{@if angBCA<0 then "obtuse" else "acute"@}</b> one.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have not determined the correct value of \(\sin(CAB)\).
+<br>However, your answer is consistent with the answer that you gave to part (a).</p>
+<p>Also, you have given an <b>{@if ecf2<0 then "acute" else "obtuse"@}</b> angle instead of an <b>{@if ecf2<0 then "obtuse" else "acute"@}</b> one.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt2-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node8_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have used the sine rule incorrectly.</p>
+<p>Remember that the sine rule is: \(\frac{a}{\sin(A)} = \frac{b}{\sin(B)} = \frac{c}{\sin(C)}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt2-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node9_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have used the <b>cosine</b> of the angle \(CAB\) to find the angle \(BCA\).</p>
+<p>Remember that the sine rule is: \(\frac{a}{\sin(A)} = \frac{b}{\sin(B)} = \frac{c}{\sin(C)}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

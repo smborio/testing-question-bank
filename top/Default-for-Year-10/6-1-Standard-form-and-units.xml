@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>6.1 Standard form and units</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p><i>To give an answer in standard form, \(n \times 10^p\), type</i> <b> "n*10^p".</b></p>
+
+<p><br>(a) Calculate \({@if integerp(first(aList)) then first(aList) else float(first(aList))@}\times10^4 + {@if integerp(second(aList)) then second(aList) else float(second(aList))@}\times10^3 + {@if integerp(third(aList)) then third(aList) else float(third(aList))@}\times10^5\)<br><i>Give you answer in standard form.</i></p>
+<p align="right">[[input:ans1]] [[validation:ans1]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p>(b) Calculate \(10^{@first(bList)@} \times 10^{@second(bList)@} \times 10^{@third(bList)@}\)<br><i>Give your answer as a power of 10.</i></p>
+<p align="right">[[input:ans2]] [[validation:ans2]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt2]]</p>
+
+<p>(c) How many times longer is \({@if integerp(cTimeLongDec) then cTimeLongDec else float(cTimeLongDec)@} \times 10^{@cTimeLongPow@}\) {@first(cUnitsList)@} than \({@if integerp(cTimeShortDec) then cTimeShortDec else float(cTimeShortDec)@} \times 10^{@cTimeShortPow@}\) {@second(cUnitsList)@}?<br><i>Give your answer in standard form.</i></p>
+<p align="right">[[input:ans3]] [[validation:ans3]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt3]]</p>
+
+<p>(d) What is the volume of a box with dimensions \({@if integerp(dLengthDec) then dLengthDec else float(dLengthDec)@} \times 10^{@dLengthPow@} \text{{@first(dUnitsList)@}}\) by \({@if integerp(dWidthCorrUnit) then dWidthCorrUnit else float(dWidthCorrUnit)@} \text{{@second(dUnitsList)@}}\) by \({@if integerp(dHeightDec) then dHeightDec else float(dHeightDec)@} \times 10^{@dHeightPow@} \text{{@third(dUnitsList)@}}\)?<br><i>Give your answer in standard form in \(\text{cm}^3\).</i></p>
+<p align="right">[[input:ans4]] \(\text{cm}^3\) [[validation:ans4]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt4]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>7</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Randomisation of (a) */
+numTwoDP:rand_with_prohib(101,999,[200,300,400,500,600,700,800,900])/100;
+numOneDP:rand_with_prohib(11,99,[20,30,40,50,60,70,80,90])/10;
+numZeroDP:rand(9)+1;
+aList:random_permutation([numZeroDP,numOneDP,numTwoDP]);
+
+simp:false;
+tans1: ev(float((first(aList)*10^4 + second(aList)*10^3 + third(aList)*10^5)/10^(floor(log(first(aList)*10^4 + second(aList)*10^3 + third(aList)*10^5)/log(10)))),simp)*10^ev(floor(log(first(aList)*10^4 + second(aList)*10^3 + third(aList)*10^5)/log(10)),simp);
+simp:true;
+
+/* Randomisation of (b) */
+bList:rand_selection([-4,-3,-2,-1,2,3,4,5],3);
+
+simp:false;
+tans2:10^ev(first(bList)+second(bList)+third(bList),simp);
+simp:true;
+
+/* Randomisation of (c) */
+cUnitsList:rand_selection(["seconds","minutes","hours"],2);
+
+ratioDec:rand_with_prohib(11,79,[20,30,40,50,60,70])/10;
+ratioPow:rand(8)+2;
+
+cTimeShortHrs:rand_with_prohib(11,99,[20,30,40,50,60,70,80,90])*10^(rand(2)+1);
+cTimeShortCorrUnit: if second(cUnitsList)="seconds" then cTimeShortHrs*3600 else if second(cUnitsList)="minutes" then cTimeShortHrs*60 else cTimeShortHrs;
+
+cTimeShortPow:floor(log(cTimeShortCorrUnit)/log(10))-1;
+cTimeShortDec:cTimeShortCorrUnit/(10^cTimeShortPow);
+
+cTimeLongHrs:cTimeShortHrs*(ratioDec*10^ratioPow);
+cTimeLongCorrUnit: if first(cUnitsList)="seconds" then cTimeLongHrs*3600 else if first(cUnitsList)="minutes" then cTimeLongHrs*60 else cTimeLongHrs;
+
+cTimeLongPow:floor(log(cTimeLongCorrUnit)/log(10))+1;
+cTimeLongDec:cTimeLongCorrUnit/(10^cTimeLongPow);
+
+simp:false;
+tans3: float(ratioDec)*10^ratioPow;
+simp:true;
+
+/* Randomisation of (d) */
+
+dUnitsList:rand_selection(["m", "m", "cm", "cm", "mm", "mm"],3);
+
+dLengthM:(rand(9)+11)/10;
+dLengthCorrUnit: if first(dUnitsList)="mm" then dLengthM*1000 else if first(dUnitsList)="cm" then dLengthM*100 else dLengthM;
+
+dLengthPow:rand([2,3]);
+dLengthDec:dLengthCorrUnit/(10^dLengthPow);
+
+dWidthM:rand_with_prohib(51,99,[60,70,80,90])/10;
+dWidthCorrUnit: if second(dUnitsList)="mm" then dWidthM*1000 else if second(dUnitsList)="cm" then dWidthM*100 else dWidthM;
+
+dHeightM:rand_with_prohib(11,49,[20,30,40])/10;
+dHeightCorrUnit: if third(dUnitsList)="mm" then dHeightM*1000 else if third(dUnitsList)="cm" then dHeightM*100 else dHeightM;
+
+dHeightPow:rand([-1,-2]);
+dHeightDec:dHeightCorrUnit/(10^dHeightPow);
+
+dVol:dLengthM*dWidthM*dHeightM*1000000;
+dVolPow:floor(log(dVol)/log(10));
+
+simp:false;
+tans4: ev(float(dVol/10^dVolPow),simp)*10^dVolPow;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>(a) \({@float(first(aList))@}\times10^4 + {@float(second(aList))@}\times10^3 + {@float(third(aList))@}\times10^5\)</p>
+<p>(b) \(10^{@first(bList)@} \times 10^{@second(bList)@} \times 10^{@third(bList)@}\)</p>
+<p>(c) \({@float(cTimeLongDec)@} \times 10^{@cTimeLongPow@}\) {@first(cUnitsList)@} and \({@float(cTimeShortDec)@} \times 10^{@cTimeShortPow@}\) {@second(cUnitsList)@}</p>
+<p>(d) \({@float(dLengthDec)@} \times 10^{@dLengthPow@}{@first(dUnitsList)@}\) by \({@float(dWidthCorrUnit)@}{@second(dUnitsList)@}\) by \({@float(dHeightDec)@} \times 10^{@dHeightPow@}{@third(dUnitsList)@}\)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>cross</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>tans1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>tans2</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>tans3</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>tans4</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>0</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+/* Node 3: Check correct answer, but wrong standard form */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans1</sans>
+        <tans>tans1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\({@if integerp(first(aList)) then first(aList) else float(first(aList))@}\times10^4 + {@if integerp(second(aList)) then second(aList) else float(second(aList))@}\times10^3 + {@if integerp(third(aList)) then third(aList) else float(third(aList))@}\times10^5\)</p>
+
+<p>\(= {@if integerp(ev(first(aList)/10,simp)) then ev(first(aList)/10,simp) else ev(float(first(aList)/10),simp)@}\times10^5 + {@if integerp(ev(second(aList)/100,simp)) then ev(second(aList)/100,simp) else ev(float(second(aList)/100),simp)@}\times10^5 + {@if integerp(third(aList)) then third(aList) else float(third(aList))@}\times10^5\)</p>
+
+<p>\(= ({@if integerp(ev(first(aList)/10,simp)) then ev(first(aList)/10,simp) else ev(float(first(aList)/10),simp)@} + {@if integerp(ev(second(aList)/100,simp)) then ev(second(aList)/100,simp) else ev(float(second(aList)/100),simp)@} + {@if integerp(third(aList)) then third(aList) else float(third(aList))@})\times10^5\)</p>
+
+<p>\(= {@tans1@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ev(ans1,simp)</sans>
+        <tans>ev(tans1,simp)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer is correct however you have not answered in <b>standard form</b> as required.<br>Remember that a number in standard form, \(n \times 10^p\), must have \(p\) as an integer and \(0 \leq n < 10\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>0</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+/* Node 3: Correct answer, incorrect form */
+/* Node 4: Multiply powers instead of adding */
+node4_error: 10^ev(first(bList)*second(bList)*third(bList),simp);</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans2</sans>
+        <tans>tans2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\(10^{@first(bList)@} \times 10^{@second(bList)@} \times 10^{@third(bList)@}\)</p>
+<p>\(= 10^{{@first(bList)@} {@if second(bList)<0 then "-" else "+"@} {@ev(abs(second(bList)),simp)@} {@if third(bList)<0 then "-" else "+"@} {@ev(abs(third(bList)),simp)@}}\)</p>
+<p>\(= {@tans2@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ev(ans2,simp)</sans>
+        <tans>ev(tans2,simp)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer is correct, however you have not given it in the correct form.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ev(ans2,simp)</sans>
+        <tans>ev(node4_error,simp)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have multiplied the powers in the question, however you should have summed them.<br>Remember that, in general, \(10^a \times 10^b = 10^{a+b}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>2.0000000</value>
+      <autosimplify>0</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+/* Node 3: Check correct answer, but wrong standard form */
+/* Node 4: Check no conversion of units */
+node4_error: (cTimeLongDec*10^cTimeLongPow)/(cTimeShortDec*10^cTimeShortPow);</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans3</sans>
+        <tans>tans3</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>We first need to convert both times to the same unit, take hours:</p>
+
+<p>\({@if integerp(cTimeLongDec) then cTimeLongDec else float(cTimeLongDec)@} \times 10^{@cTimeLongPow@}\) {@first(cUnitsList)@} {@if first(cUnitsList)="hours" then sconcat("\\(= ", string(cTimeLongHrs), "\\) hours") else if first(cUnitsList)="minutes" then sconcat("\\((\\div 60)", "= ", string(cTimeLongHrs), "\\) hours") else sconcat("\\((\\div 3600)", "= ", string(cTimeLongHrs), "\\) hours")@}</p>
+
+<p>\({@if integerp(cTimeShortDec) then cTimeShortDec else float(cTimeShortDec)@} \times 10^{@cTimeShortPow@}\) {@second(cUnitsList)@} {@if second(cUnitsList)="hours" then sconcat("\\(= ", string(cTimeShortHrs), "\\) hours") else if second(cUnitsList)="minutes" then sconcat("\\((\\div 60)", "= ", string(cTimeShortHrs), "\\) hours") else sconcat("\\((\\div 3600)", "= ", string(cTimeShortHrs), "\\) hours")@}</p>
+
+<p><br>So, \(\frac{{@cTimeLongHrs@}}{{@cTimeShortHrs@}} = {@tans3@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ev(ans3,simp)</sans>
+        <tans>ev(tans3,simp)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer is correct however you have not answered in <b>standard form</b> as required.<br>Remember that a number in standard form, \(n \times 10^p\), must have \(p\) as an integer and \(0 \leq n < 10\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ev(ans3,simp)</sans>
+        <tans>ev(node4_error,simp)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have attempted to divide the longer time by the shorter.<br>However, you have forgotten to convert both time periods to the same unit.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt4</name>
+      <value>3.0000000</value>
+      <autosimplify>0</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+/* Node 3: Correct answer, but wrong standard form (2) */
+
+/* Node 4: Wrong units used but correct standard form (2) */
+node4_test: if ans4=ev(float(dVol/10^dVolPow),simp)*10^ev(dVolPow+3,simp) or ans4=ev(float(dVol/10^dVolPow),simp)*10^ev(dVolPow-6,simp) then 1 else 0;
+
+/* Node 5: Wrong units and wrong standard form (1) */
+node5_test: if ev(ans4,simp)=ev(float(dVol/10^dVolPow)*10^(dVolPow+3),simp) or ev(ans4,simp)=ev(float(dVol/10^dVolPow)*10^(dVolPow-6),simp) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans4</sans>
+        <tans>tans4</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt4-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt4-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>Firstly, convert all of the measurements into \(cm\):</p>
+
+<p>\({@if integerp(dLengthDec) then dLengthDec else float(dLengthDec)@} \times 10^{@dLengthPow@}{@first(dUnitsList)@}\) {@if first(dUnitsList)="m" then sconcat("\\(\\ (\\times 100) = ", string(ev(dLengthM*100,simp)), " cm\\)") else if first(dUnitsList)="mm" then sconcat("\\(\\ (\\div 10) = ", string(ev(dLengthM*100,simp)), " cm\\)") else sconcat("\\(\\ = ", string(ev(dLengthM*100,simp)), " cm\\)")@}</p>
+
+<p>\({@if integerp(dWidthCorrUnit) then dWidthCorrUnit else float(dWidthCorrUnit)@}{@second(dUnitsList)@}\) {@if second(dUnitsList)="m" then sconcat("\\(\\ (\\times 100) = ", string(ev(dWidth*100,simp)), " cm\\)") else if second(dUnitsList)="mm" then sconcat("\\(\\ (\\div 10) = ", string(ev(dWidthM*100,simp)), " cm\\)") else ""@}
+</p>
+
+<p>\({@if integerp(dHeightDec) then dHeightDec else float(dHeightDec)@} \times 10^{@dHeightPow@}{@third(dUnitsList)@}\) {@if third(dUnitsList)="m" then sconcat("\\(\\ (\\times 100) = ", string(ev(dHeightM*100,simp)), " cm\\)") else if third(dUnitsList)="mm" then sconcat("\\(\\ (\\div 10) = ", string(ev(dHeightM*100,simp)), " cm\\)") else sconcat("\\(\\ = ", string(ev(dHeightM*100,simp)), " cm\\)")@}</p>
+
+<p><br>\(V = {@ev(dLengthM*100,simp)@} \times {@ev(dWidthM*100,simp)@} \times {@ev(dHeightM*100,simp)@}\)</p>
+<p>\(V = {@ev(dLengthM*dWidthM*dHeightM*1000000,simp)@} cm^3\)
+<p>\(V = {@tans4@} cm^3\)]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt4-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ev(ans4,simp)</sans>
+        <tans>ev(tans4,simp)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.6670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer is correct however you have not answered in <b>standard form</b> as required.<br>Remember that a number in standard form, \(n \times 10^p\), must have \(p\) as an integer and \(0 \leq n < 10\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt4-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.6670000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have given your answer in {@if ans4=ev(float(dVol/10^dVolPow),simp)*10^(dVolPow+3) then "millimetres" else "metres"@} where you should have answered in centimetres.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt4-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have given your answer in {@if ev(ans4,simp)=ev(float(dVol/10^dVolPow)*10^(dVolPow+3),simp) then "millimetres" else "metres"@} where you should have answered in centimetres.</p>
+<p>You have also not answered in <b>standard form</b> as required.<br>Remember that a number in standard form, \(n \times 10^p\), must have \(p\) as an integer and \(0 \leq n < 10\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt4-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

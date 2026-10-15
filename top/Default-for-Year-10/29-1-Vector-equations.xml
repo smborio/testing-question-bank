@@ -1,0 +1,996 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>29.1 Vector equations</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>a) i) Find rational constants \(a\) and \(b\), such that \(a{@matrix1@} + b{@matrix2@} = {@matrixAns@}\).</p>
+<p align="right">\(a =\) [[input:ans1]] [[validation:ans1]]</p>
+<p align="right">\(b =\) [[input:ans2]] [[validation:ans2]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt1]]</p>
+<p><br>b) i) Find whole numbers \(x\), \(y\) and \(z\) such that \(x{@matrix1@} + y{@matrix2@} = z{@matrixAns@}\).</p>
+<p align="right">\(x =\) [[input:ans3]] [[validation:ans3]]</p>
+<p align="right">\(y =\) [[input:ans4]] [[validation:ans4]]</p>
+<p align="right">\(z =\) [[input:ans5]] [[validation:ans5]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt2]]</p>
+<p>b) ii) Calculate the magnitudes of the three vectors for your chosen whole number values of  \(x\), \(y\) and \(z\).<br><i>Write your answers fully simplified in the form \(n\sqrt{m}\) for integers \(n,m\) by writing \(n*sqrt(m)\).</i></p>
+<p align="right">\(\left| x{@matrix1@} \right| =\) [[input:ans6]] [[validation:ans6]]</p>
+<p>[[feedback:prt3]]</p>
+<p align="right">\(\left| y{@matrix2@} \right| =\) [[input:ans7]] [[validation:ans7]]</p>
+<p>[[feedback:prt4]]</p>
+<p align="right">\(\left| z{@matrixAns@} \right| =\) [[input:ans8]] [[validation:ans8]]</p>
+<p>[[feedback:prt5]]</p>
+<p align="right"><b>(6)</b></p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>9</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Generating non-parallel vectors for (a) */
+vector1_x:rand_with_prohib(-5,5,[0]);
+vector1_y:rand_with_prohib(-5,5,[0,vector1_x]);
+matrix1:matrix([vector1_x],[vector1_y]);
+
+vector2_x:rand_with_prohib(-5,5,[0]);
+vector2_y:rand_with_prohib(-5,5,[0,vector2_x, vector1_y*vector2_x/vector1_x]);
+matrix2:matrix([vector2_x],[vector2_y]);
+
+vectorAns_x:rand_with_prohib(-5,5,[0,vector1_x,-vector1_x]);
+vectorAns_y:rand_with_prohib(-5,5,[0,vector2_y,-vector2_y,vectorAns_x]);
+matrixAns:matrix([vectorAns_x],[vectorAns_y]);
+
+aSol:(vector2_y*vectorAns_x-vector2_x*vectorAns_y)/(vector1_x*vector2_y-vector1_y*vector2_x);
+bSol:(vector1_x*vectorAns_y-vector1_y*vectorAns_x)/(vector1_x*vector2_y-vector1_y*vector2_x);
+
+/* Finding lowest x,y,z for (b) */
+zSol:lcm(denom(aSol),denom(bSol));
+xSol:aSol*zSol;
+ySol:bSol*zSol;
+
+/* Solving (c) and ensuring correct form. */
+
+x_sqrFact: if integerp((vector1_x^2+vector1_y^2)/25) then 25 else if integerp((vector1_x^2+vector1_y^2)/16) then 16 else if integerp((vector1_x^2+vector1_y^2)/9) then 9 else if integerp((vector1_x^2+vector1_y^2)/4) then 4 else 1;
+y_sqrFact: if integerp((vector2_x^2+vector2_y^2)/25) then 25 else if integerp((vector2_x^2+vector2_y^2)/16) then 16 else if integerp((vector2_x^2+vector2_y^2)/9) then 9 else if integerp((vector2_x^2+vector2_y^2)/4) then 4 else 1;
+z_sqrFact: if integerp((vectorAns_x^2+vectorAns_y^2)/25) then 25 else if integerp((vectorAns_x^2+vectorAns_y^2)/16) then 16 else if integerp((vectorAns_x^2+vectorAns_y^2)/9) then 9 else if integerp((vectorAns_x^2+vectorAns_y^2)/4) then 4 else 1;
+
+simp:false
+c_xSol: if ev(sqrt((vector1_x^2+vector1_y^2)/x_sqrFact),simp)=1 then ev(abs(xSol*sqrt(x_sqrFact)),simp) else ev(abs(xSol*sqrt(x_sqrFact)),simp)*ev(sqrt((vector1_x^2+vector1_y^2)/x_sqrFact),simp);
+c_ySol: if ev(sqrt((vector2_x^2+vector2_y^2)/y_sqrFact),simp)=1 then ev(abs(ySol*sqrt(y_sqrFact)),simp) else ev(abs(ySol*sqrt(y_sqrFact)),simp)*ev(sqrt((vector2_x^2+vector2_y^2)/y_sqrFact),simp);
+c_zSol: if ev(sqrt((vectorAns_x^2+vectorAns_y^2)/z_sqrFact),simp)=1 then ev(abs(zSol*sqrt(z_sqrFact)),simp) else ev(abs(zSol*sqrt(z_sqrFact)),simp)*ev(sqrt((vectorAns_x^2+vectorAns_y^2)/z_sqrFact),simp);</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text>\(a{@matrix1@} + b{@matrix2@} = {@matrixAns@}\)</text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>(</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>aSol</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>bSol</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>xSol</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>ySol</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>zSol</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans6</name>
+      <type>algebraic</type>
+      <tans>c_xSol</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>1</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans7</name>
+      <type>algebraic</type>
+      <tans>c_ySol</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>1</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans8</name>
+      <type>algebraic</type>
+      <tans>c_zSol</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>1</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>simp:true
+/* Node 1: Check correct answers */
+node1_test: if ans1=aSol and ans2=bSol then 1 else 0;
+
+/* Node 2: Worked solution */
+/* Node 3: Check whether either equation works (1) */
+node3_test: if ans1*vector1_x+ans2*vector2_x=vectorAns_x or ans1*vector1_y+ans2*vector2_y=vectorAns_y then 1 else 0;
+
+/* Node 4: Check whether a and b reversed (1) */
+node4_test: if ans1=bSol and ans2=aSol then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>Re-writing this vector equation as two simultaneous equations gives:</p>
+<p>\({@vector1_x*a@} {@if vector2_x>0 then "+" else "-"@} {@abs(vector2_x)*b@} = {@vectorAns_x@}\)</p>
+<p>\({@vector1_y*a@} {@if vector2_y>0 then "+" else "-"@} {@abs(vector2_y)*b@} = {@vectorAns_y@}\)</p>
+<p><br>To solve for \(a\):</p>
+<p>\({@vector1_x*abs(vector2_y)*a@} {@if vector2_x>0 then "+" else "-"@} {@abs(vector2_x)*abs(vector2_y)*b@} = {@vectorAns_x*abs(vector2_y)@}\)</p>
+<p>\({@vector1_y*abs(vector2_x)*a@} {@if vector2_y>0 then "+" else "-"@} {@abs(vector2_y)*abs(vector2_x)*b@} = {@vectorAns_y*abs(vector2_x)@}\)</p>
+<p>{@if sign(vector2_x)=sign(vector2_y) then "Subtracting" else "Adding"@} these equations gives:</p>
+<p>\({@vector1_x*abs(vector2_y)*a@} {@if sign(vector2_x)=sign(vector2_y) then (if vector1_y>0 then "-" else "+") else (if vector1_y<0 then "+" else "-")@} {@abs(vector1_y)*abs(vector2_x)*a@} = {@vectorAns_x*abs(vector2_y)@} {@if sign(vector2_x)=sign(vector2_y) then (if vectorAns_y>0 then "-" else "+") else (if vectorAns_y<0 then "+" else "-")@} {@abs(vectorAns_y)*abs(vector2_x)@}\)</p>
+<p>\({@zSol@}a = {@xSol@}\)</p>
+<p>\(a = {@aSol@}\)</p>
+<p><br>Alternatively, to solve for \(b\):</p>
+<p>\({@vector1_x*abs(vector1_y)*a@} {@if vector2_x>0 then "+" else "-"@} {@abs(vector2_x)*abs(vector1_y)*b@} = {@vectorAns_x*abs(vector1_y)@}\)</p>
+<p>\({@vector1_y*abs(vector1_x)*a@} {@if vector2_y>0 then "+" else "-"@} {@abs(vector2_y)*abs(vector1_x)*b@} = {@vectorAns_y*abs(vector1_x)@}\)</p>
+<p>{@if sign(vector1_x)=sign(vector1_y) then "Subtracting" else "Adding"@} these equations gives:</p>
+<p>\({@vector1_x*abs(vector1_y)*a@} {@if sign(vector1_x)=sign(vector1_y) then (if vector2_y>0 then "-" else "+") else (if vector2_y<0 then "+" else "-")@} {@abs(vector1_y)*abs(vector1_x)*a@} = {@vectorAns_x*abs(vector1_y)@} {@if sign(vector1_x)=sign(vector1_y) then (if vectorAns_y>0 then "-" else "+") else (if vectorAns_y<0 then "+" else "-")@} {@abs(vectorAns_y)*abs(vector1_x)@}\)</p>
+<p>\({@zSol@}b = {@ySol@}\)</p>
+<p>\(b = {@bSol@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>The answers that you have given solve the {@if ans1*vector1_x+ans2*vector2_x=vectorAns_x then "top row" else "bottom row"@} of the vector equation but not the {@if ans1*vector1_x+ans2*vector2_x=vectorAns_x then "bottom row" else "top row"@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have given your answers to \(a\) and \(b\) the wrong way around, \(a = {@aSol@}\) and \(b = {@bSol@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>simp:true
+/* Node 1: Check correct answers */
+node1_test: if ans3=xSol and ans4=ySol and ans5=zSol then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check negative of correct answers */
+node3_test: if ans3=-xSol and ans4=-ySol and ans5=-zSol then 1 else 0;
+
+/* Node 4: Check integer multiples of correct answer (1 but feedback) */
+node4_test: if ans3*vector1_x+ans4*vector2_x=ans5*vectorAns_x and ans3*vector1_y+ans4*vector2_y=ans5*vectorAns_y and integerp(ans3) and integerp(ans4) and integerp(ans5) then 1 else 0;
+
+/* Node 5: check if answers solve equation but are not integers */
+node5_test: if ans3*vector1_x+ans4*vector2_x=ans5*vectorAns_x and ans3*vector1_y+ans4*vector2_y=ans5*vectorAns_y then 1 else 0;
+
+/* Node 6: Check ecf from (a) (1) */
+node6_test: if (ans5=lcm(denom(ans1),denom(ans2)) and ans3=ans1*ans5 and ans4=ans2*ans5) or (ans5=-lcm(denom(ans1),denom(ans2)) and ans3=-ans1*ans5 and ans4=-ans2*ans5) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>From (a): \({@aSol@}{@matrix1@} {@if bSol>0 then "+" else "-"@} {@abs(bSol)@}{@matrix2@} = {@matrixAns@}\)</p>
+<p>Multiplying through by {@zSol@} gives:</p>
+<p>\({@xSol@}{@matrix1@} {@if ySol>0 then "+" else "-"@} {@abs(ySol)@}{@matrix2@} = {@zSol@}{@matrixAns@}\)</p>
+<p><br>So \(x = {@xSol@}\), \(y = {@ySol@}\) and \(z = {@zSol@}\) are integer solutions to the given equation.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The answers you have given are correct, however there is a solution which uses smaller integers.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The answers you have given do solve this vector equation, however they are not integers.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You answers do not solve this vector equation.<br>However, you have correctly rearranged the equation that you gave in (a) to give the smallest integer solutions.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check answer exactly correct (2) */
+/* Node 2: Worked solution */
+/* Node 3: Check answer correct but not fully simplified (1) */
+/* Node 4: Check ecf from (i) and simplified (2) */
+/* Node 5: Check ecf from (i) but not simplified (1) */
+
+simp:false
+ecf_error: if ev(sqrt((vector1_x^2+vector1_y^2)/x_sqrFact),simp)=1 then ev(abs(ans3*sqrt(x_sqrFact)),simp) else ev(abs(ans3*sqrt(x_sqrFact)),simp)*ev(sqrt((vector1_x^2+vector1_y^2)/x_sqrFact),simp);</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans6</sans>
+        <tans>c_xSol</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\(\left| x{@matrix1@} \right| = {@abs(xSol)@} \times \left| {@matrix1@} \right|\)</p>
+<p>\(\left| x{@matrix1@} \right| = {@abs(xSol)@} \times \sqrt{({@vector1_x@})^2 + ({@vector1_y@})^2}\)</p>
+<p>\(\left| x{@matrix1@} \right| = {@abs(xSol)@} \times {@sqrt(vector1_x^2 + vector1_y^2)@}\)</p>
+<p>\(\left| x{@matrix1@} \right| = {@c_xSol@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans6</sans>
+        <tans>c_xSol</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>{@ans6@} is the correct magnitude.<br>However, you have not given it in a fully simplified form.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans6</sans>
+        <tans>ecf_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>{@ans6@} is not the correct magnitude.<br>However, it is consistent with the answer that you gave for \(x\) in (i).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt3-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans6</sans>
+        <tans>ecf_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>{@ans6@} is not the correct magnitude.<br>However, it is consistent with the answer that you gave for \(x\) in (i).<br>You have also not answered in a fully simplified form.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt4</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check answer exactly correct (2) */
+/* Node 2: Worked solution */
+/* Node 3: Check answer correct but not fully simplified (1) */
+/* Node 4: Check ecf from (i) and simplified (2) */
+/* Node 5: Check ecf from (i) but not simplified (1) */
+
+simp:false
+ecf_error: if ev(sqrt((vector2_x^2+vector2_y^2)/y_sqrFact),simp)=1 then ev(abs(ans4*sqrt(y_sqrFact)),simp) else ev(abs(ans4*sqrt(y_sqrFact)),simp)*ev(sqrt((vector2_x^2+vector2_y^2)/y_sqrFact),simp);</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans7</sans>
+        <tans>c_ySol</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt4-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt4-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\(\left| y{@matrix2@} \right| = {@abs(ySol)@} \times \left| {@matrix2@} \right|\)</p>
+<p>\(\left| y{@matrix2@} \right| = {@abs(ySol)@} \times \sqrt{({@vector2_x@})^2 + ({@vector2_y@})^2}\)</p>
+<p>\(\left| y{@matrix2@} \right| = {@abs(ySol)@} \times {@sqrt(vector2_x^2 + vector2_y^2)@}\)</p>
+<p>\(\left| y{@matrix2@} \right| = {@c_ySol@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt4-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans7</sans>
+        <tans>c_ySol</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>{@ans7@} is the correct magnitude.<br>However, you have not given it in a fully simplified form.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt4-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans7</sans>
+        <tans>ecf_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>{@ans7@} is not the correct magnitude.<br>However, it is consistent with the answer that you gave for \(y\) in (i).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt4-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans8</sans>
+        <tans>ecf_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>{@ans7@} is not the correct magnitude.<br>However, it is consistent with the answer that you gave for \(y\) in (i).<br>You have also not answered in a fully simplified form.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt4-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt5</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check answer exactly correct (2) */
+/* Node 2: Worked solution */
+/* Node 3: Check answer correct but not fully simplified (1) */
+/* Node 4: Check ecf from (i) and simplified (2) */
+/* Node 5: Check ecf from (i) but not simplified (1) */
+
+simp:false
+ecf_error: if ev(sqrt((vectorAns_x^2+vectorAns_y^2)/z_sqrFact),simp)=1 then ev(abs(ans5*sqrt(z_sqrFact)),simp) else ev(abs(ans5*sqrt(z_sqrFact)),simp)*ev(sqrt((vectorAns_x^2+vectorAns_y^2)/z_sqrFact),simp);</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans8</sans>
+        <tans>c_zSol</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt5-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt5-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt5-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>\(\left| z{@matrixAns@} \right| = {@abs(zSol)@} \times \left| {@matrixAns@} \right|\)</p>
+<p>\(\left| z{@matrixAns@} \right| = {@abs(zSol)@} \times \sqrt{({@vectorAns_x@})^2 + ({@vectorAns_y@})^2}\)</p>
+<p>\(\left| z{@matrixAns@} \right| = {@abs(zSol)@} \times {@sqrt(vectorAns_x^2 + vectorAns_y^2)@}\)</p>
+<p>\(\left| z{@matrixAns@} \right| = {@c_zSol@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt5-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans8</sans>
+        <tans>c_zSol</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt5-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>{@ans8@} is the correct magnitude.<br>However, you have not given it in a fully simplified form.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt5-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans8</sans>
+        <tans>ecf_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt5-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>{@ans8@} is not the correct magnitude.<br>However, it is consistent with the answer that you gave for \(z\) in (i).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt5-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans8</sans>
+        <tans>ecf_error</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt5-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>{@ans8@} is not the correct magnitude.<br>However, it is consistent with the answer that you gave for \(z\) in (i).<br>You have also not answered in a fully simplified form.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt5-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

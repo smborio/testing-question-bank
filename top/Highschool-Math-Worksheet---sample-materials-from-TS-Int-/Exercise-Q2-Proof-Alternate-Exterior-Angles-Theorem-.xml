@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text><![CDATA[Exercise Q2 Proof: Alternate Exterior Angles Theorem"]]></text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Arrange the steps in the correct order to show why the two highlighted angles are equal. Make sure your proof logically connects each step, starting from the assumptions and ending with the conclusion.</p>
+<p></p>
+<p>Drag the steps from the list on the right to the left to construct a correct proof of the following theorem.</p> 
+<p><strong>Theorem:</strong> {@thm@}</p> 
+
+
+[[parsons input="ans1" log="true"]]
+{# parsons_encode(proof_steps) #}
+[[/parsons ]]
+<p>[[input:ans1]] [[validation:ans1]] [[feedback:prt1]] </p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[stack_include_contrib("prooflib.mac");
+
+/****************************************************************/
+/* Theorem statement */
+thm: "If two parallel lines are cut by a transversal, then alternate exterior angles are equal.";
+
+/****************************************************************/
+/* Proof steps */
+proof_steps: [
+    ["assumption", "Let lines \\(AB\\) and \\(CD\\) be parallel, cut by transversal \\(XY\\)."],
+    ["step1", "Note that \\(\\angle BO_1Y\\) and \\(\\angle AO_1O_2\\) are vertically opposite angles, so they are equal."],
+    ["step2", "Since \\(AB \\parallel CD\\), by the corresponding angles theorem, \\(\\angle AO_1O_2 = \\angle CO_2X\\)."],
+    ["conclusion", "Therefore, \\(\\angle BO_1Y = \\angle CO_2X\\)."]
+];
+
+/****************************************************************/
+/* Correct proof order */
+proof_ans: proof("assumption","step1","step2","conclusion");
+
+/* Randomize steps for Parsons-style task */
+proof_steps: random_permutation(proof_steps);
+
+/* Generate alternatives for STACK marking */
+tal: proof_alternatives(proof_ans);
+len1: length(tal);
+
+/* Flatten proofs for feedback display */
+tas: setify(map(proof_flatten, tal));]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="html">
+      <text>{@ map(first, proof_steps) @}</text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>parsons</type>
+      <tans>[proof_ans, proof_steps]</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>sa: parsons_decode(ans1);
+[pd, saa]:proof_assessment(sa, proof_alternatives(proof_ans));</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>pd</sans>
+        <tans>0</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<h3>Solution</h3>
+<p>First, draw a diagram that looks like the one below. This will help you visualize the angles and the relationships between the lines:</p>
+
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-1, 7, 8, -1],
+    axis: false,
+    showCopyright: false,
+    showNavigation: false,
+    keepAspectRatio: true
+});
+
+// Define points for parallel lines
+var A = board.create('point', [0,5], {name:'A', size:2, fixed:true});
+var B = board.create('point', [7,5], {name:'B', size:2, fixed:true});
+var C = board.create('point', [0,2], {name:'C', size:2, fixed:true});
+var D = board.create('point', [7,2], {name:'D', size:2, fixed:true});
+
+// Draw parallel lines AB and CD
+var lineAB = board.create('line', [A, B], {straightFirst:false, straightLast:false, strokeWidth:2});
+var lineCD = board.create('line', [C, D], {straightFirst:false, straightLast:false, strokeWidth:2});
+
+// Define points for transversal
+var X = board.create('point', [1,0], {name:'X', size:2, fixed:true});
+var Y = board.create('point', [4,6], {name:'Y', size:2, fixed:true});
+
+// Draw transversal XY
+var transversal = board.create('line', [X,Y], {straightFirst:false, straightLast:false, strokeWidth:2, dash:2});
+
+// Intersection points of transversal with parallel lines
+var O1 = board.create('intersection', [lineAB, transversal, 0], {name:'O₁', size:2});
+var O2 = board.create('intersection', [lineCD, transversal, 0], {name:'O₂', size:2});
+
+// Highlight alternate angle at O1
+board.create('angle', [B, O1, Y], { 
+    radius: 0.6,      
+    name: ' ',
+    type: 'sector', 
+    fillColor: 'lightblue', 
+    fillOpacity: 0.6, 
+    strokeColor: 'blue', 
+    strokeWidth: 1
+});
+
+// Highlight alternate angle at O2
+board.create('angle', [C, O2, X], { 
+    radius: 0.6, 
+    name: ' ',
+    type: 'sector', 
+    fillColor: 'lightblue', 
+    fillOpacity: 0.6, 
+    strokeColor: 'blue', 
+    strokeWidth: 1
+});
+[[/jsxgraph]]
+
+<p>Now, using the diagram, follow these steps to write your proof:</p>
+<ol>
+  <li>Identify vertically opposite angles at each intersection.</li>
+  <li>Apply the relationship between corresponding angles formed by a transversal cutting parallel lines.</li>
+  <li>Conclude that the alternate exterior angles are equal.</li>
+</ol>
+<p>Write your answer in logical order using these steps to construct a clear proof.</p>
+
+
+
+<p>
+{@proof_assessment_display(saa, proof_steps)@}
+</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>263493547</deployedseed>
+    <deployedseed>2080086703</deployedseed>
+    <deployedseed>2119685624</deployedseed>
+    <deployedseed>2065386162</deployedseed>
+    <deployedseed>1272837801</deployedseed>
+    <deployedseed>2105511895</deployedseed>
+    <qtest>
+      <testcase>1</testcase>
+      <description>Test case assuming the teacher's input gets full marks.</description>
+      <testinput>
+        <name>ans1</name>
+        <value>apply(parsons_answer,[tal[1], proof_steps])</value>
+      </testinput>
+      <expected>
+        <name>prt1</name>
+        <expectedscore>1.0000000</expectedscore>
+        <expectedpenalty>0.0000000</expectedpenalty>
+        <expectedanswernote>prt1-1-T</expectedanswernote>
+      </expected>
+    </qtest>
+    <qtest>
+      <testcase>2</testcase>
+      <description><![CDATA[One incorret answer, based on "sorting" the correct answer keys.]]></description>
+      <testinput>
+        <name>ans1</name>
+        <value>apply(parsons_answer,[wa1, proof_steps])</value>
+      </testinput>
+      <expected>
+        <name>prt1</name>
+        <expectedscore>0.0000000</expectedscore>
+        <expectedpenalty>0.1000000</expectedpenalty>
+        <expectedanswernote>prt1-3-F</expectedanswernote>
+      </expected>
+    </qtest>
+    <qtest>
+      <testcase>3</testcase>
+      <description>If direction</description>
+      <testinput>
+        <name>ans1</name>
+        <value>apply(parsons_answer,[proof1, proof_steps])</value>
+      </testinput>
+      <expected>
+        <name>prt1</name>
+        <expectedscore>0.3000000</expectedscore>
+        <expectedpenalty>0.1000000</expectedpenalty>
+        <expectedanswernote>prt1-2-T</expectedanswernote>
+      </expected>
+    </qtest>
+    <qtest>
+      <testcase>4</testcase>
+      <description>Only if direction</description>
+      <testinput>
+        <name>ans1</name>
+        <value>apply(parsons_answer,[proof2, proof_steps])</value>
+      </testinput>
+      <expected>
+        <name>prt1</name>
+        <expectedscore>0.3000000</expectedscore>
+        <expectedpenalty>0.1000000</expectedpenalty>
+        <expectedanswernote>prt1-3-T</expectedanswernote>
+      </expected>
+    </qtest>
+  </question>
+</quiz>

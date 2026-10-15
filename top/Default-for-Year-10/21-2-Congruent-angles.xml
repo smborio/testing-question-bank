@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>21.2 Congruent angles</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Consider the diagram below:
+<br>Two GREEN angles are formed between each parallel line and the line sloping upwards.
+<br>Two BLUE angles are formed between each parallel line and the line sloping downwards.</p>
+
+[[jsxgraph width="400px" height="400px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-9,8.5,8,-8.5],
+      showCopyright:false,
+      showNavigation:false
+    })
+
+    var angleDisp = {#angleDisp#};
+    var angleL = {#greenAngle#};
+    var angleR = {#blueAngle#};
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black"
+    };
+
+    var hatchStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      face:"<"
+    };
+
+    var angleStyle = {
+      radius:1.5,
+      orthoType:"sector",
+      highlight:false,
+      name:"\\(z^\\circ\\)",
+      withLabel:true,
+      label:{
+        highlight:false,
+        position:"auto",
+        offset:[-5,0],
+        fontSize:15,
+        strokeColor:"black"
+      }
+    };
+
+    var pointO = board.create("point", [0,2], {visible:false});
+    var pointR = board.create("point", [7,-2], {visible:false});
+    var pointL = board.create("point", [-7,-2], {visible:false});
+
+    var paraLineA = board.create("line", [[-4,2], [4,2]], lineStyle);
+    var paraLineB = board.create("line", [[-4,-2], [4,-2]], lineStyle);
+
+    board.create("hatch", [paraLineB, 2], hatchStyle);
+    hatchStyle.anchor = 0.2;
+    board.create("hatch", [paraLineA, 2], hatchStyle);
+
+    var lineL = board.create("line", [[0,2], [-4/Math.tan(angleL*Math.PI/180),-2]], lineStyle);
+    var lineR = board.create("line", [[0,2], [4/Math.tan((180-angleR)*Math.PI/180),-2]], lineStyle);
+
+    var intersectionL = board.create("intersection", [paraLineB, lineL], {visible:false});
+    var intersectionR = board.create("intersection", [paraLineB, lineR], {visible:false});
+
+    board.create("angle", [lineL, lineR, -1, -1], angleStyle);
+
+    angleStyle.strokeColor="green";
+    angleStyle.fillColor="green";
+
+    angleStyle.label.offset = [2,-2];
+    angleStyle.name = "\\(x^\\circ\\)";
+    board.create("angle", [paraLineA, lineL, -1, 1], angleStyle);
+
+    if (angleDisp == 1 && angleL >= 65) {
+      angleStyle.label.offset = [-5,0];
+    } else if (angleDisp == 1 && angleL >= 45) {
+      angleStyle.label.offset = [20,0];
+    } else if (angleDisp == 1) {
+      angleStyle.label.offset = [-5,10];
+    } else if (angleDisp == -1 && angleL == 75) {
+      angleStyle.label.offset = [5,0];
+    } else {
+      angleStyle.label.offset = [-20,5];
+    };
+
+    angleStyle.name = "\\(".concat(angleL, "^\\circ\\)");
+    board.create("angle", [paraLineB, lineL, angleDisp, -angleDisp], angleStyle);
+    
+    angleStyle.strokeColor="blue";
+    angleStyle.fillColor="blue";
+
+    angleStyle.label.offset = [0,-8];
+    angleStyle.name = "\\(y^\\circ\\)";
+    board.create("angle", [lineR, paraLineA, 1, 1], angleStyle);
+
+    if (angleDisp == 1 && angleR >= 130) {
+      angleStyle.label.offset = [20,-15];
+    } else if (angleDisp == 1 && angleR >= 115) {
+      angleStyle.label.offset = [-25,-15];
+    } else if (angleDisp == 1) {
+      angleStyle.label.offset = [-25,-5];
+    } else if (angleDisp == -1 && angleR >= 140) {
+      angleStyle.label.offset = [20,-8];
+    } else if (angleDisp == -1 && angleR >= 110) {
+      angleStyle.label.offset = [30,-8];
+    } else {
+      angleStyle.label.offset = [-3,-8];
+    };
+
+    angleStyle.name = "\\(".concat(angleR, "^\\circ\\)");
+    board.create("angle", [paraLineB, lineR, -angleDisp, angleDisp], angleStyle);
+
+[[/jsxgraph]]
+
+<p><br>(a) The two GREEN angles are: [[input:ans1]] [[validation:ans1]]</p>
+<p>Given the lower GREEN angle is \({@greenAngle@}^\circ\), find the angle \(x^\circ\).</p>
+<p align="right">\(x =\) [[input:ans2]] \(^\circ\) [[validation:ans2]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) The two BLUE angles are: [[input:ans3]] [[validation:ans3]]</p>
+<p>Given the lower BLUE angle is \({@blueAngle@}^\circ\), find the angle \(y^\circ\).</p>
+<p align="right">\(y =\) [[input:ans4]] \(^\circ\) [[validation:ans4]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt2]]</p>
+
+<p><br>(c) What is the sum of the angles \(x\), \(y\) and \(z\)?</p>
+<p align="right">\(x + y + z =\)[[input:ans5]] \(^\circ\) [[validation:ans5]]</p>
+<p>Hence, find the angle \(z^\circ\)</p>
+<p align="right">\(z =\) [[input:ans6]] \(^\circ\) [[validation:ans6]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt3]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>6</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Randomisation */
+
+angleDisp:rand([1,-1]);
+greenAngle:rand_with_step(35,70,5);
+blueAngle:rand_with_prohib(22,29,[(180-greenAngle)/5])*5;
+
+/* Solutions */
+
+tans1: if angleDisp=1 then "alternate" else "corresponding";
+
+tans3: if angleDisp=1 then "none of the above" else "consecutive";
+tans4:180-blueAngle;
+
+tans6:blueAngle-greenAngle;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>{@angleDisp@},
+<br>green = {@greenAngle@},
+<br>blue = {@blueAngle@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>dropdown</type>
+      <tans><![CDATA[[["alternate",is(tans1="alternate")], ["corresponding",is(tans1="corresponding")], ["consecutive",false], ["none of the above",false]]]]></tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>greenAngle</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>dropdown</type>
+      <tans><![CDATA[[["alternate",false], ["corresponding",false], ["consecutive",is(tans3="consecutive")], ["none of the above",is(tans3="none of the above")]]]]></tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>tans4</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>180</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans6</name>
+      <type>algebraic</type>
+      <tans>tans6</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+node1_test: if float(ans1)=float(tans1) and float(ans2)=float(greenAngle) then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Correct angle, incorrect term (1) */
+
+/* Node 4: Correct term? */
+
+/* Node 5: Calculated 180-angle? */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The two green angles are {@tans1@}.</p>
+
+<p><br>Here is a diagram showing {@tans1@} angles in the same colour:</p>
+
+[[jsxgraph width="200px" height="200px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false
+    });
+
+    var relation = {#tans1#};
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black"
+    };
+
+    var hatchStyle = {
+      highlight:false,
+      strokeColor:"black",
+      face:">",
+      anchor:0.2
+    };
+
+    var angleStyle = {
+      highlight:false,
+      name:" ",
+    };
+
+    var pointO = board.create("point", [0,2], {visible:false});
+    var pointR = board.create("point", [7,-2], {visible:false});
+    var pointL = board.create("point", [-7,-2], {visible:false});
+
+    var paraLineA = board.create("line", [[-4,2], [4,2]], lineStyle);
+    var paraLineB = board.create("line", [[-4,-2], [4,-2]], lineStyle);
+    var interLine = board.create("line", [[-1,-2],[1,2]], lineStyle);
+
+    if (relation == "corresponding") {
+
+      angleStyle.radius = 1.5;
+      angleStyle.fillColor = "red";
+      angleStyle.strokeColor = "red";
+      board.create("angle", [paraLineA, interLine, 1, 1], angleStyle);
+      board.create("angle", [paraLineB, interLine, 1, 1], angleStyle);
+
+      angleStyle.fillColor = "blue";
+      angleStyle.strokeColor = "blue";
+      board.create("angle", [paraLineA, interLine, -1, -1], angleStyle);
+      board.create("angle", [paraLineB, interLine, -1, -1], angleStyle);
+
+      angleStyle.radius = 1;
+      angleStyle.fillColor = "green";
+      angleStyle.strokeColor = "green";
+      board.create("angle", [interLine, paraLineA, -1, 1], angleStyle);
+      board.create("angle", [interLine, paraLineB, -1, 1], angleStyle);
+
+      angleStyle.fillColor = "purple";
+      angleStyle.strokeColor = "purple";
+      board.create("angle", [interLine, paraLineA, 1, -1], angleStyle);
+      board.create("angle", [interLine, paraLineB, 1, -1], angleStyle);
+
+    } else if (relation == "alternate") {
+
+      angleStyle.radius = 1.5;
+      angleStyle.fillColor = "red";
+      angleStyle.strokeColor = "red";
+      board.create("angle", [paraLineA, interLine, 1, 1], angleStyle);
+      board.create("angle", [paraLineB, interLine, -1, -1], angleStyle);
+
+      angleStyle.fillColor = "blue";
+      angleStyle.strokeColor = "blue";
+      board.create("angle", [paraLineA, interLine, -1, -1], angleStyle);
+      board.create("angle", [paraLineB, interLine, 1, 1], angleStyle);
+
+      angleStyle.radius = 1;
+      angleStyle.fillColor = "green";
+      angleStyle.strokeColor = "green";
+      board.create("angle", [interLine, paraLineA, -1, 1], angleStyle);
+      board.create("angle", [interLine, paraLineB, 1, -1], angleStyle);
+
+      angleStyle.fillColor = "purple";
+      angleStyle.strokeColor = "purple";
+      board.create("angle", [interLine, paraLineA, 1, -1], angleStyle);
+      board.create("angle", [interLine, paraLineB, -1, 1], angleStyle);
+
+    };
+
+[[/jsxgraph]]
+
+<p><br>Angles which are {@tans1@} are equal in size. 
+<br>So, \(x = {@greenAngle@}^\circ\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>greenAngle</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have calculated the correct value for \(x\).
+<br>However, the two green angles are <i>{@tans1@}</i>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>tans1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You are correct that the green angles are <i>{@tans1@}</i>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>The green angles are actually <i>{@tans1@}</i>.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>180-greenAngle</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have attempted to calculate \(x\) by summing the green angles to \(180^\circ\).
+<br>However, since the two green angles are {@tans1@}, they are equal in size.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your angle for \(x\) is not correct.
+<br>Since the two green angles are {@tans1@}, they are equal in size.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+node1_test: if float(ans3)=float(tans3) and float(ans4)=float(tans4) then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Correct angle, incorrect term (1) */
+
+/* Node 4: Correct term? */
+
+/* Node 5: Gave answer equal to angle */
+
+/* Node 6: Calculated 360-angle? */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The two green angles are {@if tans3="consecutive" then tans3 else "not related by any of the given relationships"@}.</p>
+
+<p><br>Here is a diagram showing consecutive angles in the same colour:</p>
+
+[[jsxgraph width="200px" height="200px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false
+    });
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black"
+    };
+
+    var hatchStyle = {
+      highlight:false,
+      strokeColor:"black",
+      face:">",
+      anchor:0.2
+    };
+
+    var angleStyle = {
+      highlight:false,
+      name:" ",
+    };
+
+    var pointO = board.create("point", [0,2], {visible:false});
+    var pointR = board.create("point", [7,-2], {visible:false});
+    var pointL = board.create("point", [-7,-2], {visible:false});
+
+    var paraLineA = board.create("line", [[-4,2], [4,2]], lineStyle);
+    var paraLineB = board.create("line", [[-4,-2], [4,-2]], lineStyle);
+    var interLine = board.create("line", [[-1,-2],[1,2]], lineStyle);
+
+    angleStyle.fillColor = "red";
+    angleStyle.strokeColor = "red";
+    angleStyle.radius = 1.5;
+    board.create("angle", [paraLineA, interLine, 1, 1], angleStyle);
+    angleStyle.radius = 1;
+    board.create("angle", [interLine, paraLineB, -1, 1], angleStyle);
+    
+    angleStyle.fillColor = "green";
+    angleStyle.strokeColor = "green";
+    angleStyle.radius = 1.5;
+    board.create("angle", [paraLineB, interLine, 1, 1], angleStyle);
+    angleStyle.radius = 1;
+    board.create("angle", [interLine, paraLineA, -1, 1], angleStyle);
+
+    angleStyle.fillColor = "blue";
+    angleStyle.strokeColor = "blue";
+    angleStyle.radius = 1.5;
+    board.create("angle", [paraLineA, interLine, -1, -1], angleStyle);
+    angleStyle.radius = 1;
+    board.create("angle", [interLine, paraLineB, 1, -1], angleStyle);
+
+    angleStyle.fillColor = "purple";
+    angleStyle.strokeColor = "purple";
+    angleStyle.radius = 1.5;
+    board.create("angle", [paraLineB, interLine, -1, -1], angleStyle);
+    angleStyle.radius = 1;
+    board.create("angle", [interLine, paraLineA, 1, -1], angleStyle);
+
+[[/jsxgraph]]
+
+<p><br>{@if tans3="consecutive" then "" else "Although, the blue angles are not themselves consecutive, the consecutive angle to \\(y\\) <b>is</b> a vertical angle to the lower blue angle. Therefore, the lower blue angle has the same size as the consecutive angle to \\(y\\)."@} Angles which are consecutive sum to \(180^\circ\).
+<br>So, \(y = 180 - {@blueAngle@} = {@tans4@}^\circ\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>tans4</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have calculated the correct value for \(y\).
+<br>However, the two green angles are <i>{@tans3@}</i>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>tans3</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You are correct that the blue angles {@if tans3="consecutive" then "are <i>consecutive</i>" else "<i>do not</i> have any of the listed relationships"@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>The green angles {@if tans3="consecutive" then "are actually <i>consecutive</i>" else "actually <i>do not</i> have any of the listed relationships"@}.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>blueAngle</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have attempted to calculate \(y\) by equating the blue angles.
+<br>However, {@if tans3="consecutive" then "since the blue angles are consecutive, they sum to \\(180^\\circ\\)" else "the two blue angles sum to \(180^\circ\)"@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>360-blueAngle</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have attempted to calculate \(y\) by summing the blue angles to \(360^\circ\).
+<br>However, {@if tans3="consecutive" then "since the blue angles are consecutive, they sum to \\(180^\\circ\\)" else "the two blue angles sum to \(180^\circ\)"@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your angle for \(y\) is not correct.
+<br>{@if tans3="consecutive" then "Since the blue angles are consecutive, they sum to \\(180^\\circ\\)" else "The two blue angles sum to \(180^\circ\)"@}.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+node1_test: if float(ans5)=180.0 and float(ans6)=float(tans6) then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 4: Gives 180 as angle on a line (1) */
+
+/* Node 3: Answers correctly sum to 180 (+1 for ecf) */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The vertical angle to \(z\) forms a straight line with the angles \(x\) and \(y\).</p>
+
+[[jsxgraph width="200px" height="200px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false
+    });
+
+    var relation = "corresponding";
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black"
+    };
+
+    var hatchStyle = {
+      highlight:false,
+      strokeColor:"black",
+      face:">",
+      anchor:0.2
+    };
+
+    var angleStyle = {
+      radius:1.5,
+      orthoType:"sector",
+      highlight:false,
+      name:"\\(z^\\circ\\)",
+      withLabel:true,
+      label:{
+        highlight:false,
+        position:"auto",
+        offset:[-5,0],
+        fontSize:15,
+        strokeColor:"black"
+      }
+    };
+
+    var pointO = board.create("point", [0,2], {visible:false});
+    var pointR = board.create("point", [7,-2], {visible:false});
+    var pointL = board.create("point", [-7,-2], {visible:false});
+
+    var paraLineA = board.create("line", [[-4,0], [4,0]], lineStyle);
+    var lineL = board.create("line", [[-1,-2],[1,2]], lineStyle);
+    var lineR = board.create("line", [[-1,2],[1,-2]], lineStyle);
+
+    board.create("angle", [lineL, lineR, 1, -1], angleStyle);
+
+    angleStyle.name = " ";
+    board.create("angle", [lineL, lineR, -1, 1], angleStyle);
+
+    angleStyle.strokeColor="green";
+    angleStyle.fillColor="green";
+
+    angleStyle.label.offset = [2,-2];
+    angleStyle.name = "\\(x^\\circ\\)";
+    board.create("angle", [paraLineA, lineL, -1, -1], angleStyle);
+
+    angleStyle.strokeColor="blue";
+    angleStyle.fillColor="blue";
+
+    angleStyle.label.offset = [0,-5];
+    angleStyle.name = "\\(y^\\circ\\)";
+    board.create("angle", [lineR, paraLineA, 1, 1], angleStyle);
+
+[[/jsxgraph]]
+<p><i>(Angles not to scale)</i></p>
+
+<p><br>So, \(x + y + z = 180^\circ\).</p>
+<p>Using parts (a) and (b): \(z = 180 - {@greenAngle@} - {@tans4@} = {@tans6@}^\circ\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>float(ans2+ans4+ans6)</sans>
+        <tans>180.0</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer is not the correct value for \(z\).
+<br>However, your answer is consistent with the answers that you gave in parts (a) and (b).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>However, your answers for \(x\), \(y\) and \(z\) do not sum to \(180^\circ\).</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>float(ans5)</sans>
+        <tans>180.0</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prt3-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You are correct that the sum of the angles \(x\), \(y\) and \(z\) is \(180^\circ\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>The correct value for the sum of the angles \(x\), \(y\) and \(z\) is \(180^\circ\).</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

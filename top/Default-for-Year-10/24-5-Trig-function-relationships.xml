@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>24.5 Trig function relationships</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>You may use the trigonometric curves below by dragging the red points.
+<br><i>Input angles are to the nearest degree and outputs are rounded to 2dp.</i></p>
+
+<center>
+[[jsxgraph height="500px" width="500px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    var axisStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black"
+    };
+
+    var curveStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"red"
+    };
+
+    var textStyle = {
+      fixed:true,
+      highlight:false,
+      fonSize:15,
+      anchorX:"right",
+      useMathJax:true,
+      parse:false
+    };
+
+    var pointStyle = {
+      showInfoBox:false,
+      withLabel:false
+    }
+
+    // SINE graph
+
+    board.create("segment", [[0,2],[0,4]], axisStyle);
+    board.create("segment", [[-4,3],[4,3]], axisStyle);
+
+    var sinCurve = board.create("curve", [
+      function(t){return 2*t/Math.PI},
+      function(t){return Math.sin(t)+3},
+      -2*Math.PI,
+      2*Math.PI
+    ], curveStyle);
+
+    var sinPoint = board.create("glider", [0, 3, sinCurve], pointStyle);
+
+    var sinText = board.create("text", [4, 4.3,function() {
+      return "\\(\\sin(".concat(
+      Math.round(90*sinPoint.X()),
+      "^\\circ)=",
+      Math.round(100*Math.sin(Math.PI*Math.round(90*sinPoint.X())/180))/100,
+      "\\)")
+    }], textStyle);
+
+    // COSINE graph
+
+    board.create("segment", [[0,-1],[0,1]], axisStyle);
+    board.create("segment", [[-4,0],[4,0]], axisStyle);
+
+    var cosCurve = board.create("curve", [
+      function(t){return 2*t/Math.PI},
+      function(t){return Math.cos(t)},
+      -2*Math.PI,
+      2*Math.PI
+    ], curveStyle);
+
+    var cosPoint = board.create("glider", [0, 1, cosCurve], pointStyle);
+
+    var cosText = board.create("text", [4, 1.3,function() {
+      return "\\(\\cos(".concat(
+      Math.round(90*cosPoint.X()),
+      "^\\circ)=",
+      Math.round(100*Math.cos(Math.PI*Math.round(90*cosPoint.X())/180))/100,
+      "\\)")
+    }], textStyle);
+
+    // TAN graph
+
+    board.create("segment", [[0,-4],[0,-2]], axisStyle);
+    board.create("segment", [[-4,-3],[4,-3]], axisStyle);
+
+    var tanCurve = board.create("curve", [
+      function(t){return 2*t/Math.PI},
+      function(t){if (Math.tan(t)/4 < 1 && Math.tan(t)/4 > -1){return Math.tan(t)/4-3}},
+      -2*Math.PI,
+      2*Math.PI
+    ], curveStyle);
+
+    var tanPoint = board.create("glider", [0, -3, tanCurve], pointStyle);
+
+    var tanText = board.create("text", [4, -1.7,function() {
+      return "\\(\\tan(".concat(
+      Math.round(90*tanPoint.X()),
+      "^\\circ)=",
+      Math.round(100*Math.tan(Math.PI*Math.round(90*tanPoint.X())/180))/100,
+      "\\)")
+    }], textStyle);
+
+[[/jsxgraph]]
+</center>
+
+<p>(a) Select all of the expressions below which are equivalent to \(\{@funcA@}(\theta)\).</p>
+<p>[[input:ans1]] [[validation:ans1]]</p>
+<p align="right"><b>(5)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p>(b) Using the properties of the <i>sine</i> and <i>cosine</i> functions, write \(\tan{@funcB@}\) in terms of \(\tan(\theta)\).
+<br><i>You must use a "+" to represent a positive answer. Black answers will be marked incorrect.</i></p>
+
+<p><br>\(\sin{@funcB@}\) = [[input:ans2]] \(\sin(\theta)\) [[validation:ans2]]</p>
+<p>\(\cos{@funcB@}\) = [[input:ans3]] \(\cos(\theta)\) [[validation:ans3]]</p>
+
+<p><br>Therefore: \(\tan{@funcB@} = \frac{\sin{@funcB@}}{\cos{@funcB@}} =\) [[input:ans4]] \(\frac{\sin(\theta)}{\cos(\theta)} =\) [[input:ans5]] \(\tan(\theta)\) [[validation:ans4]] [[validation:ans5]]</p>
+
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>8</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Questions */
+
+funcA:rand(["cos","sin"]);
+
+ansListA: [[1, false, sconcat("\\(\\", funcA, "(\\theta \\pm 90)\\)")], [2, false, sconcat("\\(\\", funcA, "(\\theta \\pm 180)\\)")],[3, true, sconcat("\\(-\\", funcA, "(\\theta \\pm 180)\\)")], [4, true, sconcat("\\(\\", funcA, "(\\theta \\pm 360)\\)")], [5, is(funcA="cos"), sconcat("\\(\\", funcA, "(-\\theta)\\)")], [6, is(funcA="sin"), sconcat("\\(\\", funcA, "(180-\\theta)\\)")], [7, is(funcA="sin"), sconcat("\\(-\\", funcA, "(-\\theta)\\)")], [8, is(funcA="cos"), sconcat("\\(-\\", funcA, "(180-\\theta)\\)")], [9, false, sconcat("\\(\\", if funcA="cos" then "sin" else if funcA="sin" then "cos", "(\\theta)\\)")], [10, true, sconcat("\\(\\", if funcA="cos" then "sin" else if funcA="sin" then "cos", "(90-\\theta)\\)")], [11, false, "\\(\\tan(\\theta)\\)"], [12, false, "\\(\\tan(180-\\theta)\\)"]];
+
+funcB:rand(["(180+\\theta)","(180-\\theta)","(-\\theta)"]);
+
+ansListB1: [[" ", false], ["+", is(funcB="(180-\\theta)")], ["-", not(is(funcB="(180-\\theta)"))]];
+ansListB2: [[" ", false], ["+", is(funcB="(-\\theta)")], ["-", not(is(funcB="(-\\theta)"))]];
+ansListB3: [[" ", false], ["+", is(funcB="(180+\\theta)")], ["-", not(is(funcB="(180+\\theta)"))]];
+
+/* Solutions */
+
+tans1: if funcA="cos" then [3,4,5,8,10] else if funcA="sin" then [3,4,6,7,10];
+
+tans2: if funcB="(180-\\theta)" then "+" else "-";
+
+tans3: if funcB="(-\\theta)" then "+" else "-";
+
+tans45: if funcB="(180+\\theta)" then "+" else "-";]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>Part (a): {@funcA@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>checkbox</type>
+      <tans>ansListA</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options>latex</options>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>dropdown</type>
+      <tans>ansListB1</tans>
+      <boxsize>3</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options>nonotanswered</options>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>dropdown</type>
+      <tans>ansListB2</tans>
+      <boxsize>3</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options>nonotanswered</options>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>dropdown</type>
+      <tans>ansListB3</tans>
+      <boxsize>3</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options>nonotanswered</options>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>dropdown</type>
+      <tans>ansListB3</tans>
+      <boxsize>3</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options>nonotanswered</options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>5.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+
+/* Node 2: Feedback and worked solution */
+
+noCorr: length(intersection(setify(ans1), setify(tans1)));
+marks: max(2*noCorr - length(setify(ans1)), 0);
+
+/* Node 3: Awarding 4 marks */
+/* Node 4: Awarding 3 marks */
+/* Node 5: Awarding 2 marks */
+/* Node 6: Awarding 1 marks */
+/* Node 7: Awarding 0 marks */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>Sets</answertest>
+        <sans>setify(ans1)</sans>
+        <tans>setify(tans1)</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>
+{@if length(intersection(setify(ans1), setify(tans1)))>0 then "<br><i>Correct answers given:</i>" else ""@}
+
+{@if elementp(3, intersection(setify(ans1), setify(tans1))) then sconcat("<br>\\(-\\", funcA, "(\\theta \\pm 180)\\)") else ""@}
+
+{@if elementp(4, intersection(setify(ans1), setify(tans1))) then sconcat("<br>\\(\\", funcA, "(\\theta \\pm 360)\\)") else ""@}
+
+{@if funcA="cos" and elementp(5, intersection(setify(ans1), setify(tans1))) then sconcat("<br>\\(\\", funcA, "(-\\theta)\\)") else if funcA="sin" and elementp(6, intersection(setify(ans1), setify(tans1))) then sconcat("<br>\\(\\", funcA, "(180-\\theta)\\)") else ""@}
+
+{@if funcA="sin" and elementp(7, intersection(setify(ans1), setify(tans1))) then sconcat("<br>\\(-\\", funcA, "(-\\theta)\\)") else if funcA="cos" and elementp(8, intersection(setify(ans1), setify(tans1))) then sconcat("<br>\\(-\\", funcA, "(180-\\theta)\\)") else ""@}
+
+{@if elementp(10, intersection(setify(ans1), setify(tans1))) then sconcat("<br>\\(\\",if funcA="cos" then "sin" else "cos","(90 - \\theta)\\)") else ""@}
+</p>
+
+<p>
+{@if length(setdifference(setify(tans1), setify(ans1)))>0 then "<i>Correct answers missing:</i>" else ""@}
+
+{@if elementp(3, setdifference(setify(tans1), setify(ans1))) then sconcat("<br>\\(-\\", funcA, "(\\theta \\pm 180)\\)") else ""@}
+
+{@if elementp(4, setdifference(setify(tans1), setify(ans1))) then sconcat("<br>\\(\\", funcA, "(\\theta \\pm 360)\\)") else ""@}
+
+{@if funcA="cos" and elementp(5, setdifference(setify(tans1), setify(ans1))) then sconcat("<br>\\(\\", funcA, "(-\\theta)\\)") else if funcA="sin" and elementp(6, setdifference(setify(tans1), setify(ans1))) then sconcat("<br>\\(\\", funcA, "(180-\\theta)\\)") else ""@}
+
+{@if funcA="sin" and elementp(7, setdifference(setify(tans1), setify(ans1))) then sconcat("<br>\\(-\\", funcA, "(-\\theta)\\)") else if funcA="cos" and elementp(8, setdifference(setify(tans1), setify(ans1))) then sconcat("<br>\\(-\\", funcA, "(180-\\theta)\\)") else ""@}
+
+{@if elementp(10, setdifference(setify(tans1), setify(ans1))) then sconcat("<br>\\(\\",if funcA="cos" then "sin" else "cos","(90 - \\theta)\\)") else ""@}
+</p>
+
+<p>
+{@if length(setdifference(setify(ans1), setify(tans1)))>0 then "<i>Incorrect answers given:</i>" else ""@}
+
+{@if elementp(1, setdifference(setify(ans1), setify(tans1))) then sconcat("<br>\\(\\", funcA, "(\\theta \\pm 90)\\)") else ""@}
+
+{@if elementp(2, setdifference(setify(ans1), setify(tans1))) then sconcat("<br>\\(\\", funcA, "(\\theta \\pm 180)\\)") else ""@}
+
+{@if funcA="sin" and elementp(5, setdifference(setify(ans1), setify(tans1))) then sconcat("<br>\\(\\", funcA, "(-\\theta)\\)") else if funcA="cos" and elementp(6, setdifference(setify(ans1), setify(tans1))) then sconcat("<br>\\(\\", funcA, "(180-\\theta)\\)") else ""@}
+
+{@if funcA="cos" and elementp(7, setdifference(setify(ans1), setify(tans1))) then sconcat("<br>\\(-\\", funcA, "(-\\theta)\\)") else if funcA="sin" and elementp(8, setdifference(setify(ans1), setify(tans1))) then sconcat("<br>\\(-\\", funcA, "(180-\\theta)\\)") else ""@}
+
+{@if elementp(9, setdifference(setify(ans1), setify(tans1))) then sconcat("<br>\\(\\", if funcA="cos" then "sin" else if funcA="sin" then "cos", "(\\theta)\\)") else ""@}
+
+{@if elementp(11, setdifference(setify(ans1), setify(tans1))) then "<br>\\(\\tan(\\theta)\\)" else ""@}
+
+{@if elementp(12, setdifference(setify(ans1), setify(tans1))) then "<br>\\(\\tan(180-\\theta)\\)" else ""@}
+</p>
+
+<p><br>Here is a worked solution:</p>
+<p>Consider the graphs of \(y=\sin(x)\) and \(y=\cos(x)\).
+<br><i>You can adjust the position of \(\theta\) (green point) in the diagram below.</i></p>
+<center>
+[[jsxgraph width="780px" height="300px"]]
+
+    var funcA = {#funcA#};
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5.3,2.5,7.7,-2.5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    // AXES
+
+    var axisStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black"
+    };
+
+    board.create("segment", [[0,-2],[0,2]], axisStyle);
+    var yAxis = board.create("segment", [[-4,0],[6,0]], axisStyle);
+
+    // CURVES
+
+    var curveStyle = {
+      fixed:true,
+      highlight:false,
+      strokeWidth:2,
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        position:"rt",
+        anchorX:"left",
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    curveStyle.strokeColor = "blue";
+    curveStyle.name = "\\(y = \\sin(\\theta)\\)";
+    curveStyle.label.strokeColor = "blue";
+    curveStyle.label.offset = [10,0];
+
+    var sinCurve = board.create("curve", [
+      function(t){return 2*t/Math.PI},
+      function(t){return 1.5*Math.sin(t)},
+      -2*Math.PI,
+      3*Math.PI
+    ], curveStyle);
+
+    curveStyle.strokeColor = "red";
+    curveStyle.name = "\\(y = \\cos(\\theta)\\)";
+    curveStyle.label.strokeColor = "red";
+    curveStyle.label.offset = [50,-55];
+
+    var cosCurve = board.create("curve", [
+      function(t){return 2*t/Math.PI},
+      function(t){return 1.5*Math.cos(t)},
+      -2*Math.PI,
+      3*Math.PI
+    ], curveStyle);
+
+    // POINTS
+
+    var pointStyle = {
+      showInfoBox:false,
+      withLabel:true,
+      fillColor:"#7acc0e",
+      strokeColor:"#7acc0e",
+      name:"\\(\\theta\\)",
+      label:{
+        fixed:true,
+        highlight:false,
+        offset:[18,-15],
+        anchorX:"middle",
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    var theta = board.create("glider", [1/3, 0, yAxis], pointStyle);
+
+    pointStyle.fixed = true;
+    pointStyle.highlight = false;
+    pointStyle.strokeColor = "black";
+
+    pointStyle.name = "\\(\\theta + 180\\)";
+    var add180 = board.create("point", [function(){if (theta.X()<4){return theta.X()+2}},0], pointStyle);
+
+    pointStyle.name = "\\(\\theta - 180\\)";
+    var sub180 = board.create("point", [function(){if (theta.X()>-2){return theta.X()-2}},0], pointStyle);
+
+    pointStyle.name = "\\(\\theta + 360\\)";
+    var add360 = board.create("point", [function(){if (theta.X()<2){return theta.X()+4}},0], pointStyle);
+
+    pointStyle.label.offset = [18,15];
+
+    pointStyle.name = "\\(-\\theta\\)";
+    var negTheta = board.create("point", [function(){if (theta.X()<4){return -theta.X()}},0], pointStyle);
+
+    pointStyle.name = "\\(90 - \\theta\\)";
+    var negAdd90 = board.create("point", [function(){if (theta.X()<5){return 1-theta.X()}},0], pointStyle);
+
+    pointStyle.name = "\\(180 - \\theta\\)";
+    var negAdd180 = board.create("point", [function(){return 2-theta.X()},0], pointStyle);
+
+    // TRACING POINTS TO CURVES
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      strokeWidth:1.5,
+      withLabel:false,
+      label:{
+        fixed:true,
+        highlight:false,
+        fontSize:12,
+        position:"lft",
+        anchorX:"right",
+        offset:[-5,-10],
+        strokeColor:"purple",
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    function question_curve() {};
+    function other_curve() {};
+
+    if (funcA == "sin") {
+        
+      question_curve = function(point) {
+        return [
+            point.X(),
+            1.5*Math.sin(Math.PI*point.X()/2)
+        ]
+      };
+
+      other_curve = function(point) {
+        return [
+            point.X(),
+            1.5*Math.cos(Math.PI*point.X()/2)
+        ]
+      };
+
+      lineStyle.color = "blue";
+    
+    } else if (funcA == "cos") {
+
+      question_curve = function(point) {
+        return [
+            point.X(),
+            1.5*Math.cos(Math.PI*point.X()/2)
+        ]
+      };
+
+      other_curve = function(point) {
+        return [
+            point.X(),
+            1.5*Math.sin(Math.PI*point.X()/2)
+        ]
+      };
+
+      lineStyle.color = "red";
+
+    };
+
+    board.create("segment", [theta, function(){return question_curve(theta)}], lineStyle);
+
+    lineStyle.dash = 1;
+
+    board.create("segment", [add180, function(){return question_curve(add180)}], lineStyle);
+
+    board.create("segment", [sub180, function(){return question_curve(sub180)}], lineStyle);
+
+    board.create("segment", [add360, function(){return question_curve(add360)}], lineStyle);
+
+    board.create("segment", [negTheta, function(){return question_curve(negTheta)}], lineStyle);
+
+    board.create("segment", [negAdd180, function(){return question_curve(negAdd180)}], lineStyle);
+
+    if (funcA == "sin") {
+      lineStyle.color = "red";
+    } else if (funcA == "cos") {
+      lineStyle.color = "blue";
+    };
+
+    board.create("segment", [negAdd90, function(){return other_curve(negAdd90)}], lineStyle);
+
+    lineStyle.color = "purple";
+    lineStyle.withLabel = true;
+
+    if (funcA == "sin") {
+      lineStyle.name = "\\(\\sin(\\theta)\\)";
+    } else if (funcA == "cos") {
+      lineStyle.name = "\\(\\cos(\\theta)\\)";
+    };
+
+    board.create("segment", [
+      function(){return [-4, question_curve(theta)[1]]},
+      function(){return [6, question_curve(theta)[1]]}
+    ], lineStyle);
+
+    if (funcA == "sin") {
+      lineStyle.name = "\\(-\\sin(\\theta)\\)";
+    } else if (funcA == "cos") {
+      lineStyle.name = "\\(-\\cos(\\theta)\\)";
+    };
+
+    board.create("segment", [
+      function(){return [-4, -question_curve(theta)[1]]},
+      function(){return [6, -question_curve(theta)[1]]}
+    ], lineStyle);
+
+[[/jsxgraph]]
+</center>
+
+<p>From the diagram: 
+{@if funcA="sin" then "<br>\\(\\sin(\\theta) = \\cos(90-\\theta) = \\sin(180-\\theta) = \\sin(360+\\theta)\\)" else "<br>\\(\\cos(\\theta) = \\cos(-\\theta) = \\sin(90-\\theta) = \\cos(360+\\theta)\\)"@}</p>
+
+<p>Also:
+{@if funcA="sin" then "<br>\\(-\\sin(\\theta) = \\sin(\\theta \\pm 180) = \\sin(-\\theta)\\)<br>\\(\\Rightarrow \\sin(\\theta) = -\\sin(\\theta \\pm 180) = -\\sin(-\\theta)\\)" else "<br>\\(-\\cos(\\theta) = \\cos(\\theta \\pm 180) = \\cos(180-\\theta)\\)<br>\\(\\Rightarrow \\cos(\\theta) = -\\cos(\\theta \\pm 180) = -\\cos(180-\\theta)\\)"@}</p>
+
+<p>These are the 5 correct solutions.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>marks</sans>
+        <tans>4</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.8000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>marks</sans>
+        <tans>3</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.6000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>marks</sans>
+        <tans>2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.4000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>marks</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.2000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct solution */
+node1_test: if ans2=tans2 and ans3=tans3 and ans4=tans45 and ans5=tans5 then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check sin correct (+1) */
+/* Node 4: Check cos correct (+1) */
+/* Node 5: Check tan correct (+1) */
+node5_test: if ans4=tans45 and ans5=tans45 then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>tans2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You are correct that: \(\sin{@funcB@} = {@tans2@}\sin(\theta)\) </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>The correct relationship is: \(\sin{@funcB@} = {@tans2@}\sin(\theta)\) </p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>tans3</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You are correct that: \(\cos{@funcB@} = {@tans3@}\cos(\theta)\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The correct relationship is: \(\cos{@funcB@} = {@tans3@}\cos(\theta)\)</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You are correct that: \(\tan{@funcB@} = {@tans45@}\frac{\sin{@funcB@}}{\cos{@funcB@}} = {@tans45@}\tan(\theta)\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The correct relationship is: \(\tan{@funcB@} = {@tans45@}\frac{\sin{@funcB@}}{\cos{@funcB@}} = {@tans45@}\tan(\theta)\)</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

@@ -1,0 +1,867 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>17.1 Solve for 2 unknowns, find point of intersection of lines</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p></p>
+<p>(a) Multiply these equations by different numbers to prepare to solve them simultaneously.
+<br><i>Give your answers in the same form as the equations given,</i> \(ax+by=c\)</p>
+<p>\( {@coeff_x1@}x {@eq1_sign@} {@abs(coeff_y1)@}y = {@eq1_ans@} \quad(1) \)
+<br>\( {@coeff_x2@}x {@eq2_sign@} {@abs(coeff_y2)@}y = {@eq2_ans@} \quad(2) \)</p>
+<p></p>
+<p>\( (1) \times \) [[input:ans1]] \( : \) [[input:ans2]]
+<br>\( (2) \times \) [[input:ans3]] \( : \) [[input:ans4]]</p>
+<p style="text-align: right;"><b>(2)</b></p>
+<p>[[validation:ans1]]&nbsp;[[validation:ans2]]&nbsp;[[validation:ans3]]&nbsp;[[validation:ans4]]&nbsp;[[feedback:prt1]]</p>
+<p></p>
+<p>(b) Hence, solve the equations simultaneously.</p>
+<p>\( x = \) [[input:ans5]]
+<br>\( y = \) [[input:ans6]]</p>
+<p style="text-align: right;"><b>(1)</b></p>
+<p>[[validation:ans5]]&nbsp;[[validation:ans6]]&nbsp;[[feedback:prt2]]</p>
+<p>(c) Write down the coordinates of the point of intersection between the two lines whose equations are:</p>
+<p>\( {@coeff_x1@}x {@eq1_sign@} {@abs(coeff_y1)@}y = {@eq1_ans@} \)
+<br>\( {@coeff_x2@}x {@eq2_sign@} {@abs(coeff_y2)@}y = {@eq2_ans@} \)</p>
+<p>(&nbsp;[[input:ans7]] ,&nbsp;[[input:ans8]] )</p>
+<p style="text-align: right;"><b>(1)</b></p>
+<p>[[validation:ans7]]&nbsp;[[validation:ans8]]&nbsp;[[feedback:prt3]]</p>
+<p></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>4</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[ordergreat(x,y);
+
+/* Generating x-coefficients which are not multiples of each other */
+coeff_x1:rand_with_prohib(-10,10,[-1,0,1]);
+coeff_x2:rand_with_prohib(-10,10,[-1,0,1]);
+while gcd(abs(coeff_x1),abs(coeff_x2))=lmin({abs(coeff_x1),abs(coeff_x2)}) do coeff_x2:rand_with_prohib(-10,10,[-1,0,1]);
+
+/* Generating y-coefficients which are coprime with the respective x-coefficients */
+coeff_y1:rand_with_prohib(-10,10,[-1,0,1]);
+coeff_y2:rand_with_prohib(-10,10,[-1,0,1]);
+while gcd(abs(coeff_x1),abs(coeff_y1))>1 do coeff_y1:rand_with_prohib(-10,10,[-1,0,1]);
+while gcd(abs(coeff_x2),abs(coeff_y2))>1 do coeff_y2:rand_with_prohib(-10,10,[-1,0,1]);
+
+/* Check to ensure that the y-coefficients are not multiples of one another */
+while gcd(abs(coeff_y1),abs(coeff_y2))=lmin({abs(coeff_y1),abs(coeff_y2)}) do (coeff_y1:rand_with_prohib(-10,10,[-1,0,1]),coeff_y2:rand_with_prohib(-10,10,[-1,0,1]),while gcd(abs(coeff_x1),abs(coeff_y1))>1 do coeff_y1:rand_with_prohib(-10,10,[-1,0,1]),while gcd(abs(coeff_x2),abs(coeff_y2))>1 do coeff_y2:rand_with_prohib(-10,10,[-1,0,1]));
+
+/* Generating answers as multiples of 1/2 between -5 and 5 */
+/* To ensure LHS of each equation is an integer we only allow a half to be generated if both coefficients are even */
+x_ans: if integerp(coeff_x1/2) and integerp(coeff_x2/2) then rand_with_prohib(-10,10,[0])/2 else rand_with_prohib(-5,5,[0]);
+y_ans: if integerp(coeff_y1/2) and integerp(coeff_y2/2) then rand_with_prohib(-10,10,[0])/2 else rand_with_prohib(-5,5,[0]);
+
+/* Calculating the RHS of eq1 and eq2 */
+eq1_ans:coeff_x1*x_ans+coeff_y1*y_ans;
+eq2_ans:coeff_x2*x_ans+coeff_y2*y_ans;
+
+/* Generating signs for question display */
+eq1_sign: if coeff_y1>0 then "+" else "-";
+eq2_sign: if coeff_y2>0 then "+" else "-";
+
+/* Part (a) model answer */
+/* Multiplying to give same y-coefficients */
+sol_coeff_y:lcm(abs(coeff_y1),abs(coeff_y2));
+eq1_fact_y:sol_coeff_y/abs(coeff_y1);
+eq2_fact_y:sol_coeff_y/abs(coeff_y2);
+sol_eq1_y:eq1_fact_y*coeff_x1*x + eq1_fact_y*coeff_y1*y = eq1_fact_y*eq1_ans;
+sol_eq2_y:eq2_fact_y*coeff_x2*x + eq2_fact_y*coeff_y2*y = eq2_fact_y*eq2_ans;
+
+/* Multiplying to give same x-coefficients */
+sol_coeff_x:lcm(abs(coeff_x1),abs(coeff_x2));
+eq1_fact_x:sol_coeff_x/abs(coeff_x1);
+eq2_fact_x:sol_coeff_x/abs(coeff_x2);
+sol_eq1_x:eq1_fact_x*coeff_x1*x + eq1_fact_x*coeff_y1*y = eq1_fact_x*eq1_ans;
+sol_eq2_x:eq2_fact_x*coeff_x2*x + eq2_fact_x*coeff_y2*y = eq2_fact_x*eq2_ans;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>\( {@coeff_x1@}x + {@coeff_y1@}y = {@eq1_ans@} \)</p>
+<p>\( {@coeff_x2@}x + {@coeff_y2@}y = {@eq2_ans@} \)</p>
+<p>\( x={@x_ans@}, y={@y_ans@} \)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>eq1_fact_y</tans>
+      <boxsize>3</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>sol_eq1_y</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>1</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>1</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>eq2_fact_y</tans>
+      <boxsize>3</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>sol_eq2_y</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>1</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>1</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>2</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>x_ans</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans6</name>
+      <type>algebraic</type>
+      <tans>y_ans</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans7</name>
+      <type>algebraic</type>
+      <tans>x_ans</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans8</name>
+      <type>algebraic</type>
+      <tans>y_ans</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Three measures for correctness: 
+Equations are equivalent to those in question
+Multiplication numbers are consistent with equations given
+Coefficients of x or y coordinates in both equations are the same */
+
+/* Node 1: Check equivalence of ans2 to eq1 */
+/* Node 2: Check equivalence of ans4 to eq2 (where Node 1 is correct) */
+/* Node 3: Check equivalence of ans4 to eq2 (where Node 1 is incorrect)*/
+
+/* Node 4: Check whether multiplication numbers are consistent */
+implied_multiple_1:coeff(lhs(ans2),x)/coeff_x1;
+implied_multiple_2:coeff(lhs(ans4),x)/coeff_x2;
+check_multi_nums: if ans1=implied_multiple_1 and ans3=implied_multiple_2 then 1 else 0;
+
+/* Node 5: If multiplication numbers are inconsistent, feedback which */
+inconsistent_both: if ans1=implied_multiple_1 or ans3=implied_multiple_2 then 0 else 1;
+inconsistent_which: if ans1=implied_multiple_1 then "second" else "first";
+
+/* Node 6: Check whether either coefficients are equal */
+check_equal_coeff: if abs(coeff(lhs(ans2),x))=abs(coeff(lhs(ans4),x)) or abs(coeff(lhs(ans2),y))=abs(coeff(lhs(ans4),y)) then 1 else 0;
+
+/* Node 7: Check whether answers given are using lowest multiples possible */
+check_lowest_multiple: if abs(ans1)=eq1_fact_x or abs(ans1)=eq1_fact_y then 1 else 0;
+
+/* Partial Credit: 
+Node 8: One equation and multiplier pair completely correct */
+
+correct_eq1_check_x: if (lhs(ans2)=lhs(sol_eq1_x) and rhs(ans2)=rhs(sol_eq1_x) and ans1=eq1_fact_x) or (lhs(ans2)=-lhs(sol_eq1_x) and rhs(ans2)=-rhs(sol_eq1_x) and ans1=-eq1_fact_x) then 1 else 0;
+correct_eq1_check_y: if (lhs(ans2)=lhs(sol_eq1_y) and rhs(ans2)=rhs(sol_eq1_y) and ans1=eq1_fact_y) or (lhs(ans2)=-lhs(sol_eq1_y) and rhs(ans2)=-rhs(sol_eq1_y) and ans1=-eq1_fact_y) then 1 else 0;
+
+correct_eq2_check_x: if (lhs(ans4)=lhs(sol_eq2_x) and rhs(ans4)=rhs(sol_eq2_x) and ans3=eq2_fact_x) or (lhs(ans4)=-lhs(sol_eq2_x) and rhs(ans4)=-rhs(sol_eq2_x) and ans3=-eq2_fact_x) then 1 else 0;
+correct_eq2_check_y: if (lhs(ans4)=lhs(sol_eq2_y) and rhs(ans4)=rhs(sol_eq2_y) and ans3=eq2_fact_y) or (lhs(ans4)=-lhs(sol_eq2_y) and rhs(ans4)=-rhs(sol_eq2_y) and ans3=-eq2_fact_y) then 1 else 0;
+
+one_comp_correct_test: if correct_eq1_check_x=1 or correct_eq1_check_y=1 or correct_eq2_check_x=1 or correct_eq2_check_y=1 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>coeff_x1*x + coeff_y1*y = eq1_ans</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your first equation is not correct.
+<br>It is not equivalent to the equation given in the question.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>coeff_x2*x + coeff_y2*y = eq2_ans</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your second equation is not correct.
+<br>It is not equivalent to the equation given in the question.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>coeff_x2*x + coeff_y2*y = eq2_ans</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your second equation is not correct.
+<br>It is not equivalent to the equation given in the question.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>check_multi_nums</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>inconsistent_both</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>8</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Both the numbers that you have entered to multiply by are not consistent with the equations that you have given.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The {@inconsistent_which@} number that you have entered to multiply by is not consistent with the equation that you have given.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>check_equal_coeff</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>You have correctly multiplied the equations by the numbers you have given.
+<br>However you have not obtained equations with a similar x or y coefficient, so we are still unable to solve these equations simultaneously.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>check_lowest_multiple</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>8</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer is completely correct.
+<br>However you could have chosen smaller numbers to multiply each equation by, which may have made you calculations easier.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>one_comp_correct_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>8</truenextnode>
+        <trueanswernote>prt1-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt1-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>check_equal_coeff</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p></p>
+<p><b>Here is a worked solution:</b></p>
+<p>To get equal x-coefficients:</p>
+<p>\( (1) \times {@eq1_fact_x@} : {@eq1_fact_x*coeff_x1@}x {@if eq1_fact_x*coeff_y1>=0 then "+" else "-"@} {@abs(eq1_fact_x*coeff_y1)@}y = {@eq1_fact_x*eq1_ans@} \)
+<br>\( (2) \times {@eq2_fact_x@} : {@eq2_fact_x*coeff_x2@}x {@if eq2_fact_x*coeff_y2>=0 then "+" else "-"@} {@abs(eq2_fact_x*coeff_y2)@}y = {@eq2_fact_x*eq2_ans@} \)</p>
+<p></p>
+<p>To get equal y-coefficients:</p>
+<p>\( (1) \times {@eq1_fact_y@} : {@eq1_fact_y*coeff_x1@}x {@if eq1_fact_y*coeff_y1>=0 then "+" else "-"@} {@abs(eq1_fact_y*coeff_y1)@}y = {@eq1_fact_y*eq1_ans@} \)
+<br>\( (2) \times {@eq2_fact_y@} : {@eq2_fact_y*coeff_x2@}x {@if eq2_fact_y*coeff_y2>=0 then "+" else "-"@} {@abs(eq2_fact_y*coeff_y2)@}y = {@eq2_fact_y*eq2_ans@} \)</p>
+<p></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check student answers with correct answers */
+correct_sol_xy: if ans5=x_ans and ans6=y_ans then 1 else 0;
+
+/* Node 2: Check whether the students system in (a) has a solution */
+/* Node 3: Check whether student has correctly solved their equations from (a) */
+
+student_ans_matrix:matrix([coeff(lhs(ans2),x),coeff(lhs(ans2),y)],[coeff(lhs(ans4),x),coeff(lhs(ans4),y)]);
+student_ans_det:determinant(student_ans_matrix);
+student_ans_invserse: if student_ans_det=0 then 0 else invert(student_ans_matrix);
+eq_ans_matrix:matrix([rhs(ans2)],[rhs(ans4)]);
+student_system_solution:student_ans_invserse.eq_ans_matrix;
+
+consistent_sol_xy: if ans5=first(first(student_system_solution)) and ans6=first(second(student_system_solution)) then 1 else 0;
+
+/* Node 4: Specific feedback for students who add their equations rather than subtract and vice versa */
+/* Using incorrect sign to remove x-terms */
+
+sf_x_student_ans_matrix:matrix([coeff(lhs(ans2),x),coeff(lhs(ans2),y)],[-coeff(lhs(ans4),x),coeff(lhs(ans4),y)]);
+sf_x_student_ans_det:determinant(sf_x_student_ans_matrix);
+sf_x_student_ans_invserse: if sf_x_student_ans_det=0 then 0 else invert(sf_x_student_ans_matrix);
+sf_x_student_system_solution:sf_x_student_ans_invserse.eq_ans_matrix;
+sf_x: if ans5=first(first(sf_x_student_system_solution)) and ans6=first(second(sf_x_student_system_solution)) then 1 else 0;
+
+/* Using incorrect sign to remove y-terms */
+
+sf_y_student_ans_matrix:matrix([coeff(lhs(ans2),x),coeff(lhs(ans2),y)],[coeff(lhs(ans4),x),-coeff(lhs(ans4),y)]);
+sf_y_student_ans_det:determinant(sf_y_student_ans_matrix);
+sf_y_student_ans_invserse: if sf_y_student_ans_det=0 then 0 else invert(sf_y_student_ans_matrix);
+sf_y_student_system_solution:sf_y_student_ans_invserse.eq_ans_matrix;
+sf_y: if ans5=first(first(sf_y_student_system_solution)) and ans6=first(second(sf_y_student_system_solution)) then 1 else 0;
+
+specific_feedback: if sf_x=1 or sf_y=1 then 1 else 0;
+
+/* Node 5: Worked solution is different depending on signs of coefficients */
+
+combine_x_op: if coeff(lhs(sol_eq1_x),x)=coeff(lhs(sol_eq2_x),x) then "-" else "+";
+combine_x_res: if combine_x_op="+" then (lhs(sol_eq1_x)+lhs(sol_eq2_x)=rhs(sol_eq1_x)+rhs(sol_eq2_x)) else (lhs(sol_eq1_x)-lhs(sol_eq2_x)=rhs(sol_eq1_x)-rhs(sol_eq2_x));
+
+combine_y_op: if coeff(lhs(sol_eq1_y),y)=coeff(lhs(sol_eq2_y),y) then "-" else "+";
+combine_y_res: if combine_y_op="+" then (lhs(sol_eq1_y)+lhs(sol_eq2_y)=rhs(sol_eq1_y)+rhs(sol_eq2_y)) else (lhs(sol_eq1_y)-lhs(sol_eq2_y)=rhs(sol_eq1_y)-rhs(sol_eq2_y));]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>correct_sol_xy</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>student_ans_det</sans>
+        <tans>0</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The equations which you gave in part (a) do not have a unique solution, so you cannot solve them.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>consistent_sol_xy</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly solved the equations that you gave in part (a).
+<br>However your answer to (a) was incorrect, so you have not obtained the correct solution to the equations given in the question.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>specific_feedback</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have combined the equations incorrectly, either adding when you should have subtracted or subtracting when you should have added.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p></p>
+<p><b>Here is a worked solution:</b></p>
+<p>From obtaining equal x-coefficients:</p>
+<p>&emsp;&emsp;\( {@eq1_fact_x*coeff_x1@}x {@if eq1_fact_x*coeff_y1>=0 then "+" else "-"@} {@abs(eq1_fact_x*coeff_y1)@}y = {@eq1_fact_x*eq1_ans@} \)
+<br>\( [{@combine_x_op@}] \)&ensp;\( {@eq2_fact_x*coeff_x2@}x {@if eq2_fact_x*coeff_y2>=0 then "+" else "-"@} {@abs(eq2_fact_x*coeff_y2)@}y = {@eq2_fact_x*eq2_ans@} \)</p>
+<p>\( \Rightarrow {@combine_x_res@} \)
+<br>\( y={@y_ans@} \)</p>
+<p>\( (1) \Rightarrow&nbsp;{@coeff_x1*x@} + {@coeff_y1*y_ans@} = {@eq1_ans@} \)
+<br>\( x={@x_ans@} \)</p>
+<p></p>
+<p>From obtaining equal y-coefficients:</p>
+<p>&emsp;&emsp;\( {@eq1_fact_y*coeff_x1@}x {@if eq1_fact_y*coeff_y1>=0 then "+" else "-"@} {@abs(eq1_fact_y*coeff_y1)@}y = {@eq1_fact_y*eq1_ans@} \)
+<br>\( [{@combine_y_op@}] \)&ensp;\( {@eq2_fact_y*coeff_x2@}x {@if eq2_fact_y*coeff_y2>=0 then "+" else "-"@} {@abs(eq2_fact_y*coeff_y2)@}y = {@eq2_fact_y*eq2_ans@} \)</p>
+<p>\( \Rightarrow {@combine_y_res@} \)
+<br>\( x={@x_ans@} \)</p>
+<p>\( (1) \Rightarrow&nbsp;{@coeff_x1*x_ans@} + {@coeff_y1*y@} = {@eq1_ans@} \)
+<br>\( y={@y_ans@} \)</p>
+<p></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+correct_sol_xy: if ans7=x_ans and ans8=y_ans then 1 else 0;
+
+/* Node 2: Check consistent answer with (a) */
+student_ans_matrix:matrix([coeff(lhs(ans2),x),coeff(lhs(ans2),y)],[coeff(lhs(ans4),x),coeff(lhs(ans4),y)]);
+student_ans_det:determinant(student_ans_matrix);
+student_ans_invserse: if student_ans_det=0 then 0 else invert(student_ans_matrix);
+eq_ans_matrix:matrix([rhs(ans2)],[rhs(ans4)]);
+student_system_solution:student_ans_invserse.eq_ans_matrix;
+
+consistent_sol_a: if ans5=first(first(student_system_solution)) and ans6=first(second(student_system_solution)) then 1 else 0;
+
+/* Node 3: Check consistent answer with (b) */
+consistent_sol_b: if ans7=ans5 and ans8=ans6 then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>correct_sol_xy</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>consistent_sol_xy</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly found the intersection of the equations that you gave in part (a).
+<br>However your answer to (a) was incorrect, so you have not obtained the correct solution to the equations given in the question.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>consistent_sol_b</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly understood that the point of intersection of the two lines will have the coordinates of the solution to the two equations.
+<br>However, your solution for the equations in (b) was not correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p></p>
+<p><b>Here is a worked solution:</b></p>
+<p>Solutions to equations:
+<br>\( x={@x_ans@} \)
+<br>\( y={@y_ans@} \)</p>
+<p>Therefore, the point of intersection is: \( ({@x_ans@},{@y_ans@}) \).</p>
+<p></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

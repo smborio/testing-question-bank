@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>27.2 Area of triangles using 0.5absinC</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>Find the area of the following triangles, giving your answer correct to 2 decimal places were appropriate:</p>
+<p>(a) Triangle \(ABC\) where \(A\) has coordinates ({@ax@},{@ay@}), \(B\) has coordinates ({@bx@},{@by@}) and \(C\) has coordinates ({@cx@},{@cy@}).</p>
+<p>Area = [[input:ans1]] units\(^{2} \)[[validation:ans1]] [[feedback:prt1]]</p>
+
+<p>(b) Triangle \(DEF\) where \(DE = {@float(de)@}\) cm, \(DF = {@if integerp(df_in_question) then df_in_question else float(df_in_question)@}\) cm, \(EF = {@float(ef)@}\) cm, and \(D = {@angleD_degrees@}^{\circ}\) as shown in the diagram below (not to scale).</p>
+
+<p>
+[[jsxgraph height='200px']]
+var board = JXG.JSXGraph.initBoard(divid, {
+  boundingbox: [-4, 6, 6, -2],
+  axis: false,
+  keepaspectratio: true,
+  showNavigation: false,
+  showCopyright: false
+});
+
+// Point D
+var p1 = board.create('point', [-2, 0], {
+  name: 'D',
+  size: 0.1,
+  fixed: true,
+  visible: true,
+  strokeColor: '#901B77',
+  fillColor: '#901B77',
+  label: {
+    fontSize: 15,
+    autoPosition: true,
+    offset: [-10, -10]
+  }
+});
+
+// Point E
+var p2 = board.create('point', [p1.X() + {#float(de)#}, 0], { // feed in length of DE here
+  name: 'E',
+  size: 0.1,
+  fixed: true,
+  visible: true,
+  strokeColor: '#901B77',
+  fillColor: '#901B77',
+  label: {
+    fontSize: 15,
+    autoPosition: true,
+    offset: [0, -10]
+  }
+});
+
+// Edge AB (has to be horizontal!)
+var l1 = board.create('line', [p1, p2], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+});
+
+// ----- Construct ray from D through F -------
+// define a rotation from bottom left of given angle
+var t1 = board.create('transform', [{#float(angleD_radians)#}, p1], { // feed in angle D in radians here 
+  type: 'rotate'
+});
+// dummy point to rotate
+var p3 = board.create('point', [p1.X() + 0.1, p1.Y()], {
+  name: '',
+  visible: false
+});
+// rotated dummy point
+var p4 = board.create('point', [p3, t1], {
+  name: '',
+  visible: false
+});
+// ray
+var l2 = board.create('line', [p1, p4], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: true,
+  strokeWidth: 2,
+  visible: false
+});
+
+// ----- Find point F and construct edges -------
+// circle from E of radius EF
+var c1 = board.create('circle', [p2, [p2.X() + {#float(ef)#}, p2.Y()]], { // feed in length EF here
+  fixed: true,
+  visible: false
+});
+// point F
+var p5 = board.create('intersection', [l2, c1, 1], {
+  name: 'F',
+  size: 0.1,
+  fixed: true,
+  visible: true,
+  strokeColor: '#901B77',
+  fillColor: '#901B77',
+  label: {
+    fontSize: 15,
+    autoPosition: true,
+    offset: [-5, 12.5]
+  }
+});
+// Edge DF 
+var l3 = board.create('line', [p1, p5], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+});
+// Edge AB (has to be horizontal!)
+var l4 = board.create('line', [p2, p5], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+});
+
+// ----- Labels -------
+// Angle 
+var angle = board.create('angle', [p2, p1, p5], {
+  radius: 0.75,
+  name: {#angleD_degrees#}, // feed here the value of angle D in degrees
+  label: {
+    fontSize: 15,
+    strokeColor: '#000000',
+    autoPosition: true,
+    offset: [15, 0]
+  }
+});
+// length DE
+var txt = board.create('text', [(p1.X() + p2.X()) / 2 - 0.5, (p1.Y() + p2.Y()) / 2 - 0.5, p2.X() - p1.X()], { 
+  fontSize: 15,
+  fixed: true
+});
+// length EF
+var txt = board.create('text', [(p2.X() + p5.X()) / 2 - 0.25, (p2.Y() + p5.Y()) / 2 + 0.5, {#float(ef)#}], { // feed in length EF here
+  fontSize: 15,
+  fixed: true
+});
+// length DF
+var txt = board.create('text', [(p1.X() + p5.X()) / 2 - 0.5, (p1.Y() + p5.Y()) / 2 + 0.75, {#float(df_in_question)#}], { // feed here the length of DF
+  fontSize: 15,
+  fixed: true
+});
+[[/jsxgraph]]
+</p>
+
+
+<p>Area = [[input:ans2]]cm\(^{2}\) [[validation:ans2]] [[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2023060500</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* --------- Part (a) ---------- */
+/*random coordinates of triangle*/
+ax:-rand(5)-2;
+ay:rand(3)+3;
+bx:ax+7+rand(4);
+by:ay;
+cx:rand_with_prohib(ax+1,bx-1,[0]);
+cy:ay+5+rand(5);
+/*dimensions of triangle*/
+base:bx-ax;
+height:cy-by;
+areaABC:base*height/2;
+
+/* --------- Part (b) --------- */
+de:8+(rand(9)+1)/10;
+angleD_degrees:rand_with_step(36,44,1);
+angleD_radians:angleD_degrees*pi/180;
+ef:rand_with_step(62,68,1)/10;
+/* Find coefficients of quadratic on df from cosine rule and then df with quadratic formula */
+bb:-2*de*cos(angleD_radians);
+cc:de^2-ef^2;
+df_calculated:(-bb-sqrt(bb^2-4*cc))/2;
+/* Get the value of df to use in the actual question */
+df_in_question:floor(10*decimalplaces(df_calculated,1));
+df_in_question:df_in_question/10;
+df:df_in_question;
+/* calcuylate the area */
+areaDEF:1/2*df*de*sin(angleD_radians);
+
+
+
+
+
+
+
+
+
+/*-------------------------------------------------------------------------------------------*/
+/*Define function S(n) that given a number n, returns the string "+n" if positive (or zero) and "-n" if negative, if n=+1 or -1 it returns + or - respectively*/
+S(n):= block([], if (n=1) then return("+") elseif (n=-1) then return("-") elseif (n>=0) then return(vconcat("+", abs(n)))  else  return(vconcat("-", abs(n))));
+
+/*Define function S1(n) that given a number n, returns the string "+n" if positive (or zero) and "-n" if negative (1 and -1 are treated as the other numbers)*/
+S1(n):= block([], if (n>=0) then return(vconcat("+", abs(n)))  else  return(vconcat("-", abs(n))));
+
+/*Define function SP(n) that given a number n, returns the string "n" if positive (or zero) and "(-n)" if negative*/
+SP(n):= block([], if (n>=0) then return(n)  else  return(vconcat("(-", abs(n), ")")));
+
+/*-------------------------------------------------------------------------------------------*/]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>{@float(areaABC)@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>float(areaABC)</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>dispdp(areaDEF,2)</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/*Check correct answer if integer or float*/
+if_interger:if integerp(areaABC) then areaABC else float(areaABC);
+
+/* Mistake node 2: using side AC as height */
+mistake_12:base*sqrt((cx-ax)^2+(cy-ay)^2)/2;
+
+/* Mistake node 3: using side BC as height */
+mistake_13:base*sqrt((cx-bx)^2+(cy-by)^2)/2;
+
+/* Mistake node 4: using side AC and BC as base and height */
+mistake_14:sqrt((cx-ax)^2+(cy-ay)^2)*sqrt((cx-bx)^2+(cy-by)^2)/2;
+
+/* Mistake node 5: using long method with cos rule and sine rule but carrying rounding errors. */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>EqualComAss</answertest>
+        <sans>ans1</sans>
+        <tans>if_interger</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>NumDecPlaces</answertest>
+        <sans>ans1</sans>
+        <tans>mistake12</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You used the length of \(AC\) as the height but it's not the height.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>NumDecPlaces</answertest>
+        <sans>ans1</sans>
+        <tans>mistake13</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You used the length of \(BC\) as the height but it's not the height.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>NumDecPlaces</answertest>
+        <sans>ans1</sans>
+        <tans>mistake14</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><b>Worked Solution:</b></p>
+
+<p>With a question like this, drawing a diagram is crucial. The diagram below shows the details of this scenario.</p>
+
+<p>
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard(divid, {
+  boundingbox: [-7, 15, 9, -1],
+  axis: true,
+  keepaspectratio: true,
+  showNavigation: false,
+  showCopyright: false
+});
+
+// point A
+var p1 = board.create('point', [{#ax#}, {#ay#}], { // Feed in coordinates of A here
+  name: 'A',
+  size: 1,
+  fixed: true,
+  visible: true,
+  strokeColor: '#901B77',
+  fillColor: '#901B77',
+  label: {
+    fontSize: 15,
+    autoPosition: true,
+    offset: [-12.5, -10]
+  }
+});
+
+// point B
+var p2 = board.create('point', [{#bx#}, {#by#}], { // Feed in coordinates of B here
+  name: 'B',
+  size: 1,
+  fixed: true,
+  visible: true,
+  strokeColor: '#901B77',
+  fillColor: '#901B77',
+  label: {
+    fontSize: 15,
+    autoPosition: true,
+    offset: [7.5, -10]
+  }
+});
+
+// point C
+var p3 = board.create('point', [{#cx#}, {#cy#}], { // Feed in coordinates of C here
+  name: 'C',
+  size: 1,
+  fixed: true,
+  visible: true,
+  strokeColor: '#901B77',
+  fillColor: '#901B77',
+  label: {
+    fontSize: 15,
+    autoPosition: true,
+    offset: [-5, 12.5]
+  }
+});
+
+// Edge AB
+var l1 = board.create('line', [p1, p2], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+});
+
+// Edge AC
+var l2 = board.create('line', [p1, p3], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+});
+
+// Edge BC
+var l3 = board.create('line', [p3, p2], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+});
+
+// foot of heitght from C on AB
+var p4 = board.create('point', [p3.X(), p2.Y()], { 
+  name: '',
+  size: 1,
+  fixed: true,
+  visible: false
+});
+
+// height
+var l4 = board.create('line', [p3, p4], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+  dash:2
+});
+
+// Right angle symbol
+var an = board.create('angle', [p2, p4, p3], {
+  radius: 0.75,
+  name: '', 
+  label: {
+    fontSize: 15,
+    strokeColor: '#000000',
+    autoPosition: true,
+    offset: [-1000, -1000]
+  }
+});
+[[/jsxgraph]]
+</p>
+
+<p>Here, we can see that we can draw the height from \(AB\) to \(C\) and using the coordinates of the points we can find the length of the base and the height as follows.</p>
+
+<p>Base \( = {@bx@} {@S1(ax)@} = {@base@}\) units.</p>
+
+<p>Height \( = {@cy@} - {@by@} = {@height@} \) units.</p>
+
+<p>So, Area \( = \frac{1}{2} \times \mbox{Base} \times \mbox{Height} = \frac{1}{2} \times {@base@} \times {@height@} = {@if integerp(areaABC) then areaABC else float(areaABC)@}\) units\(^2\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1*100</sans>
+        <tans>areaABC*100</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>When the answer is an integer you do not need the trailing zeroes. Note that the requirement of 2 decimal places says 'if appropriate'; when the answer is an integer or an exact answer to 1 decimal place then you do not need the trailing zeroes.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Mistake node 3: Using wrong sides pt1  */
+mistake3:1/2*df*ef*sin(angleD_radians);
+
+/* Mistake node 4: Using wrong sides pt2  */
+mistake4:1/2*de*ef*sin(angleD_radians);
+
+/* Mistake node 5: Using cos instead of sin */
+mistake5:1/2*de*df*cos(angleD_radians);
+
+/* Mistake node 6: Calculator in radians */
+mistak6:1/2*df*de*sin(angleD_degrees);
+
+/* Mistake node 7: Calculator in gradians */
+mistake7:1/2*df*de*sin(angleD_degrees*pi/200);</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>NumDecPlaces</answertest>
+        <sans>ans2</sans>
+        <tans>areaDEF</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>NumDecPlaces</answertest>
+        <sans>ans2</sans>
+        <tans>areaDEF</tans>
+        <testoptions>1</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.75</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answers is correct to 1 decimal place but you should have given it to 2 decimal places.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>NumDecPlaces</answertest>
+        <sans>ans2</sans>
+        <tans>mistake3</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You used side \(EF\), which is not one of the sides required in the formula.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>NumDecPlaces</answertest>
+        <sans>ans2</sans>
+        <tans>mistake4</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You used side \(EF\), which is not one of the sides required in the formula.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>NumDecPlaces</answertest>
+        <sans>ans2</sans>
+        <tans>mistake5</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>-</truescoremode>
+        <truescore>0.25</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You used cos instead of sin in the formula for the area.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>NumDecPlaces</answertest>
+        <sans>ans2</sans>
+        <tans>mistake6</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.75</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>It looks like your calculator is in radians!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>NumDecPlaces</answertest>
+        <sans>ans2</sans>
+        <tans>mistake7</tans>
+        <testoptions>2</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.75</truescore>
+        <truepenalty/>
+        <truenextnode>7</truenextnode>
+        <trueanswernote>prt2-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>It looks like your calculator is in gradians!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt2-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><b>Worked Solution:</b></p>
+
+<p>In this question we can use the formula Area \(=\frac{1}{2}ab\sin{C}\) to find the area of the triangle. It is important to identify which value corresponds to each component of the formula, noticing that \(a\) and \(b\) are the sides that make angle \(C\).</p>
+
+<p>In our case, \(a = {@float(de)@}\), \(b = {@if integerp(df) then df else float(df)@}\) and \(C = {@angleD_degrees@}\). So,</p>
+
+<p>Area \( = \frac{1}{2} \times {@float(de)@} \times {@if integerp(df) then df else float(df)@} \times \sin{{@angleD_degrees@}}\)</p>
+
+<p>\(\quad = {@dispdp(areaDEF,2)@}\) com\(^2\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

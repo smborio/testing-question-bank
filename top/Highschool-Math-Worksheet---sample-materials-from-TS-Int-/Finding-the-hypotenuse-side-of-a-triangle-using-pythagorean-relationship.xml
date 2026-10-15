@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Finding the hypotenuse side of a triangle using pythagorean relationship</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>Find the length of the side marked \({@letters@}\) in the figure below.</p>
+
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {boundingbox: [-5, 12, 16, -5],
+                keepAspectRatio:false, showCopyright:false, showNavigation:false ,axis:false});
+        const A = board.create('point', [0,0], { name: 'A', visible: false});
+        const B = board.create('point', [0,10], { name: 'B', visible: false });
+        const C = board.create('point', [15,0], { name: 'C', visible: false});
+
+
+        const a = board.create('point', [0,0], { name: 'a', visible: false});
+        const b = board.create('point', [0,2], { name: 'b', visible: false });
+        const c = board.create('point', [2,2], { name: 'c', visible: false});
+        const d = board.create('point', [2,0], { name: 'd', visible: false});
+
+        board.create('polygon', [a,b,c,d], {borders: {
+                                               strokeWidth: 1,
+                                               strokeColor: 'blue',},
+                                              fillColor: 'none',});
+
+
+        board.create('polygon', [A, B, C], {borders: {
+                                               strokeWidth: 1,
+                                               strokeColor: 'blue',},
+                                              fillColor: 'none',});
+
+        board.create('text', [-2,5, '{#height#} m'], { fontSize: 10 });
+        board.create('text', [7,6, '{#letters#}'], { fontSize: 10 });
+        board.create('text', [6,-1, '{#base#} m'], { fontSize: 10 });
+[[/jsxgraph]]
+<p>side \({@letters@}\) = [[input:ans1]]\( m\)[[validation:ans1]][[feedback:prt1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text><![CDATA[<h3>Worked solution</h3>
+<p>We are finding the hypotenuse {@letters@} of a right-angled triangle.</p>
+
+<p>Recall the Pythagorean Theorem: \( a^{2} + b^{2} = c^{2} \). </p>
+
+<p>Here, \(a = {@base@}\) and \(b = {@height@}\).</p>
+
+<p>Now substitute the values:  \( {@letters@}^{2} = {@base@}^{2} + {@height@}^{2} \)</p>
+
+<p>Square each side:  \( {@letters@}^{2} = {@square_base@} + {@square_height@} \)</p>
+
+<p>Add them together:  \( {@letters@}^{2} = {@sum_squares@} \)</p>
+
+<p>Take the square root:  \( {@letters@} = \sqrt{@sum_squares@} \)</p>
+
+<p>Simplify:  \( {@letters@} = {@hypothenuse@} \)</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text>letters:rand([a,b,c,d,f,x,y,g,h,i,j,k,m,n,o,p,q,r,s]);
+list_of_the_values:[[3,4,5],[6,8,10],[9,12,15],[5, 12, 13],[7, 24, 25],[8, 15, 17],[9, 40, 41],[11, 60, 61],[12, 35, 37],[13, 84, 85],[16, 63, 65],[20, 21, 29],[33, 56, 65],[36, 77, 85],[39, 80, 89],[48, 55, 73],[60, 91, 109],[65, 72, 97],[80, 99, 121],[15, 20, 25],[35, 72, 85],[36, 77, 85],[39, 80, 89],[72, 24, 72]];
+index:1+rand(24);
+choose_one:list_of_the_values[index];
+base:choose_one[1];
+height:choose_one[2];
+hypothenuse:choose_one[3];
+square_base:base^2;
+square_height:height^2;
+sum_squares:square_base+square_height;
+hypothenuse:sqrt(sum_squares);
+ta:hypothenuse;
+
+/*mistakes 1*/
+sum: base+height;
+hyp:sqrt(sum);</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>The correct answer \(= {@ta@}\)</p>]]></text>
+    </questionnote>
+    <questiondescription format="html">
+      <text><![CDATA[<p id="author">Eric Morara </p>
+<p id="concept">https://ecampus.idems.international/question/bank/history/history.php?entryid=126346&returnurl=%2Fquestion%2Fedit.php%3Fcourseid%3D430%26cat%3D18805%252C121817&courseid=430</p>
+<p id="reviewer"></p>
+<p id="reviewer"></p>
+
+<p id="description">The question is about how to find the hypotenuse side of a right-angled triangle given the lengths of two shorter sides.</p>]]></text>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta</tans>
+      <boxsize>4</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description>Checks for correct hypoteneus.</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description>Not squaring the base and height.</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>hyp</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>It looks like you made a mistake in calculating the hypotenuse of a right triangle. The correct way is to square the lengths of the two shorter sides , add them together, and then take the square root of the sum.kindly follow step by step worked solution.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>395591570</deployedseed>
+    <qtest>
+      <testcase>1</testcase>
+      <description>Not squaring the base and height.</description>
+      <testinput>
+        <name>ans1</name>
+        <value>hyp</value>
+      </testinput>
+      <expected>
+        <name>prt1</name>
+        <expectedscore>0.0000000</expectedscore>
+        <expectedpenalty/>
+        <expectedanswernote>prt1-2-T</expectedanswernote>
+      </expected>
+    </qtest>
+  </question>
+</quiz>

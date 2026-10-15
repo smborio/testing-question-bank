@@ -1,0 +1,1139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>1.2 Calculations and ordering decimals</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Consider this list of decimals:</p>
+<p><br>{@floatList@}</p>
+
+<p><br>Answer the following without a calculator:</p>
+
+<p><br>(a) Write this same list of decimals rounded to one decimal place.</p>
+<p align="right">[[input:ans1]] [[validation:ans1]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) Add the largest and the smallest numbers from the list together.</p>
+<p><i>Give your answer exactly</i></p>
+<p align="right">[[input:ans2]] [[validation:ans2]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt2]]</p>
+
+<p><br>(c) Subtract the fourth largest decimal from the third largest.</p>
+<p><i>Give your answer exactly</i></p>
+<p align="right">[[input:ans3]] [[validation:ans3]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt3]]</p>
+
+<p><br>(d) Write down two decimals from the list which when divided will give a whole number, and what is the whole number?</p>
+<p align="right">[[input:ans4]] \(\div\) [[input:ans5]] \(=\) [[input:ans6]] [[validation:ans4]] [[validation:ans5]] [[validation:ans6]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt4]]</p>
+
+<p><br>(e) Write two decimals from the list when added together will give a whole number, and what is the whole number?</p>
+<p align="right">[[input:ans7]] \(+\) [[input:ans8]] \(=\) [[input:ans9]] [[validation:ans7]] [[validation:ans8]] [[validation:ans9]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt5]]</p>
+
+<p><br>(f) Which two numbers when multiplied together give you a number closest to 0?</p>
+<p><i>You do not need to calculate the product</i></p>
+<p align="right">[[input:ans10]] and [[input:ans11]] [[validation:ans10]] [[validation:ans11]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt6]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>6</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[num1:rand([1,1,-1])*(10*(rand(90)+10)+rand(9)+1)/rand([10,100,1000]);
+num2:rand([1,1,-1])*(10*(rand(90)+10)+rand(9)+1)/rand([10,100,1000]);
+
+num3:rand([1,1,-1])*(10*(rand(900)+100)+rand(9)+1)/rand([100,1000,10000]);
+num4:rand([1,1,-1])*(10*(rand(900)+100)+rand(9)+1)/rand([100,1000,10000]);
+
+num5:rand([1,1,-1])*(10*(rand(9000)+1000)+rand(9)+1)/rand([100,1000,10000]);
+
+chooseNums:rand_selection([num1,num2,num3,num4,num5], 2);
+
+num6: if abs(first(chooseNums))>100 then rand([1,-1])*first(chooseNums)/rand([10,100,1000]) else if abs(first(chooseNums))>10 then rand([1,-1])*first(chooseNums)/rand([10,100]) else if abs(first(chooseNums))>1 then rand([1,-1])*first(chooseNums)*rand([10,1/10]) else rand([1,-1])*first(chooseNums)*rand([10,100]);
+
+num7: if second(chooseNums)>0 then rand(20)+ceiling(second(chooseNums))-second(chooseNums) else -(rand(20)+ceiling(second(chooseNums)))-second(chooseNums);
+
+fracList:sort([num1,num2,num3,num4,num5,num6,num7]);
+floatList:random_permutation([float(num1),float(num2),float(num3),float(num4),float(num5),float(num6),float(num7)]);
+
+tans1:[decimalplaces(num1,1),decimalplaces(num2,1),decimalplaces(num3,1),decimalplaces(num4,1),decimalplaces(num5,1),decimalplaces(num6,1),decimalplaces(num7,1)];
+
+tans2:float(lmax(fracList)+lmin(fracList));
+
+tans3:float(fifth(fracList)-fourth(fracList));
+
+tans4: if integerp(num6/first(chooseNums)) then float(num6) else float(first(chooseNums));
+tans5: if integerp(num6/first(chooseNums)) then float(first(chooseNums)) else float(num6);
+tans6: if integerp(num6/first(chooseNums)) then num6/first(chooseNums) else first(chooseNums)/num6;
+
+tans7:float(num7);
+tans8:float(second(chooseNums));
+tans9:num7+second(chooseNums);
+
+absSort(a,b) := abs(a)<abs(b);
+tans10:first(sort(floatList, absSort));
+tans11:second(sort(floatList, absSort));]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text>1</text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>tans1</tans>
+      <boxsize>20</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint>[ ]</syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans10</name>
+      <type>algebraic</type>
+      <tans>tans10</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans11</name>
+      <type>algebraic</type>
+      <tans>tans11</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>tans2</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>tans3</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>tans4</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>tans5</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans6</name>
+      <type>algebraic</type>
+      <tans>tans6</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans7</name>
+      <type>algebraic</type>
+      <tans>tans7</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans8</name>
+      <type>algebraic</type>
+      <tans>tans8</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans9</name>
+      <type>algebraic</type>
+      <tans>tans9</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check that there are the correct number of elements */
+node3_test: if length(ans1)=7 then 0 else 1;
+
+/* Node 4: Check if all elements are given to 1dp */
+
+node4_test: if length(ans1)=7 and {decimalplaces(first(ans1),1), decimalplaces(second(ans1),1), decimalplaces(third(ans1),1), decimalplaces(fourth(ans1),1), decimalplaces(fifth(ans1),1), decimalplaces(sixth(ans1),1), decimalplaces(seventh(ans1),1)}=setify(ans1) then 0 else 1;
+
+notToOneDP: if length(ans1)=7 then setdifference(setify(ans1),{decimalplaces(first(ans1),1), decimalplaces(second(ans1),1), decimalplaces(third(ans1),1), decimalplaces(fourth(ans1),1), decimalplaces(fifth(ans1),1), decimalplaces(sixth(ans1),1), decimalplaces(seventh(ans1),1)}) else {};
+
+/* Node 5: Check for rounding errors (up instead of down an vice versa) */
+incorrectRoundings: if length(ans1)=7 then intersection(setify(ans1), union(setdifference({float(ceiling(num1*10)/10),float(ceiling(num2*10)/10),float(ceiling(num3*10)/10),float(ceiling(num4*10)/10),float(ceiling(num5*10)/10),float(ceiling(num6*10)/10),float(ceiling(10*num7)/10)},setify(tans1)), setdifference({float(floor(num1*10)/10),float(floor(num2*10)/10),float(floor(num3*10)/10),float(floor(num4*10)/10),float(floor(num5*10)/10),float(floor(num6*10)/10),float(floor(10*num7)/10)},setify(tans1)))) else {};
+
+node5_test: if length(incorrectRoundings)=0 then 0 else 1;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>Sets</answertest>
+        <sans>setify(ans1)</sans>
+        <tans>setify(tans1)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>{@first(floatList)@} {@if 10*first(floatList)-floor(10*first(floatList))=float(0) then "need not be changed" else if 10*first(floatList)-floor(10*first(floatList))<1/2 then sconcat("is rounded <b>down</b> to \\(", float(floor(10*first(floatList))/10),"\\)") else sconcat("is rounded <b>up</b> to \\(",float(ceiling(10*first(floatList))/10),"\\)")@}</p>
+
+<p>{@second(floatList)@} {@if 10*second(floatList)-floor(10*second(floatList))=float(0) then "need not be changed" else if 10*second(floatList)-floor(10*second(floatList))<1/2 then sconcat("is rounded <b>down</b> to \\(", float(floor(10*second(floatList))/10),"\\)") else sconcat("is rounded <b>up</b> to \\(",float(ceiling(10*second(floatList))/10),"\\)")@}</p>
+
+<p>{@third(floatList)@} {@if 10*third(floatList)-floor(10*third(floatList))=float(0) then "need not be changed" else if 10*third(floatList)-floor(10*third(floatList))<1/2 then sconcat("is rounded <b>down</b> to \\(", float(floor(10*third(floatList))/10),"\\)") else sconcat("is rounded <b>up</b> to \\(",float(ceiling(10*third(floatList))/10),"\\)")@}</p>
+
+<p>{@fourth(floatList)@} {@if 10*fourth(floatList)-floor(10*fourth(floatList))=float(0) then "need not be changed" else if 10*fourth(floatList)-floor(10*fourth(floatList))<1/2 then sconcat("is rounded <b>down</b> to \\(", float(floor(10*fourth(floatList))/10),"\\)") else sconcat("is rounded <b>up</b> to \\(",float(ceiling(10*fourth(floatList))/10),"\\)")@}</p>
+
+<p>{@fifth(floatList)@} {@if 10*fifth(floatList)-floor(10*fifth(floatList))=float(0) then "need not be changed" else if 10*fifth(floatList)-floor(10*fifth(floatList))<1/2 then sconcat("is rounded <b>down</b> to \\(", float(floor(10*fifth(floatList))/10),"\\)") else sconcat("is rounded <b>up</b> to \\(",float(ceiling(10*fifth(floatList))/10),"\\)")@}</p>
+
+<p>{@sixth(floatList)@} {@if 10*sixth(floatList)-floor(10*sixth(floatList))=float(0) then "need not be changed" else if 10*sixth(floatList)-floor(10*sixth(floatList))<1/2 then sconcat("is rounded <b>down</b> to \\(", float(floor(10*sixth(floatList))/10),"\\)") else sconcat("is rounded <b>up</b> to \\(",float(ceiling(10*sixth(floatList))/10),"\\)")@}</p>
+
+<p>{@seventh(floatList)@} {@if 10*seventh(floatList)-floor(10*sevnenth(floatList))=float(0) then "need not be changed" else if 10*seventh(floatList)-floor(10*seventh(floatList))<1/2 then sconcat("is rounded <b>down</b> to \\(", float(floor(10*seventh(floatList))/10),"\\)") else sconcat("is rounded <b>up</b> to \\(",float(ceiling(10*seventh(floatList))/10),"\\)")@}</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You list does not contain the correct number of elements.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer(s): {@notToOneDP@} are not given to one decimal place.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer(s): {@incorrectRoundings@} have been rounded in the wrong direction.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct answer */
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check whether student gave or used non-exact values */
+node3_test: if ans2<=tans2+0.1 and ans2>=tans2-0.1 then 1 else 0;
+
+/* Node 4: Check whether student did correct largest number add a non-smallest number on the list */
+node4_test: if float(ans2)=float(lmax(fracList)+second(fracList)) or float(ans2)=float(lmax(fracList)+third(fracList)) or float(ans2)=float(lmax(fracList)+fourth(fracList)) or float(ans2)=float(lmax(fracList)+fifth(fracList)) or float(ans2)=float(lmax(fracList)+sixth(fracList)) then 1 else 0;
+
+/* Node 5: Check whether student did correct smallest number add a non-largest number on the list */
+node5_test: if float(ans2)=float(lmin(fracList)+second(fracList)) or float(ans2)=float(lmin(fracList)+third(fracList)) or float(ans2)=float(lmin(fracList)+fourth(fracList)) or float(ans2)=float(lmin(fracList)+fifth(fracList)) or float(ans2)=float(lmin(fracList)+sixth(fracList)) then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>tans2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The largest number in the list is {@float(lmax(fracList))@} and the smallest is {@float(lmin(fracList))@}.</p>
+<p>So, \({@float(lmax(fracList))@} {@if lmin(fracList)<0 then "-" else "+"@} {@abs(float(lmin(fracList)))@} = {@tans2@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You appear to have rounded your answer.<br>However, you should have answered exactly.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly identified {@float(lmax(fracList))@} as the largest decimal in the list.<br>However you have added {@float(ans2-lmax(fracList))@} which is not the correct smallest number.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly identified {@float(lmin(fracList))@} as the smallest decimal in the list.<br>However you have added {@float(ans2-lmin(fracList))@} which is not the correct largest number.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct answer */
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check whether student did fourth largest minus third largest */
+
+/* Node 4: Check whether student gave or used non-exact values */
+node4_test: if ans3<=tans3+0.1 and ans3>=tans3-0.1 then 1 else 0;
+
+/* Node 5: Check whether student did correct third largest number minus another number on the list */
+node5_test: if float(ans3)=float(fifth(fracList)+first(fracList)) or float(ans3)=float(fifth(fracList)+second(fracList)) or float(ans3)=float(fifth(fracList)+third(fracList)) or float(ans3)=float(fifth(fracList)+sixth(fracList)) or float(ans3)=float(fifth(fracList)+seventh(fracList)) then 1 else 0;
+
+/* Node 6: Check whether student did correct another number on the list minus correct fourth largest */
+node5_test: if float(ans3)=float(first(fracList)-fourth(fracList)) or float(ans3)=float(second(fracList)-fourth(fracList)) or float(ans3)=float(third(fracList)-fourth(fracList)) or float(ans3)=float(sixth(fracList)-sixth(fracList)) or float(ans3)=float(sevneth(fracList)-fourth(fracList)) then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>tans3</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The fourth largest number in the list is {@float(fourth(fracList))@} and the third largest is {@float(fifth(fracList))@}.</p>
+<p>So, \({@float(fifth(fracList))@} {@if fourth(fracList)<0 then "+" else "-"@} {@abs(float(fourth(fracList)))@} = {@tans3@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>-tans3</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have subtracted the third largest decimal from the fourth largest.<br>However, you should have subtracted these the other way around.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You appear to have rounded your answer.<br>However, you should have answered exactly.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt3-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly identified {@float(fifth(fracList))@} as the third largest decimal in the list.<br>However you have subtracted {@float(ans3-fifth(fracList))@} which is not the correct fourth largest number.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt3-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly identified {@float(fourth(fracList))@} as the fourth largest decimal in the list.<br>However you have subtracted it from {@float(ans3+fourth(fracList))@} which is not the correct third largest number.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt4</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct answer */
+node1_test: if float(ans6-floor(ans6))=0.0 and ans4/ans5<float(ans6)+0.0001 and ans4/ans5>float(ans6)-0.0001 then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check whether ans6 is an integer */
+node3_test: if ifloat(ans6-floor(ans6))=0.0 then 0 else 1;
+
+/* Node 4: Check whether calculation given is correct */
+node4_test: if ans4/ans5<float(ans6)+0.0001 and ans4/ans5>float(ans6)-0.0001 then 0 else 1;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt4-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt4-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The numbers {@tans4@} and {@tans5@} have the same digits and only differ by the placement of the decimal point.<br>This means that {@tans4@} divided by {@tans5@} will be a power of \(10\), which will be an integer.</p>
+<p>For the solution: \(\frac{{@tans4@}}{{@tans5@}} = {@tans6@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt4-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>The right hand side of your equation is not a whole number.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt4-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your equation is not correct, \(\frac{{@ans4@}}{{@ans5@}} \neq {@ans6@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt4-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt5</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct answer */
+node1_test: if float(ans9-floor(ans9))=0.0 and ans7+ans8<float(ans9)+0.0001 and ans7+ans8>float(ans9)-0.0001 then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check whether ans6 is an integer */
+node3_test: if float(ans9-floor(ans9))=0.0 then 0 else 1;
+
+/* Node 4: Check whether calculation given is correct */
+node4_test: if ans7+ans8<float(ans9)+0.0001 and ans7+ans8>float(ans9)-0.0001 then 0 else 1;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt5-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt5-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt5-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The decimal parts of the numbers {@tans7@} and {@tans8@} sum to \(1\).<br>This means that {@tans7@} and {@tans8@} will sum to an integer.</p>
+<p>For the solution: \({@tans7@} {@if tans8<0 then "-" else "+"@} {@abs(tans8)@} = {@tans9@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt5-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt5-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>The right hand side of your equation is not a whole number.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt5-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt5-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your equation is not correct, \({@ans7@} {@if ans8<0 then "-" else "+"@} {@abs(ans8)@} \neq {@ans9@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt5-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt6</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+node1_test: if {ans10,ans11}={tans10,tans11} then 1 else 0;
+
+/* Node 2: Worked solution*/
+
+/* Node 3: Check whether either answer is correct */
+node3_test: if elementp(ans10,{tans10,tans11}) or elementp(ans11,{tans10,tans11}) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt6-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt6-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt6-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The smallest product will be achieved by multiplying the two numbers with the smallest <i>absolute values</i>, that being their size regardless of their sign.<br>In this list, these numbers are {@tans10@} and {@tans11@}.</p>
+<p>For these numbers, the product would be \({@tans10@} \times {@tans11@} = {@tans10*tans11@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt6-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt6-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer {@if elementp(ans10,{tans10,tans11}) then ans10 else ans11@} is correct.<br>However, {@if elementp(ans11,{tans10,tans11}) then ans10 else ans11@} is not.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt6-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

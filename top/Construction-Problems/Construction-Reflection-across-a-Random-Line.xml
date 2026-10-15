@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Construction Reflection across a Random Line</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p><b>Task:</b> Reflect the triangle across the given line.</p>
+<p>Click each vertex (A, B, C), then click where you think its reflected image (A′, B′, C′) should be.</p>
+
+[[jsxgraph width="600px" height="600px" input-ref-ans1="ans1Ref"]]
+var board = JXG.JSXGraph.initBoard(divid, {
+    boundingbox: [-10, 10, 10, -10],
+    axis: true,
+    showCopyright: false
+});
+
+// Load random variables from STACK
+var pts = {#pts#};
+var m = {#m#};
+var c = {#c#};
+
+// --- Draw reflection line: y = m*x + c ---
+var reflLine = board.create('functiongraph', [
+    function(x) { return m * x + c; },
+    -10, 10
+], {
+    strokeColor: 'blue',
+    dash: 2,
+    strokeWidth: 2,
+    name: 'Reflection line'
+});
+
+// --- Draw original triangle ---
+var labels = ['A', 'B', 'C'];
+var objPts = [];
+for (var i=0; i<pts.length; i++){
+    objPts.push(board.create('point', pts[i], {
+        name: labels[i],
+        fixed: true,
+        size: 3,
+        fillColor: '#1f77b4',
+        label: {offset:[-10,10]}
+    }));
+}
+var shape = board.create('polygon', objPts, {
+    fillColor: '#9ecae1',
+    borders:{strokeColor:'#1f77b4'}
+});
+
+// --- Interactive reflection process ---
+var clickedPoint = null;
+var reflectedPts = [];
+var usedPts = new Set();
+
+for (let i=0; i<objPts.length; i++){
+    objPts[i].on('down', function(){
+        if (usedPts.has(i)) return;
+        objPts.forEach((t,j)=> {
+            if (!usedPts.has(j)) t.setAttribute({fillColor:'#1f77b4'});
+        });
+        clickedPoint = objPts[i];
+        clickedPoint.setAttribute({fillColor:'red'});
+    });
+}
+
+board.on('down', function(e){
+    if (!clickedPoint) return;
+
+    var cPos = board.getMousePosition(e);
+    var coords = new JXG.Coords(JXG.COORDS_SCREEN, cPos, board);
+    var xClick = coords.usrCoords[1];
+    var yClick = coords.usrCoords[2];
+
+    var idx = objPts.indexOf(clickedPoint);
+    var labelPrime = labels[idx] + "'";
+    var studPt = board.create('point', [xClick, yClick], {
+        size: 3,
+        name: labelPrime,
+        fillColor: '#ff7f0e',
+        label: {offset:[-10,10]}
+    });
+    reflectedPts.push(studPt);
+
+    usedPts.add(idx);
+    clickedPoint.setAttribute({fillColor:'#b0b0b0'});
+    clickedPoint = null;
+
+    if (reflectedPts.length === objPts.length){
+        board.create('polygon', reflectedPts, {
+            fillColor: '#fdd0a2',
+            borders: {strokeColor:'#ff7f0e'}
+        });
+    }
+});
+
+stack_jxg.bind_point_list('ans1Ref', reflectedPts);
+board.update();
+[[/jsxgraph]]
+
+<p style="visibility:hidden">
+  [[input:ans1]] [[validation:ans1]]
+</p>
+<p style="visibility:hidden">
+  [[feedback:prt1]]
+</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* --- Random triangle --- */
+xshift: rand([-8,-6,-4,-2]);
+yshift: rand([0,2,4,6]);
+pts: [
+   [xshift, yshift],
+   [xshift + rand([3,4,5]), yshift + rand([2,3,4])],
+   [xshift + rand([2,3,4]), yshift]
+];
+
+/* Compute triangle vertical extent */
+yvals: map(second, pts);
+ymin: lmin(yvals);
+ymax: lmax(yvals);
+
+/* --- Random slope --- */
+lt: rand(3); /* 0 = horizontal, 1 = positive, 2 = negative */
+slope_list: [0, 1, -1];
+m: slope_list[lt+1];
+
+/* --- Choose c so the line stays away from the triangle --- */
+if m=0 then
+    c: rand([ymin-3, ymin-2, ymax+2, ymax+3])
+else
+    c: rand([-6,-5,-4,4,5,6])$
+    
+/* --- Define reflection function --- */
+reflect_point(x0, y0, m, c) := block(
+  [A, B, C, d, xp, yp],
+  /* For line y = m*x + c, the normal form is A*x + B*y + C = 0 */
+  A: m, B: -1, C: c,
+  d: (A*x0 + B*y0 + C) / (A^2 + B^2),
+  xp: x0 - 2*A*d,
+  yp: y0 - 2*B*d,
+  [xp, yp]
+);
+
+/* --- Reflect all points to get model answer --- */
+pts_image: map(lambda([p], reflect_point(first(p), second(p), m, c)), pts);
+ta1: pts_image;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="html">
+      <text><![CDATA[[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard(divid, {
+    boundingbox: [-10, 10, 10, -6],
+    axis: true,
+    showCopyright: false
+});
+
+// Load random variables from STACK
+var pts = {#pts#};
+var m = {#m#};
+var c = {#c#};
+
+// --- Draw reflection line: y = m*x + c ---
+var reflLine = board.create('functiongraph', [
+    function(x) { return m * x + c; },
+    -10, 10
+], {
+    strokeColor: 'blue',
+    dash: 2,
+    strokeWidth: 2,
+    name: 'Reflection line'
+});
+
+// --- Draw original triangle ---
+var labels = ['A', 'B', 'C'];
+var objPts = [];
+for (var i=0; i<pts.length; i++){
+    objPts.push(board.create('point', pts[i], {
+        name: labels[i],
+        fixed: true,
+        size: 3,
+        fillColor: '#1f77b4',
+        label: {offset:[-10,10]}
+    }));
+}
+var shape = board.create('polygon', objPts, {
+    fillColor: '#9ecae1', borders:{strokeColor:'#1f77b4'}
+});
+
+// --- Interactive reflection process ---
+var clickedPoint = null;
+var reflectedPts = [];
+var usedPts = new Set();
+
+for (let i=0; i<objPts.length; i++){
+    objPts[i].on('down', function(){
+        if (usedPts.has(i)) return;
+        objPts.forEach((t,j)=> {
+            if (!usedPts.has(j)) t.setAttribute({fillColor:'#1f77b4'});
+        });
+        clickedPoint = objPts[i];
+        clickedPoint.setAttribute({fillColor:'red'});
+    });
+}
+
+board.on('down', function(e){
+    if (!clickedPoint) return;
+
+    var cPos = board.getMousePosition(e);
+    var coords = new JXG.Coords(JXG.COORDS_SCREEN, cPos, board);
+    var xClick = coords.usrCoords[1];
+    var yClick = coords.usrCoords[2];
+
+    var idx = objPts.indexOf(clickedPoint);
+    var labelPrime = labels[idx] + "'";
+    var studPt = board.create('point', [xClick, yClick], {
+        size: 3,
+        name: labelPrime,
+        fillColor: '#ff7f0e',
+        label: {offset:[-10,10]}
+    });
+    reflectedPts.push(studPt);
+
+    usedPts.add(idx);
+    clickedPoint.setAttribute({fillColor:'#b0b0b0'});
+    clickedPoint = null;
+
+    if (reflectedPts.length === objPts.length){
+        board.create('polygon', reflectedPts, {
+            fillColor: '#fdd0a2',
+            borders: {strokeColor:'#ff7f0e'}
+        });
+    }
+});
+[[/jsxgraph]]]]></text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[dist(a, b) := sqrt((first(a)-first(b))^2 + (second(a)-second(b))^2);
+is_close(ans, model, tol) := lmax(map(lambda([x,y], dist(x,y)), ans, model)) < tol;
+
+tAns: map(lambda([P], reflect_point(P, m, c)), pts);]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>tAns</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <qtest>
+      <testcase>1</testcase>
+      <description/>
+      <testinput>
+        <name>ans1</name>
+        <value>3</value>
+      </testinput>
+      <expected>
+        <name>prt1</name>
+        <expectedscore>0.0000000</expectedscore>
+        <expectedpenalty>0.1000000</expectedpenalty>
+        <expectedanswernote>prt1-1-F</expectedanswernote>
+      </expected>
+    </qtest>
+  </question>
+</quiz>

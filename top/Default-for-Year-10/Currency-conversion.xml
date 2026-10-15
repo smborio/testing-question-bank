@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Currency conversion</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p> A tourist converted £{@init_amnt@} into Kenyan Shillings (KSH) at the rate of {@float(ex_rate)@} KSH to £\(1\).</p>
+
+<p> He spent {@spent@} KSH</p>
+<p>He then converted the rest back into pounds at the same exchange rate.</p>
+<p>How many pounds did he have left?</p>
+<p>Give your answer to \(2\) decimal places.</p>
+<p>Amount of pounds left \(=\) £[[input:ans1]] [[validation:ans1]][[feedback:prt1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<h3>Worked Solution</h3>
+<p></p>
+<p>Convert pounds to Kenyan shillings:</p>
+<p>\({{@init_amnt@}} \times {@float(ex_rate)@} ={@init_amnt_ksh@}\)</p>
+<p>Subtract the money spent:</P>
+<p>\({@init_amnt_ksh@}-{@spent@} ={@bal_ksh@}\)</p>
+<p>Convert back to pounds:</p>
+<p>\({@bal_ksh@} \div {@float(ex_rate)@} = {@dispdp(bal_pounds,2)@}\)</p>
+<p>Final answer is £\({@dispdp(bal_pounds,2)@}\)</p>
+<p><br></p>
+<p>A quick way to do this is to convert the shillings spent into pounds:</p>
+<p>\({@spent@}\div{@float(ex_rate)@}={@spent_pounds@}\)</p>
+<p>Subtract this from the orginal:</p>
+<p>\({@init_amnt@}-{@spent_pounds@}=£{@dispdp(bal_pounds,2)@}\)</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>3</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2023060500</text>
+    </stackversion>
+    <questionvariables>
+      <text>init_amnt:10*(rand(50)+50);
+
+ex_rate:rand_with_prohib(1351,1619,[1360,1370,1380,1390,1400,1410,1420,1430,1440,1450,1460,1470,1480,1490,1500,1510,1520,1530,1540,1550,1560,1570,1580,1590,1600,1610])/10;
+
+spent:rand([6,8,9])*(rand(60)+500);
+
+/*model solution*/
+init_amnt_ksh:init_amnt*ex_rate;
+bal_ksh:init_amnt_ksh-spent;
+bal_pounds:bal_ksh/ex_rate;
+
+bal_2_dp:decimalplaces(bal_pounds,2);
+
+/*alternative solution*/
+spent_pounds:decimalplaces(spent/ex_rate,2);</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text>initial amount={@init_amnt@};
+exchange_rate={@ex_rate@};
+spent={@spent@};
+balance_in_euros={@dispdp(bal_pounds,2)@};</text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text><![CDATA[<p id="author">Mary Sayuni</p>
+<p id="concept">N/A</p>
+<p id="reviewer">Godfrey Wabwire</p>
+<p id="reviewer">Juma Zevick</p>
+<p id="description">The question requires students to convert the currency to the given number of decimal places </p>]]></text>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>dispdp(bal_pounds,2)</tans>
+      <boxsize>8</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/*possible mistakes*/
+
+/*Node 1: check correct answer to correct number of decimal places */
+
+/*Node 2: answer to 2d.p*/
+
+/*Node 3: answer in shillings*/
+
+/*Node 4: dividing rather than multiplying and then multiplying rather than dividing*/
+Sans_incorr_conv:init_amnt/ex_rate;
+Sans_incorr_bal:Sans_incorr_conv-spent;
+Sans_incorr_bal_pounds:Sans_incorr_bal*ex_rate;
+
+/*Node 5: worked solution*/
+
+/*Node 6: student has got last decimal place wrong */
+
+check1:if (ans1+0.01=bal_2_dp) then 1 else 0; 
+check2:if (ans1-0.01=bal_2_dp) then 1 else 0; 
+final_check:check1+check2;
+
+/*Node 7: is student correct to nearest pound*/
+
+roundedans1:decimalplaces(ans1,0);
+rounded_ans:decimalplaces(bal_pounds,0);</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description>checks for the balance after spending divided by exchange rate</description>
+        <answertest>NumDecPlaces</answertest>
+        <sans>ans1</sans>
+        <tans>bal_pounds</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description>checks for the balance after spending divided by exchange rate in  3 dp</description>
+        <answertest>NumDecPlaces</answertest>
+        <sans>ans1</sans>
+        <tans>bal_pounds</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.6667</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You need to round off your answer to two decimal places.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>+</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description>checks for the balance in kenyan shillings</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>bal_ksh</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3334</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You gave your answer in Ksh instead of in pounds. You need to further convert in to pounds.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description>checks for the balance after spending in pounds</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>Sans_incorr_bal_pounds</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.3334</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You might have divided the conversion rate rather than multiplying it with the initial amount of money and then multiplying rather than dividing at the end. This is not correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description>checks if the amount is a whole number</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description>checks for number of dp used</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>final_check</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.66666</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Very close, but make sure to use the Ans button on your calculator and round correctly at the end.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description>checks if the correct answer is rounded off</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>roundedans1</sans>
+        <tans>rounded_ans</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.666666</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Correct but you were asked for 2 d.p. </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>343848437</deployedseed>
+    <deployedseed>1639145962</deployedseed>
+    <deployedseed>2128736481</deployedseed>
+    <deployedseed>978589861</deployedseed>
+    <deployedseed>164436215</deployedseed>
+    <deployedseed>1644033550</deployedseed>
+    <deployedseed>938229344</deployedseed>
+    <deployedseed>1978214194</deployedseed>
+    <deployedseed>1895201826</deployedseed>
+    <deployedseed>1437856096</deployedseed>
+    <deployedseed>1716974161</deployedseed>
+    <deployedseed>323860696</deployedseed>
+    <deployedseed>2095089295</deployedseed>
+    <deployedseed>1813246382</deployedseed>
+    <deployedseed>1025805741</deployedseed>
+    <deployedseed>1415532658</deployedseed>
+    <deployedseed>1607655930</deployedseed>
+    <deployedseed>722453285</deployedseed>
+    <deployedseed>797488948</deployedseed>
+    <deployedseed>2057366072</deployedseed>
+    <deployedseed>1223884444</deployedseed>
+    <deployedseed>2062712255</deployedseed>
+    <deployedseed>304832643</deployedseed>
+    <deployedseed>2129669456</deployedseed>
+    <deployedseed>1811112082</deployedseed>
+    <deployedseed>1370714566</deployedseed>
+    <deployedseed>1575663280</deployedseed>
+    <deployedseed>696971736</deployedseed>
+    <deployedseed>2089014160</deployedseed>
+    <deployedseed>1644506490</deployedseed>
+    <deployedseed>1299571182</deployedseed>
+    <deployedseed>331100005</deployedseed>
+    <deployedseed>1658395682</deployedseed>
+    <deployedseed>469119254</deployedseed>
+    <deployedseed>1048465756</deployedseed>
+    <deployedseed>1979662163</deployedseed>
+    <deployedseed>1968891179</deployedseed>
+    <deployedseed>1641072219</deployedseed>
+    <deployedseed>1585144842</deployedseed>
+    <deployedseed>63329760</deployedseed>
+    <deployedseed>592249101</deployedseed>
+    <deployedseed>1452523009</deployedseed>
+    <deployedseed>1540186509</deployedseed>
+    <deployedseed>457894497</deployedseed>
+    <deployedseed>1941308021</deployedseed>
+    <deployedseed>1755257636</deployedseed>
+    <deployedseed>181872296</deployedseed>
+    <deployedseed>167253359</deployedseed>
+    <deployedseed>1699252895</deployedseed>
+    <deployedseed>1130458519</deployedseed>
+    <qtest>
+      <testcase>1</testcase>
+      <description/>
+      <testinput>
+        <name>ans1</name>
+        <value>dispdp(bal_pounds,2)</value>
+      </testinput>
+      <expected>
+        <name>prt1</name>
+        <expectedscore>1.0000000</expectedscore>
+        <expectedpenalty/>
+        <expectedanswernote>prt1-5-T</expectedanswernote>
+      </expected>
+    </qtest>
+  </question>
+</quiz>

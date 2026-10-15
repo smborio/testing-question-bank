@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>random question on gradients</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<h3>Perpendicular Lines and Gradients</h3>
+
+<p>
+Consider the line <em>L<sub>1</sub></em> passing through the point 
+\(({@x0@}, {@y0@})\) with gradient \({@m1@}\).
+A second line <em>L<sub>2</sub></em> passes through the <strong>same point</strong> and is
+<strong>perpendicular</strong> to <em>L<sub>1</sub></em>.
+</p>
+
+<p><strong>Task.</strong> What is the gradient of <em>L<sub>2</sub></em>?</p>
+
+[[jsxgraph]]
+  var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-10, 10, 10, -10],
+      axis: true,
+      showCopyright: false
+  });
+
+  // Fixed point A (shared by both lines)
+  var A = board.create('point', [{@x0@}, {@y0@}], {name: 'A', fixed: true, size: 3});
+
+  // Line L1 through A with slope m1: use a second point one unit to the right
+  var P1 = board.create('point', [{@x0@}+1, {@y0@}+({@m1@})*1], {visible: false});
+  var L1 = board.create('line', [A, P1], {strokeWidth: 3});
+
+  // Perpendicular line L2 through A with slope m2
+  var P2 = board.create('point', [{@x0@}+1, {@y0@}+({@m2@})*1], {visible: false});
+  var L2 = board.create('line', [A, P2], {strokeWidth: 3, dash: 2});
+
+  // Labels
+  board.create('text', [{@x0@}+0.3, {@y0@}+0.5, function(){ return "A"; }]);
+  board.create('text', [-9.5, 9.2, function(){ return "Blue: L₁ (slope = {@m1@})"; }]);
+  board.create('text', [-9.5, 8.4, function(){ return "Dashed: L₂ (perpendicular)"; }]);
+[[/jsxgraph]]
+
+<p>
+<strong>Answer:</strong>
+</p>
+[[input:ans1]] [[validation:ans1]]
+
+<p style="margin-top:0.6rem; font-size:0.95em; color:#444;">
+Tip: Perpendicular lines have gradients whose product is \(-1\).
+</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text>Key fact: If two non-vertical lines are perpendicular, then their gradients multiply to \(-1\).
+
+Here \(m_1 = {@m1@}\). Therefore the gradient of the perpendicular line is
+\[
+m_2 = -\frac{1}{m_1} = {@m2@}.
+\]
+
+In the diagram:
+- The solid blue line is \(L_1\) with slope \({@m1@}\).
+- The dashed line is \(L_2\), perpendicular to \(L_1\).
+- They meet at the point \(({@x0@}, {@y0@})\).</text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Randomly generate slope of line 1 (not vertical) */
+m1:rand_with_prohib(-4,4,[0]); 
+
+/* Randomly generate a point for line 1 */
+x0:rand_with_step(-5,5,1);
+y0:rand_with_step(-5,5,1);
+
+/* Equation of line 1: y = m1*(x-x0) + y0 */
+eq1: y = m1*(x-x0)+y0;
+
+/* Gradient of perpendicular line */
+m2: -1/m1;
+
+/* Choose another point on line 2 to define it */
+x1:rand_with_prohib(-5,5,[x0]);
+y1:m2*(x1-x0)+y0;
+
+/* Equation of line 2: y = m2*(x-x0) + y0 */
+eq2: y = m2*(x-x0)+y0;
+
+/* Teacher’s answer: slope of perpendicular line */
+ta:m2;
+</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text>[[feedback:prt1]]</text>
+    </specificfeedback>
+    <questionnote format="html">
+      <text>{@m1@}</text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

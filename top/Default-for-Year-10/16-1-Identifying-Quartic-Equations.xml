@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>16.1 Identifying Quartic Equations</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>(a) Select the graph with the equation \(y = {@first(prtA)@}\)</p>
+
+<table>
+  <tr style="height:225px">
+    <td style="width:45px; font-size:15px">
+    \((i)\)
+    </td>
+    <td style="width:250px">
+    [[jsxgraph height="200px" width="200px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true,
+      grid:true
+    });
+
+    var axisStyle = {
+      fixed:true,
+      strokeColor:"black",
+      highlightStrokeColor:"black",
+      ticks:{visible:false}
+    };
+
+    board.create("axis", [[0,0],[0,1]], axisStyle);
+    board.create("axis", [[0,0],[1,0]], axisStyle);
+
+    var sketchNo = 5;
+    var points = [];
+
+    points = [
+      board.create("point", [-2,3], {visible:false}),
+      board.create("point", [0,1], {visible:false}),
+      board.create("point", [1,-2/5], {visible:false}),
+      board.create("point", [2,-1], {visible:false})
+    ];
+
+    var polynomial = JXG.Math.Numerics.lagrangePolynomial(points);
+    board.create("functiongraph", [polynomial, -5, 5], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      strokeWidth:2
+    });
+
+    [[/jsxgraph]]
+    </td>
+    <td style="width:45px; font-size:15px">
+    \((ii)\)
+    </td>
+    <td style="width:250px">
+    [[jsxgraph height="200px" width="200px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true,
+      grid:true
+    });
+
+    var axisStyle = {
+      fixed:true,
+      strokeColor:"black",
+      highlightStrokeColor:"black",
+      ticks:{visible:false}
+    };
+
+    board.create("axis", [[0,0],[0,1]], axisStyle);
+    board.create("axis", [[0,0],[1,0]], axisStyle);
+
+    var sketchNo = 5;
+    var points = [];
+
+    points = [
+      board.create("point", [-4,0], {visible:false}),
+      board.create("point", [-2,5/2], {visible:false}),
+      board.create("point", [0,1], {visible:false}),
+      board.create("point", [2,5/2], {visible:false}),
+      board.create("point", [4,0], {visible:false})
+    ];
+
+    var polynomial = JXG.Math.Numerics.lagrangePolynomial(points);
+    board.create("functiongraph", [polynomial, -5, 5], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      strokeWidth:2
+    });
+
+    [[/jsxgraph]]
+    </td>
+    <td style="width:45px; font-size:15px">
+    \((iii)\)
+    </td>
+    <td style="width:250px">
+    [[jsxgraph height="200px" width="200px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true,
+      grid:true
+    });
+
+    var axisStyle = {
+      fixed:true,
+      strokeColor:"black",
+      highlightStrokeColor:"black",
+      ticks:{visible:false}
+    };
+
+    board.create("axis", [[0,0],[0,1]], axisStyle);
+    board.create("axis", [[0,0],[1,0]], axisStyle);
+
+    var sketchNo = 5;
+    var points = [];
+
+    points = [
+      board.create("point", [-4,0], {visible:false}),
+      board.create("point", [-2,-5/2], {visible:false}),
+      board.create("point", [0,-1], {visible:false}),
+      board.create("point", [2,-5/2], {visible:false}),
+      board.create("point", [4,0], {visible:false})
+    ];
+
+    var polynomial = JXG.Math.Numerics.lagrangePolynomial(points);
+    board.create("functiongraph", [polynomial, -5, 5], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      strokeWidth:2
+    });
+
+    [[/jsxgraph]]
+    </td>
+  </tr>
+  <tr style="height:225px">
+    <td style="width:45px">
+    \((iv)\)
+    </td>
+    <td style="width:220px">
+    [[jsxgraph height="200px" width="200px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true,
+      grid:true
+    });
+
+    var axisStyle = {
+      fixed:true,
+      strokeColor:"black",
+      highlightStrokeColor:"black",
+      ticks:{visible:false}
+    };
+
+    board.create("axis", [[0,0],[0,1]], axisStyle);
+    board.create("axis", [[0,0],[1,0]], axisStyle);
+
+    var sketchNo = 5;
+    var points = [];
+
+    points = [
+      board.create("point", [-2,-3], {visible:false}),
+      board.create("point", [0,-1], {visible:false}),
+      board.create("point", [1,2/5], {visible:false}),
+      board.create("point", [2,1], {visible:false})
+    ];
+
+    var polynomial = JXG.Math.Numerics.lagrangePolynomial(points);
+    board.create("functiongraph", [polynomial, -5, 5], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      strokeWidth:2
+    });
+
+    [[/jsxgraph]]
+    </td>
+    <td style="width:45px">
+    \((v)\)
+    </td>
+    <td style="width:220px">
+    [[jsxgraph height="200px" width="200px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true,
+      grid:true
+    });
+
+    var axisStyle = {
+      fixed:true,
+      strokeColor:"black",
+      highlightStrokeColor:"black",
+      ticks:{visible:false}
+    };
+
+    board.create("axis", [[0,0],[0,1]], axisStyle);
+    board.create("axis", [[0,0],[1,0]], axisStyle);
+
+    var sketchNo = 5;
+    var points = [];
+
+    points = [
+      board.create("point", [-4,-2], {visible:false}),
+      board.create("point", [-2,1/2], {visible:false}),
+      board.create("point", [0,-1], {visible:false}),
+      board.create("point", [2,1/2], {visible:false}),
+      board.create("point", [4,-2], {visible:false})
+    ];
+
+    var polynomial = JXG.Math.Numerics.lagrangePolynomial(points);
+    board.create("functiongraph", [polynomial, -5, 5], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      strokeWidth:2
+    });
+
+    [[/jsxgraph]]
+    </td>
+    <td style="width:45px">
+    \((vi)\)
+    </td>
+    <td style="width:220px">
+    [[jsxgraph height="200px" width="200px"]]
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,5,5,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true,
+      grid:true
+    });
+
+    var axisStyle = {
+      fixed:true,
+      strokeColor:"black",
+      highlightStrokeColor:"black",
+      ticks:{visible:false}
+    };
+
+    board.create("axis", [[0,0],[0,1]], axisStyle);
+    board.create("axis", [[0,0],[1,0]], axisStyle);
+
+    var sketchNo = 5;
+    var points = [];
+
+    points = [
+      board.create("point", [-4,2], {visible:false}),
+      board.create("point", [-2,-1/2], {visible:false}),
+      board.create("point", [0,1], {visible:false}),
+      board.create("point", [2,-1/2], {visible:false}),
+      board.create("point", [4,2], {visible:false})
+    ];
+
+    var polynomial = JXG.Math.Numerics.lagrangePolynomial(points);
+    board.create("functiongraph", [polynomial, -5, 5], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      strokeWidth:2
+    });
+
+    [[/jsxgraph]]
+    </td>
+  </tr>
+</table>
+
+<p align="right"><br>[[input:ans1]] [[validation:ans1]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) Using the equation from part (a) and the relationship between the two graphs, select the equation of the function below.</p>
+<p><br></p>
+
+[[jsxgraph height="400px" width="400px"]]
+
+    var offset = [5, -2]; // transB
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-6,6,6,-6],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true,
+      grid:true
+    });
+
+    var axisStyle = {
+      fixed:true,
+      strokeColor:"black",
+      highlightStrokeColor:"black",
+      ticks:{visible:false}
+    };
+
+    board.create("axis", [[0,0],[0,1]], axisStyle);
+    board.create("axis", [[0,0],[1,0]], axisStyle);
+
+    var funcStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      strokeWidth:2
+    };
+
+    board.create("functiongraph", [function(x) {return x**2 + 4*x + 1}, -6, 6], funcStyle);
+    
+    funcStyle.strokeColor = "red";
+    board.create("functiongraph", [function(x) {return (x-offset[0])**2 + 4*(x-offset[0]) + 1 + offset[1]}, -6, 6], funcStyle);
+
+[[/jsxgraph]]
+
+<p><br>[[input:ans2]] [[validation:ans2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>5</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[prtA: rand([["-x^4+3x^2+1", "(ii)", 1], ["-2x^4+5x^2+2", "(ii)", 2], ["-\\frac{1}{2}x^4+2x^2+\\frac{2}{3}", "(ii)", 3], ["x^4-3x^2-1", "(iii)", 1], ["2x^4-5x^2-2", "(iii)", 2], ["\\frac{1}{2}x^4-2x^2-\\frac{2}{3}", "(iii)", 3], ["-x^4+3x^2-1", "(v)", 1], ["-2x^4+5x^2-2", "(v)", 2], ["-\\frac{1}{2}x^4+2x^2-\\frac{2}{3}", "(v)", 3], ["x^4-3x^2+1", "(vi)", 1], ["2x^4-5x^2+2", "(vi)", 2], ["\\frac{1}{2}x^4-2x^2+\\frac{2}{3}", "(vi)", 3]]);
+
+transB: random_permutation([rand([1,-1]), rand([2,-2])]);]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>(a) {@prtA@}</p>
+<p>(b) {@transB@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>dropdown</type>
+      <tans><![CDATA[[["(i)", false], ["(ii)", is(second(prtA)="(ii)")], ["(iii)", is(second(prtA)="(iii)")], ["(iv)", false], ["(v)", is(second(prtA)="(v)")], ["(vi)", is(second(prtA)="(vi)")]]]]></tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>radio</type>
+      <tans><![CDATA[[["(a) ...",true], ["(b) ...",true], ["(c) ...",true], ["(d) ...",true]]]]></tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

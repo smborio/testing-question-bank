@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>26.2 Circle Theorems - Cyclic Quadrilaterals, Alternate Segment Theory</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>\(A, B, C, D\) are points on a circle, centre \(O\).
+<br>There is a tangent to the circle at \(A\).</p>
+
+[[jsxgraph height="400px" width="500px"]]
+
+    var angBCA = {#angBCA#};
+    var angADC = {#angADC#};
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,4,5,-4],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    var pointStyle = {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        withLabel:true,
+        label:{
+            fixed:true,
+            highlight:false,
+            fontSize:15,
+            useMathJax:true,
+            parse:false
+        }
+    };
+
+    pointStyle.name = "\\(O\\)";
+    pointStyle.label.offset = [10,-10];
+    var pO = board.create("point", [0,0], pointStyle);
+
+    var circle = board.create("circle", [3, pO], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black"
+    });
+
+    board.create("segment", [[-4,-3], [4,-3]], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black"
+    });
+
+    pointStyle.name = "\\(A\\)";
+    pointStyle.label.offset = [5,-15];
+    var pA = board.create("glider", [0, -3, circle], pointStyle);
+
+    var lineAB = board.create("line", [
+        pA, 
+        [Math.cos(angBCA*Math.PI/180), Math.sin(angBCA*Math.PI/180)-3]
+    ], {visible:false});
+
+    pointStyle.name = "\\(B\\)";
+    pointStyle.label.offset = [10,5];
+    var pB = board.create("intersection", [circle, lineAB], pointStyle);
+
+    var lineBC = board.create("line", [
+        pB,
+        [pB.X()-Math.cos((180-angADC-angBCA)*Math.PI/180), pB.Y()+Math.sin((180-angADC-angBCA)*Math.PI/180)]
+    ], {visible:false});
+
+    pointStyle.name = "\\(C\\)";
+    pointStyle.label.offset = [-20,10];
+    var pC = board.create("intersection", [circle, lineBC], pointStyle);
+
+    pointStyle.name = "\\(D\\)";
+    pointStyle.label.offset = [-25,5];
+    var pD = board.create("glider", [-3, 0, circle], pointStyle);
+
+    board.create("polygon", [pA, pB, pC, pD], {
+        fixed:true,
+        highlight:false,
+        fillColor:"none",
+        borders:{
+            fixed:true,
+            highlight:false,
+            strokeColor:"blue",
+            strokeWidth:2
+        }
+    });
+
+    board.create("segment", [pA, pC], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"blue"
+    });
+
+    var angStyle = {
+        fixed:true,
+        highlight:false,
+        radius:0.75,
+        withLabel:true,
+        label:{
+            fixed:true,
+            highlight:false,
+            strokeColor:"black"
+        }
+    };
+
+    angStyle.name = "\\(".concat(angBCA, "^\\circ\\)");
+    angStyle.label.offset = [-5,-5];
+    board.create("angle", [[6,-3], pA, pB], angStyle);
+
+    angStyle.name = "\\(".concat(angADC, "^\\circ\\)");
+    angStyle.label.offset = [20,0];
+    board.create("angle", [pA, pD, pC], angStyle);
+
+[[/jsxgraph]]
+
+<p>(a) Complete this circle theorem:</p>
+<p>Opposite angles in a cyclic quadrilateral have a [[input:ans1]] [[validation:ans1]]</p>
+<p align="right"><b>(1)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p>(b) Find the angle \(CAB\).</p>
+<p align="right">\(CAB = \) [[input:ans2]] \(^\circ\) [[validation:ans2]]</p>
+<p align="right"><b>(3)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>4</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Randomisation of angles */
+angBCA:rand(31)+40;
+angADC:rand(16)+100;
+
+/* Solutions */
+
+tans1: [["sum of 90 degrees", false], ["sum of 180 degrees", true], ["sum of 360 degrees", false], ["difference of 90 degrees", false], ["difference of 180 degrees", false], ["difference of 360 degrees", false]];
+
+tans2: angADC-angBCA;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>\(BCA = {@angBCA@}^\circ\)</p>
+<p>\(ADC = {@angADC@}^\circ\)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>dropdown</type>
+      <tans>tans1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>tans2</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Correct answer */
+/* Node 2: Worked solution */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>String</answertest>
+        <sans>ans1</sans>
+        <tans><![CDATA["sum of 180 degrees"]]></tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>In a cyclic quadrilateral, the opposite angles have a <b>sum</b> of \(180^\circ\).</p>
+<p>We can show this using the fact that an angle formed at the centre of a sector is twice the angle formed at the circumference.</p>
+
+[[jsxgraph height="360px" width="400px"]]
+
+    var angBCA = {#angBCA#};
+    var angADC = {#angADC#};
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,4,5,-4],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    var pointStyle = {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        withLabel:true,
+        label:{
+            fixed:true,
+            highlight:false,
+            fontSize:15,
+            useMathJax:true,
+            parse:false
+        }
+    };
+
+    pointStyle.name = " ";
+    var pO = board.create("point", [0,0], pointStyle);
+
+    var circle = board.create("circle", [3, pO], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black"
+    });
+
+    board.create("segment", [[-4,-3], [4,-3]], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black"
+    });
+
+    pointStyle.name = "\\(A\\)";
+    pointStyle.label.offset = [5,-15];
+    var pA = board.create("glider", [0, -3, circle], pointStyle);
+
+    var lineAB = board.create("line", [
+        pA, 
+        [Math.cos(angBCA*Math.PI/180), Math.sin(angBCA*Math.PI/180)-3]
+    ], {visible:false});
+
+    pointStyle.name = "\\(B\\)";
+    pointStyle.label.offset = [10,5];
+    var pB = board.create("intersection", [circle, lineAB], pointStyle);
+
+    var lineBC = board.create("line", [
+        pB,
+        [pB.X()-Math.cos((180-angADC-angBCA)*Math.PI/180), pB.Y()+Math.sin((180-angADC-angBCA)*Math.PI/180)]
+    ], {visible:false});
+
+    pointStyle.name = "\\(C\\)";
+    pointStyle.label.offset = [-20,10];
+    var pC = board.create("intersection", [circle, lineBC], pointStyle);
+
+    pointStyle.name = "\\(D\\)";
+    pointStyle.label.offset = [-25,5];
+    var pD = board.create("glider", [-3, 0, circle], pointStyle);
+
+    board.create("polygon", [pA, pB, pC, pD], {
+        fixed:true,
+        highlight:false,
+        fillColor:"none",
+        borders:{
+            fixed:true,
+            highlight:false,
+            strokeColor:"blue",
+            strokeWidth:2
+        }
+    });
+
+    board.create("segment", [pO, pA], {
+        fixed:true,
+        highlight:false,
+        dash:2
+    });
+
+    board.create("segment", [pO, pC], {
+        fixed:true,
+        highlight:false,
+        dash:2
+    });
+
+    var angStyle = {
+        highlight:false,
+        withLabel:false,
+        radius:0.75
+    };
+
+    angStyle.fillColor = "red";
+    angStyle.strokeColor = "red";
+    board.create("angle", [pC, pO, pA], angStyle);
+
+    angStyle.fillColor = "orange";
+    angStyle.strokeColor = "orange";
+    board.create("angle", [pC, pB, pA], angStyle);
+
+    angStyle.fillColor = "blue";
+    angStyle.strokeColor = "blue";
+    board.create("angle", [pA, pO, pC], angStyle);
+
+    angStyle.fillColor = "green";
+    angStyle.strokeColor = "green";
+    board.create("angle", [pA, pD, pC], angStyle);
+
+[[/jsxgraph]]
+
+<p>Summing the angles at the centre of the circle: \(\theta_R + \theta_B = 360^\circ\)</p>
+<p>Relating these to the angles at the circumference: \(\theta_R = 2\theta_Y\) and \(\theta_B = 2\theta_G\)</p>
+<p>Putting these together: \(2\theta_Y + 2\theta_G = 360^\circ\)</p>
+<p>Therefore: \(\theta_Y + \theta_G = 180^\circ\)</p>
+<p><i>The sum of the opposite angles in a cyclic quadrilateral is 180 degrees.</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Correct answer */
+/* Node 2: Worked solution */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>tans2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+[[jsxgraph height="360px" width="400px"]]
+
+    var angBCA = {#angBCA#};
+    var angADC = {#angADC#};
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,4,5,-4],
+      showCopyright:false,
+      showNavigation:false,
+      keepaspectratio:true
+    });
+
+    var pointStyle = {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        withLabel:true,
+        label:{
+            fixed:true,
+            highlight:false,
+            fontSize:15,
+            useMathJax:true,
+            parse:false
+        }
+    };
+
+    pointStyle.name = "\\(O\\)";
+    pointStyle.label.offset = [10,-10];
+    var pO = board.create("point", [0,0], pointStyle);
+
+    var circle = board.create("circle", [3, pO], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black"
+    });
+
+    board.create("segment", [[-4,-3], [4,-3]], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black"
+    });
+
+    pointStyle.name = "\\(A\\)";
+    pointStyle.label.offset = [5,-15];
+    var pA = board.create("glider", [0, -3, circle], pointStyle);
+
+    var lineAB = board.create("line", [
+        pA, 
+        [Math.cos(angBCA*Math.PI/180), Math.sin(angBCA*Math.PI/180)-3]
+    ], {visible:false});
+
+    pointStyle.name = "\\(B\\)";
+    pointStyle.label.offset = [10,5];
+    var pB = board.create("intersection", [circle, lineAB], pointStyle);
+
+    var lineBC = board.create("line", [
+        pB,
+        [pB.X()-Math.cos((180-angADC-angBCA)*Math.PI/180), pB.Y()+Math.sin((180-angADC-angBCA)*Math.PI/180)]
+    ], {visible:false});
+
+    pointStyle.name = "\\(C\\)";
+    pointStyle.label.offset = [-20,10];
+    var pC = board.create("intersection", [circle, lineBC], pointStyle);
+
+    pointStyle.name = "\\(D\\)";
+    pointStyle.label.offset = [-25,5];
+    var pD = board.create("glider", [-3, 0, circle], pointStyle);
+
+    board.create("polygon", [pA, pB, pC, pD], {
+        fixed:true,
+        highlight:false,
+        fillColor:"none",
+        borders:{
+            fixed:true,
+            highlight:false,
+            strokeColor:"blue",
+            strokeWidth:2
+        }
+    });
+
+    board.create("segment", [pA, pC], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"blue"
+    });
+
+    var angStyle = {
+        fixed:true,
+        highlight:false,
+        radius:0.75,
+        withLabel:true,
+        label:{
+            fixed:true,
+            highlight:false,
+            strokeColor:"black"
+        }
+    };
+
+    angStyle.name = "\\(".concat(angADC, "^\\circ\\)");
+    angStyle.label.offset = [20,0];
+    board.create("angle", [pA, pD, pC], angStyle);
+
+    angStyle.strokeColor = "green";
+    angStyle.fillColor = "green";
+
+    angStyle.name = "\\(".concat(angBCA, "^\\circ\\)");
+    angStyle.label.offset = [-5,-5];
+    board.create("angle", [[6,-3], pA, pB], angStyle);
+
+    angStyle.name = " ";
+    board.create("angle", [pA, pC, pB], angStyle);
+
+    angStyle.strokeColor = "red";
+    angStyle.fillColor = "red";
+
+    board.create("angle", [pC, pB, pA], angStyle);
+
+[[/jsxgraph]]
+
+<p>The green angles can be related using the Alternate Segment Theorem.
+<br>So, \(BCA = {@angBCA@}^\circ\)</p>
+
+<p>The red and orange angles can be related using the circle theorem form part (a).
+<br>So, \(ABC = 180 - {@angADC@} = {@180-angADC@}^\circ\)</p>
+
+<p>Since there are \(180^\circ\) in a triangle, \(CAB + {@angBCA@} + {@180-angADC@} = 180^\circ\)
+<br>Therefore, \(CAB = {@angADC-angBCA@}^\circ\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

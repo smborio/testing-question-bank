@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>27.1 Bearings - non right angled trigonometry</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>A ship is out at sea.</p>
+
+<p>A lighthouse is on a bearing of {@bearhh@}\(^{\circ}\) from the ship.</p>
+
+<p>A port is on a bearing of {@bearpp@}\(^{\circ}\) from the lighthouse.</p>
+
+<p>The ship is {@ss@}km from the lighthouse, and the port is {@pp@}km from the lighthouse. </p>
+
+<p>How far is the ship from the port?</p>
+
+<p>Give your answer correct to 3 significant figures.</p>
+
+<p>[[input:ans1]] [[validation:ans1]][[feedback:prt1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text>/*lighthouse from ship between 95 and 120 */
+bearhh:rand(25)+95;
+
+/*port from lighthouse between 190 and 240 so that it is between south and west on diagram and leaves at angle between 35 and 110 for angle they need to find */
+bearpp:rand_with_prohib(190,240,[180+bearhh-90,180+bearhh-60,180+bearhh-45]);
+
+/*Ship is between 80 and 99 km away and the port is between 50 and 79km away */
+ss:rand(19)+80;
+pp:rand(29)+50;
+
+/*co-interior angles*/
+aa:180-bearhh;
+/*angle in triangle at lighthouse */
+tt:360-bearpp-aa;
+/*Teacher answer using cosine rule */
+squared:ss^2+pp^2-2*ss*pp*cos(tt*pi/180);
+exactside:sqrt(squared);
+tans1:significantfigures(exactside,3);</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text>{@tt@}</text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>tans1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Mistake Node 3: calculator in radians */
+mistake3:sqrt(ss^2+pp^2-2*ss*pp*cos(tt));
+
+/* Mistake node 4 - Using pythag with x as hypotenuse */
+mistake4:sqrt(ss^2+pp^2);
+
+/* Mistake node 5 - Using pythag with ss as hypotenuse */
+mistake5:if ss^2-pp^2>0 then sqrt(ss^2-pp^2) else 0;
+
+/* Mistake node 6 - Using pythag with pp as hypotenuse */
+mistake6:if pp^2-ss^2>0 then sqrt(pp^2-ss^2) else 0;
+
+/* Mistake node 7 - Thinking the co-interior angle at L is the same as the bearing from of L from S */
+mistake7:if ss^2+pp^2-2*ss*pp*cos((360-bearhh-bearpp)*pi/180)>0 then sqrt(ss^2+pp^2-2*ss*pp*cos((360-bearhh-bearpp)*pi/180)) else 0;
+
+/* Mistake node 8 - cos rule without squares */
+mistake8:ss+pp-2*ss*pp*cos(tt*pi/180);
+
+/* Mistake node 9 - forgetting the square root */
+mistake9:ss^2+pp^2-2*ss*pp*cos(tt*pi/180);
+
+/* Nodes 10 and 11 test for incorrect number of significant figures */]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>tans1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>This question is almost impossible to answer without a diagram. Below is the diagram for this situation:</p>
+
+<p>
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard(divid, {
+  boundingbox: [3, 8, 19, -8],
+  axis: false,
+  keepaspectratio: true,
+  showNavigation: false,
+  showCopyright: false
+});
+
+// Point S (ship)
+var p1 = board.create('point', [5, 5], {
+  name: 'S',
+  size: 0.1,
+  fixed: true,
+  visible: true,
+  strokeColor: '#901B77',
+  fillColor: '#901B77',
+  label: {
+    fontSize: 15,
+    autoPosition: true,
+    offset: [-12.5, 10]
+  }
+});
+
+
+// ----- Construct ray from S on bearing to L -------
+// define a rotation for the bearing
+var t1 = board.create('transform', [{#-float(bearhh*pi/180)#}, p1], { // feed in bearing from S to L radians (negative) here 
+  type: 'rotate'
+});
+// dummy point to rotate
+var p2 = board.create('point', [p1.X(), p1.Y() + 0.1], {
+  name: '',
+  visible: false
+});
+// rotated dummy point
+var p3 = board.create('point', [p2, t1], {
+  name: '',
+  visible: false
+});
+// ray
+var l1 = board.create('line', [p1, p3], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: true,
+  strokeWidth: 2,
+  visible: false
+});
+
+// ----- Find point L  -------
+// circle from S of radius SL
+var c1 = board.create('circle', [p1, [p1.X() + {#float(ss/10)#}, p2.Y()]], { // feed in length SL here
+  fixed: true,
+  visible: false
+});
+// point L
+var p4 = board.create('intersection', [l1, c1, 0], {
+  name: 'L',
+  size: 0.1,
+  fixed: true,
+  visible: true,
+  strokeColor: '#901B77',
+  fillColor: '#901B77',
+  label: {
+    fontSize: 15,
+    autoPosition: true,
+    offset: [-12.5, 20]
+  }
+});
+
+// ----- Construct ray from L on bearing to P -------
+// define a rotation for the bearing
+var t2 = board.create('transform', [{#-float(bearpp*pi/180)#}, p4], { // feed in bearing from L to P radians (negative) here 
+  type: 'rotate'
+});
+// dummy point to rotate
+var p5 = board.create('point', [p4.X(), p4.Y() + 0.1], {
+  name: '',
+  visible: false
+});
+// rotated dummy point
+var p6 = board.create('point', [p5, t2], {
+  name: '',
+  visible: false
+});
+// ray
+var l2 = board.create('line', [p4, p6], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: true,
+  strokeWidth: 2,
+  visible: false
+});
+
+// ----- Find point P  -------
+// circle from L of radius LP
+var c2 = board.create('circle', [p4, [p4.X() + {#float(pp/10)#}, p4.Y()]], { // feed in length LP here
+  fixed: true,
+  visible: false
+});
+// point P
+var p7 = board.create('intersection', [l2, c2, 0], {
+  name: 'P',
+  size: 0.1,
+  fixed: true,
+  visible: true,
+  strokeColor: '#901B77',
+  fillColor: '#901B77',
+  label: {
+    fontSize: 15,
+    autoPosition: true,
+    offset: [-5, -12.5]
+  }
+});
+
+// ----- Construct edges  -------
+// Edge SL 
+var l3 = board.create('line', [p1, p4], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor: '#901B77'
+});
+// Edge LP 
+var l4 = board.create('line', [p7, p4], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+});
+// Edge SP 
+var l5 = board.create('line', [p7, p1], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+});
+
+// ----- Construct vertical lines for bearings  -------
+// Dummy point for line at S
+var p8 = board.create('point', [p1.X(), p1.Y() + 3], {
+  name: '',
+  visible: false
+});
+// At S 
+var l6 = board.create('line', [p1, p8], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  dash: 2,
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+});
+// Dummy point for line at L
+var p9 = board.create('point', [p4.X(), p4.Y() + 3], {
+  name: '',
+  visible: false
+});
+// At L 
+var l7 = board.create('line', [p4, p9], {
+  fixed: true,
+  straightFirst: false,
+  straightLast: false,
+  dash: 2,
+  strokeWidth: 2,
+  strokeColor: '#901B77',
+});
+
+// ----- Labels  -------
+// bearing from S to L
+var angle = board.create('angle', [p4, p1, p8], {
+  radius: 0.75,
+  name: {#bearhh#}, // feed here the value of bearing from S to L in degrees
+  label: {
+    fontSize: 15,
+    strokeColor: '#000000',
+    autoPosition: true,
+    offset: [5, -10]
+  }
+});
+// bearing from L to P
+var angle = board.create('angle', [p7, p4, p9], {
+  radius: 0.75,
+  name: {#bearpp#}, // feed here the value of bearing from L to P in degrees
+  label: {
+    fontSize: 15,
+    strokeColor: '#000000',
+    autoPosition: true,
+    offset: [5, 0]
+  }
+});
+// Distance from S to L
+var txt = board.create('text', [(p1.X() + p4.X()) / 2, (p1.Y() + p4.Y()) / 2 + 0.5, {#ss#}+' km'], { // feed in distance SL here
+  fontSize: 15,
+  fixed: true
+});
+// Distance from L to P
+var txt = board.create('text', [(p4.X() + p7.X()) / 2 , (p4.Y() + p7.Y()) / 2 - 1, {#pp#}+' km'], { // feed in distance LP here
+  fontSize: 15,
+  fixed: true
+});
+
+[[/jsxgraph]]
+</p>
+
+<p>As the vertical dotted lines are parallel (North), the co-interior angle at L is \(180-{@bearhh@}={@180-bearhh@}\)</p>
+
+<p>So, the angle inside the triangle at the lighthouse L is \(360-{@180-bearhh@}-{@bearpp@}={@tt@}\)</p>
+
+<p>We have two sides and an angle inbetween, so we can use the cosine rule.<p>
+
+<p>\(a^2=b^2+c^2-2bc\cos{A}\)</p>
+
+<p>\(a^2={@ss@}^2+{@pp@}^2-2 \times {@ss@} \times {@pp@} \times \cos{{@tt@}}\)</p>
+
+<p>\(a^2={@dispsf(squared,7)@}\)...</p>
+
+<p>\(a=\sqrt{{@dispsf(squared,7)@}...}\)</p>
+
+<p>\(a={@dispsf(exactside,5)@}\)...</p>
+
+<p>\(a={@tans1@}\) km to 3 significant figures.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>10</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>exactside</tans>
+        <testoptions>2</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.4000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-11-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You gave your answer to 2 significant figures. It seems to be correct but you were asked for 3!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-11-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>mistake3</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.8000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>It looks like your calculator is in radians when it should be in degrees.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>mistake4</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You used Pythagoras' Theorem but this is not a right-angled triangle. You should use the cosine rule instead.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>mistake5</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You used Pythagoras' Theorem but this is not a right-angled triangle. You should use the cosine rule instead.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>mistake6</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You used Pythagoras' Theorem but this is not a right-angled triangle. You should use the cosine rule instead.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>mistake7</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The angle between the line joining the lighthouse and the ship and North is not the same as the bearing of the lighthouse from the ship, they add up to \(180^{\circ)}\). See the diagram in the worked solution below for more details.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>mistake8</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2500000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You forgot all the squares in the cosine rule!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt1-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>mistake9</tans>
+        <testoptions>3</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You forgot to take the square root, you found the square of the correct answer!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>9</falsenextnode>
+        <falseanswernote>prt1-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>9</name>
+        <description/>
+        <answertest>NumSigFigs</answertest>
+        <sans>ans1</sans>
+        <tans>exactside</tans>
+        <testoptions>4</testoptions>
+        <quiet>1</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.8000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-10-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer is correct to 4 significant figures but you were asked for only 3!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>10</falsenextnode>
+        <falseanswernote>prt1-10-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

@@ -1,0 +1,1338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>23.5 Cubes, pyramids and cylinders</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Here is a diagram of a tower comprised of a cylinder, a cuboid and a pyramid:
+<br><i>Diagram not to scale.</i></p>
+
+[[jsxgraph height="500px" width="500px"]]
+
+    // Question variables
+
+    var h_g = {#h_g#};
+    var l_g = {#l_g#};
+
+    var h_b = {#h_b#};
+    var l_b = {#l_b#};
+    
+    var h_p = {#h_p#};
+    var r_p = {#r_p#};
+
+    // Set inital display conditions
+    var zoom = 2.7;
+    var cenOfView = [0,-0.4];
+    var orientation = [4.58,6.02,0.03];
+
+    // Creating JSXGraph board: change "jxgbox" to divid for STACK questions
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[cenOfView[0]-zoom, cenOfView[1]+zoom, cenOfView[0]+zoom, cenOfView[1]-zoom],
+      showCopyright:false,
+      showNavigation:false,
+    });
+
+    // Function to project point in 3D onto a plane through the origin normal to [xN,yN,zN];
+    function flatten_point([x,y,z]) {
+        return([x,y]);
+    };
+
+    // Functions to rotate point in 3D around x, y and z axes
+    function rotate_x([x,y,z], angle) {
+        return([
+            x,
+            Math.cos(angle)*y - Math.sin(angle)*z,
+            Math.sin(angle)*y + Math.cos(angle)*z
+        ]);
+    };
+
+    function rotate_y([x,y,z], angle) {
+        return([
+            Math.sin(angle)*z + Math.cos(angle)*x,
+            y,
+            Math.cos(angle)*z - Math.sin(angle)*x
+        ]);
+    };
+
+    function rotate_z([x,y,z], angle) {
+        return([
+            Math.cos(angle)*x - Math.sin(angle)*y,
+            Math.sin(angle)*x + Math.cos(angle)*y,
+            z
+        ]);
+    };
+
+    // Function to create a point-projection pair:
+    function make_point([x,y,z], style) {
+
+        // Rotate coordinates by display orientation
+        var coords = rotate_z(rotate_y(rotate_x([x,y,z], orientation[0]), orientation[1]), orientation[2]);
+        
+        // Create point, defined by initial coords, display coords and projected coords
+        var point = {
+            initCoords:coords,
+            dispCoords:coords,
+            proj:board.create("point", flatten_point(coords), style)
+        }
+        elements.push(point);
+        return(point);
+
+    };
+    
+    // List containing all 3D elements to be displayed (used to update position for user movement)
+    var elements = [];
+
+    // CREATE CUBOID: print_cuboid(sideLengthX, sideLengthY, sideLengthZ, centreCoords, rotation, faceStyle, pointStyle)
+    function print_cuboid(
+        sideLengthX = 1,
+        sideLengthY = 1,
+        sideLengthZ = 1,
+        [x,y,z] = [0,0,0], 
+        [rotX,rotY,rotZ] = [0,0,0],
+        faceStyle = {
+            fixed:true,
+            highlight:false,
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        },
+        pointStyle = {visible:false}) {
+
+        // Define points on a cubeoid before rotation and translation
+        var pointList = [
+            [sideLengthX/2,sideLengthY/2,sideLengthZ/2],
+            [sideLengthX/2,sideLengthY/2,-sideLengthZ/2],
+            [sideLengthX/2,-sideLengthY/2,-sideLengthZ/2],
+            [sideLengthX/2,-sideLengthY/2,sideLengthZ/2],
+            [-sideLengthX/2,-sideLengthY/2,sideLengthZ/2],
+            [-sideLengthX/2,sideLengthY/2,sideLengthZ/2],
+            [-sideLengthX/2,sideLengthY/2,-sideLengthZ/2],
+            [-sideLengthX/2,-sideLengthY/2,-sideLengthZ/2],
+        ];
+        
+        // For each defined point; rotate translate by user specs.
+        var i;
+        var j;
+        for (i in pointList) {
+            j = rotate_z(rotate_y(rotate_x(pointList[i], rotX), rotY), rotZ);
+            pointList[i] = make_point([
+                x + j[0],
+                y + j[1],
+                z + j[2]
+            ], pointStyle);
+        };
+
+        // Define which vertices join together to create faces
+        var faceVertexIndex = [
+            [0,1,2,3],
+            [0,1,6,5],
+            [0,3,4,5],
+            [1,2,7,6],
+            [2,3,4,7],
+            [4,5,6,7]
+        ];
+        
+        // Create faces of cuboid
+        for (i in faceVertexIndex) {
+            board.create("polygon", [
+                pointList[faceVertexIndex[i][0]],
+                pointList[faceVertexIndex[i][1]],
+                pointList[faceVertexIndex[i][2]],
+                pointList[faceVertexIndex[i][3]],
+            ].map(function(point) {return point.proj}),
+            faceStyle);
+        };
+    };
+
+    // CREATE POLYGON-BASED PYRAMID print_pyram(noSides, sideLength, height, baseCentreCoords, rotation, faceStyle, pointStyle)
+    function print_pyram(
+        noSides = 4, 
+        sideLength = 1, 
+        height = 1, 
+        [x,y,z] = [0,0,0], 
+        [rotX,rotY,rotZ] = [0,0,0],
+        faceStyle = {
+            fixed:true,
+            highlight:false,
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        },
+        pointStyle = {visible:false}) {
+
+        var pointList = [];
+        
+        // Create top point without rotation or translation
+        pointList.push([0, 0, height]);
+
+        // Create points in n-gon base without rotation or translation
+        var i;
+        for (i = 0; i < noSides; i++) {
+            pointList.push([
+                Math.cos(2*i*Math.PI/noSides)*sideLength/Math.sqrt(2*(1-Math.cos(2*Math.PI/noSides))),
+                Math.sin(2*i*Math.PI/noSides)*sideLength/Math.sqrt(2*(1-Math.cos(2*Math.PI/noSides))),
+                0]);
+        };
+
+        // For each defined point; rotate and translate by user specs.
+        var j;
+        for (i in pointList) {
+            j = rotate_z(rotate_y(rotate_x(pointList[i], rotX), rotY), rotZ);
+            pointList[i] = make_point([
+                x + j[0],
+                y + j[1],
+                z + j[2]
+            ], pointStyle);
+        };
+
+        // Create sloping triangular faces
+        for (i in pointList.slice(1)) {
+            board.create("polygon", [
+                pointList[0].proj,
+                pointList.slice(1)[i].proj,
+                pointList.slice(1)[(Number(i)+1) % (pointList.length-1)].proj,
+            ], faceStyle)
+        };
+
+        // Create polygon base
+        board.create("polygon", pointList.slice(1).map(function(point) {return point.proj}), faceStyle);
+
+    };
+    
+    // CREATE CYLINDER: print_cylin(baseRadius, height, centreCoords, rotation, faceStyle, pointStyle)
+    function print_cylin(
+        radius = 1, 
+        height = 1, 
+        [x,y,z] = [0,0,0], 
+        [rotX,rotY,rotZ] = [0,0,0],
+        faceStyle = {
+            fixed:true,
+            highlight:false,
+            fillColor:"#00FF00",
+            fillOpacity:0.3,
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        },
+        pointStyle = {visible:false}) {
+
+        // Create cylinder using prism method with 30 sides to be approximately circular
+        var pointList = [];
+        var noSides = 25;
+        
+        var i;
+        for (i = 0; i < noSides; i++) {
+            pointList.push([
+                radius*Math.cos(2*i*Math.PI/noSides),
+                radius*Math.sin(2*i*Math.PI/noSides),
+                height/2]);
+            pointList.push([
+                radius*Math.cos(2*i*Math.PI/noSides),
+                radius*Math.sin(2*i*Math.PI/noSides),
+                -height/2]);
+        };
+
+        var j;
+        for (i in pointList) {
+            j = rotate_z(rotate_y(rotate_x(pointList[i], rotX), rotY), rotZ);
+            pointList[i] = make_point([
+                x + j[0],
+                y + j[1],
+                z + j[2]
+            ], pointStyle);
+        };
+
+        var topPoints = [];
+        var botPoints = [];
+
+        for (i = 0; i < pointList.length/2; i++) {
+            topPoints.push(pointList[2*i]);
+            botPoints.push(pointList[2*i + 1]);
+            board.create("polygon", [
+                pointList[2*i],
+                pointList[2*i + 1],
+                pointList[(2*i+3) % (noSides*2)],
+                pointList[(2*i+2) % (noSides*2)]
+            ].map(function(point) {return point.proj}), faceStyle)
+        };
+
+        // Create circular base and top faces
+        board.create("conic", [
+            topPoints[0], 
+            topPoints[6], 
+            topPoints[12], 
+            topPoints[18], 
+            topPoints[24]
+        ].map(function(point) {return point.proj}), faceStyle);
+        board.create("conic", [
+            botPoints[0],
+            botPoints[6],
+            botPoints[12],
+            botPoints[18],
+            botPoints[24]
+        ].map(function(point) {return point.proj}), faceStyle);
+
+    };
+
+    print_cuboid(1.5, 1.5, 1, [0,0,0], [0,0,0], {
+            fixed:true,
+            highlight:false,
+            fillColor:"blue",
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        });
+
+    print_pyram(4, 2, 1.5, [0,0,0.5],[0,0,Math.PI/4], {
+        fixed:true,
+            highlight:false,
+            fillColor:"gray",
+            borders:{
+                fixed:true,
+                strokeColor:"gray",
+                highlight:false
+            }
+        });
+
+    print_cylin(0.5, 2, [0,0,-1.5], [0,0,0], {
+        fixed:true,
+        highlight:false,
+        fillColor:"purple",
+        fillOpacity:0.4,
+        strokeColor:"purple",
+        borders:{
+            fixed:true,
+            strokeColor:"purple",
+            highlight:false
+        }
+    });
+
+    var solidLineStyle = {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        withLabel:true,
+        label:{
+            fixed:true,
+            highlight:false,
+            useMathJax:true,
+            parse:false
+        }
+    };
+
+    var dashLineStyle = {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        dash:2
+    };
+
+    var C1 = make_point([0,0,-2.5], {visible:false});
+    var C2 = make_point([0,0,-0.5], {visible:false});
+    var C3 = make_point([0,0,0.5], {visible:false});
+    var C4 = make_point([0,0,2], {visible:false});
+
+    var L1 = make_point([-1.25,-1.25,-2.5], {visible:false});
+    var L2 = make_point([-1.25,-1.25,-0.5], {visible:false});
+    var L3 = make_point([-1.5,-1.5,-0.5], {visible:false});
+    var L4 = make_point([-1.5,-1.5,0.5], {visible:false});
+    var L5 = make_point([-1.25,-1.25,0.5], {visible:false});
+    var L6 = make_point([-1.25,-1.25,2], {visible:false});
+
+    var R1 = make_point([0.75,-0.75,-0.5], {visible:false});
+    var R2 = make_point([1.5,-0.75,-0.5], {visible:false});
+    var R3 = make_point([0.75,0.75,-0.5], {visible:false});
+    var R4 = make_point([1.5,0.75,-0.5], {visible:false});
+
+    var R9 = make_point([1,-1,0.5], {visible:false});
+    var R10 = make_point([1.75,-1,0.5], {visible:false});
+    var R11 = make_point([1,1,0.5], {visible:false});
+    var R12 = make_point([1.75,1,0.5], {visible:false});
+
+    var F1 = make_point([0,1.5,-2.5], {visible:false});
+    var F2 = make_point([0.5,0,-2.5], {visible:false});
+    var F3 = make_point([0.5,1.5,-2.5], {visible:false});
+
+    board.create("segment", [C1.proj, L1.proj], dashLineStyle);
+    board.create("segment", [C2.proj, L3.proj], dashLineStyle);
+    board.create("segment", [C3.proj, L4.proj], dashLineStyle);
+    board.create("segment", [C4.proj, L6.proj], dashLineStyle);
+
+    solidLineStyle.label.offset = [-70,0];
+    solidLineStyle.name = "\\(h_p=".concat(h_p,"m\\)");
+    board.create("segment", [L1.proj, L2.proj], solidLineStyle);
+    solidLineStyle.name = "\\(h_b=".concat(h_b,"m\\)");
+    board.create("segment", [L3.proj, L4.proj], solidLineStyle);
+    solidLineStyle.name = "\\(h_g=".concat(h_g,"m\\)");
+    board.create("segment", [L5.proj, L6.proj], solidLineStyle);
+
+    solidLineStyle.label.offset = [10,10];
+    solidLineStyle.name = "\\(l_b=".concat(l_b,"m\\)");
+    board.create("segment", [R1.proj, R2.proj], dashLineStyle);
+    board.create("segment", [R3.proj, R4.proj], dashLineStyle);
+    board.create("segment", [R2.proj, R4.proj], solidLineStyle);
+
+    solidLineStyle.name = "\\(l_g=".concat(l_g,"m\\)");
+    board.create("segment", [R9.proj, R10.proj], dashLineStyle);
+    board.create("segment", [R11.proj, R12.proj], dashLineStyle);
+    board.create("segment", [R10.proj, R12.proj], solidLineStyle);
+
+    solidLineStyle.label.offset = [-10,-15];
+    solidLineStyle.name = "\\(r_p=".concat(r_p,"m\\)");
+    board.create("segment", [C1.proj, F1.proj], dashLineStyle);
+    board.create("segment", [F2.proj, F3.proj], dashLineStyle);
+    board.create("segment", [F1.proj, F3.proj], solidLineStyle);
+
+[[/jsxgraph]]
+
+<p>Note that the bases of the pyramid and the cuboid are <b>squares</b> with side length \({@float(l_g)@}m\) and \({@float(l_b)@}m\) respectively.</p>
+
+<p><br>(a) By dividing the tower up into the three shapes, find the volume of the tower.
+<br>Round your answers to 3dp where appropriate.</p>
+
+<p align="right"><br>Volume of the grey pyramid, \(V_g=\) [[input:ans1]] \(m^3\) [[validation:ans1]]</p>
+<p align="right">Volume of the blue cuboid, \(V_b=\) [[input:ans2]] \(m^3\) [[validation:ans2]]</p>
+<p align="right">Volume of the purple cylinder, \(V_p=\) [[input:ans3]] \(m^3\) [[validation:ans3]]</p>
+
+<p align="right"><br>Total volume of the tower, \(V_T=\) [[input:ans4]] \(m^3\) [[validation:ans4]]</p>
+<p align="right"><b>(7)</b></p>
+
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) By dividing the tower up into the three shapes, find the outer surface area of the tower.
+<br>Round your answers to 3dp where appropriate.</p></p>
+
+<p align="right"><br>Outer surface area of the grey pyramid, \(A_g=\) [[input:ans5]] \(m^2\) [[validation:ans5]]</p>
+<p align="right">Outer surface area of the blue cuboid, \(A_b=\) [[input:ans6]] \(m^2\) [[validation:ans6]]</p>
+<p align="right">Outer surface area of the purple cylinder, \(A_p=\) [[input:ans7]] \(m^2\) [[validation:ans7]]</p>
+
+<p align="right"><br>Total outer surface area of the tower, \(A_T=\) [[input:ans8]] \(m^2\) [[validation:ans8]]</p>
+<p align="right"><b>(7)</b></p>
+
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>14</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Randomising measurements */
+
+r_p: (rand(4)+6)/10;
+h_p: rand(5)+3;
+
+l_b: rand_with_step(20*r_p+1, 20*r_p+10, 1)/10;
+h_b: rand_with_step(11, 10*l_b-1, 1)/10;
+
+l_g: rand_with_step(10*l_b+1, 10*l_b+10, 1)/10;
+h_g: rand_with_step(10*h_b+1, 10*h_b+9, 1)/10;
+
+/* Solutions */
+
+V_g: (1/3)*h_g*l_g^2;
+V_b: h_b*l_b^2;
+V_p: h_p*%pi*r_p^2;
+V_T: V_g+V_b+V_p;
+
+A_g: 4*(sqrt((l_g/2)^2 + h_g^2)*l_g/2) + l_g^2 - l_b^2;
+A_b: 4*(l_b*h_b) + l_b^2 - %pi*r_p^2;
+A_p: 2*%pi*r_p*h_p + %pi*r_p^2;
+A_T: A_g+A_b+A_p;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text>1</text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(V_g,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(V_b,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(V_p,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(V_T,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(A_g,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans6</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(A_b,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans7</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(A_p,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans8</name>
+      <type>algebraic</type>
+      <tans>decimalplaces(A_T,3)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>7.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check all parts correct (7) */
+node1_test: if ans1=decimalplaces(V_g,3) and ans2=decimalplaces(V_b,3) and ans3=decimalplaces(V_p,3) and (ans4=decimalplaces(V_T,3) or ans4=decimalplaces(V_g,3)+decimalplaces(V_b,3)+decimalplaces(V_p,3)) then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check V_g correct (+2) */
+/* Node 4: Check V_g incorrectly rounded (+1) */
+node4_test: if abs(ans1-V_g) <= 0.01 then 1 else 0;
+
+/* Node 5: Check V_b correct (+2) */
+/* Node 6: Check V_b incorrectly rounded (+1) */
+node6_test: if abs(ans2-V_b) <= 0.01 then 1 else 0;
+
+/* Node 7: Check V_p correct (+2) */
+/* Node 8: Check V_p incorrectly rounded (+1) */
+node8_test: if abs(ans3-V_p) <= 0.01 then 1 else 0;
+
+/* Node 9: Check V_T correct (+1) */
+node9_test: if ans4=decimalplaces(V_T,3) or ans4=decimalplaces(V_g,3)+decimalplaces(V_b,3)+decimalplaces(V_p,3) then 1 else 0;
+
+/* Node 10: Check V_T consistent with given answers (+1) */
+node10_test: if ans4=ans1+ans2+ans3 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The volume of a pyramid is given by: \(V = \frac{1}{3}h \times A\)</p>
+<p>Using the values from the question:</p>
+<p>\(V_g = \frac{{@float(h_g)@}}{3} \times {@float(l_g)@}^2 =\) {@if integerp(1000*V_g) then sconcat("\\(", string(float(V_g)), "m^3\\)") else sconcat("\\(", string(decimalplaces(V_g,3)), "m^3\\)", " <i>(to 3dp)</i>")@}</p>
+
+<p><br>The volume of a cuboid is given by: \(V = w \times l \times h\)</p>
+<p>Using the values from the question:</p>
+<p>\(V_b = {@float(l_b)@} \times {@float(l_b)@} \times {@float(h_b)@} =\) {@if integerp(1000*V_b) then sconcat("\\(", string(float(V_b)), "m^3\\)") else sconcat("\\(", string(decimalplaces(V_b,3)), "m^3\\)", " <i>(to 3dp)</i>")@}</p>
+
+<p><br>The volume of a cylinder is given by: \(V = \pi r^2 \times h\)</p>
+<p>Using the values from the question:</p>
+<p>\(V_p = {@float(r_p)@}^2 \pi \times {@h_p@} =\) {@if integerp(1000*V_p) then sconcat("\\(", string(float(V_p)), "m^3\\)") else sconcat("\\(", string(decimalplaces(V_p,3)), "m^3\\)", " <i>(to 3dp)</i>")@}</p>
+
+<p><br>Therefore, the total volume of the tower is the sum of the volumes of each shape.</p>
+<p>\(V_T = V_g + V_b + V_p\)</p>
+<p>\(V_T = {@if integerp(100000*V_g) then float(V_g) else decimalplaces(V_g,5)@} + {@if integerp(100000*V_b) then float(V_b) else decimalplaces(V_b,5)@} + {@if integerp(100000*V_p) then float(V_p) else decimalplaces(V_p,5)@}\)</p>
+<p>\(V_T =\) {@if integerp(1000*V_T) then sconcat("\\(", string(float(V_T)), "m^3\\)") else sconcat("\\(", string(decimalplaces(V_T,3)), "m^3\\)", " <i>(to 3dp)</i>")@}</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>decimalplaces(V_g,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2857000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly calculated the volume of the grey pyramid.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1428000</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have calculated the volume of the grey pyramid.
+<br>However, you have not rounded your answer correctly to 3dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the volume of the grey pyramid is not correct.
+<br>Remember that the volume of a pyramid is given by: \(V = \frac{1}{3}h \times A\), where \(h\) is the height of the pyramid and \(A\) is the area of the base.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>decimalplaces(V_b,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2857000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly calculated the volume of the blue cuboid.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1428000</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have calculated the volume of the blue cuboid.
+<br>However, you have not rounded your answer correctly to 3dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer for the volume of the blue cuboid is not correct.
+<br>Remember that the volume of a cuboid is given by: \(V = w \times l \times h\), where \(w, l, h\) are the side lengths of the cuboid.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>decimalplaces(V_p,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2857000</truescore>
+        <truepenalty/>
+        <truenextnode>8</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly calculated the volume of the purple cylinder.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node8_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1428000</truescore>
+        <truepenalty/>
+        <truenextnode>8</truenextnode>
+        <trueanswernote>prt1-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have calculated the volume of the purple cylinder.
+<br>However, you have not rounded your answer correctly to 3dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt1-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer for the volume of the purple cylinder is not correct.
+<br>Remember that the volume of a pyramid is given by: \(V = \pi r^2 \times h\), where \(r\) is the radius of the cylinder and \(h\) is the height.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node9_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1428000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer for the total volume of the tower is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>9</falsenextnode>
+        <falseanswernote>prt1-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>9</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node10_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1428000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-10-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer for the total volume of the tower is not correct.
+<br>However, it is consistent with the answers that you gave for the volumes of the three shapes.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-10-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer for the total volume of the tower is not correct and is also not the sum of the answers that you gave for the volumes of the three shapes.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>7.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check all parts correct (7) */
+node1_test: if ans5=decimalplaces(A_g,3) and ans6=decimalplaces(A_b,3) and ans7=decimalplaces(A_p,3) and (ans8=decimalplaces(A_T,3) or ans8=decimalplaces(A_g,3)+decimalplaces(A_b,3)+decimalplaces(A_p,3)) then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check A_g correct (+2) */
+/* Node 4: Check A_g incorrectly rounded (+1) */
+node4_test: if abs(ans5-A_g) <= 0.01 then 1 else 0;
+
+/* Node 5: Check whether student gave full surface area of pyramid (+1) */
+node5_test: if ans5=4*(((l_g/2)^2 + h_g^2)*l_g/2) + l_g^2 then 1 else 0;
+
+/* Node 6: Check A_b correct (+2) */
+/* Node 7: Check A_b incorrectly rounded (+1) */
+node7_test: if abs(ans6-A_b) <= 0.01 then 1 else 0;
+
+/* Node 8: Check whether student gave full surface area of cuboid (+1) */
+node8_test: if ans6=4*(l_b*h_b) + 2*(l_b^2) then 1 else 0;
+
+/* Node 9: Check A_p correct (+2) */
+/* Node 10: Check A_p incorrectly rounded (+1) */
+node10_test: if abs(ans7-A_p) <= 0.01 then 1 else 0;
+
+/* Node 11: Check whether student gave full surface area of cylinder (+1) */
+node11_test: if ans7=2*%pi*r_p*h_p + 2*%pi*r_p^2 then 1 else 0;
+
+/* Node 12: Check A_T correct (+1) */
+node12_test: if ans8=decimalplaces(A_T,3) or ans8=decimalplaces(A_g,3)+decimalplaces(A_b,3)+decimalplaces(A_p,3) then 1 else 0;
+
+/* Node 13: Check A_T consistent with given answers (+1) */
+node13_test: if ans8=ans5+ans6+ans7 then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>To find the outer surface area of the grey pyramid, you need to find the area of the triangles and square which comprise it.</p>
+
+<p>For the area of the triangles, the slanted height of the triangle, \(s\), can be found using Pythagoras' theorem:</p>
+<p>\(s = \sqrt{{@float(h_g)@}^2 + {@float(l_g/2)@}^2}\) 
+<br>\(s = \sqrt{{@float(h_g^2 + (l_g/2)^2)@}} m\)</p>
+
+<p>So the area of each triangular face is given by:</p>
+<p>\(A_{tri} = \frac{1}{2} s l_g\)
+<br>\(A_{tri} = \frac{1}{2} \sqrt{{@float(h_g^2 + (l_g/2)^2)@}} \times {@l_g@}\)
+<br>\(A_{tri} = {@decimalplaces((sqrt(h_g^2 + (l_g/2)^2)*l_g/2),5)@}... m^2\)</p>
+
+<p>Adding the area of the pyramid base and subtracting the area which is covered by the top face of the blue cuboid:</p>
+<p>\(A_g = 4 \times {@decimalplaces((sqrt(h_g^2 + (l_g/2)^2)*l_g/2),5)@}... + {@float(l_g)@}^2 - {@float(l_b)@}^2\)
+<br>\(A_g =\) {@if integerp(1000*A_g) then sconcat("\\(", float(A_g), "m^2\\)") else sconcat("\\(", decimalplaces(A_g,3), "m^2\\) <i>(to 3dp)</i>")@}</p>
+
+<p><br>For the outer surface area of the blue cuboid, you need to sum the areas of its four rectangular faces and the bottom square face minus the area covered by top face of the cylinder.
+<br>You need not consider the top square face since it is completely covered by the base of the pyramid.</p>
+<p>\(A_b = 4(l_b \times h_b) + (l_b)^2 - \pi (r_p)^2\)
+<br>\(A_b = 4({@float(l_b)@} \times {@float(h_b)@}) + {@float(l_b)@}^2 - {@float(r_p)@}^2 \pi\)
+<br>\(A_b = {@float(4*l_b*h_b)@} + {@float(l_b^2)@} - {@decimalplaces(%pi*r_p^2,5)@}...\)
+<br>\(A_b = {@decimalplaces(A_b,3)@}\) <i>(to 3dp)</i></p>
+
+<p><br>For the outer surface area of the purple cylinder, you need to sum the area of the curved face and the area of the base circle.
+<br>You need not consider the area of the top circle since it is completely covered by the base of the cuboid.</p>
+<p>\(A_p = 2 \pi r_p h_p + \pi (r_p)^2\)
+<br>\(A_p = 2 \times {@r_p@}\pi \times {@h_p@} + {@r_p@}^2 \pi\)
+<br>\(A_p = {@decimalplaces(2*r_p*h_p*%pi,5)@}... + \ {@decimalplaces(r_p^2*%pi,5)@}...\)
+<br>\(A_p = {@decimalplaces(2*r_p*h_p*%pi + r_p^2*%pi,3)@}\) <i>(to 3dp)</i></p>
+
+<p><br>Therefore, the total outer surface area of the tower is the sum of the surface areas of each shape.</p>
+<p>\(A_T = A_g + A_b + A_p\)</p>
+<p>\(A_T = {@if integerp(1000*A_g) then float(A_g) else decimalplaces(A_g,5)@} + {@if integerp(1000*A_b) then float(A_b) else decimalplaces(A_b,5)@} + {@if integerp(1000*A_p) then float(A_p) else decimalplaces(A_p,5)@}\)</p>
+<p>\(A_T =\) {@if integerp(1000*A_T) then sconcat("\\(", string(float(A_T)), "m^2\\)") else sconcat("\\(", string(decimalplaces(A_T,3)), "m^2\\)", " <i>(to 3dp)</i>")@}</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>10</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node11_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1428000</truescore>
+        <truepenalty/>
+        <truenextnode>11</truenextnode>
+        <trueanswernote>prt2-11-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have calculated the surface area of the purple cylinder.
+<br>However, you have not subtracted the portion which is covered by the base of the blue cuboid.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>11</falsenextnode>
+        <falseanswernote>prt2-11-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer for the outer surface area of the purple cylinder is not correct.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>11</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node12_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1428000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-12-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer for the total outer surface area of the tower is correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>12</falsenextnode>
+        <falseanswernote>prt2-12-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>12</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node13_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1428000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-13-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer for the total outer surface area of the tower is not correct.
+<br>However, it is consistent with the answers that you gave for the outer surface areas of the three shapes.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-13-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer for the total outer surface area of the tower is not correct and is also not the sum of the answers that you gave for the outer surface areas of the three shapes.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans5</sans>
+        <tans>decimalplaces(A_g,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2857000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly calculated the outer surface area of the grey pyramid.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1428000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have calculated the outer surface area of the grey pyramid.
+<br>However, you have not rounded your answer correctly to 3dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1428000</truescore>
+        <truepenalty/>
+        <truenextnode>5</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have calculated the surface area of the grey pyramid.
+<br>However, you have not subtracted the portion which is covered by the top face of the blue cuboid.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the outer surface area of the grey pyramid is not correct.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans6</sans>
+        <tans>decimalplaces(A_b,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2857000</truescore>
+        <truepenalty/>
+        <truenextnode>8</truenextnode>
+        <trueanswernote>prt2-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly calculated the outer surface area of the blue cuboid.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt2-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1428000</truescore>
+        <truepenalty/>
+        <truenextnode>8</truenextnode>
+        <trueanswernote>prt2-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have calculated the outer surface area of the blue cuboid.
+<br>However, you have not rounded your answer correctly to 3dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt2-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node8_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1428000</truescore>
+        <truepenalty/>
+        <truenextnode>8</truenextnode>
+        <trueanswernote>prt2-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have calculated the surface area of the blue cuboid.
+<br>However, you have not subtracted the portion which is covered by the base of the grey pyramid and the top of the purple cylinder.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt2-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer for the outer surface area of the blue cuboid is not correct.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans7</sans>
+        <tans>decimalplaces(A_p,3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2857000</truescore>
+        <truepenalty/>
+        <truenextnode>11</truenextnode>
+        <trueanswernote>prt2-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have correctly calculated the outer surface area of the purple cylinder.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>9</falsenextnode>
+        <falseanswernote>prt2-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>9</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node10_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1428000</truescore>
+        <truepenalty/>
+        <truenextnode>11</truenextnode>
+        <trueanswernote>prt2-10-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have calculated the outer surface area of the purple cylinder.
+<br>However, you have not rounded your answer correctly to 3dp.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>10</falsenextnode>
+        <falseanswernote>prt2-10-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

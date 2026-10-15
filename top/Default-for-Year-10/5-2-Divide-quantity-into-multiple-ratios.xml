@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>5.2 Divide quantity into multiple ratios</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>In a box,</p>
+
+<p>number of red buttons : number of blue buttons = \({@aa@}:{@bb_1@}\)</p>
+
+<p>number of blue buttons : number of green buttons = \({@1@}:{@bb_2@}\).</p>
+
+<p>a) Work out the ratio of red buttons : green buttons.</p>
+
+<p>[[input:ans1]] : [[input:ans2]] [[validation:ans1]] [[validation:ans2]] [[feedback:prt1]]</p>
+<p align="right"><b>(2)</b></p>
+
+<p>There are {@cc@} green buttons in the box.</p>
+
+<p>b) Work out the number of red buttons in the box.</p>
+
+<p>[[input:ans3]] [[validation:ans3]] [[feedback:prt2]]</p>
+<p align="right"><b>(2)</b></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<h3>Worked solution</h3>
+<p>a)To find the ratio of red buttons to green buttons, we can first establish the relationship between the blue buttons, and then use that information to calculate the number of red buttons and green buttons.</p>
+<p>Let's assume that there are \({@aa*x@}\) red buttons and \({@bb_1*x@}\) blue buttons (where \(x\) is a positive integer representing a common multiplier):</p>
+<p>Red buttons =  \({@aa*x@}\)</p>
+<p>Blue buttons = \({@bb_1*x@}\)</p>
+<p>Now, we also know that the blue buttons : green buttons \(={@1@}:{@bb_2@}\), so:
+
+<p>Blue buttons \(= {@1*y@}\)</p>
+<p>Green buttons \(= {@bb_2*y@}\) (where \(y\) is a positive integer representing another common multiplier).</p><p>We can equate the number of blue buttons in both sets of ratios:</p>
+
+ <p>\({@bb_1*x@}\) (from the first set of ratios) \(= {@1*y@}\)(from the second set of ratios)</p>
+
+<p>\({@bb_1*x@}= {@1*y@}\)</p>
+
+
+<p>\(y = {@bb_1*x@}\)</p><p>Red buttons \({@aa*x@} :\)  Green buttons \({@bb_2*y@}\)</p>
+
+<p>Substitute \(y\) with \( {@bb_1*x@}\) we get;</p>
+
+<p>Red buttons  \({@aa*x@} :\) Green buttons \({@bb_2*bb_1*x@}\)</p><p>Now we have the ratio of red buttons to green buttons as \({@ta1@}:{@ta2@}\)</p>
+<p>b) Now, we can calculate the number of red buttons using the ratio given that there are \({@cc@}\) green buttons in the box :</p>
+
+<p>Red buttons : Green buttons \(= {@ta1@}:{@ta2@}\)</p>
+
+<p>Let's set up a proportion:</p>
+
+<p>\(\displaystyle \frac{{@ta1@}}{{@ta2@}} =\frac{ x}{{@cc@}}\)</p>
+
+<p>To find \(x\) (the number of red buttons), we can cross-multiply and solve for \(x\):</p>
+
+<p>\({@ta1@} \times {@cc@} ={@ta2*x@}\)</p>
+<p>\({@ta1* cc@} ={@ta2*x@}\)</p>
+
+
+<p>Now, divide by \({@ta2@}\) to find the number of red buttons:</p>
+
+<p>\(x = \frac{{@ta1* cc@}}{{@ta2@}}\)</p>
+<p>\(x = {@ta3@}\)</p>
+
+<p>So, there are  \({@ta3@}\) red buttons in the box.</p>]]></text>
+    </generalfeedback>
+    <defaultgrade>4</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2023060500</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[aa:rand(7)+2;
+
+bb_1:rand_with_prohib(2,4,[aa]);
+bb_2:rand_with_prohib(2,7,[aa,bb_1]);
+
+for i:1 while (gcd(aa,bb_1)>1 or gcd(aa,bb_1*bb_2)>1) do (aa:rand(7)+2,bb_1:rand_with_prohib(2,4,[aa]), bb_2:rand_with_prohib(2,7,[aa,bb_1]));
+
+cf:rand([2,3,4]);
+cc:cf*bb_1*bb_2;
+
+/*model solutions*/
+/*part a:ratio=aa:bb_1*bb_2*/
+ta1:aa;
+ta2:bb_1*bb_2;
+
+/*part b*/
+ta3:cc/(bb_1*bb_2)*aa;]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>number of red buttons : number of blue buttons = \({@aa@}:{@bb_1@}\)</p>
+<p>number of blue buttons : number of green buttons = \({@1@}:{@bb_2@}\).</p>
+<p>the ratio of red buttons to green buttons as \({@ta1@}:{@ta2@}\)</p>
+<p>there are  \({@ta3@}\) red buttons in the box.</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text><![CDATA[<p id="author">Emmaculate Odhiambo</p>
+<p id="concept">N/A</p>
+<p id="reviewer">Nixson Kiplagat</p>
+<p id="reviewer">[Juma Zevick]</p>
+<p id="description"> The question requires students to divide given quantity into multiple ratios</p>]]></text>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>ta1</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>ta2</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>ta3</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>set_sol:[ta1,ta2]
+set_sans:[ans1,ans2];
+test1:ta2/ta1;
+test2:ans2/ans1;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description>Checks for correct answer</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>set_sans</sans>
+        <tans>set_sol</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description>Checks for incorrect answer</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description>Checks for correct answer</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>test1</sans>
+        <tans>test2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>cons_ans:cc/ans2*ans1;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description>Checks for correct answer</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>ta3</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description>Checks for correct answer</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>cons_ans</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer follows correctly from your answer to part (a).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description>Checks for incorrect answer</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>713745877</deployedseed>
+    <deployedseed>1682188011</deployedseed>
+    <deployedseed>399317278</deployedseed>
+    <deployedseed>1103204352</deployedseed>
+    <deployedseed>764465274</deployedseed>
+    <deployedseed>129238786</deployedseed>
+    <deployedseed>732688685</deployedseed>
+    <deployedseed>199034610</deployedseed>
+    <deployedseed>312043989</deployedseed>
+    <deployedseed>2070430421</deployedseed>
+    <deployedseed>339382945</deployedseed>
+    <deployedseed>1293640175</deployedseed>
+    <deployedseed>1093666305</deployedseed>
+    <deployedseed>972846337</deployedseed>
+    <deployedseed>1335904042</deployedseed>
+    <deployedseed>1701611641</deployedseed>
+    <deployedseed>1008777677</deployedseed>
+    <deployedseed>363102867</deployedseed>
+    <deployedseed>1704719881</deployedseed>
+    <deployedseed>1136320696</deployedseed>
+    <deployedseed>351038322</deployedseed>
+    <deployedseed>280150802</deployedseed>
+    <deployedseed>1150920272</deployedseed>
+    <deployedseed>2062646227</deployedseed>
+    <deployedseed>2082546029</deployedseed>
+    <deployedseed>1465899963</deployedseed>
+    <deployedseed>1236426701</deployedseed>
+    <deployedseed>229591043</deployedseed>
+    <deployedseed>1780513497</deployedseed>
+    <deployedseed>978932282</deployedseed>
+    <qtest>
+      <testcase>1</testcase>
+      <description>Test case assuming the teacher's input gets full marks.</description>
+      <testinput>
+        <name>ans1</name>
+        <value>ta1</value>
+      </testinput>
+      <testinput>
+        <name>ans2</name>
+        <value>ta2</value>
+      </testinput>
+      <testinput>
+        <name>ans3</name>
+        <value>ta3</value>
+      </testinput>
+      <expected>
+        <name>prt1</name>
+        <expectedscore>1.0000000</expectedscore>
+        <expectedpenalty>0.0000000</expectedpenalty>
+        <expectedanswernote>prt1-2-T</expectedanswernote>
+      </expected>
+      <expected>
+        <name>prt2</name>
+        <expectedscore>1.0000000</expectedscore>
+        <expectedpenalty>0.0000000</expectedpenalty>
+        <expectedanswernote>prt2-3-T</expectedanswernote>
+      </expected>
+    </qtest>
+  </question>
+</quiz>

@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>32.2 Repeated Trials</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>(a) A fair coin is flipped three times, what is the chance of getting exactly {@textH@} or exactly {@textT@}?</p>
+<p align="right">[[input:ans1]] [[validation:ans1]] [[feedback:prt1]]</p>
+<p align="right"><b>(1)</b></p>
+<p>(b) A fair dice is rolled twice, what is the probability that the {@operation@} of the rolls is {@total@}?</p>
+<p align="right">[[input:ans2]] [[validation:ans2]] [[feedback:prt2]]</p>
+<p align="right"><b>(2)</b></p>
+<p>(c) There are {@noRed@} red balls, and {@noYel@} yellow balls in a bag. Two balls are drawn at random <i>without replacement</i>, what is the probability that the balls are the same colours?</p>
+<p align="right">[[input:ans3]] [[validation:ans3]] [[feedback:prt3]]</p>
+<p align="right"><b>(3)</b></p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>6</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Conditions for (a) should be "noH" and "noT" where noH != 3 - noT */
+noH:rand(4);
+noT:rand_with_prohib(0,3,[3-noH]);
+
+textH: if noH=0 then "zero heads" else if noH=1 then "one head" else if noH=2 then "two heads" else "three heads";
+textT: if noT=0 then "zero tails" else if noT=1 then "one tail" else if noT=2 then "two tails" else "three tails";
+
+probA: ((if noH=0 or noH=3 then 1 else 3) + (if noT=0 or noT=3 then 1 else 3))/8
+
+/* (b) be should either be a sum with total between 5 and 9 inc. or a product of 4, 6, or 12 */
+operation:rand(["sum","product"]);
+total: if operation="product" then rand([4,6,12]) else (rand(5)+5);
+
+probB: if operation="product" then (if total=4 then 1/12 else 1/9) else (if total=7 then 1/6 else if (total=6 or total=8) then 5/36 else 1/9);
+
+/* (c) keep number of balls of each colour between 2 and 8 and the sum below 12 */
+noRed:rand(7)+2;
+noYel:rand_with_prohib(2,min(12-noRed,8),[noRed]);
+
+probC:(noRed*(noRed-1)+noYel*(noYel-1))/((noRed+noYel)*(noRed+noYel-1));]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text>1</text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>probA</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>probB</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>probC</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct probability */
+/* Node 2: Worked solution */
+outcomesH: if noH=3 then "HHH" else if noH=2 then "HHT,HTH,THH" else if noH=1 then "TTH,THT,HTT" else "TTT"
+outcomesT: if noT=0 then "HHH" else if noT=1 then "HHT,HTH,THH" else if noT=2 then "TTH,THT,HTT" else "TTT"
+
+/* Node 3: Check whether student has multiplied probabilities for H and T instead of adding */
+sf_a:((if noH=0 or noH=3 then 1 else 3)*(if noT=0 or noT=3 then 1 else 3))/64]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>probA</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>When flipping a coin 3 times, there are 8 different possible sets of outcomes:</p>
+<p>\(HHH, HHT, HTH, THH, TTH, THT, HTT, TTT\)</p>
+<p><br>Of these, there {@if noH=0 or noH=3 then "is one outcome" else "are three outcomes"@} with {@textH@} and {@if noH=0 or noH=3 then "one" else "three"@} with {@textT@}:</p>
+<p>\({@outcomesH@}\) {@if noH=0 or noH=3 then "has" else "have"@} {@textH@}.</p>
+<p>\({@outcomesT@}\) {@if noT=0 or noT=3 then "has" else "have"@} {@textT@}.</p>
+<p><br>So, there are {@(if noH=0 or noH=3 then 1 else 3) + (if noT=0 or noT=3 then 1 else 3)@} outcomes which meet the given condition, out of a possible \(8\).</p>
+<p>This gives a probability of \(\frac{{@(if noH=0 or noH=3 then 1 else 3) + (if noT=0 or noT=3 then 1 else 3)@}}{8} = {@probA@}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>sf_a</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>It seems that you may have correctly calculated the probability of getting {@textH@} as {@(if noH=0 or noH=3 then 1 else 3)/8@} and the probability of getting {@textT@} as {@(if noT=0 or noT=3 then 1 else 3)/8@}.</p>
+<p>However, you have multiplied these probabilities when you should have added them. <br>Remember that, generally, "or" denotes <i>addition</i> whereas "and" denotes <i>multiplication</i>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct probability */
+/* Node 2: Worked solution */
+rolls: if operation="sum" then (if total=5 then "(1,4), (2,3), (3,2), (4,1)" else if total=6 then "(1,5), (2,4), (3,3), (4,2), (5,1)" else if total=7 then "(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)" else if total=8 then "(2,6), (3,5), (4,4), (5,3), (6,2)" else "(3,6), (4,5), (5,4), (6,3)") else (if total=4 then "(1,4), (2,2), (4,1)" else if total=6 then "(1,6), (2,3), (3,2), (6,1)" else "(2,6), (3,4), (4,3), (6,2)");
+
+/* Node 3: Check whether given probability is smaller suggesting student has missed some correct rolls */
+node3_test: if ans2>0 and ans2<probB and integerp(ans2*36) then 1 else 0;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>probB</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>probB</sans>
+        <tans>5/36</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>There are {@36*probB@} possible rolls which give a {@operation@} of {@total@}.</p>
+<p>If we represent the two dice rolls as a pair of numbers \((dice_1, dice_2)\), then there rolls are:</p>
+<p>\({@rolls@}\)</p>
+<p><br>In total, since each dice can take any value from \(1\) to \(6\), there are \(6^2 = 36\) possible rolls.</p>
+<p>So, the probability of the {@operation@} of the dice being {@total@} is \(\frac{{@probB*36@}}{36}\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>There are {@36*probB@} possible rolls which give a {@operation@} of {@total@}.</p>
+<p>If we represent the two dice rolls as a pair of numbers \((dice_1, dice_2)\), then there rolls are:</p>
+<p>\({@rolls@}\)</p>
+<p><br>In total, since each dice can take any value from \(1\) to \(6\), there are \(6^2 = 36\) possible rolls.</p>
+<p>So, the probability of the {@operation@} of the dice being {@total@} is \(\frac{{@probB*36@}}{36} = {@probB@}\).</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>It seems that you may have not counted some rolls which will give a {@operation@} of {@total@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>3.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* Node 1: Check correct probability (3) */
+/* Node 2: Worked solution */
+/* Node 3: Check whether student has correctly answered problem WITH replacement (1) */
+pc_c1:(noRed^2+noYel^2)/((noRed+noYel)^2);
+
+/* Node 4: Check whether student has times probabilities for two reds and two yellows (1) */
+pc_c2:(noRed*(noRed-1)*noYel*(noYel-1))/((noRed+noYel)*(noRed+noYel-1))^2;
+
+/* Node 5: Check whether student has consistently used addition for "and" and multiplication for "or" */
+sf_c:(noRed/(noRed+noYel)+(noRed-1)/(noRed+noYel-1))*(noYel/(noRed+noYel)+(noYel-1)/(noRed+noYel-1));]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>probC</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>Initially there are {@noRed@} red balls and {@noYel@} yellow balls.</p>
+<p>If the first ball chosen is red, then there are {@noRed-1@} red balls and {@noYel@} yellow balls remaining.<br>If the first ball chosen is yellow, then there are {@noRed@} red balls and {@noYel-1@} yellow balls remaining.</p>
+
+<p>We can represent this situation using a probability tree diagram:</p>
+
+[[jsxgraph width="400px" height="400px"]]
+
+    // CONTROLS
+
+    // Change "jxgbox" to divid for STACK questions
+    var boardBox = divid;
+
+    // Event A info:
+    var eventAName = "Ball 1";
+    var eventAOutcomeDet = [
+      ["\\(R\\)", [5,20], "\\(\\frac{".concat({#noRed*lcm(noRed,noRed+noYel)/(noRed*(noRed+noYel))#},"}{",{#(noRed+noYel)*lcm(noRed,noRed+noYel)/(noRed*(noRed+noYel))#},"}\\)"), [-15,20]], 
+      ["\\(Y\\)", [5,-25], "\\(\\frac{".concat({#noYel*lcm(noRed,noRed+noYel)/(noRed*(noRed+noYel))#},"}{",{#(noRed+noYel)*lcm(noRed,noRed+noYel)/(noRed*(noRed+noYel))#},"}\\)"), [-15,-15]], 
+    ];
+
+    // Event B details:
+    var eventBName = "Ball 2";
+    var eventBOutcomeDet = [
+      ["\\(R\\)", [5,20], ["\\(\\frac{".concat({#lcm(noRed-1,noRed+noYel-1)/(noRed+noYel-1)#},"}{",{#lcm(noRed-1,noRed+noYel-1)/(noRed-1)#},"}\\)"),"\\(\\frac{".concat({#lcm(noRed,noRed+noYel-1)/(noRed+noYel-1)#},"}{",{#lcm(noRed,noRed+noYel-1)/noRed#},"}\\)")], [-5,25]], 
+      ["\\(Y\\)", [5,-25], ["\\(\\frac{".concat({#lcm(noYel,noRed+noYel-1)/(noRed+noYel-1)#},"}{",{#lcm(noYel,noRed+noYel-1)/noYel#},"}\\)"),"\\(\\frac{".concat({#lcm(noYel-1,noRed+noYel-1)/(noRed+noYel-1)#},"}{",{#lcm(noYel-1,noRed+noYel-1)/(noYel-1)#},"}\\)")], [-5,-20]]
+    ];
+
+    // Optional Features:
+    var showNodes = true;
+
+    var showEventName = true;
+    var eventNameFontSize = 20;
+
+    var showOutcomeName = true;
+    var outcomeNameFontSize = 15;
+
+    var showOutcomeProb = true;
+    var outcomeProbFontSize = 15;
+
+    var showTotProbs = true;
+    var totProbsFontSize = 14;
+    var totProbsList = ["\\(\\frac{".concat({#lcm(noRed*(noRed-1),(noRed+noYel)*(noRed+noYel-1))/((noRed+noYel)*(noRed+noYel-1))#},"}{",{#lcm(noRed*(noRed-1),(noRed+noYel)*(noRed+noYel-1))/(noRed*(noRed-1))#},"}\\)"), "", "", "\\(\\frac{".concat({#lcm(noYel*(noYel-1),(noRed+noYel)*(noRed+noYel-1))/((noRed+noYel)*(noRed+noYel-1))#},"}{",{#lcm(noYel*(noYel-1),(noRed+noYel)*(noRed+noYel-1))/(noYel*(noYel-1))#},"}\\)")];
+    var totProbsOffset = [45,-45];
+
+    // SCRIPT
+
+    JXG.Options.text.useMathJax=true;
+
+    // Size of the tree:
+
+    var lastLayerNo = eventAOutcomeDet.length*eventBOutcomeDet.length;
+
+    // Create the board:
+
+    var board = JXG.JSXGraph.initBoard(boardBox, {
+      boundingbox: [-4.75, lastLayerNo+1.3, 5.25, -(lastLayerNo+0.7)],
+      keepaspectratio:false,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    // Formatting styles:
+
+    var pointStyle = {
+      visible:showNodes,
+      fixed:true,
+      highlight:false,
+      showInfoBox:false,
+      size:5,
+      fillColor:"white",
+      strokeColor:"black",
+      strokeWidth:3,
+      name:"",
+      withLabel:true,
+      label:{
+        visible:showOutcomeName,
+        highlight:false,
+        fixed:true,
+        fontSize:outcomeNameFontSize,
+        anchorX:"middle",
+        anchorY:"middle",
+        strokeColor:"black",
+        strokeWidth:3,
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    var lineStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+      strokeWidth:4,
+      withLabel:true,
+      label:{
+        visible:showOutcomeProb,
+        highlight:false,
+        fixed:true,
+        fontSize:outcomeProbFontSize,
+        position:"top",
+        strokeColor:"black",
+        strokeWidth:3,
+        useMathJax:true,
+        parse:false
+      }
+    };
+
+    var eventNameStyle = {
+      anchorX:"middle",
+      anchorY:"middle",
+      visible:showEventName,
+      fixed:true,
+      highlight:false,
+      fontSize:eventNameFontSize,
+      useMathJax:true,
+      parse:false
+    };
+
+    var totalProbStyle = {
+      anchorX:"left",
+      anchorY:"middle",
+      visible:showTotProbs,
+      fixed:true,
+      highlight:false,
+      fontSize:totProbsFontSize,
+      useMathJax:true,
+      parse:false
+    };
+
+    var P0 = board.create("point", [-4,0], pointStyle);
+
+    // Construct the last layer of nodes:
+    
+    var lastLayerPointList = [];
+    var i;
+
+    for (i = 0; i < lastLayerNo; i++) {
+      lastLayerPointList.push([2,lastLayerNo - 2*i - 1]);
+      pointStyle.name = eventBOutcomeDet[i%eventBOutcomeDet.length][0];
+      pointStyle.label.offset = eventBOutcomeDet[i%eventBOutcomeDet.length][1];
+      board.create("point", [2,lastLayerNo - 2*i - 1], pointStyle);
+    };
+
+    // Construct the middle layer of nodes by averaging last layer node heights:
+
+    var midLayerPointList = [];
+    var pointHeight = 0;
+
+    for (i in lastLayerPointList) {
+      pointHeight += lastLayerPointList[i][1];
+      if (i % eventBOutcomeDet.length == eventBOutcomeDet.length-1) {
+        midLayerPointList.push([-1,pointHeight/eventBOutcomeDet.length]);
+        pointStyle.name = eventAOutcomeDet[Math.floor(i/eventBOutcomeDet.length)][0];
+        pointStyle.label.offset = eventAOutcomeDet[Math.floor(i/eventBOutcomeDet.length)][1];
+        board.create("point", [-1,pointHeight/eventBOutcomeDet.length], pointStyle);
+        pointHeight = 0;
+      };
+    };
+
+    // Construct the joins between relevant nodes:
+
+    for (i in lastLayerPointList) {
+      if (Math.floor(i/eventBOutcomeDet.length) < eventBOutcomeDet[i%eventBOutcomeDet.length][2].length) {
+        lineStyle.name = eventBOutcomeDet[i%eventBOutcomeDet.length][2][Math.floor(i/eventBOutcomeDet.length)];
+      } else {
+        lineStyle.name = eventBOutcomeDet[i%eventBOutcomeDet.length][2][0];
+      };
+        lineStyle.label.offset = eventBOutcomeDet[i%eventBOutcomeDet.length][3];
+      board.create("segment", [midLayerPointList[Math.floor(i/eventBOutcomeDet.length)],lastLayerPointList[i]], lineStyle);
+    };
+
+    for (i in midLayerPointList) {
+      lineStyle.name = eventAOutcomeDet[i%eventAOutcomeDet.length][2];
+      lineStyle.label.offset = eventAOutcomeDet[i%eventAOutcomeDet.length][3];
+      board.create("segment", [P0,midLayerPointList[i]], lineStyle);
+    };
+
+    // Add in the event names:
+    
+    board.create("text", [-2.5,lastLayerNo-0.25,eventAName], eventNameStyle);
+    board.create("text", [0.5,lastLayerNo+0.25,eventBName], eventNameStyle);
+
+    // Display total probabilities:
+
+    for (i in lastLayerPointList) {
+      if (i < totProbsList.length && totProbsList[i] != "") {
+        board.create("text", [lastLayerPointList[i][0]+totProbsOffset[0]/100, lastLayerPointList[i][1]+totProbsOffset[1]/100, 
+          "\\(P(\\)".concat(eventAOutcomeDet[Math.floor(i/eventBOutcomeDet.length)][0],
+          " \\(\\cap\\) ",eventBOutcomeDet[i%eventBOutcomeDet.length][0],
+          "\\() =\\) ",totProbsList[i])
+          ],totalProbStyle);
+      }
+    };
+
+[[/jsxgraph]]
+
+<p>To find the probability of the two balls being the same colour, we need the probability of choosing two red balls or two yellow balls.</p>
+
+<p><br>\(P((R \cap R) \cup (Y \cap Y)) = {@noRed*(noRed-1)/((noRed+noYel)*(noRed+noYel-1))@} + {@noYel*(noYel-1)/((noRed+noYel)*(noRed+noYel-1))@} = {@probC@}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>pc_c1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have calculated the probability of choosing two balls of the same colour when the balls are drawn <i>with</i> replacement.</p>
+<p>However, the question has specified that the balls are drawn <i>without</i> replacement.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>pc_c2</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.3330000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You may have correctly calculated the probabilities of getting two red balls and of getting two yellow balls as {@(noRed*(noRed-1))/((noRed+noYel)*(noRed+noYel-1))@} and {@(noYel*(noYel-1))/((noRed+noYel)*(noRed+noYel-1))@} respectively.</p>
+<p>However, you have multiplied these probabilities when you should have summed them.<br>Remember that, generally, "or" denotes <i>addition</i> whereas "and" denotes <i>multiplication</i>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt3-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>sf_c</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>It seems that you have mixed up the operations used for "or" and "and".<br>Remember that, generally, "or" denotes <i>addition</i> whereas "and" denotes <i>multiplication</i>.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

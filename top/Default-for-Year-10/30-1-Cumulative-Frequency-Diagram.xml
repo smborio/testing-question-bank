@@ -1,0 +1,1247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>30.1 Cumulative Frequency Diagram</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Here is a cumulative frequency diagram of the time spent reading by a class of students over a particular evening.
+<br>You may move the pink lines by dragging the points along the axes.</p>
+<p><br></p>
+
+<center>
+[[jsxgraph width="600px" height="750px"]]
+
+    // Coordinates of points on diagram
+
+    var coordList = [
+      {#p1#},
+      {#p2#},
+      {#p3#},
+      {#p4#},
+      {#p5#},
+      {#p6#}
+    ];
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,55,45,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepAspectRatio:false,
+      grid:true
+    });
+
+    // Defining axes
+
+    var yAxis = board.create("axis", [[0,0], [0,50]], {
+      highlight:false,
+      name:"\\(cf\\)",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        position:"rt",
+        offset:[-15,-15],
+        anchorX:"right",
+        fontSize:15,
+        useMathJax:true,
+        parse:false
+      },
+      ticks:{
+        label:{
+          highlight:false,
+          anchorX:"right",
+          offset:[-10,0]
+        }
+      }
+    });
+
+    var xAxis = board.create("axis", [[0,0], [40,0]], {
+      highlight:false,
+      name:"\\(t \\ [min]\\)",
+      withLabel:true,
+      label:{
+        fixed:true,
+        highlight:false,
+        position:"rt",
+        offset:[-5,-35],
+        anchorX:"right",
+        fontSize:15,
+        useMathJax:true,
+        parse:false
+      },
+      ticks:{
+        label:{
+          highlight:false,
+          anchorX:"middle",
+          offset:[0,-15]
+        }
+      }
+    });
+
+    // Drawing diagram
+
+    var i;
+    var segList = [];
+
+    for (i in coordList) {
+      
+      board.create("point", coordList[i], {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        size:3,
+        withLabel:false
+      });
+
+      if (i > 0) {
+        segList.push(board.create("segment", [coordList[i], coordList[i-1]], {
+          fixed:true,
+          highlight:false,
+        }));
+      };
+
+    };
+
+    // Creating user interactive lines
+
+    var yAxisSegment = board.create("segment", [[0,0], [0,coordList[5][1]]], {
+      fixed:true,
+      visible:false
+    });
+
+    var yGlider = board.create("glider", [0, 50, yAxisSegment], {
+      fillColor:"#F757FF",
+      strokeColor:"#F757FF",
+      showInfoBox:false,
+      size:3,
+      withLabel:false
+    });
+
+    var yLine = board.create("line", [
+      yGlider, 
+      function(){return [yGlider.X()+1, yGlider.Y()]}
+    ], {
+      highlight:false,
+      strokeColor:"#F757FF",
+      strokeWidth:2,
+      dash:1
+    });
+
+    var xAxisSegment = board.create("segment", [[coordList[0][0],0], [coordList[5][0],0]], {
+      fixed:true,
+      visible:false
+    });
+
+    var xGlider = board.create("glider", [40, 0, xAxisSegment], {
+      fillColor:"#F757FF",
+      strokeColor:"#F757FF",
+      showInfoBox:false,
+      size:3,
+      withLabel:false
+    });
+
+    var xLine = board.create("line", [
+      xGlider, 
+      function(){return [xGlider.X(), xGlider.Y()+1]}
+    ], {
+      highlight:false,
+      strokeColor:"#F757FF",
+      strokeWidth:2,
+      dash:1
+    });
+
+[[/jsxgraph]]
+</center>
+
+<p><br></p>
+<p><br>(a) Complete the cumulative frequency table for the data represented by the graph.</p>
+<p><br></p>
+<center>
+<table style="width:500px; border:1px solid black; text-align:left">
+  <tr style="height:70px; border-bottom:1px solid black">
+    <th style="padding:10px">Range \([min]\)</th>
+    <th style="padding:10px">Frequency</th>
+    <th style="padding:10px">Cumulative Frequency</th>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\(0 < t \leq {@first(p1)@}\)</td>
+    <td style="padding:10px">\(0\)</td>
+    <td style="padding:10px">\(0\)</td>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\({@first(p1)@} < t \leq {@first(p2)@}\)</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans1]]</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans2]]</td>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\({@first(p2)@} < t \leq {@first(p3)@}\)</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans3]]</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans4]]</td>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\({@first(p3)@} < t \leq {@first(p4)@}\)</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans5]]</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans6]]</td>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\({@first(p4)@} < t \leq {@first(p5)@}\)</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans7]]</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans8]]</td>
+  </tr>
+  <tr style="height:70px">
+    <td style="padding:10px">\({@first(p5)@} < t \leq {@first(p6)@}\)</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans9]]</td>
+    <td style="padding:10px; vertical-align:bottom">[[input:ans10]]</td>
+  </tr>
+</table>
+</center>
+<p align="right"><br><b>(5)</b></p>
+<p hidden>[[validation:ans1]] [[validation:ans2]] [[validation:ans3]] [[validation:ans4]] [[validation:ans5]] [[validation:ans6]] [[validation:ans7]] [[validation:ans8]] [[validation:ans9]] [[validation:ans10]]</p>
+<p>[[feedback:prt1]]</p>
+
+<p><br>(b) Using the cumulative frequency diagram, estimate the median, lower quartile and upper quartile for the data.
+<br><i>Give your answers to the nearest whole minute.</i></p>
+<p align="right">Lower Quartile: [[input:ans11]] \(min\) [[validation:ans11]]</p>
+<p align="right">Median: [[input:ans12]] \(min\) [[validation:ans12]]</p>
+<p align="right">Upper Quartile: [[input:ans13]] \(min\) [[validation:ans13]]</p>
+<p align="right"><br><b>(6)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>11</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2022071300</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[round_prop(num) := block(if num-floor(num)<0.5 then return(floor(num)) else return(ceiling(num)));
+
+/* Randomising points on frequency table */
+p1:[rand(6)+5,0];
+p2:[rand_with_step(first(p1)+6,first(p1)+10,1), rand(5)+2];
+p3:[rand_with_step(first(p2)+4,first(p2)+8,1), rand_with_step(second(p2)+5,second(p2)+10,1)];
+p4:[rand_with_step(first(p3)+2,first(p3)+6,1), rand_with_step(second(p3)+15,second(p3)+20,1)];
+p5:[rand_with_step(first(p4)+4,first(p4)+8,1), rand_with_step(second(p4)+5,second(p4)+10,1)];
+p6:[40, rand_with_step(second(p5)+3,second(p5)+4,1)];
+
+/* Quartiles */
+
+LQ: if second(p6)/4<second(p2) then first(p1) + (second(p6)/4 - second(p1))*(first(p2)-first(p1))/(second(p2)-second(p1)) else if second(p6)/4<second(p3) then first(p2) + (second(p6)/4 - second(p2))*(first(p3)-first(p2))/(second(p3)-second(p2)) else if second(p6)/4<second(p4) then first(p3) + (second(p6)/4 - second(p3))*(first(p4)-first(p3))/(second(p4)-second(p3)) else if second(p6)/4<second(p5) then first(p4) + (second(p6)/4 - second(p4))*(first(p5)-first(p4))/(second(p5)-second(p4)) else first(p5) + (second(p6)/4 - second(p5))*(first(p6)-first(p5))/(second(p6)-second(p5));
+
+med: if second(p6)/2<second(p2) then first(p1) + (second(p6)/2 - second(p1))*(first(p2)-first(p1))/(second(p2)-second(p1)) else if second(p6)/2<second(p3) then first(p2) + (second(p6)/2 - second(p2))*(first(p3)-first(p2))/(second(p3)-second(p2)) else if second(p6)/2<second(p4) then first(p3) + (second(p6)/2 - second(p3))*(first(p4)-first(p3))/(second(p4)-second(p3)) else if second(p6)/2<second(p5) then first(p4) + (second(p6)/2 - second(p4))*(first(p5)-first(p4))/(second(p5)-second(p4)) else first(p5) + (second(p6)/2 - second(p5))*(first(p6)-first(p5))/(second(p6)-second(p5));
+
+UQ: if 3*second(p6)/4<second(p2) then first(p1) + (3*second(p6)/4 - second(p1))*(first(p2)-first(p1))/(second(p2)-second(p1)) else if 3*second(p6)/4<second(p3) then first(p2) + (3*second(p6)/4 - second(p2))*(first(p3)-first(p2))/(second(p3)-second(p2)) else if 3*second(p6)/4<second(p4) then first(p3) + (3*second(p6)/4 - second(p3))*(first(p4)-first(p3))/(second(p4)-second(p3)) else if 3*second(p6)/4<second(p5) then first(p4) + (3*second(p6)/4 - second(p4))*(first(p5)-first(p4))/(second(p5)-second(p4)) else first(p5) + (3*second(p6)/4 - second(p5))*(first(p6)-first(p5))/(second(p6)-second(p5));]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>{@p1@}, {@p2@}, {@p3@}, {@p4@}, {@p5@}, {@p6@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>second(p2)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans10</name>
+      <type>algebraic</type>
+      <tans>second(p6)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans11</name>
+      <type>algebraic</type>
+      <tans>round_prop(LQ)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans12</name>
+      <type>algebraic</type>
+      <tans>round_prop(med)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans13</name>
+      <type>algebraic</type>
+      <tans>round_prop(UQ)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>second(p2)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>second(p3)-second(p2)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>algebraic</type>
+      <tans>second(p3)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>second(p4)-second(p3)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans6</name>
+      <type>algebraic</type>
+      <tans>second(p4)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans7</name>
+      <type>algebraic</type>
+      <tans>second(p5)-second(p4)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans8</name>
+      <type>algebraic</type>
+      <tans>second(p5)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans9</name>
+      <type>algebraic</type>
+      <tans>second(p6)-second(p5)</tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>5.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: All parts correct */
+node1_test: if ans1=second(p2) and ans2=second(p2) and ans3=second(p3)-second(p2) and ans4=second(p3) and ans5=second(p4)-second(p3) and ans6=second(p4) and ans7=second(p5)-second(p4) and ans8=second(p5) and ans9=second(p6)-second(p5) and ans10=second(p6) then 1 else 0;
+
+/* Node 2: Worked solution */
+/* Node 3-12: Check ans1-10, one mark for each correct row, feedback for correct cf only */
+
+node3_test: if ans1=second(p2) and ans2=second(p2) then 1 else 0;
+
+node5_test: if ans3=second(p3)-second(p2) and ans4=second(p3) then 1 else 0;
+
+node7_test: if ans5=second(p4)-second(p3) and ans6=second(p4) then 1 else 0;
+
+node9_test: if ans7=second(p5)-second(p4) and ans8=second(p5) then 1 else 0;
+
+node11_test: if ans9=second(p6)-second(p5) and ans10=second(p6) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br></p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The values of <b>cumulative frequency</b> can be read off the \(y\) axis of the graph:</p>
+<p><br></p>
+
+<center>
+[[jsxgraph width="400px" height="500px"]]
+
+    // Coordinates of points on diagram
+
+    var coordList = [
+      {#p1#},
+      {#p2#},
+      {#p3#},
+      {#p4#},
+      {#p5#},
+      {#p6#}
+    ];
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,55,45,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepAspectRatio:false,
+      grid:true
+    });
+
+    // Defining axes
+
+    var yAxis = board.create("axis", [[0,0], [0,50]], {
+      highlight:false,
+      ticks:{
+        label:{
+          highlight:false,
+          anchorX:"right",
+          offset:[-10,0]
+        }
+      }
+    });
+
+    var xAxis = board.create("axis", [[0,0], [40,0]], {
+      highlight:false,
+      ticks:{
+        label:{
+          highlight:false,
+          anchorX:"middle",
+          offset:[0,-15]
+        }
+      }
+    });
+
+    // Drawing diagram
+
+    var i;
+    var segList = [];
+
+    for (i in coordList) {
+      
+      board.create("point", coordList[i], {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        size:2,
+        withLabel:false
+      });
+
+      if (i > 0) {
+        segList.push(board.create("segment", [coordList[i], coordList[i-1]], {
+          fixed:true,
+          highlight:false,
+        }));
+      };
+
+    };
+
+    // Creating lines
+
+    console.log(coordList);
+
+    for (i in coordList.slice(1)) {
+
+      board.create("line", [
+        coordList.slice(1)[i], 
+        function(){return [coordList.slice(1)[i][0]+1, coordList.slice(1,)[i][1]]}
+      ], {
+        highlight:false,
+        strokeColor:"red",
+        strokeWidth:2,
+        dash:1
+      });
+
+    };
+
+[[/jsxgraph]]
+</center>
+
+<p><br>You can then find the <b>frequency</b> of each range by the difference between consecutive cumulative frequencies.</p>
+
+<p><br></p>
+<center>
+<table style="width:450px; border:1px solid black; text-align:left">
+  <tr style="height:70px; border-bottom:1px solid black">
+    <th style="padding:10px">Range</th>
+    <th style="padding:10px">Frequency</th>
+    <th style="padding:10px">Cumulative Frequency</th>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\(0 < t \leq {@first(p1)@}\)</td>
+    <td style="padding:10px">\(0\)</td>
+    <td style="padding:10px">\(0\)</td>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\({@first(p1)@} < t \leq {@first(p2)@}\)</td>
+    <td style="padding:10px">\({@second(p2)-second(p1)@} \ \ (= {@second(p2)@} - {@second(p1)@})\)</td>
+    <td style="padding:10px; color:red">\({@second(p2)@}\)</td>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\({@first(p2)@} < t \leq {@first(p3)@}\)</td>
+    <td style="padding:10px">\({@second(p3)-second(p2)@} \ \ (= {@second(p3)@} - {@second(p2)@})\)</td>
+    <td style="padding:10px; color:red">\({@second(p3)@}\)</td>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\({@first(p3)@} < t \leq {@first(p4)@}\)</td>
+    <td style="padding:10px">\({@second(p4)-second(p3)@} \ \ (= {@second(p4)@} - {@second(p3)@})\)</td>
+    <td style="padding:10px; color:red">\({@second(p4)@}\)</td>
+  </tr>
+  <tr style="height:70px; border-bottom:1px solid black"">
+    <td style="padding:10px">\({@first(p4)@} < t \leq {@first(p5)@}\)</td>
+    <td style="padding:10px">\({@second(p5)-second(p4)@} \ \ (= {@second(p5)@} - {@second(p4)@})\)</td>
+    <td style="padding:10px; color:red">\({@second(p5)@}\)</td>
+  </tr>
+  <tr style="height:70px">
+    <td style="padding:10px">\({@first(p5)@} < t \leq {@first(p6)@}\)</td>
+    <td style="padding:10px">\({@second(p6)-second(p5)@} \ \ (= {@second(p6)@} - {@second(p5)@})\)</td>
+    <td style="padding:10px; color:red">\({@second(p6)@}\)</td>
+  </tr>
+</table>
+</center>
+<p><br></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>10</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node11_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-11-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answers for the \({@first(p5)@} < t \leq {@first(p6)@}\) range are correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>11</falsenextnode>
+        <falseanswernote>prt1-11-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>11</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans10</sans>
+        <tans>second(p6)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-12-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer for the <b>cumulative frequency</b> of the \({@first(p5)@} < t \leq {@first(p6)@}\) range is correct, however your value for the <b>frequency</b> is not.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-12-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer for the <b>cumulative frequency</b> of the \({@first(p5)@} < t \leq {@first(p6)@}\) range is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.2</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answers for the \({@first(p1)@} < t \leq {@first(p2)@}\) range are correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>second(p2)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the <b>cumulative frequency</b> of the \({@first(p1)@} < t \leq {@first(p2)@}\) range is correct, however your value for the <b>frequency</b> is not.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your answer for the <b>cumulative frequency</b> of the \({@first(p1)@} < t \leq {@first(p2)@}\) range is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answers for the \({@first(p2)@} < t \leq {@first(p3)@}\) range are correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>second(p3)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1</truescore>
+        <truepenalty/>
+        <truenextnode>6</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer for the <b>cumulative frequency</b> of the \({@first(p2)@} < t \leq {@first(p3)@}\) range is correct, however your value for the <b>frequency</b> is not.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer for the <b>cumulative frequency</b> of the \({@first(p2)@} < t \leq {@first(p3)@}\) range is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node7_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1</truescore>
+        <truepenalty/>
+        <truenextnode>8</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answers for the \({@first(p3)@} < t \leq {@first(p4)@}\) range are correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>7</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>7</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans6</sans>
+        <tans>second(p4)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1</truescore>
+        <truepenalty/>
+        <truenextnode>8</truenextnode>
+        <trueanswernote>prt1-8-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer for the <b>cumulative frequency</b> of the \({@first(p3)@} < t \leq {@first(p4)@}\) range is correct, however your value for the <b>frequency</b> is not.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>8</falsenextnode>
+        <falseanswernote>prt1-8-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer for the <b>cumulative frequency</b> of the \({@first(p3)@} < t \leq {@first(p4)@}\) range is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>8</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node9_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1</truescore>
+        <truepenalty/>
+        <truenextnode>10</truenextnode>
+        <trueanswernote>prt1-9-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answers for the \({@first(p4)@} < t \leq {@first(p5)@}\) range are correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>9</falsenextnode>
+        <falseanswernote>prt1-9-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>9</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans8</sans>
+        <tans>second(p5)</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1</truescore>
+        <truepenalty/>
+        <truenextnode>10</truenextnode>
+        <trueanswernote>prt1-10-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Your answer for the <b>cumulative frequency</b> of the \({@first(p4)@} < t \leq {@first(p5)@}\) range is correct, however your value for the <b>frequency</b> is not.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>10</falsenextnode>
+        <falseanswernote>prt1-10-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your answer for the <b>cumulative frequency</b> of the \({@first(p4)@} < t \leq {@first(p5)@}\) range is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>6.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check all correct */
+node1_test: if (ans11=floor(LQ) or ans11=ceiling(LQ)) and (ans12=floor(med) or ans12=ceiling(med)) and (ans13=floor(UQ) or ans13=ceiling(UQ)) then 1 else 0;
+
+/* Node 2: Worked solution */
+/* Node 3: Check LQ */
+/* Node 4: Check Med */
+/* Node 5: Check UQ */</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>Since there are \({@second(p6)@}\) pieces of data, the median value can be estimated from the \(\frac{{@second(p6)@}}{2} = {@if integerp(second(p6)/2) then second(p6)/2 else float(second(p6)/2)@}\) piece of data.</p>
+<p>Reading across from \({@if integerp(second(p6)/2) then second(p6)/2 else float(second(p6))@}\) on the \(y\) axis will give the median value on the \(x\) axis:</p>
+<p><br></p>
+
+<center>
+[[jsxgraph width="400px" height="500px"]]
+
+    // Coordinates of points on diagram
+
+    var coordList = [
+      {#p1#},
+      {#p2#},
+      {#p3#},
+      {#p4#},
+      {#p5#},
+      {#p6#}
+    ];
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[-5,55,45,-5],
+      showCopyright:false,
+      showNavigation:false,
+      keepAspectRatio:false,
+      grid:true
+    });
+
+    // Defining axes
+
+    var yAxis = board.create("axis", [[0,0], [0,50]], {
+      highlight:false,
+      ticks:{
+        label:{
+          highlight:false,
+          anchorX:"right",
+          offset:[-10,0]
+        }
+      }
+    });
+
+    var xAxis = board.create("axis", [[0,0], [40,0]], {
+      highlight:false,
+      ticks:{
+        label:{
+          highlight:false,
+          anchorX:"middle",
+          offset:[0,-15]
+        }
+      }
+    });
+
+    // Drawing diagram
+
+    var i;
+    var segList = [];
+
+    for (i in coordList) {
+      
+      board.create("point", coordList[i], {
+        fixed:true,
+        highlight:false,
+        showInfoBox:false,
+        size:3,
+        withLabel:false
+      });
+
+      if (i > 0) {
+        segList.push(board.create("segment", [coordList[i], coordList[i-1]], {
+          fixed:true,
+          highlight:false,
+        }));
+      };
+
+    };
+
+    // Creating user interactive lines
+
+    var yAxisSegment = board.create("segment", [[0,0], [0,coordList[5][1]]], {
+      fixed:true,
+      visible:false
+    });
+
+    var yGlider = board.create("glider", [0, {#second(p6)/2#}, yAxisSegment], {
+      fixed:true,
+      highlight:false,
+      fillColor:"#F757FF",
+      strokeColor:"#F757FF",
+      showInfoBox:false,
+      size:3,
+      withLabel:false
+    });
+
+    var yLine = board.create("line", [
+      yGlider, 
+      function(){return [yGlider.X()+1, yGlider.Y()]}
+    ], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"#F757FF",
+      strokeWidth:2,
+      dash:1
+    });
+
+    var xAxisSegment = board.create("segment", [[coordList[0][0],0], [coordList[5][0],0]], {
+      fixed:true,
+      visible:false
+    });
+
+    var xGlider = board.create("glider", [{#med#}, 0, xAxisSegment], {
+      fixed:true,
+      highlight:false,
+      fillColor:"#F757FF",
+      strokeColor:"#F757FF",
+      showInfoBox:false,
+      size:3,
+      withLabel:false
+    });
+
+    var xLine = board.create("line", [
+      xGlider, 
+      function(){return [xGlider.X(), xGlider.Y()+1]}
+    ], {
+      fixed:true,
+      highlight:false,
+      strokeColor:"#F757FF",
+      strokeWidth:2,
+      dash:1
+    });
+
+[[/jsxgraph]]
+</center>
+
+<p><br>Reading off the \(x\) axis, the median value of the data is: \({@if integerp(med) then med else if integerp(10*med) then float(round_prop(10*med)/10) else float(round_prop(100*med)/100)@} = {@round_prop(med)@}\) <i>(to the nearest whole unit)</i></p>
+
+<p><br>For the Lower Quartile:
+<br>Reading off \(\frac{{@second(p6)@}}{4} = {@if integerp(second(p6)/4) then second(p6)/4 else float(second(p6)/4)@}\) from the \(y\) axis gives \({@if integerp(LQ) then LQ else if integerp(10*LQ) then float(round_prop(10*LQ)/10) else float(round_prop(100*LQ)/100)@} = {@round_prop(LQ)@}\) <i>(to the nearest whole unit)</i></p>
+
+<p><br>For the Upper Quartile:
+<br>Reading off \(\frac{3 \times {@second(p6)@}}{4} = {@if integerp(3*second(p6)/4) then 3*second(p6)/4 else float(3*second(p6)/4)@}\) from the \(y\) axis gives \({@if integerp(UQ) then UQ else if integerp(10*UQ) then float(round_prop(10*UQ)/10) else float(round_prop(100*UQ)/100)@} = {@round_prop(UQ)@}\) <i>(to the nearest whole unit)</i></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans11</sans>
+        <tans>LQ</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.333</truescore>
+        <truepenalty/>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p><br>Your value for the <b>Lower Quartile</b> is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans12</sans>
+        <tans>med</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.333</truescore>
+        <truepenalty/>
+        <truenextnode>4</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your value for the <b>Median</b> is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans13</sans>
+        <tans>UQ</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.333</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Your value for the <b>Upper Quartile</b> is incorrect.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

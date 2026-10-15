@@ -1,0 +1,945 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>20.3 Pressure and Density</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>This question is about finding a value for \(g\), the gravitational constant.
+<br>Consider the diagram below, showing a cube submerged beneath a column of liquid:</p>
+
+[[jsxgraph]]
+
+    var zoom = 3;
+    var cenOfView = [0,-0.1];
+    var orientation = [0.26,0.52,0.13];
+
+    // Creating JSXGraph board: change "jxgbox" to divid for STACK questions
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingBox:[cenOfView[0]-zoom, cenOfView[1]+zoom, cenOfView[0]+zoom, cenOfView[1]-zoom],
+      showCopyright:false,
+      showNavigation:false,
+    })
+
+    // Function to project point in 3D onto a plane through the origin normal to [xN,yN,zN];
+    function flatten_point([x,y,z]) {
+        return([x,y]);
+    };
+
+    // Functions to rotate point in 3D around x, y and z axes
+    function rotate_x([x,y,z], angle) {
+        return([
+            x,
+            Math.cos(angle)*y - Math.sin(angle)*z,
+            Math.sin(angle)*y + Math.cos(angle)*z
+        ]);
+    };
+
+    function rotate_y([x,y,z], angle) {
+        return([
+            Math.sin(angle)*z + Math.cos(angle)*x,
+            y,
+            Math.cos(angle)*z - Math.sin(angle)*x
+        ]);
+    };
+
+    function rotate_z([x,y,z], angle) {
+        return([
+            Math.cos(angle)*x - Math.sin(angle)*y,
+            Math.sin(angle)*x + Math.cos(angle)*y,
+            z
+        ]);
+    };
+
+    // Function to create a point-projection pair:
+    function make_point([x,y,z], style) {
+
+        // Rotate coordinates by display orientation
+        var coords = rotate_z(rotate_y(rotate_x([x,y,z], orientation[0]), orientation[1]), orientation[2]);
+        
+        // Create point, defined by initial coords, display coords and projected coords
+        var point = {
+            initCoords:coords,
+            dispCoords:coords,
+            proj:board.create("point", flatten_point(coords), style)
+        }
+        elements.push(point);
+        return(point);
+
+    };
+    
+    // List containing all 3D elements to be displayed (used to update position for user movement)
+    var elements = [];
+
+    // CREATE CUBE: print_cube(sideLength, centreCoords, rotation, faceStyle, pointStyle)
+    function print_cube(
+        sideLength = 1, 
+        [x,y,z] = [0,0,0], 
+        [rotX,rotY,rotZ] = [0,0,0],
+        faceStyle = {
+            fixed:true,
+            highlight:false,
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        },
+        pointStyle = {visible:false}) {
+
+        // Define points on a cube before rotation, scaling and translation
+        var pointList = [
+            [1,1,1],
+            [1,1,-1],
+            [1,-1,-1],
+            [1,-1,1],
+            [-1,-1,1],
+            [-1,1,1],
+            [-1,1,-1],
+            [-1,-1,-1],
+        ];
+        
+        // For each defined point; rotate, scale and translate by user specs.
+        var i;
+        var j;
+        for (i in pointList) {
+            j = rotate_z(rotate_y(rotate_x(pointList[i], rotX), rotY), rotZ);
+            pointList[i] = make_point([
+                x + j[0]*sideLength/2,
+                y + j[1]*sideLength/2,
+                z + j[2]*sideLength/2
+            ], pointStyle);
+        };
+
+        // Define which vertices join together to create faces
+        var faceVertexIndex = [
+            [0,1,2,3],
+            [0,1,6,5],
+            [0,3,4,5],
+            [1,2,7,6],
+            [2,3,4,7],
+            [4,5,6,7]
+        ];
+        
+        // Create faces of cube
+        for (i in faceVertexIndex) {
+            board.create("polygon", [
+                pointList[faceVertexIndex[i][0]],
+                pointList[faceVertexIndex[i][1]],
+                pointList[faceVertexIndex[i][2]],
+                pointList[faceVertexIndex[i][3]],
+            ].map(function(point) {return point.proj}),
+            faceStyle);
+        };
+    };
+
+    // CREATE CUBOID: print_cuboid(sideLengthX, sideLengthY, sideLengthZ, centreCoords, rotation, faceStyle, pointStyle)
+    function print_cuboid(
+        sideLengthX = 1,
+        sideLengthY = 1,
+        sideLengthZ = 1,
+        [x,y,z] = [0,0,0], 
+        [rotX,rotY,rotZ] = [0,0,0],
+        faceStyle = {
+            fixed:true,
+            highlight:false,
+            borders:{
+                fixed:true,
+                highlight:false
+            }
+        },
+        pointStyle = {visible:false}) {
+
+        // Define points on a cubeoid before rotation and translation
+        var pointList = [
+            [sideLengthX/2,sideLengthY/2,sideLengthZ/2],
+            [sideLengthX/2,sideLengthY/2,-sideLengthZ/2],
+            [sideLengthX/2,-sideLengthY/2,-sideLengthZ/2],
+            [sideLengthX/2,-sideLengthY/2,sideLengthZ/2],
+            [-sideLengthX/2,-sideLengthY/2,sideLengthZ/2],
+            [-sideLengthX/2,sideLengthY/2,sideLengthZ/2],
+            [-sideLengthX/2,sideLengthY/2,-sideLengthZ/2],
+            [-sideLengthX/2,-sideLengthY/2,-sideLengthZ/2],
+        ];
+        
+        // For each defined point; rotate translate by user specs.
+        var i;
+        var j;
+        for (i in pointList) {
+            j = rotate_z(rotate_y(rotate_x(pointList[i], rotX), rotY), rotZ);
+            pointList[i] = make_point([
+                x + j[0],
+                y + j[1],
+                z + j[2]
+            ], pointStyle);
+        };
+
+        // Define which vertices join together to create faces
+        var faceVertexIndex = [
+            [0,1,2,3],
+            [0,1,6,5],
+            [0,3,4,5],
+            [1,2,7,6],
+            [2,3,4,7],
+            [4,5,6,7]
+        ];
+        
+        // Create faces of cuboid
+        for (i in faceVertexIndex) {
+            board.create("polygon", [
+                pointList[faceVertexIndex[i][0]],
+                pointList[faceVertexIndex[i][1]],
+                pointList[faceVertexIndex[i][2]],
+                pointList[faceVertexIndex[i][3]],
+            ].map(function(point) {return point.proj}),
+            faceStyle);
+        };
+    };
+
+    // SCRIPT
+    
+    print_cube(1,[0,-2,0]);
+    print_cuboid(1,4,1,[0,0.5,0],[0,0,0],{
+        fixed:true,
+        highlight:false,
+        fillColor:"blue",
+        borders:{
+            fixed:true,
+            highlight:false
+        }
+    });
+
+    /* Height arrow and label */
+    var P1 = make_point([0.7,-1,0.7], {visible:false});
+    var P2 = make_point([0.7,2.5,0.7], {visible:false});
+    var P3 = make_point([0.7,-1.5,0.7], {visible:false});
+
+    board.create("arrow", [P1.proj,P2.proj], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        strokeWidth:1.5,
+        withLabel:true,
+        name:"\\(h=".concat({#Hval#},"m\\)"),
+        useMathJax:true,
+        parse:false,
+        label:{
+            fixed:true,
+            highlight:false,
+            fontSize:15,
+            position:"cen"
+        }
+    });
+
+    board.create("arrow", [P1.proj,P3.proj], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        strokeWidth:1.5,
+    });
+
+    /* Width arrow and label */
+    var P4 = make_point([0,-2.6,0.6], {visible:false});
+    var P5 = make_point([-0.5,-2.6,0.6], {visible:false});
+    var P6 = make_point([0.5,-2.6,0.6], {visible:false});
+
+    board.create("arrow", [P4.proj,P5.proj], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        strokeWidth:1.5,
+        withLabel:true,
+        name:"\\(l=".concat({#Lval#},"m\\)"),
+        useMathJax:true,
+        parse:false,
+        label:{
+            fixed:true,
+            highlight:false,
+            fontSize:15,
+            position:"cen",
+            offset:[30,-15]
+        }
+    });
+
+    board.create("arrow", [P4.proj,P6.proj], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        strokeWidth:1.5,
+    });
+
+    /* Depth arrow and label */
+    var P7 = make_point([-0.6,-2.6,0], {visible:false});
+    var P8 = make_point([-0.6,-2.6,-0.5], {visible:false});
+    var P9 = make_point([-0.6,-2.6,0.5], {visible:false});
+
+    board.create("arrow", [P7.proj,P8.proj], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        strokeWidth:1.5,
+        withLabel:true,
+        name:"\\(w=".concat({#Wval#},"m\\)"),
+        useMathJax:true,
+        parse:false,
+        label:{
+            fixed:true,
+            highlight:false,
+            fontSize:15,
+            position:"cen",
+            offset:[-70,-20]
+        }
+    });
+
+    board.create("arrow", [P7.proj,P9.proj], {
+        fixed:true,
+        highlight:false,
+        strokeColor:"black",
+        strokeWidth:1.5
+    });
+
+[[/jsxgraph]]
+<p><i>Diagram not to scale.</i></p>
+
+<p><br>(a) The cube is experiencing a force of \({@if integerp(Fval) then Fval else float(Fval)@}N\) on its top face from the volume of liquid.
+<br>Find the pressure acting downwards on the cube due to the volume of liquid in \(kPa\).</p>
+<p align="right">[[input:ans1]] \(kPa\) [[validation:ans1]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt1]]</p>
+
+<p>(b) The volume of liquid has a mass of \({@float(Mval/1000)@}t\).
+<br>Find the density of the liquid in \(kg/m^3\).</p>
+<p align="right">[[input:ans2]] \(kg/m^3\) [[validation:ans2]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt2]]</p>
+
+<p>(c) Given the equation \(P = \rho g h\) where: \(\ P\) is pressure in \(Pa\)</p>
+<p style="margin-left:260px">\(\rho\) is density in \(kg/m^3\)</p>
+<p style="margin-left:260px">\(g\) is the gravitational constant in \(N/kg\)</p>
+<p style="margin-left:260px">\(h\) is the depth of the liquid in \(m\)</p>
+
+<p><br>Calculate an experimental value for the gravitational constant.</p>
+
+<p align="right">[[input:ans3]] \(N/kg\) [[validation:ans3]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt3]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>6</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2018080600</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[Gval:rand_with_prohib(965,995,[977,980,981,983,991])/100;
+Mval:rand_with_prohib(81,129,[83,89,97,100,101,103,107,109,113,127])*300;
+Fval:Gval*Mval;
+
+factList:[];
+prime:2;
+num:Mval;
+while num>1 do (if primep(prime) and integerp(num/prime) then (factList:append(factList, [prime]), num:num/prime) else (prime:prime+1));
+
+factList:random_permutation(factList);
+LWlist:[pop(factList)*pop(factList),pop(factList)*pop(factList)];
+
+Lval:max(first(LWlist),second(LWlist));
+Lval:Lval/10^floor(log(Lval)/log(10));
+
+Wval:min(first(LWlist),second(LWlist));
+Wval:Wval/10^(floor(log(Wval)/log(10))+1);
+
+Hval:pop(factList)*pop(factList);
+Hval:Hval/10^(floor(log(Hval)/log(10))-1);
+
+Pval:Fval/(Lval*Wval);
+RHOval:Mval/(Lval*Wval*Hval);]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>\(g={@Gval@}, F={@Fval@}, m={@mval@}\)</p>
+<p>\(w={@Wval@}, l={@Lval@}, h={@Hval@}\)</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>float(Pval/1000)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>RHOval</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>float(Gval)</tans>
+      <boxsize>10</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+/* Node 3: Incorrect unit conversion (answer out by a power of 10) (1) */
+node3_test: if float(floor(decimalplaces(log(ans1/Pval)/log(10),8)))=float(decimalplaces(log(ans1/Pval)/log(10),8)) then 1 else 0;
+
+/* Node 4: Solved using incorrect equation (P=FA or P=A/F) (1) */
+node4_test: if significantfigures(ans1,3)=significantfigures((Fval/1000)*(Lval*Wval),3) or significantfigures(ans1,3)=significantfigures((Lval*Wval)/(Fval/1000),3) then 1 else 0;
+
+/* Node 5: Combined node3 and node4 errors */
+node5_test: if float(floor(decimalplaces(log(significantfigures(ans1,3)/significantfigures((Fval/1000)*(Lval*Wval),3))/log(10),8)))=float(decimalplaces(log(significantfigures(ans1,3)/significantfigures((Fval/1000)*(Lval*Wval),3))/log(10),8)) or float(floor(decimalplaces(log(significantfigures(ans1,3)/significantfigures((Lval*Wval)/(Fval/1000),3))/log(10),8)))=float(decimalplaces(log(significantfigures(ans1,3)/significantfigures((Lval*Wval)/(Fval/1000),3))/log(10),8)) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>Pval/1000</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The equation relating pressure, force and surface area is: \(P \ [Pa] = \frac{F \ [N]}{A \ [m^2]}\)</p>
+<p>Using the values given: 
+<p>\(P = \frac{{@Fval@}}{{@if integerp(Wval) then Wval else float(Wval)@} \times {@if integerp(Lval) then Lval else float(Lval)@}}\)</p>
+<p>\(P = {@Fval/(Wval*Lval)@}Pa\)</p>
+<p>\(P = {@float(Fval/(Wval*Lval*1000))@}kPa\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have used the right equation to relate pressure, force and surface area.
+<br>However, you have not converted the units of pressure into \(kPa\) correctly.
+<br>Remember, \(1kPa = 1000Pa\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly converted the units of pressure into \(kPa\).
+<br>However, you have not used the right equation to relate pressure, force and surface area.
+<br>Remember, \(P \ [Pa] = \frac{F \ [N]}{A \ [m^2]}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have not used the right equation to relate pressure, force and surface area.
+<br>Remember, \(P \ [Pa] = \frac{F \ [N]}{A \ [m^2]}\)</p>
+<p><br>You have also not converted the units of pressure into \(kPa\) correctly.
+<br>Remember, \(1kPa = 1000Pa\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+/* Node 3: Incorrect unit conversion (answer out by a power of 10) (1) */
+node3_test: if float(floor(decimalplaces(log(ans2/RHOval)/log(10),8)))=float(decimalplaces(log(ans2/RHOval)/log(10),8)) then 1 else 0;
+
+/* Node 4: Solved using incorrect equation (p=m*V or P=V*m) (1) */
+node4_test: if significantfigures(ans2,3)=significantfigures(Mval*(Lval*Wval*Hval),3) or significantfigures(ans2,3)=significantfigures((Lval*Wval*Hval)/Mval,3) then 1 else 0;
+
+/* Node 5: Combined node3 and node4 errors */
+node5_test: if float(floor(decimalplaces(log(significantfigures(ans2,3)/significantfigures(Mval*(Lval*Wval*Hval),3))/log(10),8)))=float(decimalplaces(log(significantfigures(ans2,3)/significantfigures(Mval*(Lval*Wval*Hval),3))/log(10),8)) or float(floor(decimalplaces(log(significantfigures(ans2,3)/significantfigures((Lval*Wval*Hval)/Mval,3))/log(10),8)))=float(decimalplaces(log(significantfigures(ans2,3)/significantfigures((Lval*Wval*Hval)/Mval,3))/log(10),8)) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>RHOval</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>The equation relating density, mass and volume area is: \(\rho \ [kg/m^3] = \frac{m \ [kg]}{V \ [m^3]}\)</p>
+<p>Using the values given: 
+<p>\(\rho = \frac{{@float(Mval/1000)@} \times 1000}{{@if integerp(Wval) then Wval else float(Wval)@} \times {@if integerp(Lval) then Lval else float(Lval)@} \times {@Hval@}}\)</p>
+<p>\(\rho = \frac{{@Mval@}}{{@float(Wval*Lval*Hval)@}}\)</p>
+<p>\(\rho = {@Mval/(Wval*Lval*Hval)@}kg/m^3\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have used the right equation to relate density, mass and volume.
+<br>However, you have not converted the units of mass into \(kg\) correctly.
+<br>Remember, \(1t = 1000kg\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly converted the units of mass into \(kg\).
+<br>However, you have not used the right equation to relate density, mass and volume.
+<br>Remember, \(\rho \ [kg/m^3] = \frac{m \ [kg]}{V \ [m^3]}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt2-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>You have not used the right equation to relate density, mass and volume.
+<br>Remember,  \(\rho \ [kg/m^3] = \frac{m \ [kg]}{V \ [m^3]}\)</p>
+<p><br>You have also not converted the units of mass into \(kg\) correctly.
+<br>Remember, \(1t = 1000kg\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check correct answer */
+/* Node 2: Worked solution */
+/* Node 3: If (a) or (b) incorrect, check for ecf (2) */
+node3_test: if (notequal(float(ans1),float(Pval/1000)) or notequal(float(ans2),float(RHOval))) and (float(ans3)=float((ans1*1000)/(ans2*Hval))) then 1 else 0;
+
+/* Node 4: Incorrect unit conversion of (a) (1) */
+node4_test: if float(floor(decimalplaces(log(ans3*ans2*Hval/ans1)/log(10),8)))=float(decimalplaces(log(ans3*ans2*Hval/ans1)/log(10),8)) then 1 else 0;
+
+/* Node 5: Incorrect rearranging of equation (g=Pph or g=ph/P) (1) */
+node5_test: if significantfigures(ans3,3)=significantfigures(ans1*ans2*Hval,3) or significantfigures(ans3,3)=significantfigures((ans2*Hval)/ans1,3) then 1 else 0;
+
+/* Node 6: Combined node4 and node5 errors */
+node6_test: if float(floor(decimalplaces(log(significantfigures(ans3,3)/significantfigures(ans1*ans2*Hval,3))/log(10),8)))=float(decimalplaces(log(significantfigures(ans3,3)/significantfigures(ans1*ans2*Hval,3))/log(10),8)) or float(floor(decimalplaces(log(significantfigures(ans3,3)/significantfigures(ans2*Hval/ans1,3))/log(10),8)))=float(decimalplaces(log(significantfigures(ans3,3)/significantfigures(ans2*Hval/ans1,3))/log(10),8)) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>Gval</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p>Rearranging the given equation for \(g\) gives: \(g \ [N/kg] = \frac{P \ [Pa]}{\rho \ [kg/m^3] \times h \ [m]}\)</p>
+<p>Using the values obtained in parts (a) and (b):</p>
+<p>\(g = \frac{{@float(Pval/1000)@} \times 1000}{{@RHOval@} \times {@Hval@}}\)</p>
+<p>\(g = \frac{{@Pval@}}{{@RHOval*Hval@}}\)</p>
+<p>\(g = {@Gval@}\)</p>
+
+<p><br>Note that the real world value of \(g\) is approximately \(9.8N/m\).</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly rearranged the equation to find \(g\) and converted your answer from (a) into \(Pa\)
+<br>However, since your previous answers were not completely correct, your answer for \(g\) is not accurate.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node4_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly rearranged the equation to find \(g\).
+<br>However, you have not converted your answer from (a) into \(Pa\) correctly.
+<br>Remember, \(1kPa = 1000Pa\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt3-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node5_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have correctly converted your answer from (a) into \(Pa\)
+<br>However, you have not rearranged the equation given to find the right equation for \(g\).
+<br>\(P = \rho g h \Rightarrow g = \frac{P}{\rho h}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>5</falsenextnode>
+        <falseanswernote>prt3-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node6_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.0000000</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>You have not converted your answer from (a) into \(Pa\) correctly.
+<br>Remember, \(1kPa = 1000Pa\)</p>
+<p>You have also not rearranged the equation given to find the right equation for \(g\).
+<br>\(P = \rho g h \Rightarrow g = \frac{P}{\rho h}\)</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt3-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+</quiz>

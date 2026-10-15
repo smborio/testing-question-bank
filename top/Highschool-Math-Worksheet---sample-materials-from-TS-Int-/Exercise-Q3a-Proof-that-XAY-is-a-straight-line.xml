@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Exercise Q3a: Proof that  XAY is a straight line</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<ol>
+<li>
+<p>
+Arrange the steps in the correct order to prove the statement below. 
+Make sure your proof logically connects each step, starting with the assumptions 
+and ending with the conclusion.
+</p>
+
+<p><strong>Theorem:</strong> {@thm@}</p>
+
+<br>
+
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-2, -8, 7, 4],
+    axis: false,
+    visible:false,
+    showCopyright: false,
+    showNavigation: false,
+    keepAspectRatio: true
+});
+
+// Define triangle vertices
+var A = board.create('point', [0, 0], {name:'A', size:1});
+var B = board.create('point', [6, 0], {name:'B', size:1});
+var C = board.create('point', [0, -6], {name:'C', size:1});
+
+// Draw triangle sides
+var lineAB = board.create('line', [A, B], {straightFirst:false, straightLast:false, strokeWidth:1});
+var lineAC = board.create('line', [A, C], {straightFirst:false, straightLast:false, strokeWidth:1});
+var lineBC = board.create('line', [B, C], {straightFirst:false, straightLast:false, strokeWidth:1});
+
+// Mark right angle at vertex A
+board.create('angle', [C, A, B], {
+    radius:0.7, 
+    name:' ', 
+    type:'sector', 
+    fillColor:'lightgray', 
+    fillOpacity:0.5
+});
+
+
+// Mark right angle at vertex C
+board.create('angle', [B,C,A], {
+    radius:0.7, 
+    name:' ', 
+    type:'sector', 
+    fillColor:'red', 
+    fillOpacity:0.5
+});
+
+
+// Mark right angle at vertex B
+board.create('angle', [A,B,C], {
+    radius:0.7, 
+    name:' ', 
+    type:'sector', 
+    fillColor:'green', 
+    fillOpacity:0.5
+});
+
+
+// Label angles of the triangle
+// board.create('text', [0, -5, '{#angle_BCA#}'+'°']);
+board.create('text', [5, -0.2, '{#angle_CBA#}'+'°']);
+
+// Line passing through A using three points
+var X = board.create('point', [-4, -2], {name:'X', visible:true, size:1}); 
+var Y = board.create('point', [4, 2], {name:'Y', visible:true, size:1});  
+
+var lineXY = board.create('line', [X, Y], {
+    strokeColor:'red',
+    strokeWidth:1
+});
+
+// Label angles along XY line
+board.create('text', [-1, -1, '{#angle_CAX#}'+'°']);
+// board.create('text', [1, 0.3, '{#angle_YAB#}'+'°']);
+
+[[/jsxgraph]]
+
+<br>
+[[parsons input="ans1" log="true"]]
+{# parsons_encode(proof_steps) #}
+[[/parsons]]
+
+<p>
+[[input:ans1]] [[validation:ans1]] [[feedback:prt1]]
+</p>
+</li>
+
+<li>
+Calculate the values of \( \angle BCA \) and \( \angle BAY \).
+<ul>
+<li> \( \angle BCA = \)  [[input:ans2]] [[validation:ans2]] [[feedback:prt2]] </li>
+<br>
+<li>  \( \angle BAY =\)  [[input:ans3]] [[validation:ans3]] [[feedback:prt3]]</li>
+</ul>
+</li>
+
+
+</li>
+</ol>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text>[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-2, -8, 7, 4],
+    axis: false,
+    visible:false,
+    showCopyright: false,
+    showNavigation: false,
+    keepAspectRatio: true
+});
+
+// Define triangle vertices
+var A = board.create('point', [0, 0], {name:'A', size:1});
+var B = board.create('point', [6, 0], {name:'B', size:1});
+var C = board.create('point', [0, -6], {name:'C', size:1});
+
+// Draw triangle sides
+var lineAB = board.create('line', [A, B], {straightFirst:false, straightLast:false, strokeWidth:1});
+var lineAC = board.create('line', [A, C], {straightFirst:false, straightLast:false, strokeWidth:1});
+var lineBC = board.create('line', [B, C], {straightFirst:false, straightLast:false, strokeWidth:1});
+
+// Mark right angle at vertex A
+board.create('angle', [C, A, B], {
+    radius:0.7, 
+    name:' ', 
+    type:'sector', 
+    fillColor:'lightgray', 
+    fillOpacity:0.5
+});
+
+
+// Mark right angle at vertex C
+board.create('angle', [B,C,A], {
+    radius:0.7, 
+    name:' ', 
+    type:'sector', 
+    fillColor:'red', 
+    fillOpacity:0.5
+});
+
+
+// Mark right angle at vertex B
+board.create('angle', [A,B,C], {
+    radius:0.7, 
+    name:' ', 
+    type:'sector', 
+    fillColor:'green', 
+    fillOpacity:0.5
+});
+
+
+// Label angles of the triangle
+board.create('text', [0, -5, '{#angle_BCA#}'+'°']);
+board.create('text', [5, -0.2, '{#angle_CBA#}'+'°']);
+
+// Line passing through A using three points
+var X = board.create('point', [-4, -2], {name:'X', visible:true, size:1}); 
+var Y = board.create('point', [4, 2], {name:'Y', visible:true, size:1});  
+
+var lineXY = board.create('line', [X, Y], {
+    strokeColor:'red',
+    strokeWidth:1
+});
+
+// Label angles along XY line
+board.create('text', [-1, -1, '{#angle_CAX#}'+'°']);
+board.create('text', [1, 0.3, '{#angle_YAB#}'+'°']);
+[[/jsxgraph]]</text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* Load proof library */
+stack_include_contrib("prooflib.mac");
+
+/****************************************************************/
+/* Random angle generation */
+angle_BCA : 10 + rand_with_step(30,50,5);
+angle_CBA : 90 - angle_BCA;
+
+angle_YAB : 10 + rand_with_step(10,40,1);
+angle_CAX : 90 - angle_YAB;
+
+/****************************************************************/
+/* Theorem statement */
+thm: "Show that \\(XAY\\) is a straight line.";
+
+/****************************************************************/
+/* Proof steps */ 
+proof_steps: [ ["assumption", "In triangle \\(ABC\\), we know \\(\\angle CBA + \\angle BCA = 90^\\circ\\)."], 
+
+["step1", "At point A, the right angle is adjacent to \\(\\angle CAX\\) and \\(\\angle YAB\\)."], 
+
+["step2", "By construction, \\(\\angle CAX + \\angle YAB = 90^\\circ\\)."], 
+
+["step3", "Therefore, around point A: \\(\\angle BAC + \\angle CAX + \\angle YAB = 180^\\circ\\)."], 
+
+["conclusion", "Since \\(\\angle XAY = 180^\\circ\\), it follows that \\(XAY\\) lies on a straight line (sum of angles on a straight line add up to \\(180^\\circ\\))."] ];
+
+/****************************************************************/
+/* Correct proof order */
+proof_ans: proof(proof_iff("assumption","step1","step2"),"step3","conclusion");
+
+/* Randomize steps for Parsons-style task */
+proof_steps: random_permutation(proof_steps);
+
+/* Generate alternatives for STACK marking */
+tal: proof_alternatives(proof_ans);
+len1: length(tal);
+
+/* Flatten proofs for feedback display */
+tas: setify(map(proof_flatten, tal));]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="html">
+      <text>{@ map(first, proof_steps) @}</text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>parsons</type>
+      <tans>[proof_ans, proof_steps]</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>angle_BCA </tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>angle_YAB </tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>sa: parsons_decode(ans1);
+[pd, saa]:proof_assessment(sa, proof_alternatives(proof_ans));</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>pd</sans>
+        <tans>0</tans>
+        <testoptions/>
+        <quiet>1</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>
+{@proof_assessment_display(saa, proof_steps)@}
+</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>angle_BCA </tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>angle_YAB</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>263493547</deployedseed>
+    <deployedseed>2080086703</deployedseed>
+    <deployedseed>2119685624</deployedseed>
+    <deployedseed>2065386162</deployedseed>
+    <deployedseed>1272837801</deployedseed>
+    <deployedseed>2105511895</deployedseed>
+    <qtest>
+      <testcase>1</testcase>
+      <description>Test case assuming the teacher's input gets full marks.</description>
+      <testinput>
+        <name>ans1</name>
+        <value>apply(parsons_answer,[tal[1], proof_steps])</value>
+      </testinput>
+      <expected>
+        <name>prt1</name>
+        <expectedscore>1.0000000</expectedscore>
+        <expectedpenalty>0.0000000</expectedpenalty>
+        <expectedanswernote>prt1-1-T</expectedanswernote>
+      </expected>
+    </qtest>
+    <qtest>
+      <testcase>2</testcase>
+      <description><![CDATA[One incorret answer, based on "sorting" the correct answer keys.]]></description>
+      <testinput>
+        <name>ans1</name>
+        <value>apply(parsons_answer,[wa1, proof_steps])</value>
+      </testinput>
+      <expected>
+        <name>prt1</name>
+        <expectedscore>0.0000000</expectedscore>
+        <expectedpenalty>0.1000000</expectedpenalty>
+        <expectedanswernote>prt1-3-F</expectedanswernote>
+      </expected>
+    </qtest>
+    <qtest>
+      <testcase>3</testcase>
+      <description>If direction</description>
+      <testinput>
+        <name>ans1</name>
+        <value>apply(parsons_answer,[proof1, proof_steps])</value>
+      </testinput>
+      <expected>
+        <name>prt1</name>
+        <expectedscore>0.3000000</expectedscore>
+        <expectedpenalty>0.1000000</expectedpenalty>
+        <expectedanswernote>prt1-2-T</expectedanswernote>
+      </expected>
+    </qtest>
+    <qtest>
+      <testcase>4</testcase>
+      <description>Only if direction</description>
+      <testinput>
+        <name>ans1</name>
+        <value>apply(parsons_answer,[proof2, proof_steps])</value>
+      </testinput>
+      <expected>
+        <name>prt1</name>
+        <expectedscore>0.3000000</expectedscore>
+        <expectedpenalty>0.1000000</expectedpenalty>
+        <expectedanswernote>prt1-3-T</expectedanswernote>
+      </expected>
+    </qtest>
+  </question>
+</quiz>

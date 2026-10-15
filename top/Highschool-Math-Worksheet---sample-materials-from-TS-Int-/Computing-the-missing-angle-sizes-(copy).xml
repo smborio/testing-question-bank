@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>Computing the missing angle sizes (copy)</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p><strong>Background Notes:</strong></p>
+<ul>
+  <li>In a triangle, each side is opposite an angle: side <code>a</code> opposite ∠A, side <code>b</code> opposite ∠B, side <code>c</code> opposite ∠C.</li>
+  <li>The <em>Sine Rule</em> helps us find missing sides or angles:
+    \[
+    \frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C}
+    \]
+  </li>
+  <li>We will use this rule to find the missing side.</li>
+</ul>
+
+<p><strong>Step-by-Step Guide:</strong></p>
+<ol>
+  <li>First, write down what is given: two angles and one side.</li>
+  <li>Identify the side and angle pairs (side <code>a</code> with ∠A, side <code>b</code> with ∠B).</li>
+  <li>Apply the sine rule:
+    \[
+    \frac{a}{\sin A} = \frac{b}{\sin B}
+    \]
+  </li>
+  <li>Rearrange:
+    \[
+    b = \frac{a \cdot \sin B}{\sin A}
+    \]
+  </li>
+</ol>
+
+<hr>
+
+<p><strong>Now try this problem:</strong></p>
+
+<p>In the triangle below:</p>
+<ul>
+  <li>∠A = {@A@}°</li>
+  <li>∠B = {@B@}°</li>
+  <li>∠C = {@C@}°</li>
+  <li>Side a = {@a@} units (opposite ∠A)</li>
+</ul>
+
+<p>Use the Sine Rule to find the length of side \(b\) (opposite ∠B).</p>
+
+<p><strong>Give your answer correct to <b>3 decimal places.</b></strong></p>
+
+<p>Side \( b = \) [[input:ans1]] units </p>
+<p> [[validation:ans1]][[feedback:prt1]]</p>
+
+
+[[jsxgraph]]
+var board = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-8, 12, 16, -5],
+    keepAspectRatio: false,
+    showCopyright: false,
+    showNavigation: false,
+    axis: false
+});
+
+// Triangle vertices
+const A = board.create('point', [-1, -1], { name: 'A', size: 2, fixed: true });
+const B = board.create('point', [-5,10], { name: 'B', size: 2, fixed: true });
+const C = board.create('point', [12,5], { name: 'C', size: 2, fixed: true });
+
+// Draw triangle
+board.create('polygon', [A,B,C], {
+    borders: { strokeWidth: 1, strokeColor: 'blue' },
+    fillColor: 'none'
+});
+
+// Angle labels
+board.create('text', [0, 0.5, '{#A#}°'], {fontSize: 12});
+board.create('text', [-4, 9, '{#B#}°'], {fontSize: 12});
+board.create('text', [10, 5,'{#C#}°'], {fontSize: 12});
+
+// Side labels
+// side a = BC (opposite ∠A)
+board.create('text', [3, 8, ' {#a#}'], {fontSize: 12});
+// side b = AC (opposite ∠B), unknown
+board.create('text', [5, 1, 'b = ?'], {fontSize: 12});
+[[/jsxgraph]]
+
+<br>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text><![CDATA[<h3>Worked Solution</h3>
+
+<p>We are given:</p>
+<ul>
+  <li>∠A = {@A@}°</li>
+  <li>∠B = {@B@}°</li>
+  <li>∠C = {@C@}°</li>
+  <li>Side a = {@a@} units (opposite ∠A)</li>
+</ul>
+
+<p>We want to find side \( b \), which is opposite ∠B.</p>
+
+<p><strong>Step 1:</strong> Recall the <em>Sine Rule</em>: \( \displaystyle \frac{a}{\sin A} = \frac{b}{\sin B} = \frac{c}{\sin C} \) </p>
+
+<p><strong>Step 2:</strong> Use only the pairs involving \(a\) and \(b\):  \(\displaystyle \frac{a}{\sin A} = \frac{b}{\sin B} \) </p>
+
+<p><strong>Step 3:</strong> Rearrange to make \(b\) the subject:  \(\displaystyle  b = \frac{a \cdot \sin B}{\sin A} \) </p>
+
+<p><strong>Step 4:</strong> Substitute the known values: \( \displaystyle b = \frac{{@a@} \cdot \sin({@B@}°)}{\sin({@A@}°)} \) </p>
+
+<p><strong>Step 5:</strong> Calculate: \( b = {@ta@} \text{ units} \) (correct to 3 Decimal places) </p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2025073100</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* Generate two random angles */
+C: 20 + rand(40);  /* between 20 and 60 */
+B: 30 + rand(50);  /* between 30 and 80 */
+A: 180 - (B + C);  /* ensure valid triangle */
+
+/* Given side */
+a: 10;  /* opposite angle A */
+
+/* Use sine rule: a/sin(A) = b/sin(B) = c/sin(C) */
+b: a*sin(B*%pi/180)/sin(A*%pi/180);  /* opposite angle B */
+c: a*sin(C*%pi/180)/sin(A*%pi/180);  /* opposite angle C */
+
+/* Correct answer (let’s ask for side b) */
+ta: decimalplaces(float(b),3);</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<h3>Worked solution</h3>
+<p>We are finding the hypotenuse {@letters@} of a right-angled triangle.</p>
+<p>Angle 1: {@A@}</p>
+<p>Angle 2: {@B@}</p>
+<p>Angle 3: {@C@} </p>
+<p>sum : {@A+B+C@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="html">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>none</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>numerical</type>
+      <tans>ta</tans>
+      <boxsize>4</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text/>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description>Checks for correct hypoteneus.</description>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>395591570</deployedseed>
+    <deployedseed>1444284842</deployedseed>
+    <deployedseed>163815387</deployedseed>
+    <deployedseed>191104791</deployedseed>
+    <deployedseed>1182138259</deployedseed>
+    <deployedseed>81487484</deployedseed>
+    <deployedseed>862084172</deployedseed>
+    <deployedseed>818854439</deployedseed>
+    <deployedseed>420411581</deployedseed>
+    <deployedseed>1957180794</deployedseed>
+    <deployedseed>1419059299</deployedseed>
+  </question>
+</quiz>

@@ -1,0 +1,2087 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="stack">
+    <name>
+      <text>8.2 Venn Diagrams and Set Notation (1)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>(a) Fill in the set notation to describe the highlighted region in this Venn diagram.</p>
+
+[[jsxgraph height="300px" width="300px"]]
+    
+    // CONTROLS
+    
+    var backgroundColor = "white";
+    var highlightColor = "#ffef52";
+
+    var factorLabelsOn = true;
+    var factorAName = "\\(A\\)";
+    var factorBName = "\\(B\\)";
+    var factorCName = "\\(C\\)";
+    var factorFontSize = 18;
+
+    var highList = {#aVenn#}
+
+    // SCRIPT
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-6, 6, 6, -6],
+      keepaspectratio:true,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    var centerStyle = {
+      fixed:true,
+      visible:false
+    };
+    var centerA = board.create("point", [0,1.732], centerStyle);
+    var centerB = board.create("point", [-1.5,-0.866], centerStyle);
+    var centerC = board.create("point", [1.5,-0.866], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+    };
+
+    var circleA = board.create("circle", [centerA,3], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+    var circleC = board.create("circle", [centerC,3], circleStyle);
+
+    var labelStyle = {
+      visible:factorLabelsOn,
+      fontSize:factorFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle"
+    };
+
+    var labelA = board.create("text",[-2.3,4.5,factorAName], labelStyle);
+    var labelB = board.create("text",[-3.6,-4,factorBName], labelStyle);
+    var labelC = board.create("text",[4.2,-4,factorCName], labelStyle);
+
+    var interStyle = {
+      visible:false,
+      fixed:true
+    };
+    var outerInterAB = board.create("intersection", [circleA, circleB, 0], interStyle);
+    var outerInterAC = board.create("intersection", [circleA, circleC, 1], interStyle);
+    var outerInterBC = board.create("intersection", [circleB, circleC, 0], interStyle);
+
+    var AnBnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:3
+    };
+
+    if (highList[7]) {
+      AnBnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnBnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerC, centerA, centerB], AnBnCfillStyle);
+    board.create("sector", [centerA, centerB, centerC], AnBnCfillStyle);
+    board.create("sector", [centerB, centerC, centerA], AnBnCfillStyle);
+
+    var AnBfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var AnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var BnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    if (highList[4]) {
+      AnBfillStyle.fillColor = highlightColor;
+    } else {
+      AnBfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[5]) {
+      AnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnCfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[6]) {
+      BnCfillStyle.fillColor = highlightColor;
+    } else {
+      BnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAB, centerC], AnBfillStyle);
+    board.create("sector", [centerB, centerC, outerInterAB], AnBfillStyle);
+
+    board.create("sector", [centerC, outerInterAC, centerB], AnCfillStyle);
+    board.create("sector", [centerA, centerB, outerInterAC], AnCfillStyle);
+
+    board.create("sector", [centerB, outerInterBC, centerA], BnCfillStyle);
+    board.create("sector", [centerC, centerA, outerInterBC], BnCfillStyle);
+
+  var AfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var BfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var CfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    if (highList[1]) {
+      AfillStyle.fillColor = highlightColor;
+    } else {
+      AfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[2]) {
+      BfillStyle.fillColor = highlightColor;
+    } else {
+      BfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[3]) {
+      CfillStyle.fillColor = highlightColor;
+    } else {
+      CfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAC, outerInterAB], AfillStyle);
+    board.create("sector", [centerB, outerInterAB, outerInterBC], BfillStyle);
+    board.create("sector", [centerC, outerInterBC, outerInterAC], CfillStyle);
+
+    var backStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2,
+        strokeColor:"black"
+      },
+      vertices:{
+        fixed:true,
+        visible:false
+      },
+      fillOpacity:1,
+      layer:0
+    };
+
+    if (highList[0]) {
+      backStyle.fillColor = highlightColor;
+    } else {
+      backStyle.fillColor = backgroundColor;
+    }
+
+    var background = board.create("polygon", [[-5.2,5.8],[5.2,5.8],[5.2,-5.2],[-5.2,-5.2]], backStyle);
+
+[[/jsxgraph]]
+
+<p align="right">[[input:ans1]] \(\cap\) [[input:ans2]] \(\cap\) [[input:ans3]] [[validation:ans1]] [[validation:ans2]][[validation:ans3]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt1]]</p><p><br></p><p><br></p>
+
+<p>(b) Select the Venn diagram in which the region \(({@sconcat(first(secOrder),if firstNot=0 or secondNot=0 then "'" else "", first(opOrder),second(secOrder),if firstNot=1 or secondNot=1 then "'" else "",")",second(opOrder),"(",first(secOrder),if firstNot=2 or secondNot=2 then "'" else "",first(opOrder),third(secOrder),if firstNot=3 or secondNot=3 then "'" else "")@})\) is shaded.</p>
+
+<p><br>(i)</p>
+[[jsxgraph height="150px" width="150px"]]
+    
+    // CONTROLS
+    
+    var backgroundColor = "white";
+    var highlightColor = "pink";
+
+    var factorLabelsOn = true;
+    var factorAName = "\\(A\\)";
+    var factorBName = "\\(B\\)";
+    var factorCName = "\\(C\\)";
+    var factorFontSize = 10;
+
+    var highList = {#first(vennList)#}
+
+    // SCRIPT
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-6, 6, 6, -6],
+      keepaspectratio:true,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    var centerStyle = {
+      fixed:true,
+      visible:false
+    };
+    var centerA = board.create("point", [0,1.732], centerStyle);
+    var centerB = board.create("point", [-1.5,-0.866], centerStyle);
+    var centerC = board.create("point", [1.5,-0.866], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+    };
+
+    var circleA = board.create("circle", [centerA,3], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+    var circleC = board.create("circle", [centerC,3], circleStyle);
+
+    var labelStyle = {
+      visible:factorLabelsOn,
+      fontSize:factorFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle"
+    };
+
+    var labelA = board.create("text",[-2.3,4.5,factorAName], labelStyle);
+    var labelB = board.create("text",[-3.2,-4.4,factorBName], labelStyle);
+    var labelC = board.create("text",[4,-4.4,factorCName], labelStyle);
+
+    var interStyle = {
+      visible:false,
+      fixed:true
+    };
+    var outerInterAB = board.create("intersection", [circleA, circleB, 0], interStyle);
+    var outerInterAC = board.create("intersection", [circleA, circleC, 1], interStyle);
+    var outerInterBC = board.create("intersection", [circleB, circleC, 0], interStyle);
+
+    var AnBnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:3
+    };
+
+    if (highList[7]) {
+      AnBnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnBnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerC, centerA, centerB], AnBnCfillStyle);
+    board.create("sector", [centerA, centerB, centerC], AnBnCfillStyle);
+    board.create("sector", [centerB, centerC, centerA], AnBnCfillStyle);
+
+    var AnBfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var AnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var BnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    if (highList[4]) {
+      AnBfillStyle.fillColor = highlightColor;
+    } else {
+      AnBfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[5]) {
+      AnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnCfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[6]) {
+      BnCfillStyle.fillColor = highlightColor;
+    } else {
+      BnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAB, centerC], AnBfillStyle);
+    board.create("sector", [centerB, centerC, outerInterAB], AnBfillStyle);
+
+    board.create("sector", [centerC, outerInterAC, centerB], AnCfillStyle);
+    board.create("sector", [centerA, centerB, outerInterAC], AnCfillStyle);
+
+    board.create("sector", [centerB, outerInterBC, centerA], BnCfillStyle);
+    board.create("sector", [centerC, centerA, outerInterBC], BnCfillStyle);
+
+  var AfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var BfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var CfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    if (highList[1]) {
+      AfillStyle.fillColor = highlightColor;
+    } else {
+      AfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[2]) {
+      BfillStyle.fillColor = highlightColor;
+    } else {
+      BfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[3]) {
+      CfillStyle.fillColor = highlightColor;
+    } else {
+      CfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAC, outerInterAB], AfillStyle);
+    board.create("sector", [centerB, outerInterAB, outerInterBC], BfillStyle);
+    board.create("sector", [centerC, outerInterBC, outerInterAC], CfillStyle);
+
+    var backStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2,
+        strokeColor:"black"
+      },
+      vertices:{
+        fixed:true,
+        visible:false
+      },
+      fillOpacity:1,
+      layer:0
+    };
+
+    if (highList[0]) {
+      backStyle.fillColor = highlightColor;
+    } else {
+      backStyle.fillColor = backgroundColor;
+    }
+
+    var background = board.create("polygon", [[-5.2,5.8],[5.2,5.8],[5.2,-5.2],[-5.2,-5.2]], backStyle);
+
+[[/jsxgraph]]
+
+<p><br>(ii)</p>
+[[jsxgraph height="150px" width="150px"]]
+    
+    // CONTROLS
+    
+    var backgroundColor = "white";
+    var highlightColor = "pink";
+
+    var factorLabelsOn = true;
+    var factorAName = "\\(A\\)";
+    var factorBName = "\\(B\\)";
+    var factorCName = "\\(C\\)";
+    var factorFontSize = 10;
+
+    var highList = {#second(vennList)#}
+
+    // SCRIPT
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-6, 6, 6, -6],
+      keepaspectratio:true,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    var centerStyle = {
+      fixed:true,
+      visible:false
+    };
+    var centerA = board.create("point", [0,1.732], centerStyle);
+    var centerB = board.create("point", [-1.5,-0.866], centerStyle);
+    var centerC = board.create("point", [1.5,-0.866], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+    };
+
+    var circleA = board.create("circle", [centerA,3], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+    var circleC = board.create("circle", [centerC,3], circleStyle);
+
+    var labelStyle = {
+      visible:factorLabelsOn,
+      fontSize:factorFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle"
+    };
+
+    var labelA = board.create("text",[-2.3,4.5,factorAName], labelStyle);
+    var labelB = board.create("text",[-3.2,-4.4,factorBName], labelStyle);
+    var labelC = board.create("text",[4,-4.4,factorCName], labelStyle);
+
+    var interStyle = {
+      visible:false,
+      fixed:true
+    };
+    var outerInterAB = board.create("intersection", [circleA, circleB, 0], interStyle);
+    var outerInterAC = board.create("intersection", [circleA, circleC, 1], interStyle);
+    var outerInterBC = board.create("intersection", [circleB, circleC, 0], interStyle);
+
+    var AnBnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:3
+    };
+
+    if (highList[7]) {
+      AnBnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnBnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerC, centerA, centerB], AnBnCfillStyle);
+    board.create("sector", [centerA, centerB, centerC], AnBnCfillStyle);
+    board.create("sector", [centerB, centerC, centerA], AnBnCfillStyle);
+
+    var AnBfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var AnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var BnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    if (highList[4]) {
+      AnBfillStyle.fillColor = highlightColor;
+    } else {
+      AnBfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[5]) {
+      AnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnCfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[6]) {
+      BnCfillStyle.fillColor = highlightColor;
+    } else {
+      BnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAB, centerC], AnBfillStyle);
+    board.create("sector", [centerB, centerC, outerInterAB], AnBfillStyle);
+
+    board.create("sector", [centerC, outerInterAC, centerB], AnCfillStyle);
+    board.create("sector", [centerA, centerB, outerInterAC], AnCfillStyle);
+
+    board.create("sector", [centerB, outerInterBC, centerA], BnCfillStyle);
+    board.create("sector", [centerC, centerA, outerInterBC], BnCfillStyle);
+
+  var AfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var BfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var CfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    if (highList[1]) {
+      AfillStyle.fillColor = highlightColor;
+    } else {
+      AfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[2]) {
+      BfillStyle.fillColor = highlightColor;
+    } else {
+      BfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[3]) {
+      CfillStyle.fillColor = highlightColor;
+    } else {
+      CfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAC, outerInterAB], AfillStyle);
+    board.create("sector", [centerB, outerInterAB, outerInterBC], BfillStyle);
+    board.create("sector", [centerC, outerInterBC, outerInterAC], CfillStyle);
+
+    var backStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2,
+        strokeColor:"black"
+      },
+      vertices:{
+        fixed:true,
+        visible:false
+      },
+      fillOpacity:1,
+      layer:0
+    };
+
+    if (highList[0]) {
+      backStyle.fillColor = highlightColor;
+    } else {
+      backStyle.fillColor = backgroundColor;
+    }
+
+    var background = board.create("polygon", [[-5.2,5.8],[5.2,5.8],[5.2,-5.2],[-5.2,-5.2]], backStyle);
+
+[[/jsxgraph]]
+
+<p><br>(iii)</p>
+[[jsxgraph height="150px" width="150px"]]
+    
+    // CONTROLS
+    
+    var backgroundColor = "white";
+    var highlightColor = "pink";
+
+    var factorLabelsOn = true;
+    var factorAName = "\\(A\\)";
+    var factorBName = "\\(B\\)";
+    var factorCName = "\\(C\\)";
+    var factorFontSize = 10;
+
+    var highList = {#third(vennList)#}
+
+    // SCRIPT
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-6, 6, 6, -6],
+      keepaspectratio:true,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    var centerStyle = {
+      fixed:true,
+      visible:false
+    };
+    var centerA = board.create("point", [0,1.732], centerStyle);
+    var centerB = board.create("point", [-1.5,-0.866], centerStyle);
+    var centerC = board.create("point", [1.5,-0.866], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+    };
+
+    var circleA = board.create("circle", [centerA,3], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+    var circleC = board.create("circle", [centerC,3], circleStyle);
+
+    var labelStyle = {
+      visible:factorLabelsOn,
+      fontSize:factorFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle"
+    };
+
+    var labelA = board.create("text",[-2.3,4.5,factorAName], labelStyle);
+    var labelB = board.create("text",[-3.2,-4.4,factorBName], labelStyle);
+    var labelC = board.create("text",[4,-4.4,factorCName], labelStyle);
+
+    var interStyle = {
+      visible:false,
+      fixed:true
+    };
+    var outerInterAB = board.create("intersection", [circleA, circleB, 0], interStyle);
+    var outerInterAC = board.create("intersection", [circleA, circleC, 1], interStyle);
+    var outerInterBC = board.create("intersection", [circleB, circleC, 0], interStyle);
+
+    var AnBnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:3
+    };
+
+    if (highList[7]) {
+      AnBnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnBnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerC, centerA, centerB], AnBnCfillStyle);
+    board.create("sector", [centerA, centerB, centerC], AnBnCfillStyle);
+    board.create("sector", [centerB, centerC, centerA], AnBnCfillStyle);
+
+    var AnBfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var AnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var BnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    if (highList[4]) {
+      AnBfillStyle.fillColor = highlightColor;
+    } else {
+      AnBfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[5]) {
+      AnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnCfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[6]) {
+      BnCfillStyle.fillColor = highlightColor;
+    } else {
+      BnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAB, centerC], AnBfillStyle);
+    board.create("sector", [centerB, centerC, outerInterAB], AnBfillStyle);
+
+    board.create("sector", [centerC, outerInterAC, centerB], AnCfillStyle);
+    board.create("sector", [centerA, centerB, outerInterAC], AnCfillStyle);
+
+    board.create("sector", [centerB, outerInterBC, centerA], BnCfillStyle);
+    board.create("sector", [centerC, centerA, outerInterBC], BnCfillStyle);
+
+  var AfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var BfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var CfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    if (highList[1]) {
+      AfillStyle.fillColor = highlightColor;
+    } else {
+      AfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[2]) {
+      BfillStyle.fillColor = highlightColor;
+    } else {
+      BfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[3]) {
+      CfillStyle.fillColor = highlightColor;
+    } else {
+      CfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAC, outerInterAB], AfillStyle);
+    board.create("sector", [centerB, outerInterAB, outerInterBC], BfillStyle);
+    board.create("sector", [centerC, outerInterBC, outerInterAC], CfillStyle);
+
+    var backStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2,
+        strokeColor:"black"
+      },
+      vertices:{
+        fixed:true,
+        visible:false
+      },
+      fillOpacity:1,
+      layer:0
+    };
+
+    if (highList[0]) {
+      backStyle.fillColor = highlightColor;
+    } else {
+      backStyle.fillColor = backgroundColor;
+    }
+
+    var background = board.create("polygon", [[-5.2,5.8],[5.2,5.8],[5.2,-5.2],[-5.2,-5.2]], backStyle);
+
+[[/jsxgraph]]
+
+<p><br>(iv)</p>
+[[jsxgraph height="150px" width="150px"]]
+    
+    // CONTROLS
+    
+    var backgroundColor = "white";
+    var highlightColor = "pink";
+
+    var factorLabelsOn = true;
+    var factorAName = "\\(A\\)";
+    var factorBName = "\\(B\\)";
+    var factorCName = "\\(C\\)";
+    var factorFontSize = 10;
+
+    var highList = {#fourth(vennList)#}
+
+    // SCRIPT
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-6, 6, 6, -6],
+      keepaspectratio:true,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    var centerStyle = {
+      fixed:true,
+      visible:false
+    };
+    var centerA = board.create("point", [0,1.732], centerStyle);
+    var centerB = board.create("point", [-1.5,-0.866], centerStyle);
+    var centerC = board.create("point", [1.5,-0.866], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+    };
+
+    var circleA = board.create("circle", [centerA,3], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+    var circleC = board.create("circle", [centerC,3], circleStyle);
+
+    var labelStyle = {
+      visible:factorLabelsOn,
+      fontSize:factorFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle"
+    };
+
+    var labelA = board.create("text",[-2.3,4.5,factorAName], labelStyle);
+    var labelB = board.create("text",[-3.2,-4.4,factorBName], labelStyle);
+    var labelC = board.create("text",[4,-4.4,factorCName], labelStyle);
+
+    var interStyle = {
+      visible:false,
+      fixed:true
+    };
+    var outerInterAB = board.create("intersection", [circleA, circleB, 0], interStyle);
+    var outerInterAC = board.create("intersection", [circleA, circleC, 1], interStyle);
+    var outerInterBC = board.create("intersection", [circleB, circleC, 0], interStyle);
+
+    var AnBnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:3
+    };
+
+    if (highList[7]) {
+      AnBnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnBnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerC, centerA, centerB], AnBnCfillStyle);
+    board.create("sector", [centerA, centerB, centerC], AnBnCfillStyle);
+    board.create("sector", [centerB, centerC, centerA], AnBnCfillStyle);
+
+    var AnBfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var AnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var BnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    if (highList[4]) {
+      AnBfillStyle.fillColor = highlightColor;
+    } else {
+      AnBfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[5]) {
+      AnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnCfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[6]) {
+      BnCfillStyle.fillColor = highlightColor;
+    } else {
+      BnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAB, centerC], AnBfillStyle);
+    board.create("sector", [centerB, centerC, outerInterAB], AnBfillStyle);
+
+    board.create("sector", [centerC, outerInterAC, centerB], AnCfillStyle);
+    board.create("sector", [centerA, centerB, outerInterAC], AnCfillStyle);
+
+    board.create("sector", [centerB, outerInterBC, centerA], BnCfillStyle);
+    board.create("sector", [centerC, centerA, outerInterBC], BnCfillStyle);
+
+  var AfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var BfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var CfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    if (highList[1]) {
+      AfillStyle.fillColor = highlightColor;
+    } else {
+      AfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[2]) {
+      BfillStyle.fillColor = highlightColor;
+    } else {
+      BfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[3]) {
+      CfillStyle.fillColor = highlightColor;
+    } else {
+      CfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAC, outerInterAB], AfillStyle);
+    board.create("sector", [centerB, outerInterAB, outerInterBC], BfillStyle);
+    board.create("sector", [centerC, outerInterBC, outerInterAC], CfillStyle);
+
+    var backStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2,
+        strokeColor:"black"
+      },
+      vertices:{
+        fixed:true,
+        visible:false
+      },
+      fillOpacity:1,
+      layer:0
+    };
+
+    if (highList[0]) {
+      backStyle.fillColor = highlightColor;
+    } else {
+      backStyle.fillColor = backgroundColor;
+    }
+
+    var background = board.create("polygon", [[-5.2,5.8],[5.2,5.8],[5.2,-5.2],[-5.2,-5.2]], backStyle);
+
+[[/jsxgraph]]
+
+<p align="right">[[input:ans4]] [[validation:ans4]]</p>
+<p align="right"><b>(2)</b></p>
+<p>[[feedback:prt2]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text/>
+    </generalfeedback>
+    <defaultgrade>4</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <stackversion>
+      <text>2022071300</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* PART A */
+
+aVenn: random_permutation([true,false,false,false,false,false,false,false]);
+
+tans1: if(second(aVenn) or fifth(aVenn) or sixth(aVenn) or eighth(aVenn)) then "A" else "A'";
+tans2: if(third(aVenn) or fifth(aVenn) or seventh(aVenn) or eighth(aVenn)) then "B" else "B'";
+tans3: if(fourth(aVenn) or sixth(aVenn) or seventh(aVenn) or eighth(aVenn)) then "C" else "C'";
+
+/* PART B*/
+
+secOrder:random_permutation(["A","B","C"]);
+firstNot:rand(4);
+secondNot:rand(6);
+opOrder:random_permutation(["\\cap ","\\cup "]);
+
+/* is A' n B' n C' shaded? */
+shadeNone: if first(opOrder)="\\cap " then ((is(firstNot=0) or is(secondNot=0)) and (is(firstNot=1) or is(secondNot=1))) or ((is(firstNot=2) or is(secondNot=2)) and (is(firstNot=3) or is(secondNot=3))) else ((is(firstNot=0) or is(secondNot=0)) or (is(firstNot=1) or is(secondNot=1))) and ((is(firstNot=2) or is(secondNot=2)) or (is(firstNot=3) or is(secondNot=3)));
+
+/* is A n B' n C' shaded? */
+shadeA: if first(opOrder)="\\cap " then ((is(first(secOrder)="A") and not(is(firstNot=0) or is(secondNot=0)) or not(is(first(secOrder)="A")) and (is(firstNot=0) or is(secondNot=0))) and (is(second(secOrder)="A") and not(is(firstNot=1) or is(secondNot=1)) or not(is(second(secOrder)="A")) and (is(firstNot=1) or is(secondNot=1)))) or ((is(first(secOrder)="A") and not(is(firstNot=2) or is(secondNot=2)) or not(is(first(secOrder)="A")) and (is(firstNot=2) or is(secondNot=2))) and (is(third(secOrder)="A") and not(is(firstNot=3) or is(secondNot=3)) or not(is(third(secOrder)="A")) and (is(firstNot=3) or is(secondNot=3)))) else ((is(first(secOrder)="A") and not(is(firstNot=0) or is(secondNot=0)) or not(is(first(secOrder)="A")) and (is(firstNot=0) or is(secondNot=0))) or (is(second(secOrder)="A") and not(is(firstNot=1) or is(secondNot=1)) or not(is(second(secOrder)="A")) and (is(firstNot=1) or is(secondNot=1)))) and ((is(first(secOrder)="A") and not(is(firstNot=2) or is(secondNot=2)) or not(is(first(secOrder)="A")) and (is(firstNot=2) or is(secondNot=2))) or (is(third(secOrder)="A") and not(is(firstNot=3) or is(secondNot=3)) or not(is(third(secOrder)="A")) and (is(firstNot=3) or is(secondNot=3)))); 
+
+/* is A' n B n C' shaded? */
+shadeB: if first(opOrder)="\\cap " then ((is(first(secOrder)="B") and not(is(firstNot=0) or is(secondNot=0)) or not(is(first(secOrder)="B")) and (is(firstNot=0) or is(secondNot=0))) and (is(second(secOrder)="B") and not(is(firstNot=1) or is(secondNot=1)) or not(is(second(secOrder)="B")) and (is(firstNot=1) or is(secondNot=1)))) or ((is(first(secOrder)="B") and not(is(firstNot=2) or is(secondNot=2)) or not(is(first(secOrder)="B")) and (is(firstNot=2) or is(secondNot=2))) and (is(third(secOrder)="B") and not(is(firstNot=3) or is(secondNot=3)) or not(is(third(secOrder)="B")) and (is(firstNot=3) or is(secondNot=3)))) else ((is(first(secOrder)="B") and not(is(firstNot=0) or is(secondNot=0)) or not(is(first(secOrder)="B")) and (is(firstNot=0) or is(secondNot=0))) or (is(second(secOrder)="B") and not(is(firstNot=1) or is(secondNot=1)) or not(is(second(secOrder)="B")) and (is(firstNot=1) or is(secondNot=1)))) and ((is(first(secOrder)="B") and not(is(firstNot=2) or is(secondNot=2)) or not(is(first(secOrder)="B")) and (is(firstNot=2) or is(secondNot=2))) or (is(third(secOrder)="B") and not(is(firstNot=3) or is(secondNot=3)) or not(is(third(secOrder)="B")) and (is(firstNot=3) or is(secondNot=3))));
+
+/* is A' n B' n C shaded? */
+shadeC: if first(opOrder)="\\cap " then ((is(first(secOrder)="C") and not(is(firstNot=0) or is(secondNot=0)) or not(is(first(secOrder)="C")) and (is(firstNot=0) or is(secondNot=0))) and (is(second(secOrder)="C") and not(is(firstNot=1) or is(secondNot=1)) or not(is(second(secOrder)="C")) and (is(firstNot=1) or is(secondNot=1)))) or ((is(first(secOrder)="C") and not(is(firstNot=2) or is(secondNot=2)) or not(is(first(secOrder)="C")) and (is(firstNot=2) or is(secondNot=2))) and (is(third(secOrder)="C") and not(is(firstNot=3) or is(secondNot=3)) or not(is(third(secOrder)="C")) and (is(firstNot=3) or is(secondNot=3)))) else ((is(first(secOrder)="C") and not(is(firstNot=0) or is(secondNot=0)) or not(is(first(secOrder)="C")) and (is(firstNot=0) or is(secondNot=0))) or (is(second(secOrder)="C") and not(is(firstNot=1) or is(secondNot=1)) or not(is(second(secOrder)="C")) and (is(firstNot=1) or is(secondNot=1)))) and ((is(first(secOrder)="C") and not(is(firstNot=2) or is(secondNot=2)) or not(is(first(secOrder)="C")) and (is(firstNot=2) or is(secondNot=2))) or (is(third(secOrder)="C") and not(is(firstNot=3) or is(secondNot=3)) or not(is(third(secOrder)="C")) and (is(firstNot=3) or is(secondNot=3))));
+
+/* is A n B n C' shaded? */
+shadeAnB: if first(opOrder)="\\cap " then ((not(is(first(secOrder)="C")) and not(is(firstNot=0) or is(secondNot=0)) or is(first(secOrder)="C") and (is(firstNot=0) or is(secondNot=0))) and (not(is(second(secOrder)="C")) and not(is(firstNot=1) or is(secondNot=1)) or is(second(secOrder)="C") and (is(firstNot=1) or is(secondNot=1)))) or ((not(is(first(secOrder)="C")) and not(is(firstNot=2) or is(secondNot=2)) or is(first(secOrder)="C") and (is(firstNot=2) or is(secondNot=2))) and (not(is(third(secOrder)="C")) and not(is(firstNot=3) or is(secondNot=3)) or is(third(secOrder)="C") and (is(firstNot=3) or is(secondNot=3)))) else ((not(is(first(secOrder)="C")) and not(is(firstNot=0) or is(secondNot=0)) or is(first(secOrder)="C") and (is(firstNot=0) or is(secondNot=0))) or (not(is(second(secOrder)="C")) and not(is(firstNot=1) or is(secondNot=1)) or is(second(secOrder)="C") and (is(firstNot=1) or is(secondNot=1)))) and ((not(is(first(secOrder)="C")) and not(is(firstNot=2) or is(secondNot=2)) or is(first(secOrder)="C") and (is(firstNot=2) or is(secondNot=2))) or (not(is(third(secOrder)="C")) and not(is(firstNot=3) or is(secondNot=3)) or is(third(secOrder)="C") and (is(firstNot=3) or is(secondNot=3))));
+
+/* is A n B' n C shaded? */
+shadeAnC: if first(opOrder)="\\cap " then ((not(is(first(secOrder)="B")) and not(is(firstNot=0) or is(secondNot=0)) or is(first(secOrder)="B") and (is(firstNot=0) or is(secondNot=0))) and (not(is(second(secOrder)="B")) and not(is(firstNot=1) or is(secondNot=1)) or is(second(secOrder)="B") and (is(firstNot=1) or is(secondNot=1)))) or ((not(is(first(secOrder)="B")) and not(is(firstNot=2) or is(secondNot=2)) or is(first(secOrder)="B") and (is(firstNot=2) or is(secondNot=2))) and (not(is(third(secOrder)="B")) and not(is(firstNot=3) or is(secondNot=3)) or is(third(secOrder)="B") and (is(firstNot=3) or is(secondNot=3)))) else ((not(is(first(secOrder)="B")) and not(is(firstNot=0) or is(secondNot=0)) or is(first(secOrder)="B") and (is(firstNot=0) or is(secondNot=0))) or (not(is(second(secOrder)="B")) and not(is(firstNot=1) or is(secondNot=1)) or is(second(secOrder)="B") and (is(firstNot=1) or is(secondNot=1)))) and ((not(is(first(secOrder)="B")) and not(is(firstNot=2) or is(secondNot=2)) or is(first(secOrder)="B") and (is(firstNot=2) or is(secondNot=2))) or (not(is(third(secOrder)="B")) and not(is(firstNot=3) or is(secondNot=3)) or is(third(secOrder)="B") and (is(firstNot=3) or is(secondNot=3))));
+
+/* is A' n B n C shaded? */
+shadeBnC: if first(opOrder)="\\cap " then ((not(is(first(secOrder)="A")) and not(is(firstNot=0) or is(secondNot=0)) or is(first(secOrder)="A") and (is(firstNot=0) or is(secondNot=0))) and (not(is(second(secOrder)="A")) and not(is(firstNot=1) or is(secondNot=1)) or is(second(secOrder)="A") and (is(firstNot=1) or is(secondNot=1)))) or ((not(is(first(secOrder)="A")) and not(is(firstNot=2) or is(secondNot=2)) or is(first(secOrder)="A") and (is(firstNot=2) or is(secondNot=2))) and (not(is(third(secOrder)="A")) and not(is(firstNot=3) or is(secondNot=3)) or is(third(secOrder)="A") and (is(firstNot=3) or is(secondNot=3)))) else ((not(is(first(secOrder)="A")) and not(is(firstNot=0) or is(secondNot=0)) or is(first(secOrder)="A") and (is(firstNot=0) or is(secondNot=0))) or (not(is(second(secOrder)="A")) and not(is(firstNot=1) or is(secondNot=1)) or is(second(secOrder)="A") and (is(firstNot=1) or is(secondNot=1)))) and ((not(is(first(secOrder)="A")) and not(is(firstNot=2) or is(secondNot=2)) or is(first(secOrder)="A") and (is(firstNot=2) or is(secondNot=2))) or (not(is(third(secOrder)="A")) and not(is(firstNot=3) or is(secondNot=3)) or is(third(secOrder)="A") and (is(firstNot=3) or is(secondNot=3))));
+
+/* is A n B n C shaded? */
+shadeAnBnC: if first(opOrder)="\\cap " then (not(is(firstNot=0) or is(secondNot=0)) and not(is(firstNot=1) or is(secondNot=1))) or (not(is(firstNot=2) or is(secondNot=2)) and not(is(firstNot=3) or is(secondNot=3))) else (not(is(firstNot=0) or is(secondNot=0)) or not(is(firstNot=1) or is(secondNot=1))) and (not(is(firstNot=2) or is(secondNot=2)) or not(is(firstNot=3) or is(secondNot=3)));
+
+correctVenn: [shadeNone, shadeA, shadeB, shadeC, shadeAnB, shadeAnC, shadeBnC, shadeAnBnC];
+incorVenn1: [shadeNone, not(shadeA), not(shadeB), shadeC, rand([shadeAnB,not(shadeAnB)]), rand([shadeAnC,not(shadeAnC)]), rand([shadeBnC,not(shadeBnC)]), rand([shadeAnBnC,not(shadeAnBnC)])];
+incorVenn2: [shadeNone, shadeA, not(shadeB), not(shadeC), rand([shadeAnB,not(shadeAnB)]), rand([shadeAnC,not(shadeAnC)]), rand([shadeBnC,not(shadeBnC)]), rand([shadeAnBnC,not(shadeAnBnC)])];
+incorVenn3: [shadeNone, not(shadeA), shadeB, not(shadeC), rand([shadeAnB,not(shadeAnB)]), rand([shadeAnC,not(shadeAnC)]), rand([shadeBnC,not(shadeBnC)]), rand([shadeAnBnC,not(shadeAnBnC)])];
+
+vennList:random_permutation([correctVenn,incorVenn1,incorVenn2,incorVenn3]);
+
+tans4: if first(vennList)=correctVenn then "(i)" else if second(vennList)=correctVenn then "(ii)" else if third(vennList)=correctVenn then "(iii)" else "(iv)";]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text/>
+    </specificfeedback>
+    <questionnote format="moodle_auto_format">
+      <text><![CDATA[<p>(a) \({@tans1@}\cap{@tans2@}\cap{@tans3@}\)</p>
+<p>(b) {@sconcat("\\((",first(secOrder),if firstNot=0 or secondNot=0 then "'" else "", first(opOrder),second(secOrder),if firstNot=1 or secondNot=1 then "'" else "",")",second(opOrder),"(",first(secOrder),if firstNot=2 or secondNot=2 then "'" else "",first(opOrder),third(secOrder),if firstNot=3 or secondNot=3 then "'" else "",")\\)")@}</p>]]></text>
+    </questionnote>
+    <questiondescription format="moodle_auto_format">
+      <text/>
+    </questiondescription>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <decimals>.</decimals>
+    <scientificnotation>*10</scientificnotation>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <isbroken>0</isbroken>
+    <variantsselectionseed/>
+    <input>
+      <name>ans1</name>
+      <type>dropdown</type>
+      <tans><![CDATA[[["A",is(tans1="A")],["A'",is(tans1="A'")]]]]></tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>dropdown</type>
+      <tans><![CDATA[[["B",is(tans2="B")],["B'",is(tans2="B'")]]]]></tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>dropdown</type>
+      <tans><![CDATA[[["C",is(tans3="C")],["C'",is(tans3="C'")]]]]></tans>
+      <boxsize>5</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>dropdown</type>
+      <tans><![CDATA[[["(i)",is(tans4="(i)")],["(ii)",is(tans4="(ii)")],["(iii)",is(tans4="(iii)")],["(iv)",is(tans4="(iv)")]]]]></tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint/>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords/>
+      <allowwords/>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options/>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>/* Node 1: Check answer correct */
+node1_test: if ans1=tans1 and ans2=tans2 and ans3=tans3 then 1 else 0;
+
+/* Node 2: Worked solution */
+
+/* Node 3: Check 2/3 parts correct (1) */
+node3_test: if (ans1=tans1 and ans2=tans2) or (ans1=tans1 and ans3=tans3) or (ans2=tans2 and ans3=tans3) then 1 else 0;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node1_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+<p> The shaded region is <b>{@if tans1="A" then "inside" else "outside"@}</b> the circle labelled \(A\), so we should have {@if tans1="A" then "A" else "A'"@} in the set notation.
+<br> The shaded region is <b>{@if tans2="B" then "inside" else "outside"@}</b> the circle labelled \(B\), so we should have {@if tans2="B" then "B" else "B'"@} in the set notation.
+<br> The shaded region is <b>{@if tans3="C" then "inside" else "outside"@}</b> the circle labelled \(C\), so we should have {@if tans3="C" then "C" else "C'"@} in the set notation.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>node3_test</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.667</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Your answer should have {@if ans1=tans1 and ans2=tans2 then tans3 else if ans1=tans1 and ans3=tans3 then tans2 else tans1@} rather than {@if ans1=tans1 and ans2=tans2 then ans3 else if ans1=tans1 and ans3=tans3 then ans2 else ans1@}.
+<br>Otherwise, the other two terms are correct.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>2.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[/* FIRST PART OF SET */
+
+/* is A' n B' n C' shaded? */
+shadeNone1: if first(opOrder)="\\cap " then (is(firstNot=0) or is(secondNot=0)) and (is(firstNot=1) or is(secondNot=1)) else (is(firstNot=0) or is(secondNot=0)) or (is(firstNot=1) or is(secondNot=1));
+
+/* is A n B' n C' shaded? */
+shadeA1: if first(opOrder)="\\cap " then (is(first(secOrder)="A") and not(is(firstNot=0) or is(secondNot=0)) or not(is(first(secOrder)="A")) and (is(firstNot=0) or is(secondNot=0))) and (is(second(secOrder)="A") and not(is(firstNot=1) or is(secondNot=1)) or not(is(second(secOrder)="A")) and (is(firstNot=1) or is(secondNot=1))) else (is(first(secOrder)="A") and not(is(firstNot=0) or is(secondNot=0)) or not(is(first(secOrder)="A")) and (is(firstNot=0) or is(secondNot=0))) or (is(second(secOrder)="A") and not(is(firstNot=1) or is(secondNot=1)) or not(is(second(secOrder)="A")) and (is(firstNot=1) or is(secondNot=1)));
+
+/* is A' n B n C' shaded? */
+shadeB1: if first(opOrder)="\\cap " then (is(first(secOrder)="B") and not(is(firstNot=0) or is(secondNot=0)) or not(is(first(secOrder)="B")) and (is(firstNot=0) or is(secondNot=0))) and (is(second(secOrder)="B") and not(is(firstNot=1) or is(secondNot=1)) or not(is(second(secOrder)="B")) and (is(firstNot=1) or is(secondNot=1))) else (is(first(secOrder)="B") and not(is(firstNot=0) or is(secondNot=0)) or not(is(first(secOrder)="B")) and (is(firstNot=0) or is(secondNot=0))) or (is(second(secOrder)="B") and not(is(firstNot=1) or is(secondNot=1)) or not(is(second(secOrder)="B")) and (is(firstNot=1) or is(secondNot=1)));
+
+/* is A' n B' n C shaded? */
+shadeC1: if first(opOrder)="\\cap " then (is(first(secOrder)="C") and not(is(firstNot=0) or is(secondNot=0)) or not(is(first(secOrder)="C")) and (is(firstNot=0) or is(secondNot=0))) and (is(second(secOrder)="C") and not(is(firstNot=1) or is(secondNot=1)) or not(is(second(secOrder)="C")) and (is(firstNot=1) or is(secondNot=1))) else (is(first(secOrder)="C") and not(is(firstNot=0) or is(secondNot=0)) or not(is(first(secOrder)="C")) and (is(firstNot=0) or is(secondNot=0))) or (is(second(secOrder)="C") and not(is(firstNot=1) or is(secondNot=1)) or not(is(second(secOrder)="C")) and (is(firstNot=1) or is(secondNot=1)));
+
+/* is A n B n C' shaded? */
+shadeAnB1: if first(opOrder)="\\cap " then (not(is(first(secOrder)="C")) and not(is(firstNot=0) or is(secondNot=0)) or is(first(secOrder)="C") and (is(firstNot=0) or is(secondNot=0))) and (not(is(second(secOrder)="C")) and not(is(firstNot=1) or is(secondNot=1)) or is(second(secOrder)="C") and (is(firstNot=1) or is(secondNot=1))) else (not(is(first(secOrder)="C")) and not(is(firstNot=0) or is(secondNot=0)) or is(first(secOrder)="C") and (is(firstNot=0) or is(secondNot=0))) or (not(is(second(secOrder)="C")) and not(is(firstNot=1) or is(secondNot=1)) or is(second(secOrder)="C") and (is(firstNot=1) or is(secondNot=1)));
+
+/* is A n B' n C shaded? */
+shadeAnC1: if first(opOrder)="\\cap " then (not(is(first(secOrder)="B")) and not(is(firstNot=0) or is(secondNot=0)) or is(first(secOrder)="B") and (is(firstNot=0) or is(secondNot=0))) and (not(is(second(secOrder)="B")) and not(is(firstNot=1) or is(secondNot=1)) or is(second(secOrder)="B") and (is(firstNot=1) or is(secondNot=1))) else (not(is(first(secOrder)="B")) and not(is(firstNot=0) or is(secondNot=0)) or is(first(secOrder)="B") and (is(firstNot=0) or is(secondNot=0))) or (not(is(second(secOrder)="B")) and not(is(firstNot=1) or is(secondNot=1)) or is(second(secOrder)="B") and (is(firstNot=1) or is(secondNot=1)));
+
+/* is A' n B n C shaded? */
+shadeBnC1: if first(opOrder)="\\cap " then (not(is(first(secOrder)="A")) and not(is(firstNot=0) or is(secondNot=0)) or is(first(secOrder)="A") and (is(firstNot=0) or is(secondNot=0))) and (not(is(second(secOrder)="A")) and not(is(firstNot=1) or is(secondNot=1)) or is(second(secOrder)="A") and (is(firstNot=1) or is(secondNot=1))) else (not(is(first(secOrder)="A")) and not(is(firstNot=0) or is(secondNot=0)) or is(first(secOrder)="A") and (is(firstNot=0) or is(secondNot=0))) or (not(is(second(secOrder)="A")) and not(is(firstNot=1) or is(secondNot=1)) or is(second(secOrder)="A") and (is(firstNot=1) or is(secondNot=1)));
+
+/* is A n B n C shaded? */
+shadeAnBnC1: if first(opOrder)="\\cap " then not(is(firstNot=0) or is(secondNot=0)) and not(is(firstNot=1) or is(secondNot=1)) else not(is(firstNot=0) or is(secondNot=0)) or not(is(firstNot=1) or is(secondNot=1));
+
+part1: [shadeNone1, shadeA1, shadeB1, shadeC1, shadeAnB1, shadeAnC1, shadeBnC1, shadeAnBnC1];
+
+/* SECOND PART OF SET */
+
+/* is A' n B' n C' shaded? */
+shadeNone2: if first(opOrder)="\\cap " then (is(firstNot=2) or is(secondNot=2)) and (is(firstNot=3) or is(secondNot=3)) else (is(firstNot=2) or is(secondNot=2)) or (is(firstNot=3) or is(secondNot=3));
+
+/* is A n B' n C' shaded? */
+shadeA2: if first(opOrder)="\\cap " then (is(first(secOrder)="A") and not(is(firstNot=2) or is(secondNot=2)) or not(is(first(secOrder)="A")) and (is(firstNot=2) or is(secondNot=2))) and (is(third(secOrder)="A") and not(is(firstNot=3) or is(secondNot=3)) or not(is(third(secOrder)="A")) and (is(firstNot=3) or is(secondNot=3))) else (is(first(secOrder)="A") and not(is(firstNot=2) or is(secondNot=2)) or not(is(first(secOrder)="A")) and (is(firstNot=2) or is(secondNot=2))) or (is(third(secOrder)="A") and not(is(firstNot=3) or is(secondNot=3)) or not(is(third(secOrder)="A")) and (is(firstNot=3) or is(secondNot=3)));
+
+/* is A' n B n C' shaded? */
+shadeB2: if first(opOrder)="\\cap " then (is(first(secOrder)="B") and not(is(firstNot=2) or is(secondNot=2)) or not(is(first(secOrder)="B")) and (is(firstNot=2) or is(secondNot=2))) and (is(third(secOrder)="B") and not(is(firstNot=3) or is(secondNot=3)) or not(is(third(secOrder)="B")) and (is(firstNot=3) or is(secondNot=3))) else (is(first(secOrder)="B") and not(is(firstNot=2) or is(secondNot=2)) or not(is(first(secOrder)="B")) and (is(firstNot=2) or is(secondNot=2))) or (is(third(secOrder)="B") and not(is(firstNot=3) or is(secondNot=3)) or not(is(third(secOrder)="B")) and (is(firstNot=3) or is(secondNot=3)));
+
+/* is A' n B' n C shaded? */
+shadeC2: if first(opOrder)="\\cap " then (is(first(secOrder)="C") and not(is(firstNot=2) or is(secondNot=2)) or not(is(first(secOrder)="C")) and (is(firstNot=2) or is(secondNot=2))) and (is(third(secOrder)="C") and not(is(firstNot=3) or is(secondNot=3)) or not(is(third(secOrder)="C")) and (is(firstNot=3) or is(secondNot=3))) else (is(first(secOrder)="C") and not(is(firstNot=2) or is(secondNot=2)) or not(is(first(secOrder)="C")) and (is(firstNot=2) or is(secondNot=2))) or (is(third(secOrder)="C") and not(is(firstNot=3) or is(secondNot=3)) or not(is(third(secOrder)="C")) and (is(firstNot=3) or is(secondNot=3)));
+
+/* is A n B n C' shaded? */
+shadeAnB2: if first(opOrder)="\\cap " then (not(is(first(secOrder)="C")) and not(is(firstNot=2) or is(secondNot=2)) or is(first(secOrder)="C") and (is(firstNot=2) or is(secondNot=2))) and (not(is(third(secOrder)="C")) and not(is(firstNot=3) or is(secondNot=3)) or is(third(secOrder)="C") and (is(firstNot=3) or is(secondNot=3))) else (not(is(first(secOrder)="C")) and not(is(firstNot=2) or is(secondNot=2)) or is(first(secOrder)="C") and (is(firstNot=2) or is(secondNot=2))) or (not(is(third(secOrder)="C")) and not(is(firstNot=3) or is(secondNot=3)) or is(third(secOrder)="C") and (is(firstNot=3) or is(secondNot=3)));
+
+/* is A n B' n C shaded? */
+shadeAnC2: if first(opOrder)="\\cap " then (not(is(first(secOrder)="B")) and not(is(firstNot=2) or is(secondNot=2)) or is(first(secOrder)="B") and (is(firstNot=2) or is(secondNot=2))) and (not(is(third(secOrder)="B")) and not(is(firstNot=3) or is(secondNot=3)) or is(third(secOrder)="B") and (is(firstNot=3) or is(secondNot=3))) else (not(is(first(secOrder)="B")) and not(is(firstNot=2) or is(secondNot=2)) or is(first(secOrder)="B") and (is(firstNot=2) or is(secondNot=2))) or (not(is(third(secOrder)="B")) and not(is(firstNot=3) or is(secondNot=3)) or is(third(secOrder)="B") and (is(firstNot=3) or is(secondNot=3)));
+
+/* is A' n B n C shaded? */
+shadeBnC2: if first(opOrder)="\\cap " then (not(is(first(secOrder)="A")) and not(is(firstNot=2) or is(secondNot=2)) or is(first(secOrder)="A") and (is(firstNot=2) or is(secondNot=2))) and (not(is(third(secOrder)="A")) and not(is(firstNot=3) or is(secondNot=3)) or is(third(secOrder)="A") and (is(firstNot=3) or is(secondNot=3))) else (not(is(first(secOrder)="A")) and not(is(firstNot=2) or is(secondNot=2)) or is(first(secOrder)="A") and (is(firstNot=2) or is(secondNot=2))) or (not(is(third(secOrder)="A")) and not(is(firstNot=3) or is(secondNot=3)) or is(third(secOrder)="A") and (is(firstNot=3) or is(secondNot=3)));
+
+/* is A n B n C shaded? */
+shadeAnBnC2: if first(opOrder)="\\cap " then not(is(firstNot=2) or is(secondNot=2)) and not(is(firstNot=3) or is(secondNot=3)) else not(is(firstNot=2) or is(secondNot=2)) or not(is(firstNot=3) or is(secondNot=3));
+
+part2: [shadeNone2, shadeA2, shadeB2, shadeC2, shadeAnB2, shadeAnC2, shadeBnC2, shadeAnBnC2];]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans4</sans>
+        <tans>tans4</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty/>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text/>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <description/>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions/>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty/>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p><br>Here is a worked solution:</p>
+
+<p>\(({@sconcat(first(secOrder),if firstNot=0 or secondNot=0 then "'" else "", first(opOrder),second(secOrder),if firstNot=1 or secondNot=1 then "'" else "")@}):\) The {@if first(opOrder)="\\cap " then "intersection" else "union"@} of \({@sconcat(first(secOrder),if firstNot=0 or secondNot=0 then "'" else "")@}\) and \({@sconcat(second(secOrder),if firstNot=1 or secondNot=1 then "'" else "")@}\) looks like this.</p>
+
+[[jsxgraph height="150px" width="150px"]]
+    
+    // CONTROLS
+    
+    var backgroundColor = "white";
+    var highlightColor = "#ffd450";
+
+    var factorLabelsOn = true;
+    var factorAName = "\\(A\\)";
+    var factorBName = "\\(B\\)";
+    var factorCName = "\\(C\\)";
+    var factorFontSize = 10;
+
+    var highList = {#part1#}
+
+    // SCRIPT
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-6, 6, 6, -6],
+      keepaspectratio:true,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    var centerStyle = {
+      fixed:true,
+      visible:false
+    };
+    var centerA = board.create("point", [0,1.732], centerStyle);
+    var centerB = board.create("point", [-1.5,-0.866], centerStyle);
+    var centerC = board.create("point", [1.5,-0.866], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+    };
+
+    var circleA = board.create("circle", [centerA,3], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+    var circleC = board.create("circle", [centerC,3], circleStyle);
+
+    var labelStyle = {
+      visible:factorLabelsOn,
+      fontSize:factorFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle"
+    };
+
+    var labelA = board.create("text",[-2.3,4.5,factorAName], labelStyle);
+    var labelB = board.create("text",[-3.2,-4.4,factorBName], labelStyle);
+    var labelC = board.create("text",[4,-4.4,factorCName], labelStyle);
+
+    var interStyle = {
+      visible:false,
+      fixed:true
+    };
+    var outerInterAB = board.create("intersection", [circleA, circleB, 0], interStyle);
+    var outerInterAC = board.create("intersection", [circleA, circleC, 1], interStyle);
+    var outerInterBC = board.create("intersection", [circleB, circleC, 0], interStyle);
+
+    var AnBnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:3
+    };
+
+    if (highList[7]) {
+      AnBnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnBnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerC, centerA, centerB], AnBnCfillStyle);
+    board.create("sector", [centerA, centerB, centerC], AnBnCfillStyle);
+    board.create("sector", [centerB, centerC, centerA], AnBnCfillStyle);
+
+    var AnBfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var AnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var BnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    if (highList[4]) {
+      AnBfillStyle.fillColor = highlightColor;
+    } else {
+      AnBfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[5]) {
+      AnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnCfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[6]) {
+      BnCfillStyle.fillColor = highlightColor;
+    } else {
+      BnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAB, centerC], AnBfillStyle);
+    board.create("sector", [centerB, centerC, outerInterAB], AnBfillStyle);
+
+    board.create("sector", [centerC, outerInterAC, centerB], AnCfillStyle);
+    board.create("sector", [centerA, centerB, outerInterAC], AnCfillStyle);
+
+    board.create("sector", [centerB, outerInterBC, centerA], BnCfillStyle);
+    board.create("sector", [centerC, centerA, outerInterBC], BnCfillStyle);
+
+  var AfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var BfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var CfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    if (highList[1]) {
+      AfillStyle.fillColor = highlightColor;
+    } else {
+      AfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[2]) {
+      BfillStyle.fillColor = highlightColor;
+    } else {
+      BfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[3]) {
+      CfillStyle.fillColor = highlightColor;
+    } else {
+      CfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAC, outerInterAB], AfillStyle);
+    board.create("sector", [centerB, outerInterAB, outerInterBC], BfillStyle);
+    board.create("sector", [centerC, outerInterBC, outerInterAC], CfillStyle);
+
+    var backStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2,
+        strokeColor:"black"
+      },
+      vertices:{
+        fixed:true,
+        visible:false
+      },
+      fillOpacity:1,
+      layer:0
+    };
+
+    if (highList[0]) {
+      backStyle.fillColor = highlightColor;
+    } else {
+      backStyle.fillColor = backgroundColor;
+    }
+
+    var background = board.create("polygon", [[-5.2,5.8],[5.2,5.8],[5.2,-5.2],[-5.2,-5.2]], backStyle);
+
+[[/jsxgraph]]
+
+<p><br>\(({@sconcat(first(secOrder),if firstNot=2 or secondNot=2 then "'" else "", first(opOrder),third(secOrder),if firstNot=3 or secondNot=3 then "'" else "")@}):\) The {@if first(opOrder)="\\cap " then "intersection" else "union"@} of \({@sconcat(first(secOrder),if firstNot=2 or secondNot=2 then "'" else "")@}\) and \({@sconcat(third(secOrder),if firstNot=3 or secondNot=3 then "'" else "")@}\) looks like this.</p>
+
+[[jsxgraph height="150px" width="150px"]]
+    
+    // CONTROLS
+    
+    var backgroundColor = "white";
+    var highlightColor = "#83ffdd";
+
+    var factorLabelsOn = true;
+    var factorAName = "\\(A\\)";
+    var factorBName = "\\(B\\)";
+    var factorCName = "\\(C\\)";
+    var factorFontSize = 10;
+
+    var highList = {#part2#}
+
+    // SCRIPT
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-6, 6, 6, -6],
+      keepaspectratio:true,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    var centerStyle = {
+      fixed:true,
+      visible:false
+    };
+    var centerA = board.create("point", [0,1.732], centerStyle);
+    var centerB = board.create("point", [-1.5,-0.866], centerStyle);
+    var centerC = board.create("point", [1.5,-0.866], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+    };
+
+    var circleA = board.create("circle", [centerA,3], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+    var circleC = board.create("circle", [centerC,3], circleStyle);
+
+    var labelStyle = {
+      visible:factorLabelsOn,
+      fontSize:factorFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle"
+    };
+
+    var labelA = board.create("text",[-2.3,4.5,factorAName], labelStyle);
+    var labelB = board.create("text",[-3.2,-4.4,factorBName], labelStyle);
+    var labelC = board.create("text",[4,-4.4,factorCName], labelStyle);
+
+    var interStyle = {
+      visible:false,
+      fixed:true
+    };
+    var outerInterAB = board.create("intersection", [circleA, circleB, 0], interStyle);
+    var outerInterAC = board.create("intersection", [circleA, circleC, 1], interStyle);
+    var outerInterBC = board.create("intersection", [circleB, circleC, 0], interStyle);
+
+    var AnBnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:3
+    };
+
+    if (highList[7]) {
+      AnBnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnBnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerC, centerA, centerB], AnBnCfillStyle);
+    board.create("sector", [centerA, centerB, centerC], AnBnCfillStyle);
+    board.create("sector", [centerB, centerC, centerA], AnBnCfillStyle);
+
+    var AnBfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var AnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var BnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    if (highList[4]) {
+      AnBfillStyle.fillColor = highlightColor;
+    } else {
+      AnBfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[5]) {
+      AnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnCfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[6]) {
+      BnCfillStyle.fillColor = highlightColor;
+    } else {
+      BnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAB, centerC], AnBfillStyle);
+    board.create("sector", [centerB, centerC, outerInterAB], AnBfillStyle);
+
+    board.create("sector", [centerC, outerInterAC, centerB], AnCfillStyle);
+    board.create("sector", [centerA, centerB, outerInterAC], AnCfillStyle);
+
+    board.create("sector", [centerB, outerInterBC, centerA], BnCfillStyle);
+    board.create("sector", [centerC, centerA, outerInterBC], BnCfillStyle);
+
+  var AfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var BfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var CfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    if (highList[1]) {
+      AfillStyle.fillColor = highlightColor;
+    } else {
+      AfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[2]) {
+      BfillStyle.fillColor = highlightColor;
+    } else {
+      BfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[3]) {
+      CfillStyle.fillColor = highlightColor;
+    } else {
+      CfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAC, outerInterAB], AfillStyle);
+    board.create("sector", [centerB, outerInterAB, outerInterBC], BfillStyle);
+    board.create("sector", [centerC, outerInterBC, outerInterAC], CfillStyle);
+
+    var backStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2,
+        strokeColor:"black"
+      },
+      vertices:{
+        fixed:true,
+        visible:false
+      },
+      fillOpacity:1,
+      layer:0
+    };
+
+    if (highList[0]) {
+      backStyle.fillColor = highlightColor;
+    } else {
+      backStyle.fillColor = backgroundColor;
+    }
+
+    var background = board.create("polygon", [[-5.2,5.8],[5.2,5.8],[5.2,-5.2],[-5.2,-5.2]], backStyle);
+
+[[/jsxgraph]]
+
+<p><br>\(({@sconcat(first(secOrder),if firstNot=0 or secondNot=0 then "'" else "", first(opOrder),second(secOrder),if firstNot=1 or secondNot=1 then "'" else "",")",second(opOrder),"(",first(secOrder),if firstNot=2 or secondNot=2 then "'" else "",first(opOrder),third(secOrder),if firstNot=3 or secondNot=3 then "'" else "")@}):\) So, the {@if second(opOrder)="\\cap " then "intersection" else "union"@} of \(({@sconcat(first(secOrder),if firstNot=0 or secondNot=0 then "'" else "", first(opOrder),second(secOrder),if firstNot=1 or secondNot=1 then "'" else "")@})\) and \(({@sconcat(first(secOrder),if firstNot=2 or secondNot=2 then "'" else "", first(opOrder),third(secOrder),if firstNot=3 or secondNot=3 then "'" else "")@})\) looks like this.</p>
+
+[[jsxgraph height="150px" width="150px"]]
+    
+    // CONTROLS
+    
+    var backgroundColor = "white";
+    var highlightColor = "pink";
+
+    var factorLabelsOn = true;
+    var factorAName = "\\(A\\)";
+    var factorBName = "\\(B\\)";
+    var factorCName = "\\(C\\)";
+    var factorFontSize = 10;
+
+    var highList = {#correctVenn#}
+
+    // SCRIPT
+
+    JXG.Options.text.useMathJax=true;
+    var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-6, 6, 6, -6],
+      keepaspectratio:true,
+      showNavigation:false,
+      showCopyright:false,
+    });
+
+    var centerStyle = {
+      fixed:true,
+      visible:false
+    };
+    var centerA = board.create("point", [0,1.732], centerStyle);
+    var centerB = board.create("point", [-1.5,-0.866], centerStyle);
+    var centerC = board.create("point", [1.5,-0.866], centerStyle);
+
+    var circleStyle = {
+      fixed:true,
+      highlight:false,
+      strokeColor:"black",
+    };
+
+    var circleA = board.create("circle", [centerA,3], circleStyle);
+    var circleB = board.create("circle", [centerB,3], circleStyle);
+    var circleC = board.create("circle", [centerC,3], circleStyle);
+
+    var labelStyle = {
+      visible:factorLabelsOn,
+      fontSize:factorFontSize,
+      fixed:true,
+      highlight:false,
+      useMathJax:true,
+      parse:false,
+      anchorX:"middle",
+      anchorY:"middle"
+    };
+
+    var labelA = board.create("text",[-2.3,4.5,factorAName], labelStyle);
+    var labelB = board.create("text",[-3.2,-4.4,factorBName], labelStyle);
+    var labelC = board.create("text",[4,-4.4,factorCName], labelStyle);
+
+    var interStyle = {
+      visible:false,
+      fixed:true
+    };
+    var outerInterAB = board.create("intersection", [circleA, circleB, 0], interStyle);
+    var outerInterAC = board.create("intersection", [circleA, circleC, 1], interStyle);
+    var outerInterBC = board.create("intersection", [circleB, circleC, 0], interStyle);
+
+    var AnBnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:3
+    };
+
+    if (highList[7]) {
+      AnBnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnBnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerC, centerA, centerB], AnBnCfillStyle);
+    board.create("sector", [centerA, centerB, centerC], AnBnCfillStyle);
+    board.create("sector", [centerB, centerC, centerA], AnBnCfillStyle);
+
+    var AnBfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var AnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    var BnCfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:2
+    };
+
+    if (highList[4]) {
+      AnBfillStyle.fillColor = highlightColor;
+    } else {
+      AnBfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[5]) {
+      AnCfillStyle.fillColor = highlightColor;
+    } else {
+      AnCfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[6]) {
+      BnCfillStyle.fillColor = highlightColor;
+    } else {
+      BnCfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAB, centerC], AnBfillStyle);
+    board.create("sector", [centerB, centerC, outerInterAB], AnBfillStyle);
+
+    board.create("sector", [centerC, outerInterAC, centerB], AnCfillStyle);
+    board.create("sector", [centerA, centerB, outerInterAC], AnCfillStyle);
+
+    board.create("sector", [centerB, outerInterBC, centerA], BnCfillStyle);
+    board.create("sector", [centerC, centerA, outerInterBC], BnCfillStyle);
+
+  var AfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var BfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    var CfillStyle = {
+      fixed:true,
+      highlight:false,
+      strokeOpacity:0,
+      fillOpacity:1,
+      layer:1
+    };
+
+    if (highList[1]) {
+      AfillStyle.fillColor = highlightColor;
+    } else {
+      AfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[2]) {
+      BfillStyle.fillColor = highlightColor;
+    } else {
+      BfillStyle.fillColor = backgroundColor;
+    };
+
+    if (highList[3]) {
+      CfillStyle.fillColor = highlightColor;
+    } else {
+      CfillStyle.fillColor = backgroundColor;
+    };
+
+    board.create("sector", [centerA, outerInterAC, outerInterAB], AfillStyle);
+    board.create("sector", [centerB, outerInterAB, outerInterBC], BfillStyle);
+    board.create("sector", [centerC, outerInterBC, outerInterAC], CfillStyle);
+
+    var backStyle = {
+      fixed:true,
+      highlight:false,
+      borders:{
+        fixed:true,
+        highlight:false,
+        strokeWidth:2,
+        strokeColor:"black"
+      },
+      vertices:{
+        fixed:true,
+        visible:false
+      },
+      fillOpacity:1,
+      layer:0
+    };
+
+    if (highList[0]) {
+      backStyle.fillColor = highlightColor;
+    } else {
+      backStyle.fillColor = backgroundColor;
+    }
+
+    var background = board.create("polygon", [[-5.2,5.8],[5.2,5.8],[5.2,-5.2],[-5.2,-5.2]], backStyle);
+
+[[/jsxgraph]]
+
+<p><br>Therefore, the correct answer is {@tans4@}.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty/>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text/>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>1245940113</deployedseed>
+    <deployedseed>1006720784</deployedseed>
+    <deployedseed>8966122</deployedseed>
+    <deployedseed>459352868</deployedseed>
+    <deployedseed>1742569850</deployedseed>
+    <deployedseed>731194092</deployedseed>
+    <deployedseed>682254548</deployedseed>
+    <deployedseed>958525686</deployedseed>
+    <deployedseed>2048639194</deployedseed>
+    <deployedseed>329937104</deployedseed>
+    <deployedseed>2053311943</deployedseed>
+    <deployedseed>218721544</deployedseed>
+    <deployedseed>1901896325</deployedseed>
+    <deployedseed>711366304</deployedseed>
+    <deployedseed>1443613136</deployedseed>
+    <deployedseed>1073054174</deployedseed>
+    <deployedseed>1362583339</deployedseed>
+    <deployedseed>479097394</deployedseed>
+    <deployedseed>1387720823</deployedseed>
+    <deployedseed>1047972097</deployedseed>
+  </question>
+</quiz>
