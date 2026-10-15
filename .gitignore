@@ -1,0 +1,4 @@
+.vscode/
+.claude/
+**/*_question_manifest.json
+**/*.tmp
