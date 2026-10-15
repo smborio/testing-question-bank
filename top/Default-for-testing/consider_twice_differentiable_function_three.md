@@ -102,3 +102,29 @@ REFERENCE POINTERS: Authoring/Answer_Tests/Equivalence.md; CAS/Real_Intervals.md
 ADDITIONAL LANGUAGES: (none)
 ```
 
+## Entry 6 — planner · plan locked (2026-10-15T11:43:20)
+
+**Reference files fetched:**
+- (none)
+
+**Reference files recommended by Planner:**
+- Authoring/Answer_Tests/Equivalence.md; CAS/Real_Intervals.md; Authoring/Potential_response_trees.md
+
+```text
+GOAL (non-negotiable): Test whether a student can apply Rolle's Theorem twice in sequence to prove that if f is twice differentiable with three distinct zeros a<b<c, then f''(ξ)=0 for some ξ. Specifically, test correct identification of which intervals must be closed (continuity/differentiability hypotheses) versus open (location of the guaranteed point), not the ability to invent the overall strategy.
+
+STRUCTURE (non-negotiable): A single scaffolded proof with 6 blanks in 3 stages. The question text states only the three zeros a<b<c (randomised values), without pre-assigning which pair of zeros goes with which stage, and WITHOUT ever using the words "open" or "closed" anywhere in the question text — the student must supply the bracket type themselves via oo/oc/co/cc notation, not read it off the prose. Each application is phrased generically, e.g. "applying Rolle's Theorem to f on the interval [[input]], we conclude there is an element p of the interval [[input]] with f'(p)=0" (never "a point p"). The proof outline names the two values produced by the first two applications of Rolle's Theorem p and q (so the student fills blanks 2 and 4 with expressions like f'(p)=0, f'(q)=0 arising from their own choice of interval). The value produced in stage 3 is named r (not ξ), keeping all named quantities to plain letters a,b,c,p,q,r.
+- Stage 1+2 (blanks 1–4, one combined PRT): interval-type hypothesis and interval-type conclusion (named p or q) for each of the two applications of Rolle's to f. Graded as correct if the two hypothesis intervals used are {a,b} and {b,c} (in either order), each paired with the matching conclusion interval for the same pair (hypothesis closed, conclusion open), and the two pairs are not identical. Partial credit for correct open/closed form per blank independent of pairing.
+- Stage 3 (blanks 5–6, one PRT with follow-through from the student's own blanks 2 and 4): hypothesis-interval and conclusion-interval type for applying Rolle's to f' on the interval between p and q (producing r), written in the correct order — consistent with whichever of p,q the student's own earlier answers make smaller (e.g. if their p<q, expects cc(p,q)/oo(p,q); if their p>q, expects cc(q,p)/oo(q,p)).
+
+RANDOMIZATION (negotiable): a,b,c drawn independently, no resampling loop: a uniform in {-5,...,-2}, b uniform in {-1,0,1}, c uniform in {2,...,5}. This guarantees a<b<c by construction.
+
+ANSWER TESTS (negotiable): Each blank is an algebraic input in oo(·,·), oc(·,·), co(·,·), cc(·,·) notation. Blanks 1–4 graded jointly: correct bracket type, correct pair of endpoints (order within the pair may be either, since the plan only fixes which unordered pair must be used), pairs distinct and complete (one {a,b}, one {b,c}). Blanks 5–6 graded by follow-through against the student's own p,q from blanks 2 and 4: correct bracket type, and endpoint order consistent with the actual numeric relation between the student's p and q (not a fixed canonical order).
+
+Scoring requirement (binding, from round-1/round-2 rejections): each PRT's partial-credit nodes must use additive scoring (scores accumulate across nodes to reach 1.0 for a fully correct answer, not overwrite). The two "common error" branches (same pair of zeros used twice in blanks 1–4; p/q written in the wrong order in blanks 5–6 relative to the student's own earlier answers) must score low — only whatever bracket-type credit was independently earned — never full marks for the pairing/ordering component itself. Qtest expected scores must reflect the corrected additive totals.
+
+FEEDBACK (negotiable): Worked solution: standard two-applications-of-Rolle's-Theorem proof, shown after submission, picking one canonical order (e.g. {a,b} first giving p, {b,c} second giving q) but noting the other order is equally valid. Branch for the common error of swapping open/closed (closed where conclusion needs open, or vice versa). Branch for repeating the same pair of zeros in both of the first two applications. Branch for writing p,q in the wrong order in blanks 5–6 relative to their own earlier answers (a sign the student hasn't tracked which value is smaller).
+
+PRT/QTEST SUGGESTIONS: Include one qtest where the student does {b,c} before {a,b} (reversed order from the canonical worked solution, so their p>q), to confirm PRT A accepts it and PRT B/C correctly expects cc(q,p)/oo(q,p).
+```
+
