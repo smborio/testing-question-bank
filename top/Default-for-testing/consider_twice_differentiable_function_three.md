@@ -138,3 +138,14 @@ STACK API check: PASSED after 1 attempt(s).
 Retriever gave the Author: Authoring/Answer_Tests/Equivalence.md, Authoring/Answer_Tests/Grading_recipes.md, CAS/Real_Intervals.md, Authoring/Potential_response_trees.md, Authoring/Inputs/Input_options.md
 ```
 
+## Entry 8 — planner · review (2026-10-15T11:57:22)
+
+**Reference files fetched:**
+- (none)
+
+```text
+Review decision: REJECT (keep_draft=True, plan_changed=False)
+Qtest observation verdicts: test case 1 / PRT prt_ans1: intended; test case 1 / PRT prt_ans5: intended; test case 2 / PRT prt_ans1: intended; test case 2 / PRT prt_ans5: intended; test case 4 / PRT prt_ans1: intended
+Feedback to Author: The grading logic itself is correct in all 5 flagged cases — only the qtest expected scores are stale leftovers from before the additive-scoring fix. Please update: testcase 1 prt_ans1 expectedscore to 1.0 (note prt_ans1-5-T), testcase 1 prt_ans5 expectedscore to 1.0 (note prt_ans5-4-T), testcase 2 prt_ans1 expectedscore to 1.0 (note prt_ans1-5-T), testcase 2 prt_ans5 expectedscore to 1.0 (note prt_ans5-4-T), testcase 4 prt_ans1 expectedscore to 1.0 (note prt_ans1-5-T). Do not change any PRT node logic or scores — the engine's observed scores in all these cases are the intended, correct behaviour.
+```
+
