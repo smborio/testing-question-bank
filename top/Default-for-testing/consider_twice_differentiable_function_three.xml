@@ -5,14 +5,14 @@
 <text>Consider twice differentiable function three</text>
 </name>
 <questiontext format="html">
-<text><![CDATA[<p>Let \(f\) be twice differentiable on an interval containing the three points \(a={@a@}\), \(b={@b@}\), \(c={@c@}\), with \(a<b<c\), and suppose \(f(a)=f(b)=f(c)=0\). Complete the proof that there exists a point \(\xi\) such that \(f''(\xi)=0\).</p>
+<text><![CDATA[<p>Let \(f\) be twice differentiable on an interval containing the three points \(a={@a@}\), \(b={@b@}\), \(c={@c@}\), with \(a<b<c\), and suppose \(f(a)=f(b)=f(c)=0\). Complete the proof that there exists an element \(r\) such that \(f''(r)=0\).</p>
 
-<p><b>Stage 1.</b> Applying Rolle's Theorem to \(f\) on the closed interval [[input:ans1]] [[validation:ans1]], we conclude there is a point \(p\) in the open interval [[input:ans2]] [[validation:ans2]] with \(f'(p)=0\).</p>
+<p><b>Stage 1.</b> Applying Rolle's Theorem to \(f\) on the interval [[input:ans1]] [[validation:ans1]], we conclude there is an element \(p\) of the interval [[input:ans2]] [[validation:ans2]] with \(f'(p)=0\).</p>
 
-<p><b>Stage 2.</b> Applying Rolle's Theorem to \(f\) on the closed interval [[input:ans3]] [[validation:ans3]], we conclude there is a point \(q\) in the open interval [[input:ans4]] [[validation:ans4]] with \(f'(q)=0\).</p>
+<p><b>Stage 2.</b> Applying Rolle's Theorem to \(f\) on the interval [[input:ans3]] [[validation:ans3]], we conclude there is an element \(q\) of the interval [[input:ans4]] [[validation:ans4]] with \(f'(q)=0\).</p>
 [[feedback:prt_ans1]]
 
-<p><b>Stage 3.</b> Since \(f'(p)=0\) and \(f'(q)=0\), applying Rolle's Theorem to \(f'\) on the closed interval [[input:ans5]] [[validation:ans5]], we conclude there is a point \(\xi\) in the open interval [[input:ans6]] [[validation:ans6]] with \(f''(\xi)=0\), as required.</p>
+<p><b>Stage 3.</b> Since \(f'(p)=0\) and \(f'(q)=0\), applying Rolle's Theorem to \(f'\) on the interval [[input:ans5]] [[validation:ans5]], we conclude there is an element \(r\) of the interval [[input:ans6]] [[validation:ans6]] with \(f''(r)=0\), as required.</p>
 [[feedback:prt_ans5]]]]></text>
 </questiontext>
 <questionvariables>
@@ -24,7 +24,7 @@ c: rand(4)+2;</text>
 <text><![CDATA[<p>One valid proof (taking the two sub-intervals in the order \([a,b]\) then \([b,c]\) — the reverse order works just as well):</p>
 <p>Since \(f\) is continuous on \([a,b]\), differentiable on \((a,b)\), and \(f(a)=f(b)=0\), Rolle's Theorem gives a point \(p\in(a,b)\) with \(f'(p)=0\).</p>
 <p>Since \(f\) is continuous on \([b,c]\), differentiable on \((b,c)\), and \(f(b)=f(c)=0\), Rolle's Theorem gives a point \(q\in(b,c)\) with \(f'(q)=0\). Here \(p<b<q\), so \(p<q\).</p>
-<p>Now \(f'\) is continuous on \([p,q]\) and differentiable on \((p,q)\) (since \(f\) is twice differentiable), and \(f'(p)=f'(q)=0\). Rolle's Theorem applied to \(f'\) on \([p,q]\) gives a point \(\xi\in(p,q)\) with \((f')'(\xi)=f''(\xi)=0\), as required.</p>]]></text>
+<p>Now \(f'\) is continuous on \([p,q]\) and differentiable on \((p,q)\) (since \(f\) is twice differentiable), and \(f'(p)=f'(q)=0\). Rolle's Theorem applied to \(f'\) on \([p,q]\) gives an element \(r\in(p,q)\) with \((f')'(r)=f''(r)=0\), as required.</p>]]></text>
 </generalfeedback>
 <specificfeedback format="html">
   <text></text>
@@ -164,22 +164,25 @@ s2: if length(ep2)=2 then setify(ep2) else {};
 s3: if length(ep3)=2 then setify(ep3) else {};
 s4: if length(ep4)=2 then setify(ep4) else {};
 pairing_ok: (type1 and type2 and type3 and type4) and ((s1=setab and s2=setab and s3=setbc and s4=setbc) or (s1=setbc and s2=setbc and s3=setab and s4=setab));
-samepair_flag: (type1 and type3) and is(s1=s3) and (s1=setab or s1=setbc);</text>
+samepair_flag: (type1 and type3) and is(s1=s3) and (s1=setab or s1=setbc);
+score_types1: (if type1 then 0.15 else 0)+(if type2 then 0.15 else 0)+(if type3 then 0.15 else 0)+(if type4 then 0.15 else 0);
+score_pairing_ok: score_types1+0.4;
+score_other1: score_types1;</text>
   </feedbackvariables>
   <node>
     <name>0</name>
-    <description>blank 1 is a closed interval</description>
+    <description>blank 1 is an element whose interval must be closed</description>
     <answertest>AlgEquiv</answertest>
     <sans>type1</sans>
     <tans>true</tans>
     <truenextnode>1</truenextnode>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>+0.15</truescore>
+    <truescore>1</truescore>
     <trueanswernote>prt_ans1-1-T</trueanswernote>
     <falsenextnode>1</falsenextnode>
     <falsescoremode>=</falsescoremode>
-    <falsescore>+0</falsescore>
+    <falsescore>0</falsescore>
     <falseanswernote>prt_ans1-1-F</falseanswernote>
     <falsefeedback format="html">
       <text><![CDATA[<p>The hypotheses of Rolle's Theorem (continuity, differentiability) require a <b>closed</b> interval.</p>]]></text>
@@ -187,37 +190,37 @@ samepair_flag: (type1 and type3) and is(s1=s3) and (s1=setab or s1=setbc);</text
   </node>
   <node>
     <name>1</name>
-    <description>blank 2 is an open interval</description>
+    <description>blank 2 is an element whose interval must be open</description>
     <answertest>AlgEquiv</answertest>
     <sans>type2</sans>
     <tans>true</tans>
     <truenextnode>2</truenextnode>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>+0.15</truescore>
+    <truescore>1</truescore>
     <trueanswernote>prt_ans1-2-T</trueanswernote>
     <falsenextnode>2</falsenextnode>
     <falsescoremode>=</falsescoremode>
-    <falsescore>+0</falsescore>
+    <falsescore>0</falsescore>
     <falseanswernote>prt_ans1-2-F</falseanswernote>
     <falsefeedback format="html">
-      <text><![CDATA[<p>The conclusion of Rolle's Theorem only guarantees the point strictly inside the interval, so this must be an <b>open</b> interval.</p>]]></text>
+      <text><![CDATA[<p>The conclusion of Rolle's Theorem only guarantees the element strictly inside the interval, so this must be an <b>open</b> interval.</p>]]></text>
     </falsefeedback>
   </node>
   <node>
     <name>2</name>
-    <description>blank 3 is a closed interval</description>
+    <description>blank 3 is an element whose interval must be closed</description>
     <answertest>AlgEquiv</answertest>
     <sans>type3</sans>
     <tans>true</tans>
     <truenextnode>3</truenextnode>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>+0.15</truescore>
+    <truescore>1</truescore>
     <trueanswernote>prt_ans1-3-T</trueanswernote>
     <falsenextnode>3</falsenextnode>
     <falsescoremode>=</falsescoremode>
-    <falsescore>+0</falsescore>
+    <falsescore>0</falsescore>
     <falseanswernote>prt_ans1-3-F</falseanswernote>
     <falsefeedback format="html">
       <text><![CDATA[<p>The hypotheses of Rolle's Theorem require a <b>closed</b> interval here too.</p>]]></text>
@@ -225,21 +228,21 @@ samepair_flag: (type1 and type3) and is(s1=s3) and (s1=setab or s1=setbc);</text
   </node>
   <node>
     <name>3</name>
-    <description>blank 4 is an open interval</description>
+    <description>blank 4 is an element whose interval must be open</description>
     <answertest>AlgEquiv</answertest>
     <sans>type4</sans>
     <tans>true</tans>
     <truenextnode>4</truenextnode>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>+0.15</truescore>
+    <truescore>1</truescore>
     <trueanswernote>prt_ans1-4-T</trueanswernote>
     <falsenextnode>4</falsenextnode>
     <falsescoremode>=</falsescoremode>
-    <falsescore>+0</falsescore>
+    <falsescore>0</falsescore>
     <falseanswernote>prt_ans1-4-F</falseanswernote>
     <falsefeedback format="html">
-      <text><![CDATA[<p>Again, the conclusion only places the point inside an <b>open</b> interval.</p>]]></text>
+      <text><![CDATA[<p>Again, the conclusion only places the element inside an <b>open</b> interval.</p>]]></text>
     </falsefeedback>
   </node>
   <node>
@@ -250,15 +253,15 @@ samepair_flag: (type1 and type3) and is(s1=s3) and (s1=setab or s1=setbc);</text
     <tans>true</tans>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>+0.4</truescore>
+    <truescore>score_pairing_ok</truescore>
     <truenextnode>-1</truenextnode>
     <trueanswernote>prt_ans1-5-T</trueanswernote>
     <truefeedback format="html">
-      <text><![CDATA[<p>Correct — one application of Rolle's Theorem on \([a,b]\) and one on \([b,c]\) produce two distinct points.</p>]]></text>
+      <text><![CDATA[<p>Correct — one application of Rolle's Theorem on \([a,b]\) and one on \([b,c]\) produce two distinct elements.</p>]]></text>
     </truefeedback>
     <falsenextnode>5</falsenextnode>
     <falsescoremode>=</falsescoremode>
-    <falsescore>+0</falsescore>
+    <falsescore>score_other1</falsescore>
     <falseanswernote>prt_ans1-5-F</falseanswernote>
   </node>
   <node>
@@ -269,18 +272,18 @@ samepair_flag: (type1 and type3) and is(s1=s3) and (s1=setab or s1=setbc);</text
     <tans>true</tans>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>+0</truescore>
+    <truescore>score_other1</truescore>
     <truenextnode>-1</truenextnode>
     <trueanswernote>prt_ans1-6-T</trueanswernote>
     <truefeedback format="html">
-      <text><![CDATA[<p>You have applied Rolle's Theorem twice to the <b>same</b> pair of zeros. You need one application on \([a,b]\) and a separate one on \([b,c]\) to produce two distinct points \(p\) and \(q\).</p>]]></text>
+      <text><![CDATA[<p>You have applied Rolle's Theorem twice to the <b>same</b> pair of zeros. You need one application on \([a,b]\) and a separate one on \([b,c]\) to produce two distinct elements \(p\) and \(q\).</p>]]></text>
     </truefeedback>
     <falsescoremode>=</falsescoremode>
-    <falsescore>+0</falsescore>
+    <falsescore>score_other1</falsescore>
     <falsenextnode>-1</falsenextnode>
     <falseanswernote>prt_ans1-6-F</falseanswernote>
     <falsefeedback format="html">
-      <text><![CDATA[<p>Check that each closed interval's endpoints match the corresponding open interval's endpoints, and that together the two closed intervals are \([a,b]\) and \([b,c]\).</p>]]></text>
+      <text><![CDATA[<p>Check that each interval's endpoints match the corresponding paired interval's endpoints, and that together the two hypothesis intervals are \([a,b]\) and \([b,c]\).</p>]]></text>
     </falsefeedback>
   </node>
 </prt>
@@ -307,22 +310,25 @@ correctset: setify(porder);
 orderset5: if length(ep5)=2 then setify(ep5) else {};
 orderset6: if length(ep6)=2 then setify(ep6) else {};
 swapped5: is(orderset5=correctset) and not is(ep5=porder);
-swapped6: is(orderset6=correctset) and not is(ep6=porder);</text>
+swapped6: is(orderset6=correctset) and not is(ep6=porder);
+flag5ok: is(ep5=porder);
+flag6ok: is(ep6=porder);
+total_score5: (if type5 then 0.25 else 0)+(if type6 then 0.25 else 0)+(if flag5ok then 0.25 else 0)+(if flag6ok then 0.25 else 0);</text>
   </feedbackvariables>
   <node>
     <name>0</name>
-    <description>blank 5 is a closed interval</description>
+    <description>blank 5 is an element whose interval must be closed</description>
     <answertest>AlgEquiv</answertest>
     <sans>type5</sans>
     <tans>true</tans>
     <truenextnode>1</truenextnode>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>+0.25</truescore>
+    <truescore>1</truescore>
     <trueanswernote>prt_ans5-1-T</trueanswernote>
     <falsenextnode>1</falsenextnode>
     <falsescoremode>=</falsescoremode>
-    <falsescore>+0</falsescore>
+    <falsescore>0</falsescore>
     <falseanswernote>prt_ans5-1-F</falseanswernote>
     <falsefeedback format="html">
       <text><![CDATA[<p>The hypotheses of Rolle's Theorem applied to \(f'\) require a <b>closed</b> interval.</p>]]></text>
@@ -330,21 +336,21 @@ swapped6: is(orderset6=correctset) and not is(ep6=porder);</text>
   </node>
   <node>
     <name>1</name>
-    <description>blank 6 is an open interval</description>
+    <description>blank 6 is an element whose interval must be open</description>
     <answertest>AlgEquiv</answertest>
     <sans>type6</sans>
     <tans>true</tans>
     <truenextnode>2</truenextnode>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>+0.25</truescore>
+    <truescore>1</truescore>
     <trueanswernote>prt_ans5-2-T</trueanswernote>
     <falsenextnode>2</falsenextnode>
     <falsescoremode>=</falsescoremode>
-    <falsescore>+0</falsescore>
+    <falsescore>0</falsescore>
     <falseanswernote>prt_ans5-2-F</falseanswernote>
     <falsefeedback format="html">
-      <text><![CDATA[<p>The conclusion only places \(\xi\) strictly inside the interval, so this must be an <b>open</b> interval.</p>]]></text>
+      <text><![CDATA[<p>The conclusion only places \(r\) strictly inside the interval, so this must be an <b>open</b> interval.</p>]]></text>
     </falsefeedback>
   </node>
   <node>
@@ -356,11 +362,11 @@ swapped6: is(orderset6=correctset) and not is(ep6=porder);</text>
     <truenextnode>3</truenextnode>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>+0.25</truescore>
+    <truescore>1</truescore>
     <trueanswernote>prt_ans5-3-T</trueanswernote>
     <falsenextnode>4</falsenextnode>
     <falsescoremode>=</falsescoremode>
-    <falsescore>+0</falsescore>
+    <falsescore>0</falsescore>
     <falseanswernote>prt_ans5-3-F</falseanswernote>
   </node>
   <node>
@@ -371,15 +377,15 @@ swapped6: is(orderset6=correctset) and not is(ep6=porder);</text>
     <tans>ta6</tans>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>+0.25</truescore>
+    <truescore>total_score5</truescore>
     <truenextnode>-1</truenextnode>
     <trueanswernote>prt_ans5-4-T</trueanswernote>
     <truefeedback format="html">
-      <text><![CDATA[<p>Correct — both intervals use your own points \(p\) and \(q\), ordered consistently with which of them is smaller.</p>]]></text>
+      <text><![CDATA[<p>Correct — both intervals use your own elements \(p\) and \(q\), ordered consistently with which of them is smaller.</p>]]></text>
     </truefeedback>
     <falsenextnode>5</falsenextnode>
     <falsescoremode>=</falsescoremode>
-    <falsescore>+0</falsescore>
+    <falsescore>0</falsescore>
     <falseanswernote>prt_ans5-4-F</falseanswernote>
   </node>
   <node>
@@ -391,17 +397,17 @@ swapped6: is(orderset6=correctset) and not is(ep6=porder);</text>
     <truenextnode>3</truenextnode>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>+0</truescore>
+    <truescore>1</truescore>
     <trueanswernote>prt_ans5-5-T</trueanswernote>
     <truefeedback format="html">
-      <text><![CDATA[<p>Blank 5 uses the right points \(p\) and \(q\), but in the wrong order — check which of them your own earlier work makes the smaller.</p>]]></text>
+      <text><![CDATA[<p>Blank 5 uses the right elements \(p\) and \(q\), but in the wrong order — check which of them your own earlier work makes the smaller.</p>]]></text>
     </truefeedback>
     <falsenextnode>3</falsenextnode>
     <falsescoremode>=</falsescoremode>
-    <falsescore>+0</falsescore>
+    <falsescore>0</falsescore>
     <falseanswernote>prt_ans5-5-F</falseanswernote>
     <falsefeedback format="html">
-      <text><![CDATA[<p>The closed interval here should have endpoints \(p\) and \(q\), the two points produced by your earlier applications of Rolle's Theorem.</p>]]></text>
+      <text><![CDATA[<p>The closed interval here should have endpoints \(p\) and \(q\), the two elements produced by your earlier applications of Rolle's Theorem.</p>]]></text>
     </falsefeedback>
   </node>
   <node>
@@ -412,18 +418,18 @@ swapped6: is(orderset6=correctset) and not is(ep6=porder);</text>
     <tans>true</tans>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>+0</truescore>
+    <truescore>total_score5</truescore>
     <truenextnode>-1</truenextnode>
     <trueanswernote>prt_ans5-6-T</trueanswernote>
     <truefeedback format="html">
-      <text><![CDATA[<p>Blank 6 uses the right points \(p\) and \(q\), but in the wrong order — check which of them your own earlier work makes the smaller.</p>]]></text>
+      <text><![CDATA[<p>Blank 6 uses the right elements \(p\) and \(q\), but in the wrong order — check which of them your own earlier work makes the smaller.</p>]]></text>
     </truefeedback>
     <falsescoremode>=</falsescoremode>
-    <falsescore>+0</falsescore>
+    <falsescore>total_score5</falsescore>
     <falsenextnode>-1</falsenextnode>
     <falseanswernote>prt_ans5-6-F</falseanswernote>
     <falsefeedback format="html">
-      <text><![CDATA[<p>The open interval here should have endpoints \(p\) and \(q\), the two points produced by your earlier applications of Rolle's Theorem.</p>]]></text>
+      <text><![CDATA[<p>The open interval here should have endpoints \(p\) and \(q\), the two elements produced by your earlier applications of Rolle's Theorem.</p>]]></text>
     </falsefeedback>
   </node>
 </prt>

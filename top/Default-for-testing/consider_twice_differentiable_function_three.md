@@ -128,3 +128,13 @@ FEEDBACK (negotiable): Worked solution: standard two-applications-of-Rolle's-The
 PRT/QTEST SUGGESTIONS: Include one qtest where the student does {b,c} before {a,b} (reversed order from the canonical worked solution, so their p>q), to confirm PRT A accepts it and PRT B/C correctly expects cc(q,p)/oo(q,p).
 ```
 
+## Entry 7 — author · build round 3 (2026-10-15T11:48:27)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 1 attempt(s).
+Retriever gave the Author: Authoring/Answer_Tests/Equivalence.md, Authoring/Answer_Tests/Grading_recipes.md, CAS/Real_Intervals.md, Authoring/Potential_response_trees.md, Authoring/Inputs/Input_options.md
+```
+
