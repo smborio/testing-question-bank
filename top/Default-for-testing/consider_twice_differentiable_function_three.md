@@ -57,3 +57,13 @@ Feedback to Author: Three fixes needed:
 3. The "common error" branches must not pay full marks: prt_ans1 node 5 (same pair of zeros used twice) currently has truescoremode="=" truescore="1" — this should score low (e.g. 0, keeping whatever bracket-type credit was already earned via additive scoring), not full marks, since it's flagging a mistake. Likewise prt_ans5 nodes 4 and 5 (endpoints right but p/q order swapped relative to the student's own earlier work) currently score truescore="1" absolute — these should also score low (e.g. 0 beyond already-earned bracket-type credit), not full marks. Update the qtest expected scores for testcases 3 and 4 accordingly.
 ```
 
+## Entry 4 — author · build round 2 (2026-10-15T11:36:38)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 1 attempt(s).
+Retriever gave the Author: Authoring/Variables.md, Authoring/Question_note.md, Authoring/Answer_Tests/Grading_recipes.md, CAS/Real_Intervals.md, CAS/Genuine_numbers_and_zero.md, Authoring/Answer_Tests/Equivalence.md, Authoring/Potential_response_trees.md
+```
+

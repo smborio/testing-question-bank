@@ -37,7 +37,6 @@ c: rand(4)+2;</text>
 <name>ans1</name>
 <type>algebraic</type>
 <tans>cc(a,b)</tans>
-<syntaxhint>cc(,)</syntaxhint>
 <allowwords>a,b,c</allowwords>
 <boxsize>15</boxsize>
 <strictsyntax>1</strictsyntax>
@@ -50,12 +49,12 @@ c: rand(4)+2;</text>
 <mustverify>1</mustverify>
 <showvalidation>1</showvalidation>
 <options></options>
+<syntaxhint></syntaxhint>
 </input>
 <input>
 <name>ans2</name>
 <type>algebraic</type>
 <tans>oo(a,b)</tans>
-<syntaxhint>oo(,)</syntaxhint>
 <allowwords>a,b,c</allowwords>
 <boxsize>15</boxsize>
 <strictsyntax>1</strictsyntax>
@@ -68,12 +67,12 @@ c: rand(4)+2;</text>
 <mustverify>1</mustverify>
 <showvalidation>1</showvalidation>
 <options></options>
+<syntaxhint></syntaxhint>
 </input>
 <input>
 <name>ans3</name>
 <type>algebraic</type>
 <tans>cc(b,c)</tans>
-<syntaxhint>cc(,)</syntaxhint>
 <allowwords>a,b,c</allowwords>
 <boxsize>15</boxsize>
 <strictsyntax>1</strictsyntax>
@@ -86,12 +85,12 @@ c: rand(4)+2;</text>
 <mustverify>1</mustverify>
 <showvalidation>1</showvalidation>
 <options></options>
+<syntaxhint></syntaxhint>
 </input>
 <input>
 <name>ans4</name>
 <type>algebraic</type>
 <tans>oo(b,c)</tans>
-<syntaxhint>oo(,)</syntaxhint>
 <allowwords>a,b,c</allowwords>
 <boxsize>15</boxsize>
 <strictsyntax>1</strictsyntax>
@@ -104,12 +103,12 @@ c: rand(4)+2;</text>
 <mustverify>1</mustverify>
 <showvalidation>1</showvalidation>
 <options></options>
+<syntaxhint></syntaxhint>
 </input>
 <input>
 <name>ans5</name>
 <type>algebraic</type>
 <tans>cc(p,q)</tans>
-<syntaxhint>cc(,)</syntaxhint>
 <boxsize>15</boxsize>
 <strictsyntax>1</strictsyntax>
 <insertstars>0</insertstars>
@@ -122,12 +121,12 @@ c: rand(4)+2;</text>
 <mustverify>1</mustverify>
 <showvalidation>1</showvalidation>
 <options></options>
+<syntaxhint></syntaxhint>
 </input>
 <input>
 <name>ans6</name>
 <type>algebraic</type>
 <tans>oo(p,q)</tans>
-<syntaxhint>oo(,)</syntaxhint>
 <boxsize>15</boxsize>
 <strictsyntax>1</strictsyntax>
 <insertstars>0</insertstars>
@@ -140,6 +139,7 @@ c: rand(4)+2;</text>
 <mustverify>1</mustverify>
 <showvalidation>1</showvalidation>
 <options></options>
+<syntaxhint></syntaxhint>
 </input>
 <prt>
   <name>prt_ans1</name>
@@ -269,14 +269,14 @@ samepair_flag: (type1 and type3) and is(s1=s3) and (s1=setab or s1=setbc);</text
     <tans>true</tans>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>1</truescore>
+    <truescore>+0</truescore>
     <truenextnode>-1</truenextnode>
     <trueanswernote>prt_ans1-6-T</trueanswernote>
     <truefeedback format="html">
       <text><![CDATA[<p>You have applied Rolle's Theorem twice to the <b>same</b> pair of zeros. You need one application on \([a,b]\) and a separate one on \([b,c]\) to produce two distinct points \(p\) and \(q\).</p>]]></text>
     </truefeedback>
     <falsescoremode>=</falsescoremode>
-    <falsescore>0</falsescore>
+    <falsescore>+0</falsescore>
     <falsenextnode>-1</falsenextnode>
     <falseanswernote>prt_ans1-6-F</falseanswernote>
     <falsefeedback format="html">
@@ -391,14 +391,14 @@ swapped6: is(orderset6=correctset) and not is(ep6=porder);</text>
     <truenextnode>3</truenextnode>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>1</truescore>
+    <truescore>+0</truescore>
     <trueanswernote>prt_ans5-5-T</trueanswernote>
     <truefeedback format="html">
       <text><![CDATA[<p>Blank 5 uses the right points \(p\) and \(q\), but in the wrong order — check which of them your own earlier work makes the smaller.</p>]]></text>
     </truefeedback>
     <falsenextnode>3</falsenextnode>
     <falsescoremode>=</falsescoremode>
-    <falsescore>0</falsescore>
+    <falsescore>+0</falsescore>
     <falseanswernote>prt_ans5-5-F</falseanswernote>
     <falsefeedback format="html">
       <text><![CDATA[<p>The closed interval here should have endpoints \(p\) and \(q\), the two points produced by your earlier applications of Rolle's Theorem.</p>]]></text>
@@ -412,14 +412,14 @@ swapped6: is(orderset6=correctset) and not is(ep6=porder);</text>
     <tans>true</tans>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
-    <truescore>1</truescore>
+    <truescore>+0</truescore>
     <truenextnode>-1</truenextnode>
     <trueanswernote>prt_ans5-6-T</trueanswernote>
     <truefeedback format="html">
       <text><![CDATA[<p>Blank 6 uses the right points \(p\) and \(q\), but in the wrong order — check which of them your own earlier work makes the smaller.</p>]]></text>
     </truefeedback>
     <falsescoremode>=</falsescoremode>
-    <falsescore>0</falsescore>
+    <falsescore>+0</falsescore>
     <falsenextnode>-1</falsenextnode>
     <falseanswernote>prt_ans5-6-F</falseanswernote>
     <falsefeedback format="html">
@@ -538,13 +538,13 @@ swapped6: is(orderset6=correctset) and not is(ep6=porder);</text>
   </testinput>
   <expected>
     <name>prt_ans1</name>
-    <expectedscore>1.0000000</expectedscore>
+    <expectedscore>0.6000000</expectedscore>
     <expectedpenalty>0.0000000</expectedpenalty>
     <expectedanswernote>prt_ans1-6-T</expectedanswernote>
   </expected>
   <expected>
     <name>prt_ans5</name>
-    <expectedscore>0.0000000</expectedscore>
+    <expectedscore>0.5000000</expectedscore>
     <expectedpenalty>0.0000000</expectedpenalty>
     <expectedanswernote>prt_ans5-6-F</expectedanswernote>
   </expected>
@@ -585,10 +585,13 @@ swapped6: is(orderset6=correctset) and not is(ep6=porder);</text>
   </expected>
   <expected>
     <name>prt_ans5</name>
-    <expectedscore>1.0000000</expectedscore>
+    <expectedscore>0.5000000</expectedscore>
     <expectedpenalty>0.0000000</expectedpenalty>
     <expectedanswernote>prt_ans5-6-T</expectedanswernote>
   </expected>
 </qtest>
+
+
+
 </question>
 </quiz>
