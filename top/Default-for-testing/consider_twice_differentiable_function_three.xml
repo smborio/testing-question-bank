@@ -5,15 +5,17 @@
 <text>Consider twice differentiable function three</text>
 </name>
 <questiontext format="html">
-<text><![CDATA[<p>Let \(f\) be twice differentiable on an interval containing the three points \(a={@a@}\), \(b={@b@}\), \(c={@c@}\), with \(a<b<c\), and suppose \(f(a)=f(b)=f(c)=0\). Complete the proof that there exists an element \(r\) such that \(f''(r)=0\).</p>
+<text><![CDATA[<p>Let \(f\) be twice differentiable on all real numbers, and suppose \(f({@a@})=f({@b@})=f({@c@})=0\). Complete the proof that there exists an real numebr \(r\) such that \(f''(r)=0\).</p>
 
-<p><b>Stage 1.</b> Applying Rolle's Theorem to \(f\) on the interval [[input:ans1]] [[validation:ans1]], we conclude there is an element \(p\) of the interval [[input:ans2]] [[validation:ans2]] with \(f'(p)=0\).</p>
+<p>Applying Rolle's Theorem to \(f\) on the interval [[input:ans1]] [[validation:ans1]], we conclude there is an element \(p\) in the interval [[input:ans2]] [[validation:ans2]] with \(f'(p)=0\).</p>
 
-<p><b>Stage 2.</b> Applying Rolle's Theorem to \(f\) on the interval [[input:ans3]] [[validation:ans3]], we conclude there is an element \(q\) of the interval [[input:ans4]] [[validation:ans4]] with \(f'(q)=0\).</p>
-[[feedback:prt_ans1]]
+<p>Applying Rolle's Theorem to \(f\) on the interval [[input:ans3]] [[validation:ans3]], we conclude there is an element \(q\) in the interval [[input:ans4]] [[validation:ans4]] with \(f'(q)=0\).</p>
 
-<p><b>Stage 3.</b> Since \(f'(p)=0\) and \(f'(q)=0\), applying Rolle's Theorem to \(f'\) on the interval [[input:ans5]] [[validation:ans5]], we conclude there is an element \(r\) of the interval [[input:ans6]] [[validation:ans6]] with \(f''(r)=0\), as required.</p>
-[[feedback:prt_ans5]]]]></text>
+<p>[[feedback:prt_ans1]]</p>
+
+<p>Since \(f'(p)=0\) and \(f'(q)=0\), applying Rolle's Theorem to \(f'\) on the interval [[input:ans5]] [[validation:ans5]], we conclude there is an element \(r\) of the interval [[input:ans6]] [[validation:ans6]] with \(f''(r)=0\), as required.</p>
+
+<p>[[feedback:prt_ans5]]</p>]]></text>
 </questiontext>
 <questionvariables>
 <text>a: -(rand(4)+2);
