@@ -462,13 +462,13 @@ total_score5: (if type5 then 0.25 else 0)+(if type6 then 0.25 else 0)+(if flag5o
   </testinput>
   <expected>
     <name>prt_ans1</name>
-    <expectedscore>0.4000000</expectedscore>
+    <expectedscore>1.0000000</expectedscore>
     <expectedpenalty>0.0000000</expectedpenalty>
     <expectedanswernote>prt_ans1-5-T</expectedanswernote>
   </expected>
   <expected>
     <name>prt_ans5</name>
-    <expectedscore>0.2500000</expectedscore>
+    <expectedscore>1.0000000</expectedscore>
     <expectedpenalty>0.0000000</expectedpenalty>
     <expectedanswernote>prt_ans5-4-T</expectedanswernote>
   </expected>
@@ -503,13 +503,13 @@ total_score5: (if type5 then 0.25 else 0)+(if type6 then 0.25 else 0)+(if flag5o
   </testinput>
   <expected>
     <name>prt_ans1</name>
-    <expectedscore>0.4000000</expectedscore>
+    <expectedscore>1.0000000</expectedscore>
     <expectedpenalty>0.0000000</expectedpenalty>
     <expectedanswernote>prt_ans1-5-T</expectedanswernote>
   </expected>
   <expected>
     <name>prt_ans5</name>
-    <expectedscore>0.2500000</expectedscore>
+    <expectedscore>1.0000000</expectedscore>
     <expectedpenalty>0.0000000</expectedpenalty>
     <expectedanswernote>prt_ans5-4-T</expectedanswernote>
   </expected>
@@ -585,7 +585,7 @@ total_score5: (if type5 then 0.25 else 0)+(if type6 then 0.25 else 0)+(if flag5o
   </testinput>
   <expected>
     <name>prt_ans1</name>
-    <expectedscore>0.4000000</expectedscore>
+    <expectedscore>1.0000000</expectedscore>
     <expectedpenalty>0.0000000</expectedpenalty>
     <expectedanswernote>prt_ans1-5-T</expectedanswernote>
   </expected>
@@ -596,6 +596,9 @@ total_score5: (if type5 then 0.25 else 0)+(if type6 then 0.25 else 0)+(if flag5o
     <expectedanswernote>prt_ans5-6-T</expectedanswernote>
   </expected>
 </qtest>
+
+
+
 
 
 
