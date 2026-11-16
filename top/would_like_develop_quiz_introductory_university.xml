@@ -44,7 +44,7 @@ wrong2: (1/(b-a))*ln(a*(1+b)/(b*(1+a)));</text>
 <requirelowestterms>0</requirelowestterms>
 <checkanswertype>0</checkanswertype>
 <mustverify>1</mustverify>
-<showvalidation>1</showvalidation>
+<showvalidation>3</showvalidation>
 <options></options>
 </input>
 <prt>
@@ -124,22 +124,9 @@ wrong2: (1/(b-a))*ln(a*(1+b)/(b*(1+a)));</text>
     <expectedanswernote>prt_ans1-1-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
   <testcase>2</testcase>
-  <description>Correct</description>
-  <testinput>
-    <name>ans1</name>
-    <value>CT:{#ta1#}</value>
-  </testinput>
-  <expected>
-    <name>prt_ans1</name>
-    <expectedscore>1.0000000</expectedscore>
-    <expectedpenalty>0.0000000</expectedpenalty>
-    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
-  </expected>
-</qtest>
-<qtest>
-  <testcase>3</testcase>
   <description>Difference of logs</description>
   <testinput>
     <name>ans1</name>
@@ -152,6 +139,22 @@ wrong2: (1/(b-a))*ln(a*(1+b)/(b*(1+a)));</text>
     <expectedanswernote>prt_ans1-1-T</expectedanswernote>
   </expected>
 </qtest>
+
+<qtest>
+  <testcase>3</testcase>
+  <description>Fully expanded logs (four terms)</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#(ln(b)+ln(1+a)-ln(a)-ln(1+b))/(b-a)#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
 <qtest>
   <testcase>4</testcase>
   <description>Inverted</description>
@@ -166,6 +169,7 @@ wrong2: (1/(b-a))*ln(a*(1+b)/(b*(1+a)));</text>
     <expectedanswernote>prt_ans1-3-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
   <testcase>5</testcase>
   <description>Zero</description>

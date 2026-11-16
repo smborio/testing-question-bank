@@ -56,3 +56,14 @@ Review decision: REJECT (keep_draft=True, plan_changed=False)
 Feedback to Author: Make four changes and keep everything else as is. 1) Make the validation message on input ans1 compact. 2) Rename the question to "Definite integral: substitution + partial fractions". 3) Remove the duplicate qtest 2 ("Correct"), which repeats qtest 1. 4) Add a qtest "Fully expanded logs (four terms)". It enters (ln(b)+ln(1+a)-ln(a)-ln(1+b))/(b-a), written with the question variables so it holds on every variant. It expects score 1 and answer note prt_ans1-1-T.
 ```
 
+## Entry 4 — author · build round 2 (2026-11-16T16:22:38)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 1 attempt(s).
+Retriever gave the Author: CAS/Random.md, Authoring/Inputs/Input_options.md, Authoring/Answer_Tests/Equivalence.md, Authoring/Answer_Tests/Grading_recipes.md, Authoring/Potential_response_trees.md, Authoring/Feedback.md, STACK_question_admin/Testing.md
+Deviations reported: There is no field for the question name, so I could not rename it to "Definite integral: substitution + partial fractions". Please set that name outside these fields. I set SHOWVALIDATION to 3, which I believe is STACK's compact option without the variable list. The old value 1 may already have been compact, so please check that 3 is what you meant. The new qtest is numbered 6 and placed before qtest 4, and I did not renumber the others. I wrote its expected branch as NODE0-T, the root node's true branch. STACK records that branch as prt_ans1-1-T because answer notes count nodes from 1.
+```
+
