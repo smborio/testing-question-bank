@@ -46,3 +46,13 @@ STACK API check: PASSED after 1 attempt(s).
 Retriever gave the Author: CAS/Random.md, Authoring/Inputs/Input_options.md, Authoring/Answer_Tests/Equivalence.md, Authoring/Answer_Tests/Grading_recipes.md, Authoring/Potential_response_trees.md, Authoring/Feedback.md, STACK_question_admin/Testing.md
 ```
 
+## Entry 3 — planner · review (2026-11-16T16:22:01)
+
+**Reference files fetched:**
+- (none)
+
+```text
+Review decision: REJECT (keep_draft=True, plan_changed=False)
+Feedback to Author: Make four changes and keep everything else as is. 1) Make the validation message on input ans1 compact. 2) Rename the question to "Definite integral: substitution + partial fractions". 3) Remove the duplicate qtest 2 ("Correct"), which repeats qtest 1. 4) Add a qtest "Fully expanded logs (four terms)". It enters (ln(b)+ln(1+a)-ln(a)-ln(1+b))/(b-a), written with the question variables so it holds on every variant. It expects score 1 and answer note prt_ans1-1-T.
+```
+
