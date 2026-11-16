@@ -1,24 +1,25 @@
-GOAL (non-negotiable): Evaluate exactly the definite integral of 2x/((x^2+a)(x^2+b)) from 0 to 1. Tests combining the substitution u = x^2 with partial fractions (calculate). Exact answer: (1/(b-a))*ln(b(1+a)/(a(1+b))).
+GOAL: Evaluate exactly the definite integral of 2x/((x^2+a)(x^2+b)) from 0 to 1. It tests the substitution u = x^2 combined with partial fractions (calculate). Exact answer: (1/(b-a))*ln(b(1+a)/(a(1+b))).
 
-STRUCTURE (non-negotiable): A single part with one expression input and no intermediate steps. The question text says: "Evaluate the definite integral ∫₀¹ 2x/((x²+a)(x²+b)) dx. Hint: Consider the substitution u = x². Enter the exact value." Short, formative, part of a Week 9 quiz.
+DESCRIPTION: The student sees one part: "Evaluate the definite integral ∫₀¹ 2x/((x²+a)(x²+b)) dx. Hint: consider the substitution u = x². Enter the exact value (not a decimal approximation)." There is one algebraic input that expects an exact expression, usually with a logarithm. Decimals are refused. The question is short and formative, for a Week 9 quiz.
 
-RANDOMIZATION (negotiable): integers a and b with 1 <= a < b <= 6, so a is less than b (no repeated factors, no swapped duplicates). This gives 15 variants of similar difficulty. The worked solution is the same for every variant.
+STRUCTURE: A single part with one expression input and no intermediate steps.
 
-ANSWER TESTS (negotiable): Check that the student's expression is mathematically equivalent to the exact value, accepting any equivalent exact logarithmic form (a single logarithm, a difference of logarithms, a rearranged constant). Full marks need the correct value. Decimal approximations are rejected: the input must refuse floats, with a message asking for an exact value. Form only: not allowed.
+RANDOMIZATION: Integers a and b with 1 <= a < b <= 6. This gives 15 variants of similar difficulty, with no repeated factors (a = b is excluded). The worked solution is the same for every variant.
 
-FEEDBACK (negotiable):
-- Correct: confirm briefly.
-- Mistake 1: the answer without the 1/(b-a) factor, ln(b(1+a)/(a(1+b))). Score 0, hint about the partial-fraction constant 1/(b-a).
-- Mistake 2: the inverted logarithm, (1/(b-a))*ln(a(1+b)/(b(1+a))). Score 0, hint about the signs/order inside the logarithm.
-- Any other wrong answer: a generic hint to check the substitution and the partial fractions.
-- Worked solution: with u = x^2 and du = 2x dx the limits stay 0 and 1, so the integral is ∫₀¹ du/((u+a)(u+b)). Partial fractions give (1/(b-a))(1/(u+a) - 1/(u+b)). Integrating and evaluating gives the exact value above. It names the methods: substitution, then partial fractions.
+ANSWER TESTS: The student's expression must be algebraically equivalent to (1/(b-a))*ln(b(1+a)/(a(1+b))). Any equivalent exact form keeps full marks, such as a single logarithm, a difference of logarithms, or fully expanded logarithms. Full marks need the correct value, and form alone is not enough. Floats are forbidden in the input. The words "int" and "diff" are also forbidden. The answer is checked after a validation step, and the student must confirm it.
 
-PRT/QTEST SUGGESTIONS: (none)
+FEEDBACK:
+- Correct: scores 1 with no extra message.
+- Mistake 1: the answer without the 1/(b-a) factor, ln(b(1+a)/(a(1+b))). Score 0. Hint: "You are missing the partial-fraction constant 1/(b-a)."
+- Mistake 2: the inverted logarithm, (1/(b-a))*ln(a(1+b)/(b(1+a))). Score 0. Hint: "Check the order and signs inside the logarithm: the upper-limit value goes on top."
+- Any other wrong answer: score 0. Generic hint: "Check the substitution u = x² and your partial fractions, then enter the exact value."
+- Worked solution: with u = x² and du = 2x dx, the limits stay 0 and 1. The integral becomes ∫₀¹ du/((u+a)(u+b)). Partial fractions give (1/(b-a))(1/(u+a) − 1/(u+b)). Integrating and evaluating from 0 to 1 gives the exact value. It names the methods: substitution, then partial fractions.
 
-REFERENCE POINTERS (optional):
-CAS/Random.md
-Authoring/Inputs/Numerical_input.md
-Authoring/Answer_Tests/Equivalence.md
-Authoring/Feedback.md
+IMPLEMENTATION NOTES:
+- a is drawn as rand(5)+1 and b as a+1+rand(6-a), which keeps a < b <= 6.
+- The wrong-answer values wrong1 and wrong2 are computed in the question variables from a and b.
+- Both mistake checks use the same equivalence test as the correct answer.
+- The "missing 1/(b-a)" branch (node 1) has no test case that reaches it. The build's test of wrong1 ended at node 2 on some variants and at node 1 on others, so it was not kept as a test case. This is expected when b-a = 1, because wrong1 then equals the correct answer. In that variant the correct answer is accepted first.
+- The test cases cover the model answer, a difference of logarithms, fully expanded logarithms, the inverted answer, and zero.
 
-ADDITIONAL LANGUAGES (optional): (none)
+ADDITIONAL LANGUAGES: (none)
