@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<question type="stack">
+<name>
+<text>Would like develop quiz introductory university</text>
+</name>
+<questiontext format="html">
+<text><![CDATA[<p>Evaluate the definite integral \(\displaystyle\int_0^1 \frac{2x}{(x^2+{@a@})(x^2+{@b@})}\,dx\).</p>
+<p>Hint: consider the substitution \(u=x^2\).</p>
+<p>Enter the exact value (not a decimal approximation).</p>
+<p>[[input:ans1]] [[validation:ans1]] [[feedback:prt_ans1]]</p>]]></text>
+</questiontext>
+<questionvariables>
+<text>a: rand(5)+1;
+b: a+1+rand(6-a);
+ta1: (1/(b-a))*ln(b*(1+a)/(a*(1+b)));
+wrong1: ln(b*(1+a)/(a*(1+b)));
+wrong2: (1/(b-a))*ln(a*(1+b)/(b*(1+a)));</text>
+</questionvariables>
+<generalfeedback format="html">
+<text><![CDATA[<p>Let \(u=x^2\), so \(du=2x\,dx\). The limits stay 0 and 1, so the integral becomes \(\int_0^1 \frac{du}{(u+{@a@})(u+{@b@})}\).</p>
+<p>Partial fractions give \(\frac{1}{(u+{@a@})(u+{@b@})}=\frac{1}{{@b-a@}}\left(\frac{1}{u+{@a@}}-\frac{1}{u+{@b@}}\right)\).</p>
+<p>Integrating and evaluating from 0 to 1 gives \(\frac{1}{{@b-a@}}\left[\ln\frac{u+{@a@}}{u+{@b@}}\right]_0^1={@ta1@}\).</p>]]></text>
+</generalfeedback>
+<specificfeedback format="html">
+  <text></text>
+</specificfeedback>
+<questionnote format="moodle_auto_format">
+<text>\(a={@a@}, b={@b@}\)</text>
+</questionnote>
+<penalty>0</penalty>
+<input>
+<name>ans1</name>
+<type>algebraic</type>
+<tans>ta1</tans>
+<forbidfloat>1</forbidfloat>
+<forbidwords>int, diff</forbidwords>
+<insertstars>1</insertstars>
+<boxsize>15</boxsize>
+<strictsyntax>1</strictsyntax>
+<syntaxhint></syntaxhint>
+<syntaxattribute>0</syntaxattribute>
+<allowwords></allowwords>
+<requirelowestterms>0</requirelowestterms>
+<checkanswertype>0</checkanswertype>
+<mustverify>1</mustverify>
+<showvalidation>3</showvalidation>
+<options></options>
+</input>
+<prt>
+  <name>prt_ans1</name>
+  <value>1</value>
+  <autosimplify>1</autosimplify>
+  <feedbackstyle>1</feedbackstyle>
+  <node>
+    <name>0</name>
+    <description>Correct value</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>ans1</sans>
+    <tans>ta1</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>1</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans1-1-T</trueanswernote>
+    <falsenextnode>1</falsenextnode>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falseanswernote>prt_ans1-1-F</falseanswernote>
+  </node>
+  <node>
+    <name>1</name>
+    <description>Missing 1/(b-a)</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>ans1</sans>
+    <tans>wrong1</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>0</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans1-2-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>You are missing the partial-fraction constant \(1/(b-a)\).</p>]]></text>
+    </truefeedback>
+    <falsenextnode>2</falsenextnode>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falseanswernote>prt_ans1-2-F</falseanswernote>
+  </node>
+  <node>
+    <name>2</name>
+    <description>Inverted logarithm</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>ans1</sans>
+    <tans>wrong2</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>0</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans1-3-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>Check the order and signs inside the logarithm: the upper-limit value goes on top.</p>]]></text>
+    </truefeedback>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falsenextnode>-1</falsenextnode>
+    <falseanswernote>prt_ans1-3-F</falseanswernote>
+    <falsefeedback format="html">
+      <text><![CDATA[<p>Check the substitution \(u=x^2\) and your partial fractions, then enter the exact value.</p>]]></text>
+    </falsefeedback>
+  </node>
+</prt>
+<qtest>
+  <testcase>1</testcase>
+  <description>The model answers</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#ta1#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>2</testcase>
+  <description>Difference of logs</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#(ln(b*(1+a))-ln(a*(1+b)))/(b-a)#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>3</testcase>
+  <description>Fully expanded logs (four terms)</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#(ln(b)+ln(1+a)-ln(a)-ln(1+b))/(b-a)#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>4</testcase>
+  <description>Inverted</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#wrong2#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-3-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>5</testcase>
+  <description>Zero</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#0#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-3-F</expectedanswernote>
+  </expected>
+</qtest>
+</question>
+</quiz>
