@@ -324,3 +324,13 @@ Feedback to Author: The question does not load: the STACK API times out after 30
 8. If the API still times out, retry once and report it.
 ```
 
+## Entry 11 — author · build round 4 (2026-11-19T10:48:28)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: did NOT pass (api_unreachable) after 1 attempt(s).
+Retriever gave the Author: Specialist_tools/JSXGraph/JSXGraph.md, Specialist_tools/JSXGraph/Binding.md, Authoring/Answer_Tests/Grading_recipes.md, CAS/Random.md
+```
+

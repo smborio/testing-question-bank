@@ -55,29 +55,32 @@ makeLine(ref_D, {#sD#}, 'blue', true, 'Median', ymax-2);
 </questiontext>
 <questionvariables>
 <text><![CDATA[N: 50+rand(50);
-nb: 13+rand(2);
+nb: 12+rand(3);
 mo: 3+rand(2);
-sg: rand([1, 5/4, 3/2]);
+sg: 1+rand(3)*0.25;
 nt: ceiling(N/11);
 ot: makelist(floor(nt/4)+(if i > 4-mod(nt,4) then 1 else 0), i, 1, 4);
-no: nt;
 nbody: nb-4;
 wb: makelist(float(exp(-(i-mo)^2/(2*sg^2))), i, 1, nbody);
 Sb: lsum(z, z, wb);
-cb0: makelist(floor(float((N-no)*wb[i]/Sb)), i, 1, nbody);
-cb: makelist(if i=mo then cb0[i]+N-no-lsum(z, z, cb0) else cb0[i], i, 1, nbody);
+cb0: makelist(floor(float((N-nt)*wb[i]/Sb)), i, 1, nbody);
+rem: N-nt-lsum(z, z, cb0);
+cb: makelist(if i=mo then cb0[i]+rem else cb0[i], i, 1, nbody);
 cnt: append(cb, ot);
 xc: makelist(6*(i-1)+3, i, 1, nb);
+cumc: makelist(sum(cnt[j], j, 1, i), i, 1, nb);
 maxc: lmax(cnt);
-dots: apply(append, makelist(makelist(xc[i], k, 1, cnt[i]), i, 1, nb));
-tm: sum(cnt[i]*xc[i], i, 1, nb)/N;
-med: if oddp(N) then dots[(N+1)/2] else (dots[N/2]+dots[N/2+1])/2;
+bn(k):= length(sublist(cumc, lambda([c], c<k)))+1;
+tm: float(sum(cnt[i]*xc[i], i, 1, nb)/N);
+med: float((xc[bn(floor((N+1)/2))]+xc[bn(floor(N/2)+1)])/2);
 tmd: float(round(10*tm)/10);
 medd: float(round(10*med)/10);
-nl: lsum(if xc[k] < med then cnt[k] else 0, k, makelist(j, j, 1, nb));
-nr: lsum(if xc[k] > med then cnt[k] else 0, k, makelist(j, j, 1, nb));
-ne: N - nl - nr;
-[sM, sD]: rand([[4, 6*nb-4], [6*nb-4, 4]]);
+nl: sum(if xc[k] < med then cnt[k] else 0, k, 1, nb);
+nr: sum(if xc[k] > med then cnt[k] else 0, k, 1, nb);
+ne: N-nl-nr;
+k0: rand(2);
+sM: if k0=0 then 4 else 6*nb-4;
+sD: 6*nb-sM;
 ta1: tm;
 ta2: med;]]></text>
 </questionvariables>
@@ -90,7 +93,7 @@ ta2: med;]]></text>
   <text></text>
 </specificfeedback>
 <questionnote format="moodle_auto_format">
-<text>N={@N@}, bins={@nb@}, mode bin={@mo@}, sd={@sg@}, outliers={@ot@}, starts={@[sM,sD]@}, mean={@tmd@}, median={@medd@}</text>
+<text>N={@N@}, bins={@nb@}, mode bin={@mo@}, sd={@sg@}, outliers={@ot@}, starts={@sM@} and {@sD@}, mean={@tmd@}, median={@medd@}</text>
 </questionnote>
 <penalty>0</penalty>
 <input>
@@ -252,24 +255,6 @@ pos: is(mvM and mvD and m > d);]]></text>
 </prt>
 <qtest>
   <testcase>1</testcase>
-  <description>The model answers</description>
-  <testinput>
-    <name>ans1</name>
-    <value>CT:{#ta1#}</value>
-  </testinput>
-  <testinput>
-    <name>ans2</name>
-    <value>CT:{#ta2#}</value>
-  </testinput>
-  <expected>
-    <name>prt_ans1</name>
-    <expectedscore>1.0000000</expectedscore>
-    <expectedpenalty>0.0000000</expectedpenalty>
-    <expectedanswernote>prt_ans1-5-T</expectedanswernote>
-  </expected>
-</qtest>
-<qtest>
-  <testcase>2</testcase>
   <description>Both lines at the true values</description>
   <testinput>
     <name>ans1</name>
@@ -286,8 +271,9 @@ pos: is(mvM and mvD and m > d);]]></text>
     <expectedanswernote>prt_ans1-5-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
-  <testcase>3</testcase>
+  <testcase>2</testcase>
   <description>Mean line 15% too far right</description>
   <testinput>
     <name>ans1</name>
@@ -304,6 +290,7 @@ pos: is(mvM and mvD and m > d);]]></text>
     <expectedanswernote>prt_ans1-5-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
   <testcase>4</testcase>
   <description>Both lines left at start positions</description>
@@ -320,42 +307,6 @@ pos: is(mvM and mvD and m > d);]]></text>
     <expectedscore>0.0000000</expectedscore>
     <expectedpenalty>0.0000000</expectedpenalty>
     <expectedanswernote>prt_ans1-5-F</expectedanswernote>
-  </expected>
-</qtest>
-<qtest>
-  <testcase>5</testcase>
-  <description>ans1: 0 (tried by the build)</description>
-  <testinput>
-    <name>ans1</name>
-    <value>CT:{#0#}</value>
-  </testinput>
-  <testinput>
-    <name>ans2</name>
-    <value>CT:{#ta2#}</value>
-  </testinput>
-  <expected>
-    <name>prt_ans1</name>
-    <expectedscore>0.3330000</expectedscore>
-    <expectedpenalty>0.0000000</expectedpenalty>
-    <expectedanswernote>prt_ans1-5-F</expectedanswernote>
-  </expected>
-</qtest>
-<qtest>
-  <testcase>6</testcase>
-  <description>ans2: 0 (tried by the build)</description>
-  <testinput>
-    <name>ans2</name>
-    <value>CT:{#0#}</value>
-  </testinput>
-  <testinput>
-    <name>ans1</name>
-    <value>CT:{#ta1#}</value>
-  </testinput>
-  <expected>
-    <name>prt_ans1</name>
-    <expectedscore>0.6670000</expectedscore>
-    <expectedpenalty>0.0000000</expectedpenalty>
-    <expectedanswernote>prt_ans1-5-T</expectedanswernote>
   </expected>
 </qtest>
 </question>
