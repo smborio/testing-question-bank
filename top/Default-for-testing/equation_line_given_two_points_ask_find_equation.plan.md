@@ -1,12 +1,13 @@
-GOAL (non-negotiable): Given two points, find the equation of the line through them in the form y=mx+c (calculate: gradient from two points, then intercept).
-STRUCTURE (non-negotiable): Single part. The student types one equation y=mx+c.
-RANDOMIZATION (negotiable): Built in this order. (1) y-intercept c: integer in -9..9, not 0. (2) Gradient m=p/q in lowest terms, q in 2..5, |p| in 1..9, so m is never an integer; it may exceed 1 in size (e.g. 7/3) and may be negative. (3) Two points on the line with integer coordinates, one each side of the y-axis: x1=-q*a, x2=q*b with a,b in 1..2, so y values are integers. Points are never the intercept, and are shown in x order. Keep all |y| at most 20. The worked solution always follows the same steps.
-ANSWER TESTS (negotiable): Accept any equation equivalent to the correct line, but only if it is written with y alone on the left (y=mx+c). Otherwise, e.g. 3y=2x+6, tell the student to rearrange into y=mx+c without giving marks (form is the point of the task). Full marks need the right line, not only the right form. Reject input that is not an equation in x and y.
-FEEDBACK (negotiable): Right: short confirmation. Wrong: hint naming the likely slip, no answer given. Mistakes with their own branch, in the question's variables: y=(q/p)x+c (gradient upside down; hint: gradient is change in y over change in x); y=-(p/q)x+c (sign of gradient wrong; hint: check the order of subtraction is the same top and bottom); y=cx+p/q... i.e. y=c*x+m (gradient and intercept swapped; hint: m is the coefficient of x, c is where the line crosses the y-axis). Each scores 0 with its hint. Worked solution: gradient = (y2-y1)/(x2-x1), simplify; substitute a point to find c (or note c from the point on the y-axis); state y=mx+c. Silent marks: not allowed.
-PRT/QTEST SUGGESTIONS: Also test an unsimplified equivalent form such as y=(2*p*x)/(2*q)+c, which must get full marks, and 2y=2mx+2c, which must be refused for form.
+GOAL (non-negotiable): Given two points, the student finds the equation of the line through them and writes it as y=mx+c (calculate).
+STRUCTURE (non-negotiable): Single part. One input where the student types a full equation y=mx+c.
+RANDOMIZATION (negotiable): Build in this order. (1) c: non-zero integer in -9..9. (2) m=p/q in lowest terms, q in 2..5, |p| in 1..9, p/q never a whole number; may be >1 or negative. (3) Points: A=(-q*a, y_A) and B=(q*b, y_B) with a,b each 1 or 2, both on the line y=mx+c, so one point is left and one right of the y-axis and all coordinates are integers. Neither point is the y-intercept.
+ANSWER TESTS (negotiable): The answer must be an equation with y alone on the left. Accept any equivalent right-hand side (e.g. y=2/4x+3 style forms, y=3+2x/3) for full marks. Unrearranged forms such as 3y=2x+6 get no marks and a hint to rearrange to y=mx+c. If the student types only an expression (mx+c with no "y="), no marks and a specific hint that the answer must be an equation starting y=. Form only: not allowed beyond this; the line must be the correct one.
+FEEDBACK (negotiable): Right: short confirmation. Wrong mistakes with own hint, no marks: y=-(q/p)x+c (gradient upside down), y=-(p/q)x+c (gradient sign flipped), y=cx+p/q (gradient and intercept swapped). Any other wrong answer: generic hint to compute the gradient as change in y over change in x and then use a point to find c. Worked solution: gradient = (y_B-y_A)/(x_B-x_A) simplified, substitute a point to get c, write y=mx+c.
+PRT/QTEST SUGGESTIONS: Include test of the bare expression mx+c (no "y=") expecting the "start with y=" hint and 0 marks; and 3y=... unrearranged form expecting 0 and the rearrange hint.
 REFERENCE POINTERS (optional):
-Authoring/Answer_Tests/Equivalence.md
-Authoring/Answer_Tests/Form.md
 Authoring/Inputs/Input_options.md
+Authoring/Answer_Tests/Grading_recipes.md
+Authoring/Potential_response_trees.md
+Authoring/Error_trapping.md
 CAS/Random.md
 ADDITIONAL LANGUAGES (optional): (none)
