@@ -97,3 +97,13 @@ Feedback to Author: Keep the draft and the grading as they are. Two changes: (1)
 {"student": "student", "variant": 1, "answers": {"ans1": "y=-0.2x+5"}, "what_happened": "Not marked. The answer was rejected for containing a floating-point number and for missing *.", "why_wrong": "A correct answer in decimal form is refused, and the question doesn't say fractions are required. A student has no warning before the attempt."}
 ```
 
+## Entry 7 — author · build round 3 (2026-11-19T12:05:38)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 1 attempt(s).
+Retriever gave the Author: Authoring/Answer_Tests/Grading_recipes.md, Authoring/Answer_Tests/Equivalence.md, Authoring/Inputs/Input_syntax.md
+```
+

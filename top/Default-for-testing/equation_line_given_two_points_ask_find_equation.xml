@@ -6,7 +6,7 @@
 </name>
 <questiontext format="html">
 <text><![CDATA[<p>A line passes through the points \(A({@xa@}, {@ya@})\) and \(B({@xb@}, {@yb@})\).</p>
-<p>Find the equation of the line, written in the form \(y=mx+c\).</p>
+<p>Find the equation of the line, written in the form \(y=mx+c\). Give the gradient as a fraction, not a decimal.</p>
 <p>[[input:ans1]] [[validation:ans1]] [[feedback:prt_ans1]]</p>]]></text>
 </questiontext>
 <questionvariables>
@@ -48,7 +48,7 @@ swpT: c*x+p/q;</text>
 <boxsize>15</boxsize>
 <forbidfloat>1</forbidfloat>
 <strictsyntax>1</strictsyntax>
-<insertstars>0</insertstars>
+<insertstars>4</insertstars>
 <syntaxattribute>0</syntaxattribute>
 <forbidwords></forbidwords>
 <allowwords></allowwords>
@@ -200,6 +200,7 @@ rt: if yleft then rhs(ans1) else 0;</text>
     <expectedanswernote>prt_ans1-3-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
   <testcase>2</testcase>
   <description>Correct answer</description>
@@ -214,6 +215,7 @@ rt: if yleft then rhs(ans1) else 0;</text>
     <expectedanswernote>prt_ans1-3-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
   <testcase>3</testcase>
   <description>Equivalent right-hand side</description>
@@ -228,6 +230,7 @@ rt: if yleft then rhs(ans1) else 0;</text>
     <expectedanswernote>prt_ans1-3-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
   <testcase>4</testcase>
   <description>Bare expression</description>
@@ -242,6 +245,7 @@ rt: if yleft then rhs(ans1) else 0;</text>
     <expectedanswernote>prt_ans1-1-F</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
   <testcase>5</testcase>
   <description>Unrearranged equation</description>
@@ -256,6 +260,7 @@ rt: if yleft then rhs(ans1) else 0;</text>
     <expectedanswernote>prt_ans1-2-F</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
   <testcase>6</testcase>
   <description>Gradient upside down</description>
@@ -270,8 +275,54 @@ rt: if yleft then rhs(ans1) else 0;</text>
     <expectedanswernote>prt_ans1-4-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
   <testcase>7</testcase>
+  <description>Correct line typed with implied multiplication</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#y = p*x/q+c#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-3-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>8</testcase>
+  <description>Gradient sign flipped</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#y = negT#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-5-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>9</testcase>
+  <description>m and c swapped</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#y = swpT#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-6-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>10</testcase>
   <description>ans1: its model answer factored (tried by the build)</description>
   <testinput>
     <name>ans1</name>
@@ -284,8 +335,9 @@ rt: if yleft then rhs(ans1) else 0;</text>
     <expectedanswernote>prt_ans1-3-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
-  <testcase>8</testcase>
+  <testcase>11</testcase>
   <description>ans1: its model answer simplified (tried by the build)</description>
   <testinput>
     <name>ans1</name>
@@ -298,8 +350,9 @@ rt: if yleft then rhs(ans1) else 0;</text>
     <expectedanswernote>prt_ans1-3-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
-  <testcase>9</testcase>
+  <testcase>12</testcase>
   <description>ans1: 0 (tried by the build)</description>
   <testinput>
     <name>ans1</name>
