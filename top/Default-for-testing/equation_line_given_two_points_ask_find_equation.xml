@@ -62,16 +62,21 @@ ta1: y = m*x+c;</text>
   <autosimplify>1</autosimplify>
   <feedbackstyle>1</feedbackstyle>
   <feedbackvariables>
-    <text>iseq: equationp(ans1);
+    <text><![CDATA[iseq: equationp(ans1);
 ex: if iseq then expand(lhs(ans1)-rhs(ans1)) else 0;
 cy: if iseq then diff(ex,y) else 0;
 lin: is(iseq and equal(diff(ex,x,2),0) and equal(diff(ex,y,2),0) and equal(diff(diff(ex,x),y),0) and cy#0);
 ysol: if lin then -expand(ex-cy*y)/cy else 0;
 corr: is(lin and algebraic_equivalence(ysol, m*x+c));
 yleft: is(iseq and lhs(ans1)=y);
+rr: if yleft then rhs(ans1) else 0;
+tl: if not atom(rr) and op(rr)="+" then args(rr) else [rr];
+xt: sublist(tl, lambda([t], not freeof(x,t)));
+ct: sublist(tl, lambda([t], freeof(x,t)));
+form: is(yleft and length(xt)=1 and length(ct)<=1 and freeof(x, ev(first(xt)/x,simp)));
 gr: is(lin and algebraic_equivalence(diff(ysol,x), m));
 pa: is(lin and algebraic_equivalence(subst(xa,x,ysol), ya));
-pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
+pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));]]></text>
   </feedbackvariables>
   <node>
     <name>0</name>
@@ -129,9 +134,9 @@ pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
   </node>
   <node>
     <name>3</name>
-    <description>Correct line, y alone on left?</description>
+    <description>Correct line, in the form y=mx+c?</description>
     <answertest>AlgEquiv</answertest>
-    <sans>yleft</sans>
+    <sans>form</sans>
     <tans>true</tans>
     <quiet>0</quiet>
     <truescoremode>=</truescoremode>
@@ -146,7 +151,7 @@ pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
     <falsenextnode>-1</falsenextnode>
     <falseanswernote>prt_ans1-4-F</falseanswernote>
     <falsefeedback format="html">
-      <text><![CDATA[<p>Your line is right, but rearrange it to the form y = mx + c.</p>]]></text>
+      <text><![CDATA[<p>Your line is right, but write it in the form y = mx + c: a number times x, plus a number.</p>]]></text>
     </falsefeedback>
   </node>
   <node>
@@ -234,9 +239,9 @@ pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
   </testinput>
   <expected>
     <name>prt_ans1</name>
-    <expectedscore>1.0000000</expectedscore>
+    <expectedscore>0.5000000</expectedscore>
     <expectedpenalty>0.0000000</expectedpenalty>
-    <expectedanswernote>prt_ans1-4-T</expectedanswernote>
+    <expectedanswernote>prt_ans1-4-F</expectedanswernote>
   </expected>
 </qtest>
 
@@ -272,6 +277,21 @@ pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
 
 <qtest>
   <testcase>5</testcase>
+  <description>Right side not split into mx+c</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#y = m*(x+c/m)#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.5000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-4-F</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>6</testcase>
   <description>Bare expression</description>
   <testinput>
     <name>ans1</name>
@@ -286,7 +306,7 @@ pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
 </qtest>
 
 <qtest>
-  <testcase>6</testcase>
+  <testcase>7</testcase>
   <description>Non-linear equation</description>
   <testinput>
     <name>ans1</name>
@@ -301,7 +321,7 @@ pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
 </qtest>
 
 <qtest>
-  <testcase>7</testcase>
+  <testcase>8</testcase>
   <description>Right gradient, wrong intercept</description>
   <testinput>
     <name>ans1</name>
@@ -316,7 +336,7 @@ pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
 </qtest>
 
 <qtest>
-  <testcase>8</testcase>
+  <testcase>9</testcase>
   <description>Wrong gradient through A</description>
   <testinput>
     <name>ans1</name>
@@ -331,7 +351,7 @@ pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
 </qtest>
 
 <qtest>
-  <testcase>9</testcase>
+  <testcase>10</testcase>
   <description>Wrong gradient through B</description>
   <testinput>
     <name>ans1</name>
@@ -346,7 +366,7 @@ pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
 </qtest>
 
 <qtest>
-  <testcase>10</testcase>
+  <testcase>11</testcase>
   <description>Wrong line through neither point</description>
   <testinput>
     <name>ans1</name>
@@ -361,7 +381,7 @@ pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
 </qtest>
 
 <qtest>
-  <testcase>11</testcase>
+  <testcase>12</testcase>
   <description>Input 0</description>
   <testinput>
     <name>ans1</name>
@@ -397,8 +417,18 @@ pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
 
 
 
+
+
+
+
+
+
+
+
+
+
 <qtest>
-  <testcase>12</testcase>
+  <testcase>13</testcase>
   <description>ans1: its model answer factored (tried by the build)</description>
   <testinput>
     <name>ans1</name>
@@ -406,13 +436,13 @@ pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
   </testinput>
   <expected>
     <name>prt_ans1</name>
-    <expectedscore>1.0000000</expectedscore>
+    <expectedscore>0.5000000</expectedscore>
     <expectedpenalty>0.0000000</expectedpenalty>
-    <expectedanswernote>prt_ans1-4-T</expectedanswernote>
+    <expectedanswernote>prt_ans1-4-F</expectedanswernote>
   </expected>
 </qtest>
 <qtest>
-  <testcase>13</testcase>
+  <testcase>14</testcase>
   <description>ans1: its model answer simplified (tried by the build)</description>
   <testinput>
     <name>ans1</name>
@@ -420,9 +450,9 @@ pb: is(lin and algebraic_equivalence(subst(xb,x,ysol), yb));</text>
   </testinput>
   <expected>
     <name>prt_ans1</name>
-    <expectedscore>1.0000000</expectedscore>
+    <expectedscore>0.5000000</expectedscore>
     <expectedpenalty>0.0000000</expectedpenalty>
-    <expectedanswernote>prt_ans1-4-T</expectedanswernote>
+    <expectedanswernote>prt_ans1-4-F</expectedanswernote>
   </expected>
 </qtest>
 </question>

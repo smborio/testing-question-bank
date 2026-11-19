@@ -333,3 +333,13 @@ Silent marks: not allowed.
 PRT/QTEST SUGGESTIONS: model answer (1); p*x/q+c (1); (p*x+q*c)/q (0.5); q*y=p*x+q*c (0.5); a single-fraction right side such as y=(x-7)/3 style (0.5); bare expression (0); y=x^2 (0); right gradient wrong intercept (0.5); wrong gradient through A (0.4); through B (0.4); neither (0); input 0.
 ```
 
+## Entry 20 — author · build round 3 (2026-11-19T12:43:44)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 1 attempt(s).
+Retriever gave the Author: Authoring/Potential_response_trees.md, Authoring/Answer_Tests/Grading_recipes.md, Authoring/Answer_Tests/Equivalence.md, CAS/Predicate_functions.md, Authoring/Variables.md, CAS/Random.md, Authoring/Inputs/Input_syntax.md, STACK_question_admin/Testing.md
+```
+
