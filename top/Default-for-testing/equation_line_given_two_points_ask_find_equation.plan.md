@@ -1,39 +1,52 @@
-GOAL: Given two points, the student finds the equation of the line through them and writes it as y=mx+c. Task type: calculate. The gradient is a non-integer fraction and the y-intercept is a non-zero integer.
+GOAL (non-negotiable): Edit of the existing question. Given two points, the student finds the equation of the line through them and writes it as y=mx+c (task: calculate). The gradient is a non-integer rational with |m|<3; the y-intercept is a small non-integer rational. Assessment is built around what the answer shows (form, straight line, gradient, intercept, points it passes through), not around a list of anticipated wrong answers.
 
-DESCRIPTION: The student sees "A line passes through the points A(xa, ya) and B(xb, yb)". The question asks for the equation in the form y=mx+c and says to give any fractions as fractions. There is one part. It has one algebraic input, pre-filled with "y=", where the student types a full equation. Implicit multiplication such as 5x is accepted. Decimals are rejected as invalid.
+STRUCTURE (non-negotiable): Single part, one algebraic input pre-filled "y=", one grading tree. Wording unchanged: "Find the equation of the line, written in the form y=mx+c. Give any fractions as fractions." Decimals stay rejected, implicit multiplication (5x) allowed, validation shown.
 
-STRUCTURE: Single part with one input (an equation) and one grading tree.
+RANDOMIZATION (negotiable): Constructive, no rejection sampling; question variables hold only the random data and the model answer.
+- q in {2,3,4,5}; gradient m=p/q with p = ±k, k from 1..3q-1 coprime to q (built as a filtered list), so m is never a whole number and |m|<3.
+- Point A: xa a non-multiple of q in -5..5 (so neither point is on the y-axis). ya = round(m*xa)+e, e in {-2..2}, so ya is an integer and the intercept stays small.
+- Point B: xb = xa + q*k2, k2 in {-2,-1,1,2}; yb = ya + p*k2. Integer coordinates guaranteed; the points may be on the same or opposite sides of the y-axis, and xb differs from xa.
+- c = ya - m*xa has denominator q, so it is never an integer, never 0, and |c|<=2.5 plus a fraction of at most 1/2 (small).
+- Swap which point is called A/B at random so the order of x does not give away the sign of m.
+- Same method in the worked solution for every variant.
 
-RANDOMIZATION:
-- c is a non-zero integer from -9 to 9.
-- m = p/q in lowest terms, with q in {2,3,4,5}. p has a random sign. Its absolute value is chosen from the values coprime to q, up to 9, so m is never a whole number.
-- Point A is at x = -q*a and point B is at x = q*b, with a and b each 1 or 2. The points lie on opposite sides of the y-axis, and all coordinates are integers.
-- y-values are m*x + c.
-- The worked solution has the same method for every variant.
+ANSWER TESTS (negotiable): All assessment variables (the student's right-hand side, its gradient and intercept, the check against each point) are defined in the feedback variables, not the question variables. Checks in order:
+1. Is it an equation? If not (bare expression such as mx+c, or 0): 0, "Your answer must be an equation starting y=."
+2. Is it a straight line, i.e. y alone on the left, or an equation that is linear in x and y? A non-linear equation (x^2, 1/x terms) scores 0: "This is not a straight line."
+3. Does it represent the correct line? If it is the correct line but y is not alone on the left (e.g. 4y=3x+2): 0.5, "This is the right line but not in the form y=mx+c; rearrange."
+4. With y alone: right-hand side equivalent to m*x+c: 1 (any equivalent form, e.g. (p*x+q*c)/q).
+5. Gradient correct, intercept wrong: 0.5.
+6. Gradient wrong, but the line passes through A or through B (the intercept is consistent with a given point): 0.4, error carried forward.
+7. Otherwise 0.
+Check the gradient by the coefficient of x in the right-hand side; for the intercept, the constant term. Form alone never earns marks.
 
-ANSWER TESTS: Marking runs in this order:
-1. If the answer is not an equation, it scores 0 with the hint "Your answer must start with y=." This covers a bare expression such as mx+c.
-2. If the left-hand side is not y alone (for example q*y = p*x+q*c), it scores 0 with the hint to rearrange to y = mx + c.
-3. If the right-hand side is algebraically equivalent to m*x+c, it scores 1 and the feedback is "Correct." Any equivalent right-hand side is accepted, such as (p*x+q*c)/q or p*x/q+c.
-4. A right form with a wrong line scores 0. Form alone never earns marks.
-The input forbids decimals (floats). Implicit multiplication is allowed, and the validation message is shown to the student.
+FEEDBACK (negotiable): Only evidence-based statements; no guessing of the student's method.
+- Correct: "Correct."
+- Not an equation / not straight / not y= : the hints in steps 1-3.
+- Gradient right, intercept wrong: "Your gradient is correct, but your line does not pass through A and B. Substitute a point to check c."
+- Gradient wrong, line through A (or B) only: "Your line passes through A (or B) but not the other point, so the gradient is not correct. Recheck rise over run." No claim of upside-down or sign error.
+- Other: "Not correct. Find the gradient from the two points, then substitute a point to find c."
+- No named wrong-answer branches (upside-down, sign-flip, m/c swap); these now land in the generic or point-based branches. Silent marks: none; every lost mark has a hint.
+- Worked solution, structured and in the same method each time: (1) gradient m=(y2-y1)/(x2-x1) with the values shown in brackets for negatives, simplified to a displayed fraction; (2) substitute point A into y=mx+c, with brackets around negative values and the fraction coefficient shown as \frac; (3) rearrange to find c, showing the arithmetic; (4) final equation y=mx+c, then a check that B satisfies it. No sign clashes like "+ -3" or "--".
+- Question note shows m, c and both points.
+- Question description (saved with the question) documents: pedagogical objective, mathematical constraints (|m|<3, non-integer, c non-integer, integer coordinates), the randomisation strategy above, and the assessment decisions (partial credits and why unambiguous-only feedback).
 
-FEEDBACK: Every wrong answer scores 0. Each named mistake has its own hint:
-- y=(q/p)x+c, gradient upside down: "Recheck rise over run."
-- y=-m x+c, gradient sign flipped: "Check the sign of the change in y and in x."
-- y=c x+p/q, m and c swapped: the hint says m is the coefficient of x and c is where the line crosses the y-axis.
-- Any other wrong line: "Not correct. Find the gradient from the two points, then substitute a point to find c."
-Worked solution: m = (y2-y1)/(x2-x1), then substitute point A to find c, then write y=mx+c.
+PRT/QTEST SUGGESTIONS: Descriptive tests, no duplicates (old cases 1 and 2 merged):
+- Model answer: 1. Equivalent forms: (p*x+q*c)/q, p*x/q+c, factored/expanded: 1.
+- Correct line unrearranged, q*y=p*x+q*c: 0.5.
+- Bare expression, 0: 0 (not an equation).
+- Non-straight: y=x^2: 0.
+- Right gradient, wrong intercept (y=m*x+c+1): 0.5.
+- Wrong gradient through A: y=(q/p)*x + the intercept making it pass through A: 0.4 (check that it still passes through A on every seed).
+- Wrong gradient through B: 0.4.
+- Gradient wrong, intercept not tied to either point: 0.
+- Constant line y=c: 0.
 
-IMPLEMENTATION NOTES:
-- Round 1 failed. The Author's first tree had false-branch nodes with no score, and then the STACK API timed out. Round 2 rebuilt the tree.
-- Students first found that "5x" and decimals were rejected as invalid. Implicit multiplication is now allowed (insertstars=4). Decimals are still forbidden, and the question text now says to give fractions as fractions.
-- The mistake checks compare only the right-hand side, so they run only when y is alone on the left. Anything else leaves the tree earlier, with the form hints.
-- Test case 13 covers the "other wrong line" route.
-- Test cases 1 and 2 are identical.
+REFERENCE POINTERS (optional):
+Authoring/Answer_Tests/Grading_recipes.md
+Authoring/Potential_response_trees.md
+Authoring/Question_note.md
+Authoring/Inputs/Input_options.md
+CAS/Random.md
 
-PRT/QTEST SUGGESTIONS: The test cases cover the model answer and an equivalent right-hand side. They also cover a bare expression, an unrearranged equation, implicit multiplication, each named mistake, a generic wrong line, and the input 0.
-
-REFERENCE POINTERS: (none)
-
-ADDITIONAL LANGUAGES: (none)
+ADDITIONAL LANGUAGES (optional): (none)
