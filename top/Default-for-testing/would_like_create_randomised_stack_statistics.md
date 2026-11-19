@@ -305,3 +305,22 @@ STACK API check: did NOT pass (api_unreachable) after 1 attempt(s).
 Retriever gave the Author: Specialist_tools/JSXGraph/JSXGraph.md, Specialist_tools/JSXGraph/Binding.md, Authoring/Answer_Tests/Grading_recipes.md, CAS/Random.md
 ```
 
+## Entry 10 — planner · review (2026-11-19T10:45:08)
+
+**Reference files fetched:**
+- (none)
+
+```text
+Review decision: REJECT (keep_draft=True, plan_changed=False)
+Feedback to Author: The question does not load: the STACK API times out after 30 s and the teacher sees "STACK isn't answering". Keep the draft's design, grading and feedback, but make the question variables fast and simple.
+
+1. Replace `[sM, sD]: rand([[4, 6*nb-4], [6*nb-4, 4]]);`. Use `k0: rand(2); sM: if k0=0 then 4 else 6*nb-4; sD: 10*nb-... ` (or `sD: 6*nb-sM`, so the two starts are 4 and 6*nb-4). Earlier variants also gave "An Error occured while processing the question", and this list-destructuring assignment is a suspect.
+2. Use only integer or float arithmetic. Make sg an integer-based value, e.g. `sg: [1.0, 1.25, 1.5][1+rand(3)]`, and compute the weights as `float(exp(...))` from floats only. No symbolic `exp` or rational values should reach the simplifier. Consider `simp:false`-free, purely numeric code.
+3. Drop the heavy `dots` list built with `apply(append, makelist(makelist...))`. Compute the median from the cumulative counts instead, by finding the bin that holds dot (N+1)/2, and also the one holding N/2 and N/2+1 for even N. Compute nl, nr and ne with a simple `sum` over the counts rather than `lsum` over `makelist(j...)`.
+4. Keep the JSXGraph block as it is, but make sure `{#...#}` only inserts plain numbers and lists.
+5. In the PRT, keep the feedback variables as plain float comparisons. Reduce the qtests to the 4 essential ones (true values, mean +15%, swapped lines, both at start positions) so the build check stays quick.
+6. Restore the question name "Place mean and median in stacked dot plot".
+7. State the minimum mean − median gap found over all combinations of N, nb, mo, sg and tail. If it is under 3 mm, narrow the ranges.
+8. If the API still times out, retry once and report it.
+```
+
