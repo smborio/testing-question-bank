@@ -1,13 +1,35 @@
-GOAL (non-negotiable): Given two points, the student finds the equation of the line through them and writes it as y=mx+c (calculate).
-STRUCTURE (non-negotiable): Single part. One input where the student types a full equation y=mx+c.
-RANDOMIZATION (negotiable): Build in this order. (1) c: non-zero integer in -9..9. (2) m=p/q in lowest terms, q in 2..5, |p| in 1..9, p/q never a whole number; may be >1 or negative. (3) Points: A=(-q*a, y_A) and B=(q*b, y_B) with a,b each 1 or 2, both on the line y=mx+c, so one point is left and one right of the y-axis and all coordinates are integers. Neither point is the y-intercept.
-ANSWER TESTS (negotiable): The answer must be an equation with y alone on the left. Accept any equivalent right-hand side (e.g. y=2/4x+3 style forms, y=3+2x/3) for full marks. Unrearranged forms such as 3y=2x+6 get no marks and a hint to rearrange to y=mx+c. If the student types only an expression (mx+c with no "y="), no marks and a specific hint that the answer must be an equation starting y=. Form only: not allowed beyond this; the line must be the correct one.
-FEEDBACK (negotiable): Right: short confirmation. Wrong mistakes with own hint, no marks: y=-(q/p)x+c (gradient upside down), y=-(p/q)x+c (gradient sign flipped), y=cx+p/q (gradient and intercept swapped). Any other wrong answer: generic hint to compute the gradient as change in y over change in x and then use a point to find c. Worked solution: gradient = (y_B-y_A)/(x_B-x_A) simplified, substitute a point to get c, write y=mx+c.
-PRT/QTEST SUGGESTIONS: Include test of the bare expression mx+c (no "y=") expecting the "start with y=" hint and 0 marks; and 3y=... unrearranged form expecting 0 and the rearrange hint.
+GOAL (non-negotiable): Given two points, the student finds the equation of the line through them and writes it in the form y=mx+c. Task type: calculate. The gradient is a non-integer fraction and the y-intercept is a nice non-zero integer.
+
+STRUCTURE (non-negotiable): Single part. The student types one equation of the form y = mx + c.
+
+RANDOMIZATION (negotiable): Construct in this order.
+1. c: non-zero integer from -9 to 9.
+2. m = p/q in lowest terms, q from 2 to 5, p a non-zero integer with |p| up to 9, gcd(p,q)=1, so m is never a whole number. It may be above 1 or negative.
+3. Points: A at x = -q*a and B at x = q*b, with a and b each 1 or 2. One point is on each side of the y-axis and all coordinates are whole numbers. y-values are m*x + c.
+The worked solution method stays the same: gradient from the two points, then substitute to find c (or check against the construction).
+
+ANSWER TESTS (negotiable): One input, an equation.
+- Full marks: an equation with y alone on the left whose right-hand side is equivalent to (p/q)x + c. Any equivalent right-hand side is accepted, e.g. y=(p x+q c)/q.
+- Form required: an equation not with y alone on the left (e.g. 3y=2x+12) earns no marks and a hint to rearrange to y = mx + c.
+- Bare expression (mx+c with no "y="): no marks and a specific hint that the answer must start with y=.
+- Form only: not allowed. A right form with a wrong line gets no marks.
+
+FEEDBACK (negotiable):
+- Right answer: confirmed.
+- Wrong answers with their own hint, score 0:
+  - y=(q/p)x+c: gradient upside down, hint to recheck rise over run.
+  - y=-(p/q)x+c: gradient sign flipped, hint to check the sign of the change in y and in x.
+  - y=c x+p/q: gradient and intercept swapped, hint that m is the coefficient of x and c is where the line crosses the y-axis.
+- Worked solution: gradient m = (y2-y1)/(x2-x1), then substitute one point to find c, then write y=mx+c.
+
+PRT/QTEST SUGGESTIONS: 
+- A bare mx+c with no "y=" (e.g. (p/q)x+c): expect no marks and the "start with y=" hint.
+- An unrearranged equivalent, such as q*y=p*x+q*c: expect no marks and the rearrange hint.
+
 REFERENCE POINTERS (optional):
-Authoring/Inputs/Input_options.md
+CAS/Equations.md
+Authoring/Answer_Tests/Equivalence.md
 Authoring/Answer_Tests/Grading_recipes.md
-Authoring/Potential_response_trees.md
-Authoring/Error_trapping.md
-CAS/Random.md
+Authoring/Inputs/Input_syntax.md
+
 ADDITIONAL LANGUAGES (optional): (none)
