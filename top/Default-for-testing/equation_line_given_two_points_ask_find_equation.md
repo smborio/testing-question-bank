@@ -117,3 +117,13 @@ Review decision: REJECT (keep_draft=True, plan_changed=False)
 Feedback to Author: Keep the draft and the grading. Changes: (1) Replace the question-text sentence "Give the gradient as a fraction, not a decimal." with "Give any fractions in your answer as fractions." Do not mention decimals anywhere in the text. Keep forbidfloat on and insertstars on, so a decimal answer is still rejected as invalid. (2) The input box opens pre-filled with "y=...", so the student has to delete the dots. Change it so the box opens with "y=" only, or empty. (3) Add a qtest for the route no test reaches: a wrong equation with y alone on the left that matches no named mistake, e.g. y = x + 1 (use y = (p+1)*x + c + 1 so it is wrong on every variant). Expect 0 and the note prt_ans1-6-F.
 ```
 
+## Entry 9 — author · build round 4 (2026-11-19T12:09:11)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 1 attempt(s).
+Retriever gave the Author: Authoring/Answer_Tests/Grading_recipes.md, Authoring/Answer_Tests/Equivalence.md, Authoring/Inputs/Input_syntax.md
+```
+

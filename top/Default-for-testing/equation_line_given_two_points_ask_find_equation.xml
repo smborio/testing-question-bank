@@ -6,7 +6,7 @@
 </name>
 <questiontext format="html">
 <text><![CDATA[<p>A line passes through the points \(A({@xa@}, {@ya@})\) and \(B({@xb@}, {@yb@})\).</p>
-<p>Find the equation of the line, written in the form \(y=mx+c\). Give the gradient as a fraction, not a decimal.</p>
+<p>Find the equation of the line, written in the form \(y=mx+c\). Give any fractions in your answer as fractions.</p>
 <p>[[input:ans1]] [[validation:ans1]] [[feedback:prt_ans1]]</p>]]></text>
 </questiontext>
 <questionvariables>
@@ -44,7 +44,7 @@ swpT: c*x+p/q;</text>
 <name>ans1</name>
 <type>algebraic</type>
 <tans>ta1</tans>
-<syntaxhint>y=...</syntaxhint>
+<syntaxhint>y=</syntaxhint>
 <boxsize>15</boxsize>
 <forbidfloat>1</forbidfloat>
 <strictsyntax>1</strictsyntax>
@@ -365,5 +365,31 @@ rt: if yleft then rhs(ans1) else 0;</text>
     <expectedanswernote>prt_ans1-1-F</expectedanswernote>
   </expected>
 </qtest>
+
+<qtest>
+  <testcase>13</testcase>
+  <description>Wrong line matching no named mistake</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#y = (p+1)*x + c + 1#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-6-F</expectedanswernote>
+  </expected>
+</qtest>
+
+
+
+
+
+
+
+
+
+
+
 </question>
 </quiz>
