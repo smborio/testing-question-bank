@@ -1,34 +1,50 @@
-GOAL (non-negotiable): Edit of the existing question "Equation line given two points ask find equation". Given two points, the student finds the equation of the line through them and writes it as y=mx+c. Task type: calculate. The gradient is a non-integer rational with |m|<3. The y-intercept is small (|c| about 6 or less) but not an integer. Pedagogical objective: gradient from two points, find the intercept by substituting a point, write the line in the requested form.
+GOAL: Edit of the existing question "Equation line given two points ask find equation". Given two points, the student finds the equation of the line through them and writes it as y=mx+c. Task type: calculate. The gradient is a non-integer rational with |m|<3. The y-intercept is not an integer and |c|<6. Pedagogical objective: find the gradient from two points, find the intercept by substituting a point, and write the line in the requested form.
 
-STRUCTURE (non-negotiable): Single part with one algebraic input (an equation, pre-filled "y="), one grading tree. Implicit multiplication allowed, decimals forbidden, fractions required (the question text says so).
+DESCRIPTION: The student sees two integer points A and B. They are asked for the equation of the line through them in the form y=mx+c, with any fractions given as fractions. There is one part with one algebraic input, which opens pre-filled with "y=". The input must be validated before it is graded. Decimals are rejected as invalid input. Implicit multiplication such as 5x is accepted.
 
-RANDOMIZATION (negotiable): As built: m=p/q in lowest terms, q in {2,3,4,5}, p nonzero with random sign, |m|<3, never a whole number, from a filtered list per q. A=(xa,ya) integer, xa nonzero in -6..6 and not a multiple of q; ya within 5 of floor(m*xa) so |c|<6. B=A+(q*k,p*k), k in {-2,-1,1,2}. All assessment variables are in the feedback variables. Worked solution is the same method for every variant.
+STRUCTURE: Single part with one algebraic input (an equation) and one grading tree.
 
-ANSWER TESTS (negotiable): Checked in order, using the student's equation.
-1. Not an equation: 0, hint "Your answer must start with y=".
-2. Not a straight line: 0, hint that the answer should be a straight line.
-3. Line equivalent to the correct one: 1 only if y is alone on the left AND the right-hand side is in the form y=mx+c, i.e. a number times x plus a number (e.g. x/3-7/3, (1/3)x-7/3, -7/3+x/3). Otherwise 0.5 with the hint "Your line is right, but write it in the form y = mx + c: a number times x, plus a number." This covers y=(x-7)/3 and 3y=x-7.
-4. Right gradient, wrong intercept: 0.5.
-5. Wrong gradient, line passes through A or B: 0.4.
-6. Anything else: 0.
-Form alone never earns marks.
+RANDOMIZATION:
+- m=p/q in lowest terms, with q in {2,3,4,5}.
+- p is nonzero with a random sign, drawn from a filtered list for each q. This keeps |m|<3 and m never a whole number.
+- A=(xa,ya) has integer coordinates. xa is in -6..6 and not a multiple of q. ya is drawn within 5 of floor(m*xa), which keeps |c|<6.
+- B=A+(q*k,p*k), with k in {-2,-1,1,2}. Its coordinates are integers.
+- The worked solution uses the same method for every variant.
 
-FEEDBACK (negotiable): Evidence-based hints only.
+ANSWER TESTS: The tests run in this order on the student's equation.
+1. If it is not an equation, the score is 0.
+2. If it is not a straight line, the score is 0.
+3. If it is equivalent to the correct line, the score depends on its form.
+   - It scores 1 only if y is alone on the left and the right side is a single x-term plus at most one constant. The x-term is a number times x, for example x/3-7/3, (1/3)x-7/3 or -7/3+x/3.
+   - Otherwise it scores 0.5. This covers y=(x-7)/3, 3y=x-7 and y=m*(x+c/m).
+4. If the gradient is right but the intercept is wrong, the score is 0.5.
+5. If the gradient is wrong and the line passes through A, the score is 0.4.
+6. If the gradient is wrong and the line passes through B, the score is 0.4.
+7. Anything else scores 0.
+
+Form alone never earns marks. A line that does not pass through A or B, with a wrong gradient, scores 0.
+
+FEEDBACK: Silent marks are not allowed. Every route that scores below 1 gives a hint.
+- Not an equation: "Your answer must start with y=."
+- Not a straight line: "Your answer should be the equation of a straight line, y = mx + c."
+- Correct line in the wrong form: "Your line is right, but write it in the form y = mx + c: a number times x, plus a number."
 - Right gradient, wrong intercept: "Your gradient is correct, but the intercept is not. Substitute a point into y=mx+c and solve for c."
-- Wrong gradient through exactly one point: "Your line passes through A (or B) but not the other point. Recheck the gradient using both points."
-- Wrong gradient through neither: "Your line does not pass through either given point. Find the gradient from both points, then substitute a point to find c."
-- Correct line not in the form y=mx+c: the hint in test 3.
-- Worked solution in 4 steps as built (gradient, substitute A, solve for c, final line with fraction coefficient of x, no "+ -").
-Silent marks: not allowed.
+- Wrong gradient, line through A only: "Your line passes through A but not B. Recheck the gradient using both points."
+- Wrong gradient, line through B only: "Your line passes through B but not A. Recheck the gradient using both points."
+- Wrong gradient, line through neither point: "Your line does not pass through either given point. Find the gradient from both points, then substitute a point to find c."
+- Correct and in form: "Correct."
+- The worked solution has four steps:
+  1. Compute the gradient from the two points.
+  2. Substitute A into y=mx+c.
+  3. Solve for c.
+  4. Write the final line with a fraction coefficient of x and no "+ -".
 
-PRT/QTEST SUGGESTIONS: model answer (1); p*x/q+c (1); (p*x+q*c)/q (0.5); q*y=p*x+q*c (0.5); a single-fraction right side such as y=(x-7)/3 style (0.5); bare expression (0); y=x^2 (0); right gradient wrong intercept (0.5); wrong gradient through A (0.4); through B (0.4); neither (0); input 0.
+IMPLEMENTATION NOTES:
+- Every assessment variable (equation test, linearity, rearranged y, form check, gradient and point checks) is computed in the feedback variables, and the nodes only test those booleans.
+- The "form" check splits the right side into additive terms. It requires exactly one x-term whose coefficient has no x, and at most one constant. This is why a single-fraction right side such as (x-7)/3 scores only 0.5.
+- The Author could not change how STACK displays the model answer ta1 itself. The worked solution's step 4 therefore builds the line from m and c with a conditional sign.
+- The plan's suggested tests are kept as qtests. In the last build, the model answer in factored or single-fraction form is expected to score 0.5 (qtests 13 and 14, answer note prt_ans1-4-F). An earlier build wrongly gave it full marks.
 
-REFERENCE POINTERS (optional):
-Authoring/Potential_response_trees.md
-Authoring/Feedback.md
-Authoring/Answer_Tests/Grading_recipes.md
-Authoring/Answer_Tests/Form.md
-Authoring/Variables.md
-CAS/Random.md
+REFERENCE POINTERS: (none)
 
-ADDITIONAL LANGUAGES (optional): (none)
+ADDITIONAL LANGUAGES: (none)
