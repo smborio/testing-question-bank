@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<question type="stack">
+<name>
+<text>Equation line given two points ask find equation</text>
+</name>
+<questiontext format="html">
+<text><![CDATA[<p>A line passes through the points \(A({@xa@}, {@ya@})\) and \(B({@xb@}, {@yb@})\).</p>
+<p>Find the equation of the line, written in the form \(y=mx+c\). Give any fractions in your answer as fractions.</p>
+<p>[[input:ans1]] [[validation:ans1]] [[feedback:prt_ans1]]</p>]]></text>
+</questiontext>
+<questionvariables>
+<text>c: rand_with_prohib(-9, 9, [0]);
+q: rand([2,3,4,5]);
+plist: if q=2 then [1,3,5,7,9] elseif q=3 then [1,2,4,5,7,8] elseif q=4 then [1,3,5,7,9] else [1,2,3,4,6,7,8,9];
+sg: rand([-1,1]);
+p: sg*rand(plist);
+a: rand(2)+1;
+b: rand(2)+1;
+m: p/q;
+xa: -q*a;
+xb: q*b;
+ya: m*xa+c;
+yb: m*xb+c;
+ta1: y = m*x+c;
+rhsT: m*x+c;
+invT: (q/p)*x+c;
+negT: -m*x+c;
+swpT: c*x+p/q;</text>
+</questionvariables>
+<generalfeedback format="html">
+<text><![CDATA[<p>The gradient is \(m=\frac{y_2-y_1}{x_2-x_1}=\frac{{@yb@}-({@ya@})}{{@xb@}-({@xa@})}={@m@}\).</p>
+<p>Substitute \(A({@xa@},{@ya@})\) into \(y=mx+c\): \({@ya@}={@m@}\cdot({@xa@})+c\), so \(c={@c@}\).</p>
+<p>The line is \({@ta1@}\).</p>]]></text>
+</generalfeedback>
+<specificfeedback format="html">
+  <text></text>
+</specificfeedback>
+<questionnote format="moodle_auto_format">
+<text>\(m={@m@}, c={@c@}, a={@a@}, b={@b@}\)</text>
+</questionnote>
+<penalty>0</penalty>
+<input>
+<name>ans1</name>
+<type>algebraic</type>
+<tans>ta1</tans>
+<syntaxhint>y=</syntaxhint>
+<boxsize>15</boxsize>
+<forbidfloat>1</forbidfloat>
+<strictsyntax>1</strictsyntax>
+<insertstars>4</insertstars>
+<syntaxattribute>0</syntaxattribute>
+<forbidwords></forbidwords>
+<allowwords></allowwords>
+<requirelowestterms>0</requirelowestterms>
+<checkanswertype>0</checkanswertype>
+<mustverify>1</mustverify>
+<showvalidation>1</showvalidation>
+<options></options>
+</input>
+<prt>
+  <name>prt_ans1</name>
+  <value>1</value>
+  <autosimplify>1</autosimplify>
+  <feedbackstyle>1</feedbackstyle>
+  <feedbackvariables>
+    <text>iseq: equationp(ans1);
+yleft: if iseq then is(lhs(ans1)=y) else false;
+rt: if yleft then rhs(ans1) else 0;</text>
+  </feedbackvariables>
+  <node>
+    <name>0</name>
+    <description>Is it an equation?</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>iseq</sans>
+    <tans>true</tans>
+    <truenextnode>1</truenextnode>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>1</truescore>
+    <trueanswernote>prt_ans1-1-T</trueanswernote>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falsenextnode>-1</falsenextnode>
+    <falseanswernote>prt_ans1-1-F</falseanswernote>
+    <falsefeedback format="html">
+      <text><![CDATA[<p>Your answer must start with y=.</p>]]></text>
+    </falsefeedback>
+  </node>
+  <node>
+    <name>1</name>
+    <description>y alone on left?</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>yleft</sans>
+    <tans>true</tans>
+    <truenextnode>2</truenextnode>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>1</truescore>
+    <trueanswernote>prt_ans1-2-T</trueanswernote>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falsenextnode>-1</falsenextnode>
+    <falseanswernote>prt_ans1-2-F</falseanswernote>
+    <falsefeedback format="html">
+      <text><![CDATA[<p>Rearrange your equation to the form y = mx + c.</p>]]></text>
+    </falsefeedback>
+  </node>
+  <node>
+    <name>2</name>
+    <description>Correct line</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>rt</sans>
+    <tans>rhsT</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>1</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans1-3-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>Correct.</p>]]></text>
+    </truefeedback>
+    <falsenextnode>3</falsenextnode>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falseanswernote>prt_ans1-3-F</falseanswernote>
+  </node>
+  <node>
+    <name>3</name>
+    <description>Gradient upside down</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>rt</sans>
+    <tans>invT</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>0</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans1-4-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>Your gradient is upside down. Recheck rise over run.</p>]]></text>
+    </truefeedback>
+    <falsenextnode>4</falsenextnode>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falseanswernote>prt_ans1-4-F</falseanswernote>
+  </node>
+  <node>
+    <name>4</name>
+    <description>Gradient sign flipped</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>rt</sans>
+    <tans>negT</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>0</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans1-5-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>Check the sign of the change in y and in x.</p>]]></text>
+    </truefeedback>
+    <falsenextnode>5</falsenextnode>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falseanswernote>prt_ans1-5-F</falseanswernote>
+  </node>
+  <node>
+    <name>5</name>
+    <description>m and c swapped</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>rt</sans>
+    <tans>swpT</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>0</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans1-6-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>m is the coefficient of x and c is where the line crosses the y-axis.</p>]]></text>
+    </truefeedback>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falsenextnode>-1</falsenextnode>
+    <falseanswernote>prt_ans1-6-F</falseanswernote>
+    <falsefeedback format="html">
+      <text><![CDATA[<p>Not correct. Find the gradient from the two points, then substitute a point to find c.</p>]]></text>
+    </falsefeedback>
+  </node>
+</prt>
+<qtest>
+  <testcase>1</testcase>
+  <description>The model answers</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#ta1#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-3-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>2</testcase>
+  <description>Correct answer</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#ta1#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-3-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>3</testcase>
+  <description>Equivalent right-hand side</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#y = (p*x+q*c)/q#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-3-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>4</testcase>
+  <description>Bare expression</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#rhsT#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-F</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>5</testcase>
+  <description>Unrearranged equation</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#q*y = p*x+q*c#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-2-F</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>6</testcase>
+  <description>Gradient upside down</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#y = (q/p)*x+c#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-4-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>7</testcase>
+  <description>Correct line typed with implied multiplication</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#y = p*x/q+c#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-3-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>8</testcase>
+  <description>Gradient sign flipped</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#y = negT#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-5-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>9</testcase>
+  <description>m and c swapped</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#y = swpT#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-6-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>10</testcase>
+  <description>ans1: its model answer factored (tried by the build)</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#ev(factor(ta1), simp)#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-3-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>11</testcase>
+  <description>ans1: its model answer simplified (tried by the build)</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#ev(fullratsimp(ta1), simp)#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-3-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>12</testcase>
+  <description>ans1: 0 (tried by the build)</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#0#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-F</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>13</testcase>
+  <description>Wrong line matching no named mistake</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#y = (p+1)*x + c + 1#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-6-F</expectedanswernote>
+  </expected>
+</qtest>
+
+
+
+
+
+
+
+
+
+
+
+</question>
+</quiz>
