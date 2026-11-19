@@ -53,3 +53,15 @@ PRT/QTEST SUGGESTIONS:
 - Mean line at +15% of the true mean: mean part half marks.
 ```
 
+## Entry 2 — author · build round 1 (2026-11-19T10:22:49)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 1 attempt(s).
+Retriever gave the Author: Specialist_tools/JSXGraph/JSXGraph.md, Specialist_tools/JSXGraph/Binding.md, Authoring/Answer_Tests/Grading_recipes.md, Authoring/Answer_Tests/Numerical.md, Authoring/Inputs/Numerical_input.md, CAS/Random.md
+Deviations reported: RANDOMIZATION (negotiable): the peak is always in the first bin. Weights are r^i plus a constant tail of 1/10, with r from {3/5, 7/10, 4/5}. A peak in a later bin, or pure geometric decay, did not give a mean at least about 3 mm above the median for every variant. I checked this by hand on a few variants (the extremes of r and the number of bins), not on every variant.
+Structure: the plan has three scored parts. They are built as one PRT with three additive-score node groups, because the position part needs both inputs.
+```
+
