@@ -1,14 +1,35 @@
-GOAL (non-negotiable): Students estimate the mean and median of a right-skewed distribution by eye and show they understand the long right tail pulls the mean above the median. Context: August precipitation (mm) in Eastern African cities.
+Question name: "Place mean and median in stacked dot plot". Category: default-for-testing.
 
-STRUCTURE (non-negotiable): One stacked dotplot, one JSXGraph board. Student drags two labelled vertical lines "Mean" and "Median" along the mm axis; lines start at neutral positions giving nothing away. Three independent parts, each worth 1/3: (1) accuracy of mean; (2) accuracy of median; (3) relative position: mean line strictly right of median line, judged only from line positions, independent of accuracy.
+GOAL (non-negotiable): Students estimate by eye the mean and median of a right-skewed distribution and show they understand that the long right tail pulls the mean above the median. Context: August precipitation (mm) in Eastern African cities.
 
-RANDOMIZATION (negotiable): N = 50..99 observations. Bins 6 mm wide from 0, about 8-12 bins, each dot at bin centre. Data built constructively, NO while loops and no regenerate-and-test: draw mode bin (low), tail decay rate and N; bin counts from a fixed right-skewed shape (rise to mode then slow geometric decay) scaled to N; fix rounding so counts sum exactly to N by adding the remainder to the mode bin. Parameter ranges chosen so mean exceeds median by at least ~3 mm for every combination; Author checks across the whole parameter grid. City names not randomised.
+STRUCTURE (non-negotiable): One stacked dotplot on one JSXGraph board. The student drags two labelled vertical lines, "Mean" and "Median", along the mm axis. The lines start at neutral positions that give nothing away. Three independent scored parts, equal weight (1/3 each):
+1. Accuracy of the mean estimate.
+2. Accuracy of the median estimate.
+3. Relative position: the mean line is to the right of the median line. Judged only from the two line positions, independent of accuracy. Equal positions score 0.
 
-ANSWER TESTS (negotiable): True mean and median computed from the plotted binned dots. Accuracy is percentage of true value (intentional, do not change): full marks within 10%, half marks within 20%, else 0. Position: full marks if mean line strictly right of median line, else 0; scored even if both estimates inaccurate. Line positions read from the board and graded on the question side; a line never moved scores 0.
+RANDOMIZATION (negotiable):
+- Number of observations N: random integer 50 to 99.
+- Bins 6 mm wide starting at 0, 8 to 12 bins, each dot at the bin centre.
+- Constructive generation, NO while/loop-until-valid retries: build the counts directly from a right-skewed shape, e.g. a peak in one of the first 2-3 bins followed by a geometric-type decay with a random ratio (about 0.6-0.8) over the remaining bins, scaled and rounded to sum to N (put the rounding remainder in the peak bin). Choose the peak and decay ranges so that, by construction, the mean exceeds the median by at least about 3 mm for every variant. Verify this over the ranges and restrict the ranges if needed rather than retrying.
+- City names in the context text are not randomised.
 
-FEEDBACK (negotiable): Mean and median parts: feedback depends only on accuracy band (within 10%, within 20%, further off) and gives the true value; no mistake-specific branches. Position part: says only whether the mean is right of the median or not. General feedback after the parts covers: tips for estimating by eye (median halves the dots, mean is the balance point), common slips (mean at tallest stack, median right of mean), and why a long right tail pulls the mean above the median. Worked solution: true mean and median, number of dots on each side of the median. Silent marks: allowed (mistake-specific hints deliberately left out).
+ANSWER TESTS (negotiable):
+- True mean and true median are computed from the plotted binned dot positions (median of the dot positions), so the plot and the answer agree.
+- Mean accuracy: full marks if within 10% of the true mean, half marks if outside 10% but within 20%, otherwise 0. The tolerances are intentional and must not change.
+- Median accuracy: same bands against the true median.
+- Relative position: 1 if student mean position > student median position, else 0. Scored even when both estimates are inaccurate.
+- Line positions are read from the board and graded on the question side. A line never moved scores 0.
 
-PRT/QTEST SUGGESTIONS: Both lines at exact true values: full marks. Lines swapped: position part 0. Mean estimate at +15% of true value: half marks.
+FEEDBACK (negotiable):
+- Mean and median parts: feedback relates only to the accuracy band reached (within 10%, within 20%, or further off), with the true value and a short tip on visual estimation (the median splits the dots into two equal halves; the mean is the balance point). No separate branches for specific mistakes.
+- Position part: simply states whether the mean is to the right of the median or not.
+- A detailed general feedback / worked solution covers the details: true mean and median, number of dots on each side of the median, and why the extreme values in the long right tail pull the mean more than the median, so mean > median in right-skewed data.
+- Silent marks: allowed (no mistake-specific hints beyond the accuracy bands).
+
+PRT/QTEST SUGGESTIONS:
+- Mean and median lines both at the exact true values: full marks on all three parts.
+- Lines swapped (mean left of median): position part 0.
+- Mean line at +15% of the true mean: mean part half marks.
 
 REFERENCE POINTERS:
 Specialist_tools/JSXGraph/JSXGraph.md
