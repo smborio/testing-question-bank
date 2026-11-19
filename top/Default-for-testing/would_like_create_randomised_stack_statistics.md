@@ -235,3 +235,14 @@ CAS/Statistics.md
 ADDITIONAL LANGUAGES (optional): (none)
 ```
 
+## Entry 7 — students · confirmed findings (2026-11-19T10:38:53)
+
+**Reference files fetched:**
+- (none)
+
+```text
+{"student": "breaker", "variant": 1, "answers": {}, "what_happened": "Variant 1 could not be shown: 'STACK could not show the question: An Error occured while processing the question'. Submitting answers gave the same error, so nothing could be marked.", "why_wrong": "The question does not load, so a student cannot see the dot plot or answer it."}
+{"student": "student", "variant": 1, "answers": {"ans1": "20", "ans2": "20"}, "what_happened": "No mark or feedback. I got the error: 'STACK could not mark it: An Error occured while processing the question'.", "why_wrong": "The question could not mark a plain numeric answer. This may be a fault in the question, but I could not tell that from the error."}
+{"student": "student", "variant": 1, "answers": {"ans1": "30", "ans2": "20"}, "what_happened": "No mark or feedback. The STACK API request timed out after 30 seconds.", "why_wrong": "I could not check whether this answer was marked fairly. The timeout may come from the server rather than the question, so it is weak evidence."}
+```
+
