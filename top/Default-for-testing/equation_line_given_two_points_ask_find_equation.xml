@@ -17,7 +17,8 @@ p: sg*rand(plist);
 m: p/q;
 xlist: sublist(makelist(i,i,-6,6), lambda([t], mod(t,q)#0));
 xa: rand(xlist);
-ya: rand(17)-8;
+fl: floor(p*xa/q);
+ya: fl+rand(11)-5;
 k: rand([-2,-1,1,2]);
 xb: xa+q*k;
 yb: ya+p*k;
@@ -28,7 +29,7 @@ ta1: y = m*x+c;</text>
 <text><![CDATA[<p>Step 1: the gradient is \(m=\frac{y_2-y_1}{x_2-x_1}=\frac{{@yb@}-({@ya@})}{{@xb@}-({@xa@})}={@m@}\).</p>
 <p>Step 2: substitute \(A({@xa@},{@ya@})\) into \(y=mx+c\): \({@ya@}={@m@}\cdot({@xa@})+c\).</p>
 <p>Step 3: rearrange to \(c={@ev(ya-m*xa, simp=false)@}={@c@}\).</p>
-<p>Step 4: the line is \({@ta1@}\).</p>]]></text>
+<p>Step 4: the line is \(y={@m@}x[[if test="c>0"]]+{@c@}[[else]]{@c@}[[/if]]\).</p>]]></text>
 </generalfeedback>
 <specificfeedback format="html">
   <text></text>

@@ -228,3 +228,14 @@ Review decision: REJECT (keep_draft=True, plan_changed=False)
 Feedback to Author: Two changes, keep the rest of the draft. (1) Keep the intercept small: |c| should be at most about 6 (variants currently give c=23/3 and 25/2). For example narrow the ranges of xa and ya, or draw c first as a non-integer fraction with denominator q and build A from it; A and B must still have integer coordinates, xa and xb must not be 0, and xa must not be a multiple of q. (2) Display the model answer and the worked solution's step 4 with the gradient as a fraction coefficient of x, e.g. \frac{5}{2}x+\frac{25}{2} and \frac{x}{3} written as \frac{1}{3}x, with no visible multiplication dot (not \frac{5\cdot x}{2}), in every variant. Keep grading, hints and scores unchanged.
 ```
 
+## Entry 16 — author · build round 2 (2026-11-19T12:39:10)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 1 attempt(s).
+Retriever gave the Author: Authoring/Answer_Tests/Grading_recipes.md, Authoring/Answer_Tests/Equivalence.md, Authoring/Potential_response_trees.md, Authoring/Feedback.md, Authoring/Variables.md, CAS/Random.md, Authoring/Inputs/Input_syntax.md
+Deviations reported: RANDOMIZATION (negotiable): ya is now drawn within 5 of floor(m*xa), not from -8..8. This keeps |c|<6, and A and B keep integer coordinates. Only step 4 of the worked solution is changed, so it shows the fraction coefficient of x. I did not change how STACK displays the model answer ta1 itself, because I couldn't see a way to change that from these fields.
+```
+
