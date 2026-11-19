@@ -77,3 +77,13 @@ STACK API check: PASSED after 1 attempt(s).
 Retriever gave the Author: Authoring/Answer_Tests/Grading_recipes.md, Authoring/Answer_Tests/Equivalence.md, Authoring/Inputs/Input_syntax.md
 ```
 
+## Entry 5 — planner · review (2026-11-19T12:04:41)
+
+**Reference files fetched:**
+- (none)
+
+```text
+Review decision: REJECT (keep_draft=True, plan_changed=False)
+Feedback to Author: Keep the draft and the grading as they are. Two changes: (1) Make the input accept implicit multiplication, so y=-5x+5 and y=-x/5+5 are read as valid (insert the missing * automatically, for example with the input's insertStars option) and then graded normally. (2) Keep floats forbidden, since only fractions are accepted. Add a line to the question text: "Give the gradient as a fraction, not a decimal." A decimal like y=-0.2x+5 should still be rejected as invalid. Add qtests: y=-5x+5-style input without * (written for the variant, e.g. y=p*x/q+c with the stars left out) should score 1 for the correct line. Also add qtests for the sign-flipped answer -m*x+c and the swapped answer c*x+p/q, so those routes are exercised.
+```
+
