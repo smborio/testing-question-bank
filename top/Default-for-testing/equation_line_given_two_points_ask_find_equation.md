@@ -208,3 +208,13 @@ Silent marks: not allowed (every partial score has a hint).
 PRT/QTEST SUGGESTIONS: Remove the duplicate tests. Descriptive tests: model answer (1); equivalent forms, such as (p*x+q*c)/q and p*x/q+c (1); an unrearranged correct equation q*y=p*x+q*c (0.5); a bare expression (0); a non-linear equation such as y=x^2 (0); right gradient with wrong intercept (0.5); wrong gradient through A (0.4); wrong gradient through B (0.4); wrong line through neither point (0); the input 0.
 ```
 
+## Entry 14 — author · build round 1 (2026-11-19T12:35:11)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 2 attempt(s).
+Retriever gave the Author: Authoring/Answer_Tests/Grading_recipes.md, Authoring/Answer_Tests/Equivalence.md, Authoring/Potential_response_trees.md, Authoring/Feedback.md, Authoring/Variables.md, CAS/Random.md, Authoring/Inputs/Input_syntax.md, Authoring/CASText.md, CAS/Simplification.md
+```
+
