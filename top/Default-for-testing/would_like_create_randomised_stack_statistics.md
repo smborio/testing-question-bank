@@ -334,3 +334,71 @@ STACK API check: did NOT pass (api_unreachable) after 1 attempt(s).
 Retriever gave the Author: Specialist_tools/JSXGraph/JSXGraph.md, Specialist_tools/JSXGraph/Binding.md, Authoring/Answer_Tests/Grading_recipes.md, CAS/Random.md
 ```
 
+## Entry 12 — planner · review (2026-11-19T10:54:43)
+
+**Reference files fetched:**
+- (none)
+
+```text
+Review decision: REJECT (keep_draft=True, plan_changed=True)
+Feedback to Author: Keep the draft's JSXGraph board (draggable lines, crosses, labels), the grading and the feedback. Change only the data generation, which probably causes the timeouts, and fix the small items below.
+
+1. Replace the Gaussian body plus tail with a gamma distribution. Draw shape k from 2 to 3 (integer, or in steps of 0.5) and scale theta from 9 to 12 (integer). Then mean is about k*theta and median about (k-1/3)*theta, so the gap is about theta/3, which is at least 3 mm.
+2. Generate the dots from N quantiles. Each dot is quantile_gamma((i-0.5)/N, k, theta) for i = 1..N, put into its 6 mm bin and drawn at the bin centre.
+   - Use floor(x/6) for the bin index, clamped to the last bin.
+   - Count per bin directly with a simple makelist or sum.
+   - If quantile_gamma is too slow for up to 99 dots, use cdf_gamma at the bin edges instead: round N times each bin's probability and put the rounding remainder in the mode bin.
+   - Use 12 to 14 bins. Make sure the last bin takes any dots beyond it.
+3. Keep the code simple and purely numeric. No while loops, no retries, no lambda, no heavy nested append/makelist. Compute the median from the cumulative counts. Avoid the list-destructuring assignment for the line starts: use k0: rand(2), then sM and sD as before.
+4. Check that the true mean minus the true median is at least 3 mm over ALL combinations of N, k, theta and nb, and state the minimum gap you found. Narrow the ranges if it is smaller. Also check that the line start positions (4 and 6*nb-4) stay well away from the true values.
+5. Restore the question name "Place mean and median in stacked dot plot".
+6. Add the missing test: lines swapped (mean line left of the median line), where only the position part scores 0 and the other two parts keep their marks if accurate. Keep the 4 tests: true values, mean +15%, swapped lines, both at start positions.
+7. Keep the tolerances at 10% for full marks and 20% for half marks.
+8. If the API times out, retry once and report it.
+Revised plan:
+Question name: "Place mean and median in stacked dot plot". Category: default-for-testing.
+
+GOAL (non-negotiable): Students estimate by eye the mean and median of a right-skewed distribution and show they understand that the long right tail pulls the mean above the median. Context: August precipitation (mm) in Eastern African cities.
+
+STRUCTURE (non-negotiable): One stacked dotplot on one JSXGraph board. The dots are drawn as crosses. The student drags two labelled vertical lines, "Mean" and "Median", along the mm axis by grabbing the lines themselves (horizontal movement only). The labels sit near the top of the lines, clear of the axis labels and of each other. The lines start at two different positions that give nothing away (start order random per variant). Three independent scored parts, equal weight (1/3 each):
+1. Accuracy of the mean estimate.
+2. Accuracy of the median estimate.
+3. Relative position: the mean line is to the right of the median line. Judged only from the two line positions, independent of accuracy. Equal positions score 0.
+
+RANDOMIZATION (negotiable):
+- Number of observations N: random integer 50 to 99.
+- Data: N gamma quantiles quantile_gamma((i-0.5)/N, k, theta), i = 1..N, with shape k from 2 to 3 and scale theta from 9 to 12 mm. Each value goes into a 6 mm bin starting at 0 and is plotted at the bin centre. There are 12 to 14 bins, and the last bin takes anything beyond it. If quantile_gamma is too slow, count per bin from cdf_gamma at the bin edges (rounded to sum to N, remainder in the mode bin).
+- Generation must be fast and simple: no loops with retries, no lambda, no heavy nested lists.
+- Mean minus median is about theta/3, at least 3 mm. Verify it over ALL combinations of N, k, theta and nb, and state the minimum gap found. Narrow the ranges if needed.
+- Start positions of the two lines: two distinct fixed positions (4 and 6*nb-4) well away from the true values, in random order per variant.
+- City names are not randomised.
+
+ANSWER TESTS (negotiable):
+- True mean and median are computed from the plotted binned dot positions.
+- Mean accuracy: full marks within 10% of the true mean, half marks within 20%, otherwise 0. Tolerances must not change.
+- Median accuracy: same bands.
+- Relative position: 1 if student mean position > student median position, else 0, scored even when estimates are inaccurate.
+- A line never moved scores 0 for its accuracy part; the position part scores 0 unless both lines have been moved.
+
+FEEDBACK (negotiable):
+- Mean and median parts: feedback by accuracy band only, with the true value and a tip (median splits the dots into equal halves; mean is the balance point).
+- Position part: states whether the mean is to the right of the median.
+- Worked solution: true mean and median, dots each side of the median, why the tail pulls the mean more than the median.
+- Silent marks: allowed.
+
+PRT/QTEST SUGGESTIONS:
+- Both lines at the true values: full marks.
+- Lines swapped: position part 0.
+- Mean line at +15% of the true mean: mean part half marks.
+- Both lines at their start positions: score 0.
+
+REFERENCE POINTERS (optional):
+Specialist_tools/JSXGraph/JSXGraph.md
+Specialist_tools/JSXGraph/Binding.md
+Authoring/Answer_Tests/Grading_recipes.md
+CAS/Random.md
+CAS/Statistics.md
+
+ADDITIONAL LANGUAGES (optional): (none)
+```
+
