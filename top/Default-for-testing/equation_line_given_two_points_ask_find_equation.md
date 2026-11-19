@@ -87,3 +87,13 @@ Review decision: REJECT (keep_draft=True, plan_changed=False)
 Feedback to Author: Keep the draft and the grading as they are. Two changes: (1) Make the input accept implicit multiplication, so y=-5x+5 and y=-x/5+5 are read as valid (insert the missing * automatically, for example with the input's insertStars option) and then graded normally. (2) Keep floats forbidden, since only fractions are accepted. Add a line to the question text: "Give the gradient as a fraction, not a decimal." A decimal like y=-0.2x+5 should still be rejected as invalid. Add qtests: y=-5x+5-style input without * (written for the variant, e.g. y=p*x/q+c with the stars left out) should score 1 for the correct line. Also add qtests for the sign-flipped answer -m*x+c and the swapped answer c*x+p/q, so those routes are exercised.
 ```
 
+## Entry 6 — students · confirmed findings (2026-11-19T12:04:45)
+
+**Reference files fetched:**
+- (none)
+
+```text
+{"student": "student", "variant": 1, "answers": {"ans1": "y=-5x+5"}, "what_happened": "Not marked. The answer was rejected as invalid and the message said to add * (y = -5*x+5).", "why_wrong": "Implicit multiplication such as 5x is normal student notation. Rejecting it is unfriendly, and the student gets no marking feedback on a wrong-gradient answer."}
+{"student": "student", "variant": 1, "answers": {"ans1": "y=-0.2x+5"}, "what_happened": "Not marked. The answer was rejected for containing a floating-point number and for missing *.", "why_wrong": "A correct answer in decimal form is refused, and the question doesn't say fractions are required. A student has no warning before the attempt."}
+```
+
