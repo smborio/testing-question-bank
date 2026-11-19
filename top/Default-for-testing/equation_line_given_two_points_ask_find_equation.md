@@ -284,3 +284,12 @@ CAS/Random.md
 ADDITIONAL LANGUAGES (optional): (none)
 ```
 
+## Entry 18 — students · confirmed findings (2026-11-19T12:42:22)
+
+**Reference files fetched:**
+- (none)
+
+```text
+{"student": "student", "variant": 1, "answers": {"ans1": "y=(x-7)/3"}, "what_happened": "Full marks, while 3y=x-7 got 0.5 for 'not in the form y=mx+c'.", "why_wrong": "y=(x-7)/3 is also not in the form y=mx+c, so the form check is inconsistent. It also accepts a wrong form that the question says should be avoided."}
+```
+
