@@ -295,3 +295,13 @@ PRT/QTEST SUGGESTIONS:
 - Both lines at their start positions: score 0.
 ```
 
+## Entry 9 — author · build round 3 (2026-11-19T10:42:33)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: did NOT pass (api_unreachable) after 1 attempt(s).
+Retriever gave the Author: Specialist_tools/JSXGraph/JSXGraph.md, Specialist_tools/JSXGraph/Binding.md, Authoring/Answer_Tests/Grading_recipes.md, CAS/Random.md
+```
+

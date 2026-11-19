@@ -55,12 +55,13 @@ makeLine(ref_D, {#sD#}, 'blue', true, 'Median', ymax-2);
 </questiontext>
 <questionvariables>
 <text><![CDATA[N: 50+rand(50);
-nb: 10+rand(3);
+nb: 13+rand(2);
 mo: 3+rand(2);
 sg: rand([1, 5/4, 3/2]);
-ot: rand([[1,1,1],[2,1,1],[1,2,1],[1,1,2],[2,1,2]]);
-no: lsum(z, z, ot);
-nbody: nb-3;
+nt: ceiling(N/11);
+ot: makelist(floor(nt/4)+(if i > 4-mod(nt,4) then 1 else 0), i, 1, 4);
+no: nt;
+nbody: nb-4;
 wb: makelist(float(exp(-(i-mo)^2/(2*sg^2))), i, 1, nbody);
 Sb: lsum(z, z, wb);
 cb0: makelist(floor(float((N-no)*wb[i]/Sb)), i, 1, nbody);
@@ -73,8 +74,8 @@ tm: sum(cnt[i]*xc[i], i, 1, nb)/N;
 med: if oddp(N) then dots[(N+1)/2] else (dots[N/2]+dots[N/2+1])/2;
 tmd: float(round(10*tm)/10);
 medd: float(round(10*med)/10);
-nl: length(sublist(dots, lambda([z], z < med)));
-nr: length(sublist(dots, lambda([z], z > med)));
+nl: lsum(if xc[k] < med then cnt[k] else 0, k, makelist(j, j, 1, nb));
+nr: lsum(if xc[k] > med then cnt[k] else 0, k, makelist(j, j, 1, nb));
 ne: N - nl - nr;
 [sM, sD]: rand([[4, 6*nb-4], [6*nb-4, 4]]);
 ta1: tm;
