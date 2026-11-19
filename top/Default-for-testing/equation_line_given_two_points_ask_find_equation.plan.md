@@ -1,52 +1,41 @@
-GOAL (non-negotiable): Edit of the existing question. Given two points, the student finds the equation of the line through them and writes it as y=mx+c (task: calculate). The gradient is a non-integer rational with |m|<3; the y-intercept is a small non-integer rational. Assessment is built around what the answer shows (form, straight line, gradient, intercept, points it passes through), not around a list of anticipated wrong answers.
+GOAL (non-negotiable): Edit of the existing question. Given two points, the student finds the equation of the line through them and writes it as y=mx+c (calculate). The gradient is a non-integer rational with |m|<3; the intercept is a small non-integer rational.
 
-STRUCTURE (non-negotiable): Single part, one algebraic input pre-filled "y=", one grading tree. Wording unchanged: "Find the equation of the line, written in the form y=mx+c. Give any fractions as fractions." Decimals stay rejected, implicit multiplication (5x) allowed, validation shown.
+STRUCTURE (non-negotiable): Single part, one algebraic input (equation, pre-filled "y=", decimals forbidden, implicit multiplication allowed, validation shown), one grading tree. Fractions are requested as fractions.
 
-RANDOMIZATION (negotiable): Constructive, no rejection sampling; question variables hold only the random data and the model answer.
-- q in {2,3,4,5}; gradient m=p/q with p = ±k, k from 1..3q-1 coprime to q (built as a filtered list), so m is never a whole number and |m|<3.
-- Point A: xa a non-multiple of q in -5..5 (so neither point is on the y-axis). ya = round(m*xa)+e, e in {-2..2}, so ya is an integer and the intercept stays small.
-- Point B: xb = xa + q*k2, k2 in {-2,-1,1,2}; yb = ya + p*k2. Integer coordinates guaranteed; the points may be on the same or opposite sides of the y-axis, and xb differs from xa.
-- c = ya - m*xa has denominator q, so it is never an integer, never 0, and |c|<=2.5 plus a fraction of at most 1/2 (small).
-- Swap which point is called A/B at random so the order of x does not give away the sign of m.
-- Same method in the worked solution for every variant.
+RANDOMIZATION (negotiable): Constructive, no rejection sampling beyond filtered lists.
+- q in {2,3,4,5}; p = sign * a value from a filtered list of integers coprime to q with 1<=|p|<3q, so m=p/q is in lowest terms, never whole, |m|<3.
+- Point A: integer xa from -6..6, excluding 0. Step k: nonzero integer from -3..3, giving B = (xa+q*k, ya+p*k). Coordinates are integers. xb must not be 0 (choose k from the values that avoid it); points may lie on the same or opposite sides of the y-axis.
+- Intercept: c = n/q with n a nonzero integer, -9..9, coprime to q, so c is never an integer and small. ya = m*xa + c is then a fraction with denominator q. To keep the points as integers, choose ya from integers and derive c: ya integer in -9..9, c = ya - m*xa. Since xa is not a multiple of q, c is non-integer. Pick xa from values not divisible by q, and k so xb stays off 0; the Author fixes the exact construction so all coordinates are integers, c is a non-integer with small size (|c|<=5), and both points are off the y-axis.
+- Assessment variables live in the feedback variables, not the question variables. Question variables hold only the randomisation and the model answer.
 
-ANSWER TESTS (negotiable): All assessment variables (the student's right-hand side, its gradient and intercept, the check against each point) are defined in the feedback variables, not the question variables. Checks in order:
-1. Is it an equation? If not (bare expression such as mx+c, or 0): 0, "Your answer must be an equation starting y=."
-2. Is it a straight line, i.e. y alone on the left, or an equation that is linear in x and y? A non-linear equation (x^2, 1/x terms) scores 0: "This is not a straight line."
-3. Does it represent the correct line? If it is the correct line but y is not alone on the left (e.g. 4y=3x+2): 0.5, "This is the right line but not in the form y=mx+c; rearrange."
-4. With y alone: right-hand side equivalent to m*x+c: 1 (any equivalent form, e.g. (p*x+q*c)/q).
-5. Gradient correct, intercept wrong: 0.5.
-6. Gradient wrong, but the line passes through A or through B (the intercept is consistent with a given point): 0.4, error carried forward.
-7. Otherwise 0.
-Check the gradient by the coefficient of x in the right-hand side; for the intercept, the constant term. Form alone never earns marks.
+ANSWER TESTS (negotiable): Checks in order:
+1. Is the answer an equation? If not, 0, "Your answer must be an equation starting y=."
+2. Is it a straight line (linear in x and y)? If not, 0, say so.
+3. If it is the correct line but y is not alone on the left: 0.5, "right line, now write it as y=mx+c."
+4. If y is alone and the right side equals mx+c: full marks 1. Any equivalent right side is accepted. Form alone never earns marks.
+5. y alone, gradient correct, intercept wrong: 0.5.
+6. y alone, gradient wrong, the line passes through A or B (error carried forward): 0.4, whichever point it passes through.
+7. Anything else: 0.
+Comparisons are made on the evidence in the answer, not on a guessed process.
 
-FEEDBACK (negotiable): Only evidence-based statements; no guessing of the student's method.
-- Correct: "Correct."
-- Not an equation / not straight / not y= : the hints in steps 1-3.
-- Gradient right, intercept wrong: "Your gradient is correct, but your line does not pass through A and B. Substitute a point to check c."
-- Gradient wrong, line through A (or B) only: "Your line passes through A (or B) but not the other point, so the gradient is not correct. Recheck rise over run." No claim of upside-down or sign error.
-- Other: "Not correct. Find the gradient from the two points, then substitute a point to find c."
-- No named wrong-answer branches (upside-down, sign-flip, m/c swap); these now land in the generic or point-based branches. Silent marks: none; every lost mark has a hint.
-- Worked solution, structured and in the same method each time: (1) gradient m=(y2-y1)/(x2-x1) with the values shown in brackets for negatives, simplified to a displayed fraction; (2) substitute point A into y=mx+c, with brackets around negative values and the fraction coefficient shown as \frac; (3) rearrange to find c, showing the arithmetic; (4) final equation y=mx+c, then a check that B satisfies it. No sign clashes like "+ -3" or "--".
-- Question note shows m, c and both points.
-- Question description (saved with the question) documents: pedagogical objective, mathematical constraints (|m|<3, non-integer, c non-integer, integer coordinates), the randomisation strategy above, and the assessment decisions (partial credits and why unambiguous-only feedback).
+FEEDBACK (negotiable): Only what the evidence supports.
+- Not an equation / not a line: say what is expected.
+- Right line, wrong form: say it is right and ask for y=mx+c.
+- Right gradient, wrong intercept: "Your gradient is correct; check c by substituting a point."
+- Wrong gradient but passes through a point: "Your line passes through A (or B) but not the other point, so recheck the gradient." Never claim how the student got it.
+- Otherwise: "Not correct. Find the gradient from the two points, then substitute a point to find c."
+- Old branches for upside-down gradient, flipped sign and m/c swap are dropped; those answers fall into the generic route or the pass-through-a-point route if they apply.
+- Worked solution, structured in steps: (1) gradient m=(y2-y1)/(x2-x1) with the values substituted, negative numbers in brackets, simplified fraction; (2) substitute point A into y=mx+c; (3) rearrange to c = ya - m*xa and compute it; (4) final equation y=mx+c. Fractional coefficients are shown as proper fractions, and signs are displayed naturally (e.g. y = -\frac{3}{2}x+\frac{1}{2}, not +-).
+Silent marks: none. Every partial mark has a hint.
 
-PRT/QTEST SUGGESTIONS: Descriptive tests, no duplicates (old cases 1 and 2 merged):
-- Model answer: 1. Equivalent forms: (p*x+q*c)/q, p*x/q+c, factored/expanded: 1.
-- Correct line unrearranged, q*y=p*x+q*c: 0.5.
-- Bare expression, 0: 0 (not an equation).
-- Non-straight: y=x^2: 0.
-- Right gradient, wrong intercept (y=m*x+c+1): 0.5.
-- Wrong gradient through A: y=(q/p)*x + the intercept making it pass through A: 0.4 (check that it still passes through A on every seed).
-- Wrong gradient through B: 0.4.
-- Gradient wrong, intercept not tied to either point: 0.
-- Constant line y=c: 0.
+QUESTION DESCRIPTION: The saved description records the pedagogical objectives (finding a line from two points, gradient then intercept), the mathematical constraints (|m|<3, m non-integer, c non-integer, integer coordinates, points off the y-axis), the constructive randomisation, and the assessment decisions (partial credit values and why, error carried forward, no guessing of process).
+
+PRT/QTEST SUGGESTIONS: Remove the duplicate test 1/2. Descriptive tests: model answer; equivalent forms (fraction combined, implicit multiplication); right line with y not alone (0.5); bare expression (0); non-linear equation (0); right gradient wrong c (0.5); wrong gradient through A (0.4); wrong gradient through B (0.4); unrelated wrong line (0); 0 as input. Update the expected answer notes to the new tree.
 
 REFERENCE POINTERS (optional):
 Authoring/Answer_Tests/Grading_recipes.md
 Authoring/Potential_response_trees.md
-Authoring/Question_note.md
-Authoring/Inputs/Input_options.md
 CAS/Random.md
+Authoring/Variables.md
 
 ADDITIONAL LANGUAGES (optional): (none)
