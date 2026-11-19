@@ -47,3 +47,13 @@ PRT/QTEST SUGGESTIONS:
 - An unrearranged equivalent, such as q*y=p*x+q*c: expect no marks and the rearrange hint.
 ```
 
+## Entry 2 — author · build round 1 (2026-11-19T11:22:37)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: did NOT pass (api_unreachable) after 2 attempt(s).
+Retriever gave the Author: Authoring/Answer_Tests/Grading_recipes.md, Authoring/Answer_Tests/Equivalence.md, Authoring/Inputs/Input_syntax.md, AI_authors/stack_essentials.md, Authoring/Variables.md, CAS/Random.md, Authoring/Errors.md, Authoring/Potential_response_trees.md, STACK_question_admin/Testing.md
+```
+
