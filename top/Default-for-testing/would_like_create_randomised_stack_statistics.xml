@@ -5,42 +5,67 @@
 <text>Would like create randomised stack statistics</text>
 </name>
 <questiontext format="html">
-<text><![CDATA[<p>The stacked dot plot below shows August precipitation (mm) for {@N@} observations from Eastern African cities (for example Nairobi, Addis Ababa, Kampala and Dar es Salaam). Each dot is one observation, placed at the centre of its 6 mm wide bin.</p>
-<p>Drag the two vertical lines by their handles on the lower axis. Place the line labelled "Mean" where you estimate the mean, and the line labelled "Median" where you estimate the median.</p>
+<text><![CDATA[<p>The stacked dot plot below shows August precipitation (mm) for {@N@} observations from Eastern African cities (for example Nairobi, Addis Ababa, Kampala and Dar es Salaam). Each cross is one observation, placed at the centre of its 6 mm wide bin.</p>
+<p>Drag the two vertical lines sideways by grabbing the lines themselves. Place the line labelled "Mean" where you estimate the mean, and the line labelled "Median" where you estimate the median.</p>
 [[jsxgraph input-ref-ans1="ref_M" input-ref-ans2="ref_D" width="640px" height="420px"]]
 var cnt = {#cnt#};
 var nb = {#nb#};
-var ymax = {#maxc#} + 2;
+var ymax = {#maxc#} + 4;
 var xmax = 6*nb;
 var board = JXG.JSXGraph.initBoard(divid, {boundingbox:[-4, ymax, xmax+4, -3.5], axis:false, showCopyright:false, showNavigation:false});
 board.create('axis', [[0,0],[1,0]], {ticks:{ticksDistance:6, minorTicks:0, insertTicks:false, drawLabels:true}});
 board.create('text', [xmax/2-10, -3, 'August precipitation (mm)'], {fixed:true});
 for (var i = 0; i < cnt.length; i++) {
   for (var k = 0; k < cnt[i]; k++) {
-    board.create('point', [6*i+3, 0.5+k], {size:2, fixed:true, withLabel:false, name:'', color:'#444444', highlight:false});
+    board.create('point', [6*i+3, 0.5+k], {size:3, face:'x', fixed:true, withLabel:false, name:'', color:'#444444', highlight:false});
   }
 }
-var lineM = board.create('line', [[-100,-1],[100,-1]], {visible:false});
-var lineD = board.create('line', [[-100,-2],[100,-2]], {visible:false});
-var pM = board.create('glider', [xmax/2, -1, lineM], {name:'Mean', size:6, color:'red', label:{offset:[8,8]}});
-var pD = board.create('glider', [xmax/2, -2, lineD], {name:'Median', size:6, color:'blue', label:{offset:[8,-14]}});
-board.create('line', [[function(){return pM.X();}, 0],[function(){return pM.X();}, 1]], {straightFirst:false, straightLast:true, strokeColor:'red', strokeWidth:2, fixed:true, highlight:false});
-board.create('line', [[function(){return pD.X();}, 0],[function(){return pD.X();}, 1]], {straightFirst:false, straightLast:true, strokeColor:'blue', strokeWidth:2, dash:2, fixed:true, highlight:false});
-stack_jxg.bind_point(ref_M, pM);
-stack_jxg.bind_point(ref_D, pD);
+function initPos(ref, dflt) {
+  var v = parseFloat(ref.value);
+  if (isNaN(v)) {
+    v = dflt;
+    ref.value = String(v);
+    ref.dispatchEvent(new Event('change'));
+  }
+  return v;
+}
+function makeLine(ref, dflt, col, dashed, label, ylab) {
+  var x0 = initPos(ref, dflt);
+  var P = board.create('point', [x0, 0], {visible:false, name:''});
+  var Q = board.create('point', [x0, ymax], {visible:false, name:''});
+  var L = board.create('segment', [P, Q], {strokeColor:col, strokeWidth:4, highlightStrokeWidth:6, dash:(dashed ? 2 : 0), fixed:false});
+  board.create('text', [function(){ return P.X() + 0.8; }, ylab, label], {fixed:true, color:col});
+  function save() {
+    var x = Math.max(0, Math.min(xmax, P.X()));
+    P.moveTo([x, 0]);
+    Q.moveTo([x, ymax]);
+    ref.value = String(Math.round(x*100)/100);
+    ref.dispatchEvent(new Event('change'));
+  }
+  L.on('drag', save);
+  L.on('up', save);
+  return L;
+}
+makeLine(ref_M, {#sM#}, 'red', false, 'Mean', ymax-0.8);
+makeLine(ref_D, {#sD#}, 'blue', true, 'Median', ymax-2);
 [[/jsxgraph]]
 <div style="display:none">[[input:ans1]] [[validation:ans1]] [[input:ans2]] [[validation:ans2]]</div>
-<p>Move both lines, then check. Marks: one third for the mean, one third for the median, one third for placing the mean line to the right of the median line.</p>
+<p>Move both lines, then check. Marks: one third for the mean, one third for the median, one third for placing the mean line to the right of the median line. A line you do not move earns nothing.</p>
 [[feedback:prt_ans1]]]]></text>
 </questiontext>
 <questionvariables>
 <text><![CDATA[N: 50+rand(50);
-nb: 8+rand(5);
-r: rand([3/5, 7/10, 4/5]);
-w: makelist(r^(i-1)+1/10, i, 1, nb);
-S: lsum(z, z, w);
-cnt0: makelist(floor(N*w[i]/S), i, 1, nb);
-cnt: cons(cnt0[1] + N - lsum(z, z, cnt0), rest(cnt0));
+nb: 10+rand(3);
+mo: 3+rand(2);
+sg: rand([1, 5/4, 3/2]);
+ot: rand([[1,1,1],[2,1,1],[1,2,1],[1,1,2],[2,1,2]]);
+no: lsum(z, z, ot);
+nbody: nb-3;
+wb: makelist(float(exp(-(i-mo)^2/(2*sg^2))), i, 1, nbody);
+Sb: lsum(z, z, wb);
+cb0: makelist(floor(float((N-no)*wb[i]/Sb)), i, 1, nbody);
+cb: makelist(if i=mo then cb0[i]+N-no-lsum(z, z, cb0) else cb0[i], i, 1, nbody);
+cnt: append(cb, ot);
 xc: makelist(6*(i-1)+3, i, 1, nb);
 maxc: lmax(cnt);
 dots: apply(append, makelist(makelist(xc[i], k, 1, cnt[i]), i, 1, nb));
@@ -51,19 +76,20 @@ medd: float(round(10*med)/10);
 nl: length(sublist(dots, lambda([z], z < med)));
 nr: length(sublist(dots, lambda([z], z > med)));
 ne: N - nl - nr;
-ta1: [tm, -1];
-ta2: [med, -2];]]></text>
+[sM, sD]: rand([[4, 6*nb-4], [6*nb-4, 4]]);
+ta1: tm;
+ta2: med;]]></text>
 </questionvariables>
 <generalfeedback format="html">
 <text><![CDATA[<p>The mean is the sum of all dot positions divided by {@N@}, which gives {@tmd@} mm. The median is the middle value of the {@N@} ordered dots, which is {@medd@} mm.</p>
 <p>There are {@nl@} dots below the median, {@nr@} dots above it and {@ne@} dots at it, so the median splits the dots into two nearly equal halves.</p>
-<p>The distribution is right-skewed: most dots are in the low bins and a long tail stretches to the right. The median only depends on how many dots lie on each side, so the tail dots count no more than any other dot above the median. The mean uses the actual values, so the large values in the tail pull it towards the right. Hence the mean ({@tmd@} mm) is above the median ({@medd@} mm). This is typical of right-skewed data.</p>]]></text>
+<p>The distribution is right-skewed: most dots form a hump in the low bins and a few dots lie far out to the right. The median only depends on how many dots lie on each side, so those few far-out dots count no more than any other dot above the median. The mean uses the actual values, so the large values in the tail pull it towards the right. Hence the mean ({@tmd@} mm) is above the median ({@medd@} mm). This is typical of right-skewed data.</p>]]></text>
 </generalfeedback>
 <specificfeedback format="html">
   <text></text>
 </specificfeedback>
 <questionnote format="moodle_auto_format">
-<text>N={@N@}, bins={@nb@}, r={@r@}, mean={@tmd@}, median={@medd@}</text>
+<text>N={@N@}, bins={@nb@}, mode bin={@mo@}, sd={@sg@}, outliers={@ot@}, starts={@[sM,sD]@}, mean={@tmd@}, median={@medd@}</text>
 </questionnote>
 <penalty>0</penalty>
 <input>
@@ -73,9 +99,9 @@ ta2: [med, -2];]]></text>
 <forbidfloat>0</forbidfloat>
 <showvalidation>0</showvalidation>
 <mustverify>0</mustverify>
-<insertstars>1</insertstars>
 <boxsize>15</boxsize>
 <strictsyntax>1</strictsyntax>
+<insertstars>0</insertstars>
 <syntaxhint></syntaxhint>
 <syntaxattribute>0</syntaxattribute>
 <forbidwords></forbidwords>
@@ -91,9 +117,9 @@ ta2: [med, -2];]]></text>
 <forbidfloat>0</forbidfloat>
 <showvalidation>0</showvalidation>
 <mustverify>0</mustverify>
-<insertstars>1</insertstars>
 <boxsize>15</boxsize>
 <strictsyntax>1</strictsyntax>
+<insertstars>0</insertstars>
 <syntaxhint></syntaxhint>
 <syntaxattribute>0</syntaxattribute>
 <forbidwords></forbidwords>
@@ -108,13 +134,15 @@ ta2: [med, -2];]]></text>
   <autosimplify>1</autosimplify>
   <feedbackstyle>1</feedbackstyle>
   <feedbackvariables>
-    <text><![CDATA[m: float(ans1[1]);
-d: float(ans2[1]);
-ok10m: is(abs(m-tm) <= 0.1*abs(tm));
-ok20m: is(abs(m-tm) <= 0.2*abs(tm));
-ok10d: is(abs(d-med) <= 0.1*abs(med));
-ok20d: is(abs(d-med) <= 0.2*abs(med));
-pos: is(m > d);]]></text>
+    <text><![CDATA[m: float(ans1);
+d: float(ans2);
+mvM: is(abs(m-sM) > 0.001);
+mvD: is(abs(d-sD) > 0.001);
+ok10m: is(mvM and abs(m-tm) <= 0.1*abs(tm));
+ok20m: is(mvM and abs(m-tm) <= 0.2*abs(tm));
+ok10d: is(mvD and abs(d-med) <= 0.1*abs(med));
+ok20d: is(mvD and abs(d-med) <= 0.2*abs(med));
+pos: is(mvM and mvD and m > d);]]></text>
   </feedbackvariables>
   <node>
     <name>0</name>
@@ -147,14 +175,14 @@ pos: is(m > d);]]></text>
     <truescore>1/6</truescore>
     <trueanswernote>prt_ans1-2-T</trueanswernote>
     <truefeedback format="html">
-      <text><![CDATA[<p>Mean: within 20% of the true mean ({@tmd@} mm), but not within 10%. Think of the mean as the balance point of the dots: the long right tail pulls it to the right.</p>]]></text>
+      <text><![CDATA[<p>Mean: within 20% of the true mean ({@tmd@} mm), but not within 10%. Think of the mean as the balance point of the dots: the few far-out dots pull it to the right.</p>]]></text>
     </truefeedback>
     <falsenextnode>2</falsenextnode>
     <falsescoremode>+</falsescoremode>
     <falsescore>0</falsescore>
     <falseanswernote>prt_ans1-2-F</falseanswernote>
     <falsefeedback format="html">
-      <text><![CDATA[<p>Mean: more than 20% from the true mean ({@tmd@} mm). Think of the mean as the balance point of the dots: the long right tail pulls it to the right.</p>]]></text>
+      <text><![CDATA[<p>Mean: not within 20% of the true mean ({@tmd@} mm), or the line was not moved. Think of the mean as the balance point of the dots: the few far-out dots pull it to the right.</p>]]></text>
     </falsefeedback>
   </node>
   <node>
@@ -195,12 +223,12 @@ pos: is(m > d);]]></text>
     <falsescore>0</falsescore>
     <falseanswernote>prt_ans1-4-F</falseanswernote>
     <falsefeedback format="html">
-      <text><![CDATA[<p>Median: more than 20% from the true median ({@medd@} mm). The median line should split the dots into two equal halves.</p>]]></text>
+      <text><![CDATA[<p>Median: not within 20% of the true median ({@medd@} mm), or the line was not moved. The median line should split the dots into two equal halves.</p>]]></text>
     </falsefeedback>
   </node>
   <node>
     <name>4</name>
-    <description>Mean line right of median line</description>
+    <description>Mean line right of median line, both moved</description>
     <answertest>AlgEquiv</answertest>
     <sans>pos</sans>
     <tans>true</tans>
@@ -217,9 +245,117 @@ pos: is(m > d);]]></text>
     <falsenextnode>-1</falsenextnode>
     <falseanswernote>prt_ans1-5-F</falseanswernote>
     <falsefeedback format="html">
-      <text><![CDATA[<p>Position: the mean line is not to the right of the median line.</p>]]></text>
+      <text><![CDATA[<p>Position: the mean line is not to the right of the median line (or a line was not moved).</p>]]></text>
     </falsefeedback>
   </node>
 </prt>
+<qtest>
+  <testcase>1</testcase>
+  <description>The model answers</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#ta1#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-5-T</expectedanswernote>
+  </expected>
+</qtest>
+<qtest>
+  <testcase>2</testcase>
+  <description>Both lines at the true values</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#ta1#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-5-T</expectedanswernote>
+  </expected>
+</qtest>
+<qtest>
+  <testcase>3</testcase>
+  <description>Mean line 15% too far right</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#23*ta1/20#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.8330000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-5-T</expectedanswernote>
+  </expected>
+</qtest>
+<qtest>
+  <testcase>4</testcase>
+  <description>Both lines left at start positions</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#sM#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#sD#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-5-F</expectedanswernote>
+  </expected>
+</qtest>
+<qtest>
+  <testcase>5</testcase>
+  <description>ans1: 0 (tried by the build)</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#0#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.3330000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-5-F</expectedanswernote>
+  </expected>
+</qtest>
+<qtest>
+  <testcase>6</testcase>
+  <description>ans2: 0 (tried by the build)</description>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#0#}</value>
+  </testinput>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#ta1#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.6670000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-5-T</expectedanswernote>
+  </expected>
+</qtest>
 </question>
 </quiz>

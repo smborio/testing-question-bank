@@ -168,3 +168,16 @@ PRT/QTEST SUGGESTIONS:
 - Both lines left at their start positions: score 0.
 ```
 
+## Entry 5 — author · build round 2 (2026-11-19T10:33:31)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 1 attempt(s).
+Retriever gave the Author: Specialist_tools/JSXGraph/JSXGraph.md, Specialist_tools/JSXGraph/Binding.md, Authoring/Answer_Tests/Grading_recipes.md, Authoring/Answer_Tests/Numerical.md, CAS/Random.md
+Deviations reported: - RANDOMIZATION (negotiable): the plan asks for mean − median ≥ about 3 mm for every variant. I could not reach that with 3–5 outlier dots and N up to 99. At most about 1.5 mm is possible, and in some variants less than 1 mm. I did not check mean > median over all combinations. The shape is a Gaussian body in bins 1 to nb−3, with its mode in bin 3 or 4 and sd 1, 1.25 or 1.5 bins. The outliers are the last three bins' counts, one of [1,1,1], [2,1,1], [1,2,1], [1,1,2] or [2,1,2], so 3 to 5 dots, a few bins holding 2.
+- Line start positions: fixed at 4 mm and 6·nb−4 mm, in random order.
+- Input handling: each input now holds a single number, the line's x-position, written by JavaScript on drag. "Never moved" is detected by comparing it with the start position.
+```
+
