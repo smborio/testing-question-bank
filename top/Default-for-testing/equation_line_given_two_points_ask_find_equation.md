@@ -57,3 +57,13 @@ STACK API check: did NOT pass (api_unreachable) after 2 attempt(s).
 Retriever gave the Author: Authoring/Answer_Tests/Grading_recipes.md, Authoring/Answer_Tests/Equivalence.md, Authoring/Inputs/Input_syntax.md, AI_authors/stack_essentials.md, Authoring/Variables.md, CAS/Random.md, Authoring/Errors.md, Authoring/Potential_response_trees.md, STACK_question_admin/Testing.md
 ```
 
+## Entry 3 — planner · review (2026-11-19T12:01:19)
+
+**Reference files fetched:**
+- (none)
+
+```text
+Review decision: REJECT (keep_draft=True, plan_changed=False)
+Feedback to Author: Retry keeping the draft. Fixes: (1) algebraic_equivalence is not a STACK function: use a real check such as ATAlgEquiv(...) in feedback variables, or make the nodes use AlgEquiv directly on sans/tans expressions. (2) Guard against non-equations: only call lhs/rhs after equationp(ans1) is true (use if-then-else so nothing is evaluated on a bare expression). (3) Replace the dummy nodes that test true against true (nodes 6, 7, 8) with real checks, or give each terminal branch an explicit true/false score. Every false branch that ends the tree must state its FALSESCORE (0 for wrong answers). Keep the plan's scores: only the correct line scores 1, all mistake branches 0 with the planned hints, bare expression gets the 'start with y=' hint, unrearranged equation gets the rearrange hint.
+```
+
