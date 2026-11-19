@@ -1,6 +1,6 @@
 Question name: "Place mean and median in stacked dot plot". Category: default-for-testing.
 
-GOAL (non-negotiable): Students estimate by eye the mean and median of a right-skewed distribution and show they understand that a few large values in the right tail pull the mean above the median. Context: August precipitation (mm) in Eastern African cities.
+GOAL (non-negotiable): Students estimate by eye the mean and median of a right-skewed distribution and show they understand that the long right tail pulls the mean above the median. Context: August precipitation (mm) in Eastern African cities.
 
 STRUCTURE (non-negotiable): One stacked dotplot on one JSXGraph board. The dots are drawn as crosses. The student drags two labelled vertical lines, "Mean" and "Median", along the mm axis by grabbing the lines themselves (horizontal movement only). The labels sit near the top of the lines, clear of the axis labels and of each other. The lines start at two different positions that give nothing away (start order random per variant). Three independent scored parts, equal weight (1/3 each):
 1. Accuracy of the mean estimate.
@@ -9,9 +9,10 @@ STRUCTURE (non-negotiable): One stacked dotplot on one JSXGraph board. The dots 
 
 RANDOMIZATION (negotiable):
 - Number of observations N: random integer 50 to 99.
-- Bins 6 mm wide starting at 0, 12 to 14 bins, each dot at the bin centre.
-- Shape: a bell-shaped body on the left (mode in bin 3 or 4, sd about 1 to 1.5 bins) holding about 90% of the dots, plus a thin right tail of single dots, about 8-10% of N (5 to 9 dots), spread over the last 4-5 bins. Build the counts constructively, with no retries. Choose the ranges so that mean - median is at least 3 mm for every variant, verified over ALL combinations of the random parameters, narrowing the ranges if needed.
-- Start positions of the two lines: two distinct fixed positions well away from the true values, in random order per variant.
+- Data: N gamma quantiles quantile_gamma((i-0.5)/N, k, theta), i = 1..N, with shape k from 2 to 3 and scale theta from 9 to 12 mm. Each value goes into a 6 mm bin starting at 0 and is plotted at the bin centre. There are 12 to 14 bins, and the last bin takes anything beyond it. If quantile_gamma is too slow, count per bin from cdf_gamma at the bin edges (rounded to sum to N, remainder in the mode bin).
+- Generation must be fast and simple: no loops with retries, no lambda, no heavy nested lists.
+- Mean minus median is about theta/3, at least 3 mm. Verify it over ALL combinations of N, k, theta and nb, and state the minimum gap found. Narrow the ranges if needed.
+- Start positions of the two lines: two distinct fixed positions (4 and 6*nb-4) well away from the true values, in random order per variant.
 - City names are not randomised.
 
 ANSWER TESTS (negotiable):
