@@ -1,29 +1,25 @@
-GOAL (non-negotiable): Read a two-stage probability tree for sampling without replacement, find missing branch probabilities, and compute joint probabilities (both blue; same colour). Skills: recall/calculate.
+GOAL (non-negotiable): Test reading and completing a probability tree for two draws without replacement from a bag of 16 counters (red, blue, green): find missing branch probabilities (conditional probabilities), then multiply along branches and add paths to get joint probabilities.
 
-STRUCTURE (non-negotiable): Non-interactive JSXGraph tree: 3 first-draw branches, each with 3 second-draw branches (12 branches), all fractions shown except a, b, c, which are labelled by letter. End-of-path (joint) probabilities are NOT shown. Three parts, five inputs, each worth 0.2:
-(i) a, b, c (three fraction inputs): a = P(blue first); b = P(blue second | blue first); c = P(red second | blue first).
-(ii) P(both blue).
-(iii) P(both same colour).
-Answers are fractions; need not be simplified.
+STRUCTURE (non-negotiable): Three parts, five answers in total, each worth 0.2 of the question.
+(i) Three inputs: a = P(blue on 1st draw), b = P(blue on 2nd | blue 1st), c = P(red on 2nd | blue 1st).
+(ii) P(both counters blue).
+(iii) P(both counters the same colour).
+A non-interactive JSXGraph probability tree is shown: first draw 3 branches, then 3 branches from each (9 second-draw branches). All branch probabilities are displayed as fractions over 16 and 15, except the three labelled a, b, c (the blue-first branch, the blue-after-blue branch and the red-after-blue branch). End-of-path (joint) probabilities are NOT shown on the tree. The red-red and green-green branch fractions are shown, so students can use them in (iii). Students enter fractions, not necessarily simplified.
 
-RANDOMIZATION (negotiable): Counts of red, blue, green: integers each >= 2, sum 16, all three different. Colours assigned to counts randomly, so blue's count varies between variants. Blue is always the colour in a, b, c; red is the colour in c. Tree labels are shown as unsimplified fractions over 16 and 15 (e.g. 5/16, 4/15). The tree layout stays the same, only numbers change. Worked solution is the same method for every variant.
+RANDOMIZATION (negotiable): Counts of red, blue and green sum to 16, each at least 2, and all three different. The colours are assigned randomly to the counts, so blue's count varies between variants (blue is always the colour labelled a, b, c). The tree and worked solution are generated from the counts. The tree must be drawn correctly for every variant.
 
-ANSWER TESTS (negotiable): Each input accepts only a fraction (decimals rejected, not simplified-required), graded by value (any equivalent fraction gets full marks). (i) a, b, c each checked against the correct value. (ii) correct value a*b = B(B-1)/240 gets 1. Otherwise, if the student's a and b are both genuine probabilities (strictly between 0 and 1) and the answer equals their a*b, award follow-through. (iii) correct value (R(R-1)+B(B-1)+G(G-1))/240 gets 1. Otherwise follow-through: the student's answer equals their a*b plus the red-red and green-green products read from the tree, provided their a and b are probabilities between 0 and 1. Follow-through score is 95% of the part mark (0.19 of 0.2). Follow-through is not given if a or b is outside [0,1] (or not a number). Form only: not allowed; full marks need the right value.
+ANSWER TESTS (negotiable): Five inputs (a, b, c, part ii, part iii), all accepting fractions only; decimals are rejected as invalid. Fractions need not be simplified, so any equivalent value of the correct fraction gets full marks. Check equivalence to the correct value, not only the form.
+Follow-through: in (ii), the student's a times the student's b earns 95% of the part mark (0.19 of 0.2). In (iii), the student's a times the student's b, plus the correct red-red and green-green products, earns 95% of the part mark. Follow-through applies only if the student's earlier answers are admissible probabilities (between 0 and 1); otherwise no follow-through credit. Full marks need the correct value.
 
-FEEDBACK (negotiable):
-(i) a: wrong answer B/15 (wrong denominator): hint that there are 16 counters at the first draw. b: wrong answer B/15 (no counter removed): hint that one blue is already gone and only 15 remain. b = a (as if with replacement): hint that the counter was not replaced. c: wrong answer 1-b: hint that the bag also holds a third colour (green), so c is not 1-b. Right answers: short confirmation.
-(ii) wrong answer a+b: hint to multiply along the branch, not add. Follow-through answer: tell the student the method is right but earlier values are wrong (score 0.19).
-(iii) wrong answer: only blue-blue (a*b): hint that red-red and green-green also count. Wrong answer adding the branch probabilities instead of multiplying: same hint as (ii). Follow-through: method right, earlier values wrong.
-Worked solution in General Feedback: find a=B/16, b=(B-1)/15, c=R/15 (name the method: counts remaining after the first draw); P(BB)=a*b; P(same colour)=sum of RR, BB, GG products along branches, with the numbers for the variant.
-Silent marks: not allowed.
+FEEDBACK (negotiable): Part (i): a wrong, e.g. B/15 for b (forgetting the first counter was removed): hint that the bag has one fewer counter after the first draw. b = a (treating the draws as with replacement): hint about the first counter not being replaced. c = 1−b (leaving out the green counters): hint that the third colour has been left out; the three second-draw branches after blue must sum to 1. Part (ii): adding a+b instead of multiplying: hint to multiply along the branches. Part (iii): only the blue-blue path, or leaving out one of the colours: hint that all three same-colour paths are needed. Follow-through answers get a note that the method is right but an earlier answer was wrong. Silent marks: not allowed. Worked solution in General Feedback: explains counts after the first draw, finds a, b and c, multiplies along branches for BB, then adds RR, BB, GG for same colour, using the variant's numbers.
 
-PRT/QTEST SUGGESTIONS: Test cases: all correct (full marks); wrong a with consistent follow-through in (ii) and (iii) (0.19); a = 3/2 (out of range) with follow-through value (no follow-through credit); decimal 0.25 entered (rejected).
+PRT/QTEST SUGGESTIONS: Model answers for all five inputs; unsimplified equivalents; decimals rejected; follow-through case: a, b wrong but valid probabilities, with a*b in (ii) scoring 0.19; inadmissible a (e.g. 3/2) giving no follow-through.
 
 REFERENCE POINTERS (optional):
 Specialist_tools/JSXGraph/JSXGraph.md
-Authoring/Answer_Tests/Grading_recipes.md
 Authoring/Potential_response_trees.md
-Authoring/Inputs/Input_options.md
+Authoring/Answer_Tests/Grading_recipes.md
+Authoring/Inputs/Numerical_input.md
 CAS/Random.md
 
 ADDITIONAL LANGUAGES (optional): (none)
