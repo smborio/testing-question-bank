@@ -1,32 +1,35 @@
-GOAL (non-negotiable): Read a probability tree for sampling without replacement. Find the unknown branch probabilities (a, b, c), then use the multiplication rule for "both blue" and add branch products for "same colour".
+GOAL (non-negotiable): Read a two-stage probability tree for sampling without replacement, find missing branch probabilities (a, b, c), then use the multiplication rule and addition of exclusive outcomes to get P(both blue) and P(same colour). Tests calculate/interpret at school probability level.
 
-STRUCTURE (non-negotiable): One question, three parts, five inputs, each worth 1/5. A non-interactive JSXGraph tree (first draw R, B, G; second draw R, B, G; nine branches) sits above the parts. All branch fractions are shown except a, b, c.
-(i) three inputs: a = P(blue first), b = P(blue second | blue first), c = P(red second | blue first).
+STRUCTURE (non-negotiable): A bag of 16 counters, red/blue/green; two drawn without replacement. A non-interactive JSXGraph tree shows both draws with all 3+9 branches. Branch probabilities are shown as fractions over 16 and 15, EXCEPT three labelled a, b, c (blue first; blue second given blue first; red second given blue first). The joint (end-of-path) probabilities are NOT shown on the diagram. Parts, five inputs, equal weight (0.2 of the total each):
+(i) three inputs: a, b, c.
 (ii) P(both blue).
-(iii) P(both same colour).
+(iii) P(both counters the same colour).
+Answers are fractions, not necessarily simplified.
 
-RANDOMIZATION (negotiable): Counts (r,b,g): three distinct integers each >=2 summing to 16, drawn from all such triples and randomly permuted so blue can be any size. Tree shows unsimplified fractions with denominators 16 and 15. Colours fixed as red, blue, green.
+RANDOMIZATION (negotiable): Counts (red, blue, green) sum to 16, each at least 2, all three different. Possible sets: {2,3,11},{2,4,10},{2,5,9},{2,6,8},{3,4,9},{3,5,8},{3,6,7},{4,5,7}; assign them to colours in a random order so blue's count varies (my choice). Tree labels and text follow the variant; the tree is redrawn from the counts. The worked solution structure stays the same.
 
-ANSWER TESTS (negotiable): Fractions; any equivalent fraction accepted, simplification not required. Decimals rejected with a message asking for a fraction.
-(i) a = nb/16, b = (nb-1)/15, c = nr/15, each checked for equivalence.
-(ii) Full marks for a*b with the correct values. Follow-through 0.8 of the mark for (student a)*(student b) if the student's a, b, c are admissible.
-(iii) Full marks for the correct total. Follow-through 0.8 of the mark for (student's (ii)) + (red-red branch product) + (green-green branch product), the last two from the tree, provided the student's (ii) is between 0 and 1.
-Admissible: each of a, b, c between 0 and 1, and b + c <= 1. Follow-through only when earlier answers are wrong; full marks only from the correct value.
+ANSWER TESTS (negotiable): Each input accepts a fraction or any equivalent value (not required to be simplified). Reject a non-numeric entry, and a decimal if easy (my choice: fractions only). Correct values: a=B/16, b=(B-1)/15, c=R/15 where B,R are blue/red counts. (ii) a*b. (iii) P(BB)+P(RR)+P(GG), using the RR and GG branch fractions shown on the tree.
+Follow-through: (ii) is full marks if equal to the student's a times student's b, provided a and b are admissible probabilities (each between 0 and 1); then 80% of the part mark (the small deduction; my choice). (iii) is full marks if correct, 80% if equal to the student's (ii) answer plus the correct RR and GG products, provided the student's (ii) is between 0 and 1 and the total is not above 1. Follow-through is not given for inadmissible values (negative, above 1).
+Form only: allowed (no simplification required).
 
-FEEDBACK (negotiable): Correct answers get a short confirmation. Silent marks: not allowed.
-(i) b = nb/16 (with-replacement error; the bag now holds 15); b = nb/15 (forgot a blue counter is gone); c = nr/16 (wrong denominator); c = 1-b (ignores the third colour). Each gets its own hint.
-(ii) a+b (adds instead of multiplying; hint: both happen, multiply along the branch); a*a (with-replacement error).
-(iii) only the blue-blue product (forgot other colours); the sum of three products using wrong second-draw probabilities. Each gets a hint.
-Follow-through answers get a note: method right, but built on an earlier wrong value, marks reduced.
-Worked solution in General Feedback: counts and total 16; a, b, c with the reason the denominator drops to 15; multiplication rule for P(BB); three same-colour branch products added, with numbers.
+FEEDBACK (negotiable):
+(i) Right: confirm. Wrong mistakes with hints:
+- b = B/15 (counter not removed after the first draw): "After a blue counter is taken, one fewer blue remains."
+- b = a (with replacement): "The first counter is not put back; the bag now has 15 counters."
+- c = 1-b (third colour left out): "Two colours are left besides blue's own branch; green must be counted as well: the three branches from blue add up to 1."
+- a with denominator 15 or other bad denominator: hint that the bag holds 16 counters at the start.
+(ii) a+b instead of a*b: "Along a path, multiply the branch probabilities." Follow-through message when earlier answers were wrong but method right: say marks are reduced because a or b was wrong.
+(iii) Only P(BB) given (other colours forgotten): "Same colour includes red-red and green-green." Product of the three correct terms or a sum with one term missing: hint saying which colour is missing. Answer is a wrong total above 1: say a probability cannot exceed 1.
+Worked solution (General Feedback): states a=B/16; after one blue is removed 15 left, b=(B-1)/15, c=R/15 (and the green branch G/15, total 1); P(BB)=a*b; P(same)=P(BB)+P(RR)+P(GG), each a product along the path; numeric values for the variant.
+Silent marks: not allowed (each lost-mark route above has a hint).
 
-PRT/QTEST SUGGESTIONS: all five correct (expect 1); same answers as unsimplified fractions (expect 1); wrong b with consistent (ii) and (iii) (expect follow-through); inadmissible b (e.g. 2) giving no follow-through; a decimal refused.
+PRT/QTEST SUGGESTIONS: Full correct answers; unsimplified correct fractions; wrong a with (ii)=a*b follow-through case (80%); inadmissible values (e.g. a=3/2) no follow-through; mistake b=a and c=1-b.
 
-REFERENCE POINTERS:
+REFERENCE POINTERS (optional):
 Specialist_tools/JSXGraph/JSXGraph.md
 Authoring/Potential_response_trees.md
 Authoring/Answer_Tests/Grading_recipes.md
-Authoring/Inputs/Input_options.md
+Authoring/Feedback.md
 CAS/Random.md
 
-ADDITIONAL LANGUAGES: (none)
+ADDITIONAL LANGUAGES (optional): (none)
