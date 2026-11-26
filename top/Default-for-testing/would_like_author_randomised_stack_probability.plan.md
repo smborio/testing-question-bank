@@ -1,35 +1,29 @@
-GOAL (non-negotiable): Read a two-stage probability tree for sampling without replacement, find missing branch probabilities (a, b, c), then use the multiplication rule and addition of exclusive outcomes to get P(both blue) and P(same colour). Tests calculate/interpret at school probability level.
+GOAL (non-negotiable): Read a two-stage probability tree for sampling without replacement, find missing branch probabilities, and compute joint probabilities (both blue; same colour). Skills: recall/calculate.
 
-STRUCTURE (non-negotiable): A bag of 16 counters, red/blue/green; two drawn without replacement. A non-interactive JSXGraph tree shows both draws with all 3+9 branches. Branch probabilities are shown as fractions over 16 and 15, EXCEPT three labelled a, b, c (blue first; blue second given blue first; red second given blue first). The joint (end-of-path) probabilities are NOT shown on the diagram. Parts, five inputs, equal weight (0.2 of the total each):
-(i) three inputs: a, b, c.
+STRUCTURE (non-negotiable): Non-interactive JSXGraph tree: 3 first-draw branches, each with 3 second-draw branches (12 branches), all fractions shown except a, b, c, which are labelled by letter. End-of-path (joint) probabilities are NOT shown. Three parts, five inputs, each worth 0.2:
+(i) a, b, c (three fraction inputs): a = P(blue first); b = P(blue second | blue first); c = P(red second | blue first).
 (ii) P(both blue).
-(iii) P(both counters the same colour).
-Answers are fractions, not necessarily simplified.
+(iii) P(both same colour).
+Answers are fractions; need not be simplified.
 
-RANDOMIZATION (negotiable): Counts (red, blue, green) sum to 16, each at least 2, all three different. Possible sets: {2,3,11},{2,4,10},{2,5,9},{2,6,8},{3,4,9},{3,5,8},{3,6,7},{4,5,7}; assign them to colours in a random order so blue's count varies (my choice). Tree labels and text follow the variant; the tree is redrawn from the counts. The worked solution structure stays the same.
+RANDOMIZATION (negotiable): Counts of red, blue, green: integers each >= 2, sum 16, all three different. Colours assigned to counts randomly, so blue's count varies between variants. Blue is always the colour in a, b, c; red is the colour in c. Tree labels are shown as unsimplified fractions over 16 and 15 (e.g. 5/16, 4/15). The tree layout stays the same, only numbers change. Worked solution is the same method for every variant.
 
-ANSWER TESTS (negotiable): Each input accepts a fraction or any equivalent value (not required to be simplified). Reject a non-numeric entry, and a decimal if easy (my choice: fractions only). Correct values: a=B/16, b=(B-1)/15, c=R/15 where B,R are blue/red counts. (ii) a*b. (iii) P(BB)+P(RR)+P(GG), using the RR and GG branch fractions shown on the tree.
-Follow-through: (ii) is full marks if equal to the student's a times student's b, provided a and b are admissible probabilities (each between 0 and 1); then 80% of the part mark (the small deduction; my choice). (iii) is full marks if correct, 80% if equal to the student's (ii) answer plus the correct RR and GG products, provided the student's (ii) is between 0 and 1 and the total is not above 1. Follow-through is not given for inadmissible values (negative, above 1).
-Form only: allowed (no simplification required).
+ANSWER TESTS (negotiable): Each input accepts only a fraction (decimals rejected, not simplified-required), graded by value (any equivalent fraction gets full marks). (i) a, b, c each checked against the correct value. (ii) correct value a*b = B(B-1)/240 gets 1. Otherwise, if the student's a and b are both genuine probabilities (strictly between 0 and 1) and the answer equals their a*b, award follow-through. (iii) correct value (R(R-1)+B(B-1)+G(G-1))/240 gets 1. Otherwise follow-through: the student's answer equals their a*b plus the red-red and green-green products read from the tree, provided their a and b are probabilities between 0 and 1. Follow-through score is 95% of the part mark (0.19 of 0.2). Follow-through is not given if a or b is outside [0,1] (or not a number). Form only: not allowed; full marks need the right value.
 
 FEEDBACK (negotiable):
-(i) Right: confirm. Wrong mistakes with hints:
-- b = B/15 (counter not removed after the first draw): "After a blue counter is taken, one fewer blue remains."
-- b = a (with replacement): "The first counter is not put back; the bag now has 15 counters."
-- c = 1-b (third colour left out): "Two colours are left besides blue's own branch; green must be counted as well: the three branches from blue add up to 1."
-- a with denominator 15 or other bad denominator: hint that the bag holds 16 counters at the start.
-(ii) a+b instead of a*b: "Along a path, multiply the branch probabilities." Follow-through message when earlier answers were wrong but method right: say marks are reduced because a or b was wrong.
-(iii) Only P(BB) given (other colours forgotten): "Same colour includes red-red and green-green." Product of the three correct terms or a sum with one term missing: hint saying which colour is missing. Answer is a wrong total above 1: say a probability cannot exceed 1.
-Worked solution (General Feedback): states a=B/16; after one blue is removed 15 left, b=(B-1)/15, c=R/15 (and the green branch G/15, total 1); P(BB)=a*b; P(same)=P(BB)+P(RR)+P(GG), each a product along the path; numeric values for the variant.
-Silent marks: not allowed (each lost-mark route above has a hint).
+(i) a: wrong answer B/15 (wrong denominator): hint that there are 16 counters at the first draw. b: wrong answer B/15 (no counter removed): hint that one blue is already gone and only 15 remain. b = a (as if with replacement): hint that the counter was not replaced. c: wrong answer 1-b: hint that the bag also holds a third colour (green), so c is not 1-b. Right answers: short confirmation.
+(ii) wrong answer a+b: hint to multiply along the branch, not add. Follow-through answer: tell the student the method is right but earlier values are wrong (score 0.19).
+(iii) wrong answer: only blue-blue (a*b): hint that red-red and green-green also count. Wrong answer adding the branch probabilities instead of multiplying: same hint as (ii). Follow-through: method right, earlier values wrong.
+Worked solution in General Feedback: find a=B/16, b=(B-1)/15, c=R/15 (name the method: counts remaining after the first draw); P(BB)=a*b; P(same colour)=sum of RR, BB, GG products along branches, with the numbers for the variant.
+Silent marks: not allowed.
 
-PRT/QTEST SUGGESTIONS: Full correct answers; unsimplified correct fractions; wrong a with (ii)=a*b follow-through case (80%); inadmissible values (e.g. a=3/2) no follow-through; mistake b=a and c=1-b.
+PRT/QTEST SUGGESTIONS: Test cases: all correct (full marks); wrong a with consistent follow-through in (ii) and (iii) (0.19); a = 3/2 (out of range) with follow-through value (no follow-through credit); decimal 0.25 entered (rejected).
 
 REFERENCE POINTERS (optional):
 Specialist_tools/JSXGraph/JSXGraph.md
-Authoring/Potential_response_trees.md
 Authoring/Answer_Tests/Grading_recipes.md
-Authoring/Feedback.md
+Authoring/Potential_response_trees.md
+Authoring/Inputs/Input_options.md
 CAS/Random.md
 
 ADDITIONAL LANGUAGES (optional): (none)
