@@ -47,3 +47,13 @@ STACK API check: PASSED after 1 attempt(s).
 Retriever gave the Author: Authoring/Answer_Tests/Grading_recipes.md, Authoring/Potential_response_trees.md, Authoring/Inputs/Numerical_input.md, Specialist_tools/JSXGraph/JSXGraph.md, CAS/Random.md
 ```
 
+## Entry 3 — planner · review (2026-11-26T12:48:04)
+
+**Reference files fetched:**
+- (none)
+
+```text
+Review decision: REJECT (keep_draft=True, plan_changed=False)
+Feedback to Author: 1) Make the validation message of all five inputs (ans1 to ans5) compact: set the same compact validation display on each input, not just ans1. 2) Fix the follow-through so a trivial answer gets no credit: in prt_ans4 and prt_ans5, require the student's a and b to be strictly between 0 and 1 (0 < ans1 < 1 and 0 < ans2 < 1), not 0 to 1 inclusive. Then the all-zero answer in the 'trivially wrong' test must score 0 in part (ii), and its expected result must be updated. 3) Add tests that reach the routes nobody has tried: b = a (ans2 = ta1), c = 1 - b (ans3 = 1 - ta2), a + b in (ii), only blue-blue in (iii), and a missing colour in (iii).
+```
+
