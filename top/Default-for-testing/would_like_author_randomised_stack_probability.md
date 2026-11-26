@@ -37,3 +37,13 @@ FEEDBACK (negotiable): Part (i): a wrong, e.g. B/15 for b (forgetting the first 
 PRT/QTEST SUGGESTIONS: Model answers for all five inputs; unsimplified equivalents; decimals rejected; follow-through case: a, b wrong but valid probabilities, with a*b in (ii) scoring 0.19; inadmissible a (e.g. 3/2) giving no follow-through.
 ```
 
+## Entry 2 — author · build round 1 (2026-11-26T12:45:31)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 1 attempt(s).
+Retriever gave the Author: Authoring/Answer_Tests/Grading_recipes.md, Authoring/Potential_response_trees.md, Authoring/Inputs/Numerical_input.md, Specialist_tools/JSXGraph/JSXGraph.md, CAS/Random.md
+```
+
