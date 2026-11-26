@@ -64,7 +64,7 @@ ta5: (nr*(nr-1)+nb*(nb-1)+ng*(ng-1))/240;</text>
 <name>ans1</name>
 <type>numerical</type>
 <tans>ta1</tans>
-<showvalidation>1</showvalidation>
+<showvalidation>2</showvalidation>
 <boxsize>15</boxsize>
 <strictsyntax>1</strictsyntax>
 <insertstars>0</insertstars>
@@ -93,7 +93,7 @@ ta5: (nr*(nr-1)+nb*(nb-1)+ng*(ng-1))/240;</text>
 <requirelowestterms>0</requirelowestterms>
 <checkanswertype>0</checkanswertype>
 <mustverify>1</mustverify>
-<showvalidation>1</showvalidation>
+<showvalidation>2</showvalidation>
 <options></options>
 </input>
 <input>
@@ -111,7 +111,7 @@ ta5: (nr*(nr-1)+nb*(nb-1)+ng*(ng-1))/240;</text>
 <requirelowestterms>0</requirelowestterms>
 <checkanswertype>0</checkanswertype>
 <mustverify>1</mustverify>
-<showvalidation>1</showvalidation>
+<showvalidation>2</showvalidation>
 <options></options>
 </input>
 <input>
@@ -129,7 +129,7 @@ ta5: (nr*(nr-1)+nb*(nb-1)+ng*(ng-1))/240;</text>
 <requirelowestterms>0</requirelowestterms>
 <checkanswertype>0</checkanswertype>
 <mustverify>1</mustverify>
-<showvalidation>1</showvalidation>
+<showvalidation>2</showvalidation>
 <options></options>
 </input>
 <input>
@@ -147,7 +147,7 @@ ta5: (nr*(nr-1)+nb*(nb-1)+ng*(ng-1))/240;</text>
 <requirelowestterms>0</requirelowestterms>
 <checkanswertype>0</checkanswertype>
 <mustverify>1</mustverify>
-<showvalidation>1</showvalidation>
+<showvalidation>2</showvalidation>
 <options></options>
 </input>
 <prt>
@@ -298,7 +298,7 @@ f2: is(algebraic_equivalence(ans2,ta1));</text>
   <autosimplify>1</autosimplify>
   <feedbackstyle>1</feedbackstyle>
   <feedbackvariables>
-    <text><![CDATA[ft: is(ans1>=0 and ans1<=1 and ans2>=0 and ans2<=1 and algebraic_equivalence(ans4,ans1*ans2));
+    <text><![CDATA[ft: is(ans1>0 and ans1<1 and ans2>0 and ans2<1 and algebraic_equivalence(ans4,ans1*ans2));
 fadd: is(algebraic_equivalence(ans4,ans1+ans2));]]></text>
   </feedbackvariables>
   <node>
@@ -366,7 +366,7 @@ fadd: is(algebraic_equivalence(ans4,ans1+ans2));]]></text>
   <autosimplify>1</autosimplify>
   <feedbackstyle>1</feedbackstyle>
   <feedbackvariables>
-    <text><![CDATA[ft: is(ans1>=0 and ans1<=1 and ans2>=0 and ans2<=1 and algebraic_equivalence(ans5,ans1*ans2+rrt+ggt));
+    <text><![CDATA[ft: is(ans1>0 and ans1<1 and ans2>0 and ans2<1 and algebraic_equivalence(ans5,ans1*ans2+rrt+ggt));
 fbb: is(algebraic_equivalence(ans5,ta4));
 fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+ggt]));]]></text>
   </feedbackvariables>
@@ -449,7 +449,7 @@ fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+gg
 </prt>
 
 <qtest>
-  <testcase>3</testcase>
+  <testcase>1</testcase>
   <description>decimal rejected</description>
   <testinput>
     <name>ans1</name>
@@ -478,8 +478,9 @@ fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+gg
     <expectedanswernote>NULL</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
-  <testcase>4</testcase>
+  <testcase>2</testcase>
   <description>The model answers</description>
   <testinput>
     <name>ans1</name>
@@ -532,8 +533,9 @@ fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+gg
     <expectedanswernote>prt_ans5-1-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
-  <testcase>5</testcase>
+  <testcase>3</testcase>
   <description>model answers</description>
   <testinput>
     <name>ans1</name>
@@ -586,8 +588,9 @@ fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+gg
     <expectedanswernote>prt_ans5-1-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
-  <testcase>6</testcase>
+  <testcase>4</testcase>
   <description>unsimplified equivalents</description>
   <testinput>
     <name>ans1</name>
@@ -640,8 +643,9 @@ fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+gg
     <expectedanswernote>prt_ans5-1-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
-  <testcase>7</testcase>
+  <testcase>5</testcase>
   <description>follow-through with wrong valid a and b</description>
   <testinput>
     <name>ans1</name>
@@ -694,8 +698,9 @@ fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+gg
     <expectedanswernote>prt_ans5-2-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
-  <testcase>8</testcase>
+  <testcase>6</testcase>
   <description>inadmissible a, no follow-through</description>
   <testinput>
     <name>ans1</name>
@@ -748,8 +753,9 @@ fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+gg
     <expectedanswernote>prt_ans5-4-F</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
-  <testcase>9</testcase>
+  <testcase>7</testcase>
   <description>trivially wrong</description>
   <testinput>
     <name>ans1</name>
@@ -791,9 +797,9 @@ fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+gg
   </expected>
   <expected>
     <name>prt_ans4</name>
-    <expectedscore>0.9500000</expectedscore>
+    <expectedscore>0.0000000</expectedscore>
     <expectedpenalty>0.0000000</expectedpenalty>
-    <expectedanswernote>prt_ans4-2-T</expectedanswernote>
+    <expectedanswernote>prt_ans4-3-T</expectedanswernote>
   </expected>
   <expected>
     <name>prt_ans5</name>
@@ -802,8 +808,9 @@ fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+gg
     <expectedanswernote>prt_ans5-4-F</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
-  <testcase>10</testcase>
+  <testcase>8</testcase>
   <description>ans1: 0 (tried by the build)</description>
   <testinput>
     <name>ans1</name>
@@ -856,8 +863,9 @@ fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+gg
     <expectedanswernote>prt_ans5-1-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
-  <testcase>11</testcase>
+  <testcase>9</testcase>
   <description>ans2: 0 (tried by the build)</description>
   <testinput>
     <name>ans2</name>
@@ -910,8 +918,9 @@ fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+gg
     <expectedanswernote>prt_ans5-1-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
-  <testcase>12</testcase>
+  <testcase>10</testcase>
   <description>ans3: 0 (tried by the build)</description>
   <testinput>
     <name>ans3</name>
@@ -964,8 +973,9 @@ fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+gg
     <expectedanswernote>prt_ans5-1-T</expectedanswernote>
   </expected>
 </qtest>
+
 <qtest>
-  <testcase>13</testcase>
+  <testcase>11</testcase>
   <description>ans4: 0 (tried by the build)</description>
   <testinput>
     <name>ans4</name>
@@ -1018,8 +1028,164 @@ fmiss: is(some(lambda([g],algebraic_equivalence(ans5,g)),[rrt+ta4,ggt+ta4,rrt+gg
     <expectedanswernote>prt_ans5-1-T</expectedanswernote>
   </expected>
 </qtest>
+
+<qtest>
+  <testcase>12</testcase>
+  <description>b equals a</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#ta1#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta1#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#ta4#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#ta5#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-3-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>13</testcase>
+  <description>c = 1 - b</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#ta1#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#1-ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#ta4#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#ta5#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-2-T</expectedanswernote>
+  </expected>
+</qtest>
+
 <qtest>
   <testcase>14</testcase>
+  <description>a + b added in (ii)</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#ta1#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#ta1+ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#ta5#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-3-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>15</testcase>
+  <description>only blue-blue in (iii)</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#ta1#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#ta4#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#ta4#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-3-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>16</testcase>
+  <description>green-green missing in (iii)</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#ta1#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#ta4#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#rrt+ta4#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-4-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>17</testcase>
   <description>ans5: 0 (tried by the build)</description>
   <testinput>
     <name>ans5</name>
