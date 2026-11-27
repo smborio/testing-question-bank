@@ -1,0 +1,1556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<question type="stack">
+<name>
+<text>Create randomised stack entitled hypothesis</text>
+</name>
+<questiontext format="html">
+<text><![CDATA[<p>A manufacturer claims that the mean lifetime of its batteries is \(\mu_0={@mu0@}\) hours. A researcher investigates whether the mean lifetime has
+[[if test="is(tl=0)"]]decreased[[elif test="is(tl=1)"]]increased[[else]]changed[[/if]].
+The population standard deviation is known: \(\sigma={@sigma@}\) hours. A random sample of \(n={@n@}\) batteries has a sample mean of \({@xbar@}\) hours. Assume the conditions for the test are satisfied and use a significance level of 5%. The null hypothesis is \(H_0:\mu={@mu0@}\).</p>
+<p><b>(1)</b> Choose the alternative hypothesis \(H_1\).</p>
+[[input:ans1]] [[validation:ans1]] [[feedback:prt_ans1]]
+<p><b>(2)</b> Calculate the test statistic \(z\), to 2 decimal places.</p>
+[[input:ans2]] [[validation:ans2]] [[feedback:prt_ans2]]
+<p><b>(3)</b> Calculate the p-value, to 3 significant figures.</p>
+[[input:ans3]] [[validation:ans3]] [[feedback:prt_ans3]]
+<p><b>(4)</b> What is your decision at the 5% significance level?</p>
+[[input:ans4]] [[validation:ans4]] [[feedback:prt_ans4]]
+<p><b>(5)</b> Choose the correct conclusion in context.</p>
+[[input:ans5]] [[validation:ans5]] [[feedback:prt_ans5]]]]></text>
+</questiontext>
+<questionvariables>
+<text><![CDATA[cs: rand(6);
+tl: mod(cs,3);
+rj: if cs<3 then 1 else 0;
+mu0: 5*(rand(17)+8);
+sigma: rand([4,5,6,8,10]);
+n: rand([16,25,36,49,64]);
+se: sigma/sqrt(n);
+sg1: rand([-1,1]);
+sg: if rj=1 then (if tl=0 then -1 else if tl=1 then 1 else sg1) else sg1;
+zt: if rj=1 then (if tl=2 then 2.3 else 2.2)+rand(11)/10 else 0.3+rand(11)/10;
+xbar: float(round((mu0+sg*zt*se)*100)/100);
+z2: float(round(100*(xbar-mu0)/se)/100);
+pf(zv,t):= if t=0 then float((1+erf(zv/sqrt(2)))/2) else if t=1 then float((1-erf(zv/sqrt(2)))/2) else float(1-erf(abs(zv)/sqrt(2)));
+pv: pf(z2,tl);
+zu: float((xbar-mu0)/se);
+pu: pf(zu,tl);
+pvs: dispsf(pv,3);
+wd: ["decreased","increased","changed"][tl+1];
+tv5: if rj=1 then 1 else 2;
+ta1: random_permutation([[0,is(tl=0),"\\(H_1:\\mu<\\mu_0\\)"],[1,is(tl=1),"\\(H_1:\\mu>\\mu_0\\)"],[2,is(tl=2),"\\(H_1:\\mu\\neq\\mu_0\\)"]]);
+ta2: z2;
+ta3: pv;
+ta4: random_permutation([[1,is(rj=1),"Reject H0"],[0,is(rj=0),"Do not reject H0"]]);
+ta5: random_permutation([[1,is(tv5=1),sconcat("There is sufficient evidence at the 5% level that the mean lifetime has ",wd)],[2,is(tv5=2),sconcat("There is insufficient evidence at the 5% level that the mean lifetime has ",wd)],[3,is(tv5=3),sconcat("The data prove H0 is true: the mean lifetime is definitely ",string(mu0)," hours")]]);
+zw: z2+1;
+pw: pf(zw,tl);
+dw: if pw<0.05 then 1 else 0;
+cw: if dw=1 then 1 else 2;
+ph: pv/2;
+pq: 1-pv;
+tw1: mod(tl+1,3);
+td4: 1-rj;]]></text>
+</questionvariables>
+<generalfeedback format="html">
+<text><![CDATA[[[define z2='dispdp(z2,2)' /]]
+[[if test="is(tl=0)"]]
+<p>\(H_0:\mu={@mu0@}\), \(H_1:\mu<{@mu0@}\) (left-tailed, since the researcher asks whether the mean has decreased).</p>
+<p>\(z=\dfrac{\bar x-\mu_0}{\sigma/\sqrt n}=\dfrac{{@xbar@}-{@mu0@}}{{@sigma@}/\sqrt{ {@n@} }}={@z2@}\).</p>
+<p>p-value \(=P(Z\le {@z2@})={@pvs@}\).</p>
+[[if test="is(rj=1)"]]<p>Since \(p<0.05\), we reject \(H_0\): there is sufficient evidence at the 5% level that the mean lifetime has decreased.</p>
+[[else]]<p>Since \(p>0.05\), we do not reject \(H_0\): there is insufficient evidence that the mean lifetime has decreased. This does not prove that the mean is {@mu0@} hours.</p>
+[[/if]]
+[[elif test="is(tl=1)"]]
+<p>\(H_0:\mu={@mu0@}\), \(H_1:\mu>{@mu0@}\) (right-tailed, since the researcher asks whether the mean has increased).</p>
+<p>\(z=\dfrac{\bar x-\mu_0}{\sigma/\sqrt n}=\dfrac{{@xbar@}-{@mu0@}}{{@sigma@}/\sqrt{ {@n@} }}={@z2@}\).</p>
+<p>p-value \(=P(Z\ge {@z2@})={@pvs@}\).</p>
+[[if test="is(rj=1)"]]<p>Since \(p<0.05\), we reject \(H_0\): there is sufficient evidence at the 5% level that the mean lifetime has increased.</p>
+[[else]]<p>Since \(p>0.05\), we do not reject \(H_0\): there is insufficient evidence that the mean lifetime has increased. This does not prove that the mean is {@mu0@} hours.</p>
+[[/if]]
+[[else]]
+<p>\(H_0:\mu={@mu0@}\), \(H_1:\mu\neq{@mu0@}\) (two-tailed, since the researcher asks whether the mean has changed).</p>
+<p>\(z=\dfrac{\bar x-\mu_0}{\sigma/\sqrt n}=\dfrac{{@xbar@}-{@mu0@}}{{@sigma@}/\sqrt{ {@n@} }}={@z2@}\).</p>
+<p>p-value \(=2P(Z\ge |{@z2@}|)={@pvs@}\) (the tail area is doubled).</p>
+[[if test="is(rj=1)"]]<p>Since \(p<0.05\), we reject \(H_0\): there is sufficient evidence at the 5% level that the mean lifetime has changed.</p>
+[[else]]<p>Since \(p>0.05\), we do not reject \(H_0\): there is insufficient evidence that the mean lifetime has changed. This does not prove that the mean is {@mu0@} hours.</p>
+[[/if]]
+[[/if]]]]></text>
+</generalfeedback>
+<specificfeedback format="html">
+  <text></text>
+</specificfeedback>
+<questionnote format="moodle_auto_format">
+<text>tail={@tl@}, reject={@rj@}, direction={@sg@}</text>
+</questionnote>
+<penalty>0</penalty>
+<input>
+<name>ans1</name>
+<type>radio</type>
+<tans>ta1</tans>
+<showvalidation>0</showvalidation>
+<mustverify>0</mustverify>
+<boxsize>15</boxsize>
+<strictsyntax>1</strictsyntax>
+<insertstars>0</insertstars>
+<syntaxhint></syntaxhint>
+<syntaxattribute>0</syntaxattribute>
+<forbidwords></forbidwords>
+<allowwords></allowwords>
+<forbidfloat>1</forbidfloat>
+<requirelowestterms>0</requirelowestterms>
+<checkanswertype>0</checkanswertype>
+<options></options>
+</input>
+<input>
+<name>ans2</name>
+<type>numerical</type>
+<tans>ta2</tans>
+<forbidfloat>0</forbidfloat>
+<boxsize>15</boxsize>
+<strictsyntax>1</strictsyntax>
+<insertstars>0</insertstars>
+<syntaxhint></syntaxhint>
+<syntaxattribute>0</syntaxattribute>
+<forbidwords></forbidwords>
+<allowwords></allowwords>
+<requirelowestterms>0</requirelowestterms>
+<checkanswertype>0</checkanswertype>
+<mustverify>1</mustverify>
+<showvalidation>1</showvalidation>
+<options></options>
+</input>
+<input>
+<name>ans3</name>
+<type>numerical</type>
+<tans>ta3</tans>
+<forbidfloat>0</forbidfloat>
+<boxsize>15</boxsize>
+<strictsyntax>1</strictsyntax>
+<insertstars>0</insertstars>
+<syntaxhint></syntaxhint>
+<syntaxattribute>0</syntaxattribute>
+<forbidwords></forbidwords>
+<allowwords></allowwords>
+<requirelowestterms>0</requirelowestterms>
+<checkanswertype>0</checkanswertype>
+<mustverify>1</mustverify>
+<showvalidation>1</showvalidation>
+<options></options>
+</input>
+<input>
+<name>ans4</name>
+<type>radio</type>
+<tans>ta4</tans>
+<showvalidation>0</showvalidation>
+<mustverify>0</mustverify>
+<boxsize>15</boxsize>
+<strictsyntax>1</strictsyntax>
+<insertstars>0</insertstars>
+<syntaxhint></syntaxhint>
+<syntaxattribute>0</syntaxattribute>
+<forbidwords></forbidwords>
+<allowwords></allowwords>
+<forbidfloat>1</forbidfloat>
+<requirelowestterms>0</requirelowestterms>
+<checkanswertype>0</checkanswertype>
+<options></options>
+</input>
+<input>
+<name>ans5</name>
+<type>radio</type>
+<tans>ta5</tans>
+<showvalidation>0</showvalidation>
+<mustverify>0</mustverify>
+<boxsize>15</boxsize>
+<strictsyntax>1</strictsyntax>
+<insertstars>0</insertstars>
+<syntaxhint></syntaxhint>
+<syntaxattribute>0</syntaxattribute>
+<forbidwords></forbidwords>
+<allowwords></allowwords>
+<forbidfloat>1</forbidfloat>
+<requirelowestterms>0</requirelowestterms>
+<checkanswertype>0</checkanswertype>
+<options></options>
+</input>
+<prt>
+  <name>prt_ans1</name>
+  <value>1</value>
+  <autosimplify>1</autosimplify>
+  <feedbackstyle>1</feedbackstyle>
+  <node>
+    <name>0</name>
+    <description>Correct alternative hypothesis</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>ans1</sans>
+    <tans>tl</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>1</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans1-1-T</trueanswernote>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falsenextnode>-1</falsenextnode>
+    <falseanswernote>prt_ans1-1-F</falseanswernote>
+    <falsefeedback format="html">
+      <text><![CDATA[<p>Not quite. Match the tail to the researcher's claim: "decreased" gives \(<\), "increased" gives \(>\), "changed" gives \(\neq\).</p>]]></text>
+    </falsefeedback>
+  </node>
+</prt>
+
+<prt>
+  <name>prt_ans2</name>
+  <value>1</value>
+  <autosimplify>1</autosimplify>
+  <feedbackstyle>1</feedbackstyle>
+  <node>
+    <name>0</name>
+    <description>z close to correct value</description>
+    <answertest>NumAbsolute</answertest>
+    <sans>ans2</sans>
+    <tans>ta2</tans>
+    <testoptions>0.005</testoptions>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>1</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans2-1-T</trueanswernote>
+    <falsenextnode>1</falsenextnode>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falseanswernote>prt_ans2-1-F</falseanswernote>
+  </node>
+  <node>
+    <name>1</name>
+    <description>z with wrong sign</description>
+    <answertest>NumAbsolute</answertest>
+    <sans>ans2</sans>
+    <tans>-ta2</tans>
+    <testoptions>0.005</testoptions>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>0</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans2-2-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>Check the sign: compute sample mean minus \(\mu_0\), not the other way round.</p>]]></text>
+    </truefeedback>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falsenextnode>-1</falsenextnode>
+    <falseanswernote>prt_ans2-2-F</falseanswernote>
+    <falsefeedback format="html">
+      <text><![CDATA[<p>Check your calculation of \(z=(\bar x-\mu_0)/(\sigma/\sqrt n)\).</p>]]></text>
+    </falsefeedback>
+  </node>
+</prt>
+
+<prt>
+  <name>prt_ans3</name>
+  <value>1</value>
+  <autosimplify>1</autosimplify>
+  <feedbackstyle>1</feedbackstyle>
+  <feedbackvariables>
+    <text><![CDATA[fz: pf(ans2,tl);
+ftok: is(ans1=tl and abs(ans2-z2)>0.005 and ans3>=0 and ans3<=1 and abs(ans3-fz)<=0.005*abs(fz));
+ok3: is(abs(ans3-pv)<=0.005*abs(pv) or abs(ans3-pu)<=0.005*abs(pu));
+oor: is(ans3<0 or ans3>1);
+half: is(tl=2 and abs(ans3-ph)<=0.005*ph);
+wt: is(abs(ans3-pq)<=0.005*abs(pq));]]></text>
+  </feedbackvariables>
+  <node>
+    <name>0</name>
+    <description>p-value correct to 3 s.f.</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>ok3</sans>
+    <tans>true</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>1</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans3-1-T</trueanswernote>
+    <falsenextnode>1</falsenextnode>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falseanswernote>prt_ans3-1-F</falseanswernote>
+  </node>
+  <node>
+    <name>1</name>
+    <description>Follow-through from own z</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>ftok</sans>
+    <tans>true</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>0.95</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans3-2-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>Your p-value is consistent with your own z; the error was in part 2, so it is counted there only (95%).</p>]]></text>
+    </truefeedback>
+    <falsenextnode>2</falsenextnode>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falseanswernote>prt_ans3-2-F</falseanswernote>
+  </node>
+  <node>
+    <name>2</name>
+    <description>p outside [0,1]</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>oor</sans>
+    <tans>true</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>0</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans3-3-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>A probability lies between 0 and 1.</p>]]></text>
+    </truefeedback>
+    <falsenextnode>3</falsenextnode>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falseanswernote>prt_ans3-3-F</falseanswernote>
+  </node>
+  <node>
+    <name>3</name>
+    <description>Half p-value in two-tailed test</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>half</sans>
+    <tans>true</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>0</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans3-4-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>Remember to double the tail area for a two-tailed test.</p>]]></text>
+    </truefeedback>
+    <falsenextnode>4</falsenextnode>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falseanswernote>prt_ans3-4-F</falseanswernote>
+  </node>
+  <node>
+    <name>4</name>
+    <description>Wrong tail (1-p)</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>wt</sans>
+    <tans>true</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>0</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans3-5-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>Check which tail the alternative hypothesis points to.</p>]]></text>
+    </truefeedback>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falsenextnode>-1</falsenextnode>
+    <falseanswernote>prt_ans3-5-F</falseanswernote>
+    <falsefeedback format="html">
+      <text><![CDATA[<p>Find the area in the tail(s) given by \(H_1\), using your z (doubled for a two-tailed test), and give 3 significant figures.</p>]]></text>
+    </falsefeedback>
+  </node>
+</prt>
+
+<prt>
+  <name>prt_ans4</name>
+  <value>1</value>
+  <autosimplify>1</autosimplify>
+  <feedbackstyle>1</feedbackstyle>
+  <feedbackvariables>
+    <text><![CDATA[ft4: is(ans1=tl and ans3>=0 and ans3<=1 and ans4=(if ans3<0.05 then 1 else 0));]]></text>
+  </feedbackvariables>
+  <node>
+    <name>0</name>
+    <description>Correct decision</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>ans4</sans>
+    <tans>rj</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>1</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans4-1-T</trueanswernote>
+    <falsenextnode>1</falsenextnode>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falseanswernote>prt_ans4-1-F</falseanswernote>
+  </node>
+  <node>
+    <name>1</name>
+    <description>Decision consistent with own p-value</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>ft4</sans>
+    <tans>true</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>0.95</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans4-2-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>Your decision is consistent with your own p-value; the earlier error is counted there only (95%).</p>]]></text>
+    </truefeedback>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falsenextnode>-1</falsenextnode>
+    <falseanswernote>prt_ans4-2-F</falseanswernote>
+    <falsefeedback format="html">
+      <text><![CDATA[<p>Compare the p-value with 0.05: reject \(H_0\) if \(p<0.05\), otherwise do not reject.</p>]]></text>
+    </falsefeedback>
+  </node>
+</prt>
+
+<prt>
+  <name>prt_ans5</name>
+  <value>1</value>
+  <autosimplify>1</autosimplify>
+  <feedbackstyle>1</feedbackstyle>
+  <feedbackvariables>
+    <text>ft5: is(ans1=tl and ans5=(if ans4=1 then 1 else 2));</text>
+  </feedbackvariables>
+  <node>
+    <name>0</name>
+    <description>Correct conclusion</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>ans5</sans>
+    <tans>tv5</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>1</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans5-1-T</trueanswernote>
+    <falsenextnode>1</falsenextnode>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falseanswernote>prt_ans5-1-F</falseanswernote>
+  </node>
+  <node>
+    <name>1</name>
+    <description>Conclusion consistent with own decision</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>ft5</sans>
+    <tans>true</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>0.95</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans5-2-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>Your conclusion is consistent with your own decision; the earlier error is counted there only (95%).</p>]]></text>
+    </truefeedback>
+    <falsenextnode>2</falsenextnode>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falseanswernote>prt_ans5-2-F</falseanswernote>
+  </node>
+  <node>
+    <name>2</name>
+    <description>Chose the prove H0 option</description>
+    <answertest>AlgEquiv</answertest>
+    <sans>ans5</sans>
+    <tans>3</tans>
+    <quiet>0</quiet>
+    <truescoremode>=</truescoremode>
+    <truescore>0</truescore>
+    <truenextnode>-1</truenextnode>
+    <trueanswernote>prt_ans5-3-T</trueanswernote>
+    <truefeedback format="html">
+      <text><![CDATA[<p>Failing to reject \(H_0\) does not prove it true; it only means there is insufficient evidence against it.</p>]]></text>
+    </truefeedback>
+    <falsescoremode>=</falsescoremode>
+    <falsescore>0</falsescore>
+    <falsenextnode>-1</falsenextnode>
+    <falseanswernote>prt_ans5-3-F</falseanswernote>
+    <falsefeedback format="html">
+      <text><![CDATA[<p>Match your conclusion to the decision: rejecting \(H_0\) gives sufficient evidence for \(H_1\); not rejecting gives insufficient evidence.</p>]]></text>
+    </falsefeedback>
+  </node>
+</prt>
+
+<qtest>
+  <testcase>1</testcase>
+  <description>Wrong z, p consistent with it, then follow-through on p</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#tl#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#zw#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#pw#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#dw#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#cw#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>0.9500000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-2-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>2</testcase>
+  <description>Wrong p, decision consistent with that p</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#tl#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#if rj=1 then 0.5 else 0.01#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#td4#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#tv5#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>0.9500000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-2-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>3</testcase>
+  <description>Wrong decision, conclusion consistent with that decision</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#tl#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#td4#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#if td4=1 then 1 else 2#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>0.9500000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-2-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>4</testcase>
+  <description>The model answers</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#first(mcq_correct(ta1))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#first(mcq_correct(ta4))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#first(mcq_correct(ta5))#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>5</testcase>
+  <description>All correct</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#tl#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#rj#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#tv5#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>9</testcase>
+  <description>p outside [0,1]</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#tl#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#rj#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#tv5#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-3-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>10</testcase>
+  <description>Prove H0 option</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#tl#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#rj#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#3#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-3-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>11</testcase>
+  <description>z with wrong sign</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#tl#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#-ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#rj#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#tv5#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-2-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>12</testcase>
+  <description>p as 1-p</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#tl#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#pq#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#rj#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#tv5#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-5-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>13</testcase>
+  <description>Wrong decision</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#tl#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#td4#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#tv5#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-2-F</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>14</testcase>
+  <description>ans1: its first wrong option (tried by the build)</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#first(mcq_incorrect(ta1))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#first(mcq_correct(ta4))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#first(mcq_correct(ta5))#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-F</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>15</testcase>
+  <description>ans1: its last wrong option (tried by the build)</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#last(mcq_incorrect(ta1))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#first(mcq_correct(ta4))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#first(mcq_correct(ta5))#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-F</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>16</testcase>
+  <description>ans2: its model answer factored (tried by the build)</description>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ev(factor(ta2), simp)#}</value>
+  </testinput>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#first(mcq_correct(ta1))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#first(mcq_correct(ta4))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#first(mcq_correct(ta5))#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>17</testcase>
+  <description>ans2: 0 (tried by the build)</description>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#0#}</value>
+  </testinput>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#first(mcq_correct(ta1))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#first(mcq_correct(ta4))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#first(mcq_correct(ta5))#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-2-F</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>18</testcase>
+  <description>ans3: its model answer factored (tried by the build)</description>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ev(factor(ta3), simp)#}</value>
+  </testinput>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#first(mcq_correct(ta1))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#first(mcq_correct(ta4))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#first(mcq_correct(ta5))#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+<qtest>
+  <testcase>19</testcase>
+  <description>ans3: 0 (tried by the build)</description>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#0#}</value>
+  </testinput>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#first(mcq_correct(ta1))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#first(mcq_correct(ta4))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#first(mcq_correct(ta5))#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-5-F</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+
+
+<qtest>
+  <testcase>20</testcase>
+  <description>p from the unrounded z</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#tl#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#pu#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#rj#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#tv5#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+<qtest>
+  <testcase>21</testcase>
+  <description>prove H0 option with a wrong decision</description>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#tl#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#td4#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#3#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-2-F</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-3-T</expectedanswernote>
+  </expected>
+</qtest>
+<qtest>
+  <testcase>22</testcase>
+  <description>ans2: its model answer simplified (tried by the build)</description>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ev(fullratsimp(ta2), simp)#}</value>
+  </testinput>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#first(mcq_correct(ta1))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#first(mcq_correct(ta4))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#first(mcq_correct(ta5))#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+<qtest>
+  <testcase>23</testcase>
+  <description>ans3: its model answer simplified (tried by the build)</description>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ev(fullratsimp(ta3), simp)#}</value>
+  </testinput>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#first(mcq_correct(ta1))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#first(mcq_correct(ta4))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#first(mcq_correct(ta5))#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+<qtest>
+  <testcase>24</testcase>
+  <description>ans4: its first wrong option (tried by the build)</description>
+  <testinput>
+    <name>ans4</name>
+    <value>CT:{#first(mcq_incorrect(ta4))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans1</name>
+    <value>CT:{#first(mcq_correct(ta1))#}</value>
+  </testinput>
+  <testinput>
+    <name>ans2</name>
+    <value>CT:{#ta2#}</value>
+  </testinput>
+  <testinput>
+    <name>ans3</name>
+    <value>CT:{#ta3#}</value>
+  </testinput>
+  <testinput>
+    <name>ans5</name>
+    <value>CT:{#first(mcq_correct(ta5))#}</value>
+  </testinput>
+  <expected>
+    <name>prt_ans1</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans1-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans2</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans2-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans3</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans3-1-T</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans4</name>
+    <expectedscore>0.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans4-2-F</expectedanswernote>
+  </expected>
+  <expected>
+    <name>prt_ans5</name>
+    <expectedscore>1.0000000</expectedscore>
+    <expectedpenalty>0.0000000</expectedpenalty>
+    <expectedanswernote>prt_ans5-1-T</expectedanswernote>
+  </expected>
+</qtest>
+</question>
+</quiz>
