@@ -124,3 +124,17 @@ STACK API check: PASSED after 2 attempt(s).
 Retriever gave the Author: Authoring/Question_blocks/Conditional_blocks.md, Authoring/Inputs/Multiple_choice_input.md, Authoring/Inputs/Numerical_input.md, Authoring/Answer_Tests/Numerical.md, Authoring/Answer_Tests/Grading_recipes.md, Authoring/Potential_response_trees.md, CAS/Random.md, Authoring/Question_note.md, Authoring/Variables.md, STACK_question_admin/Testing.md, AI_authors/stack_essentials.md
 ```
 
+## Entry 4 — planner · review (2026-11-27T10:30:00)
+
+**Reference files fetched:**
+- (none)
+
+```text
+Review decision: REJECT (keep_draft=True, plan_changed=False)
+Feedback to Author: Fix these, keeping the draft and the plan unchanged (no change for F4: no follow-through on p after a wrong part 1).
+1. Part 3: give full marks (1) to a p-value correct to 3 s.f. from either the rounded z (z2) or the unrounded z ((xbar-mu0)/se), using the correct tail. Accept either with the same relative tolerance.
+2. Part 3 follow-through (0.95): apply it only if the student's z in part 2 is outside the part 2 tolerance (0.005 of z2). If the z is accepted, the follow-through message must not appear. A p-value that matches neither correct value then gets 0 and the normal tail hint.
+3. Worked solution: print z to 2 decimal places (e.g. 2.30, not 2.3) wherever z is shown, using a formatted string such as printf or decimalplaces, in all three tail branches. Show the p-value with 3 s.f.
+4. Keep the qtests passing. The half-p and "prove H0" routes are unreached on some variants, so add qtests that reach them on every variant: make them independent of the shuffled option order and of the tail.
+```
+
