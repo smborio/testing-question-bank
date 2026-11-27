@@ -1,56 +1,50 @@
-GOAL (non-negotiable): Assess a one-sample z-test for a population mean with known sigma at the 5% level, in a battery-lifetime context: choose the alternative hypothesis, compute z (2 d.p.) and the p-value (3 s.f.), decide on H0, and state the contextual conclusion. Title: "Hypothesis testing". Default question grade 1.
+GOAL (non-negotiable): Assess a one-sample z-test for a population mean with known population standard deviation, in a battery-lifetime context (manufacturer claims mean lifetime mu0 hours; researcher investigates whether it has decreased, increased or changed). Significance level 5%. Conditions for the test are assumed satisfied. Question title: "Hypothesis testing". Default question grade 1.
 
-STRUCTURE (non-negotiable): Five equally weighted parts (0.2 each).
-1. Radio: alternative hypothesis (mu < mu0, mu > mu0, mu ≠ mu0). H0: mu = mu0 is given. Options shuffled.
-2. Numerical input: test statistic z, 2 d.p.
-3. Numerical input: p-value, 3 s.f.
-4. Radio: reject / do not reject H0 at 5%.
-5. Radio: contextual conclusion (options shuffled). Distractors include "sufficient evidence" vs "insufficient evidence" for the right claim, the wrong direction, and "the data prove the mean is exactly mu0" (non-rejection read as proof of H0).
-Question text states the manufacturer's claim, sigma, n, sample mean and alpha = 5%, and the researcher's claim through conditional blocks: "has decreased" / "has increased" / "has changed".
+STRUCTURE (non-negotiable): Five equally weighted parts, in order:
+1. Radio input: choose the alternative hypothesis H1 from three options (mu < mu0, mu > mu0, mu != mu0). H0 (mu = mu0) is given in the question text.
+2. Numerical input: test statistic z, 2 decimal places.
+3. Numerical input: p-value, 3 significant figures.
+4. Radio input: decision (reject / do not reject H0).
+5. Radio input: contextual conclusion (options in battery context, including the distractor "the data prove H0 is true / the mean lifetime is definitely mu0").
+Parts 3, 4, 5 use follow-through (see ANSWER TESTS). The order of radio options is randomised in every radio input.
 
-RANDOMIZATION (negotiable): Case = (tail: left/right/two) x (reject: yes/no), 6 cases drawn uniformly, so all are well represented. Context numbers: mu0 from 300 to 900 hours in steps of 50 (batteries); sigma from {15, 20, 25, 30, 40}; n from {25, 36, 49, 64, 81, 100}. The sample mean is built from a target z, rounded to 0.1 h, then z is recomputed from the rounded mean, so the values are real and the case is certain.
-Target |z| away from the critical values (1.645 one-tailed, 1.96 two-tailed):
-- Reject: one-tailed 2.1 to 3.0 in the direction of the alternative; two-tailed |z| 2.3 to 3.0, either sign.
-- Non-reject, in the direction: one-tailed 0.3 to 1.2; two-tailed |z| 0.2 to 1.5, either sign.
-- Non-reject, one-tailed, opposite direction to the alternative: z 0.3 to 2.5 the wrong way, about half of the one-tailed non-rejections. The p-value is then above 0.5.
-Question Note names tail, decision, and direction of the difference (the mathematically distinct variants), without the option order. Comments in the variables explain the construction.
+RANDOMIZATION (negotiable):
+- Case drawn from six combinations: tail (left, right, two) x outcome (reject, not reject), balanced so that all six are reasonably represented (e.g. case index 1..6 chosen with rand, or equally by seed).
+- Context values: mu0 from {40, 45, 50, 60, 75, 80, 100...} hours (sensible battery lifetimes, e.g. multiples of 5 between 40 and 120); sigma a value such as 4, 5, 6, 8, 10; n from {16, 25, 36, 49, 64}, so sigma/sqrt(n) is tidy.
+- Sample mean built from a target z at a safe distance from the critical values (e.g. reject: |z| between 2.2 and 3.2 for one-tailed/ 2.3-3.3 two-tailed; not reject: |z| between 0.3 and 1.3), then the mean is rounded to 2 decimals and z recomputed from the rounded mean; require recomputed z to stay safely away from the critical values (1.645 one-tailed, 1.96 two-tailed; margin at least 0.2).
+- For one-tailed non-rejecting cases, about half have the observed difference in the opposite direction to the alternative (e.g. sample mean above mu0 for a left-tailed test).
+- Question Note records tail, outcome and direction of difference only, not option permutations.
 
 ANSWER TESTS (negotiable):
 - Part 1: correct option gets full marks.
-- Part 2: numerical closeness with tolerance 0.005 absolute (rounding to 2 d.p.); no trailing zeros required. Full credit for the correct value.
-- Part 3: numerical closeness consistent with 3 s.f. (tolerance half a unit in the third significant figure of the correct p); no trailing zeros required. Full credit for the correct p. 95% follow-through if p matches the student's own z (their z with the right tail rule), only if part 1 was correct and the student's z is a valid number.
-- Part 4: correct decision for the true p-value gets full marks. 95% follow-through if it matches the student's own p-value (reject iff p < 0.05), only if part 1 was correct and the student's p is a valid probability (0 to 1); an invalid p gets no follow-through.
-- Part 5: correct conclusion for the true decision gets full marks. 95% follow-through if it matches the student's own decision, only if part 1 was correct.
-- Follow-through on parts 3 to 5 needs part 1 correct. Follow-through is never offered when the answer is only equal to the model answer by accident (copied answers earn nothing beyond the normal route).
+- Part 2: numerical closeness to the teacher's z with tolerance consistent with 2 decimal places (e.g. 0.005 absolute); no trailing zeros required; z entered as a number.
+- Part 3: full credit if equal to the correct p-value to 3 significant figures (relative tolerance consistent with 3 s.f., no trailing zeros required). Follow-through 95%: p-value consistent with the student's own z (using the correct tail from the true alternative), only if part 1 is correct, and only if the student's z is a valid input; a p-value outside [0,1] never gets follow-through.
+- Part 4: full credit for the correct decision. Follow-through 95%: decision consistent with the student's own p-value (compare with 0.05), only if part 1 correct and the student's p-value is a valid probability in [0,1].
+- Part 5: full credit for the correct conclusion. Follow-through 95%: conclusion consistent with the student's own decision, only if part 1 correct.
+- Follow-through never applies if part 1 is wrong; a student who answered a part correctly independently gets full marks.
 
-FEEDBACK (negotiable): Each wrong answer below gets its own hint.
-- Part 1: a wrong tail is told which direction the researcher's claim points (decreased, increased, changed); no answer given.
-- Part 3 (parts 3 to 5 depend on the tail): two-tailed p given as a one-tailed value (the p without the factor 2, p/2 of the correct value): "remember both tails". One-tailed case with the wrong tail (1 − p) is told to check which tail the alternative points to. Both score 0 for the p, with a hint.
-- Part 5: choosing "H0 is true / the mean is exactly mu0" after non-rejection is told that failing to reject is not proof of H0, only lack of evidence.
-- Part 2: z with sign reversed (-z) is told to check the order of x-bar and mu0; sigma used without dividing by sqrt(n), i.e. (xbar-mu0)/sigma, is told to use the standard error.
-- Follow-through answers are told they are consistent with the earlier mistake and the first error is named, at 95%.
-- Silent marks: not allowed.
-- General Feedback: a full worked solution inside an outer [[if]]/[[elif]]/[[else]] on the test direction (left, right, two). Each contains a nested [[if]]/[[else]] on rejection vs non-rejection, giving hypotheses, z, p (with factor 2 for two-tailed), the comparison with 0.05, the decision and the contextual conclusion. Conditions use Boolean variables from the Question Variables (e.g. tail and reject flags tested with is(...)). Native conditional CASText only, not Maxima strings of HTML.
+FEEDBACK (negotiable):
+- Part 1: wrong tail gets a hint tying the tail to the researcher's claim (decreased -> <, increased -> >, changed -> !=).
+- Part 2: no special branch beyond a general hint if far off; if sign wrong (-z), hint to check the direction of sample mean minus mu0 (score 0, hint).
+- Part 3: two-tailed case, student gives half the p-value (single tail area): hint "remember to double for a two-tailed test" (95% follow-through not applied; score 0 with hint). Wrong tail for p-value (1-p or the other tail): hint to check which tail the alternative points to. Invalid probability (<0 or >1): note that a probability lies in [0,1].
+- Part 4: decision inconsistent with p-value compared to 0.05: hint to compare p with 0.05.
+- Part 5: the option "the data prove H0 is true" gets a specific hint: failing to reject H0 does not prove H0 true, only that there is insufficient evidence against it. Other wrong conclusions: hint matching conclusion to decision.
+- Worked solution (General Feedback): three complete solutions, one per tail, in an outer native conditional block (if/elif/else), each with a nested conditional for reject vs not reject; conditions depend on Question Variables. Solutions name the method: state H0/H1, z = (xbar - mu0)/(sigma/sqrt n), p-value from the correct tail (doubled for two-tailed), compare with 0.05, state conclusion in context. Question Text uses native conditional blocks for the researcher's claim wording.
+Silent marks: not allowed.
 
-PRT/QTEST SUGGESTIONS:
-- Full correct answer set.
-- Correct part 1 and wrong z with a consistent p, decision and conclusion (follow-through at 95%).
-- Wrong part 1 with otherwise correct answers (no follow-through marks on parts 3 to 5).
-- Invalid p (e.g. 1.5) with decision "reject" (no follow-through).
-- Two-tailed p without the factor 2.
-- Non-rejection read as proof of H0 in part 5.
-- Cover every end point of each answer check, and avoid duplicates.
-
-Authoring conventions: Question grade 1; explanatory comments in Question Variables; short node descriptions; literal paragraph tags with an empty source line between paragraphs; no line-break tags; CDATA to keep the HTML readable; the Question Note as above; complete importable XML.
+PRT/QTEST SUGGESTIONS: Tests covering every PRT termination point: all-correct answers; part 1 wrong with the rest otherwise consistent (no follow-through); wrong z with consistent p, decision, conclusion (95%); p outside [0,1] (no follow-through); two-tailed half p-value; "prove H0 true" option. Avoid duplicates.
 
 REFERENCE POINTERS (optional):
 Authoring/Question_blocks/Conditional_blocks.md
 Authoring/Inputs/Multiple_choice_input.md
 Authoring/Inputs/Numerical_input.md
 Authoring/Answer_Tests/Numerical.md
+Authoring/Answer_Tests/Grading_recipes.md
 Authoring/Potential_response_trees.md
-Authoring/Question_note.md
 CAS/Random.md
+Authoring/Question_note.md
 CAS/Statistics.md
+
+Authoring conventions: comments in Question Variables explaining non-trivial choices; short PRT node descriptions; literal HTML paragraph tags with an empty source line between paragraphs, no line-break tags; CDATA sections for readable HTML.
 
 ADDITIONAL LANGUAGES (optional): (none)
