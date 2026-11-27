@@ -138,3 +138,14 @@ Feedback to Author: Fix these, keeping the draft and the plan unchanged (no chan
 4. Keep the qtests passing. The half-p and "prove H0" routes are unreached on some variants, so add qtests that reach them on every variant: make them independent of the shuffled option order and of the tail.
 ```
 
+## Entry 5 — students · confirmed findings (2026-11-27T10:30:04)
+
+**Reference files fetched:**
+- (none)
+
+```text
+{"student": "breaker", "variant": 1, "answers": {"ans1": "3", "ans2": "2.30", "ans3": "0.0106", "ans4": "2", "ans5": "1"}, "what_happened": "p-value 0.0106 was marked incorrect (0/1), with generic feedback about tail area. 0.0107 was accepted.", "why_wrong": "The unrounded z is 2.3033 and gives p=0.01064, which is 0.0106 to 3 s.f. The question accepts only the p-value computed from the rounded z=2.30. A correct answer is therefore marked wrong, and the feedback does not explain why."}
+{"student": "breaker", "variant": 1, "answers": {"ans1": "3", "ans2": "2.303", "ans3": "0.01064", "ans4": "2", "ans5": "1"}, "what_happened": "z=2.303 got full marks for part 2. The p-value 0.01064 got 0.95 with the message 'the error was in part 2, so it is counted there only (95%)'.", "why_wrong": "The feedback says part 2 had an error, but part 2 was marked fully correct. It also penalises a more accurate p-value. The message contradicts the marks."}
+{"student": "student", "variant": 1, "answers": {"ans1": "3", "ans2": "2.30", "ans3": "0.0106", "ans4": "2", "ans5": "1"}, "what_happened": "The p-value 0.0106 got 0 of 1 and the generic 'find the area in the tail' feedback. The worked solution gives 0.0107, which comes from rounding z to 2.3.", "why_wrong": "z = 3.29/(10/7) = 2.3029, so the exact p = 0.01066 → 0.0107?? Checked more carefully: the exact p is about 0.0106, and the key's 0.0107 comes from the rounded z. A correct answer is marked wrong because of intermediate rounding, and the student is told to redo a calculation they did correctly. The tolerance is too tight."}
+```
+
