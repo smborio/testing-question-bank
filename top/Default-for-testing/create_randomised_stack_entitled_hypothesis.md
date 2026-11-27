@@ -149,3 +149,13 @@ Feedback to Author: Fix these, keeping the draft and the plan unchanged (no chan
 {"student": "student", "variant": 1, "answers": {"ans1": "3", "ans2": "2.30", "ans3": "0.0106", "ans4": "2", "ans5": "1"}, "what_happened": "The p-value 0.0106 got 0 of 1 and the generic 'find the area in the tail' feedback. The worked solution gives 0.0107, which comes from rounding z to 2.3.", "why_wrong": "z = 3.29/(10/7) = 2.3029, so the exact p = 0.01066 → 0.0107?? Checked more carefully: the exact p is about 0.0106, and the key's 0.0107 comes from the rounded z. A correct answer is marked wrong because of intermediate rounding, and the student is told to redo a calculation they did correctly. The tolerance is too tight."}
 ```
 
+## Entry 6 — author · build round 2 (2026-11-27T10:32:52)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 1 attempt(s).
+Retriever gave the Author: Authoring/Question_blocks/Conditional_blocks.md, Authoring/Inputs/Multiple_choice_input.md, Authoring/Inputs/Numerical_input.md, Authoring/Answer_Tests/Numerical.md, Authoring/Answer_Tests/Grading_recipes.md, Authoring/Potential_response_trees.md, CAS/Random.md, Authoring/Question_note.md, Authoring/Variables.md, STACK_question_admin/Testing.md
+```
+
