@@ -114,3 +114,13 @@ Silent marks: not allowed.
 PRT/QTEST SUGGESTIONS: Tests covering every PRT termination point: all-correct answers; part 1 wrong with the rest otherwise consistent (no follow-through); wrong z with consistent p, decision, conclusion (95%); p outside [0,1] (no follow-through); two-tailed half p-value; "prove H0 true" option. Avoid duplicates.
 ```
 
+## Entry 3 — author · build round 1 (2026-11-27T10:24:56)
+
+**Reference files fetched:**
+- (none)
+
+```text
+STACK API check: PASSED after 2 attempt(s).
+Retriever gave the Author: Authoring/Question_blocks/Conditional_blocks.md, Authoring/Inputs/Multiple_choice_input.md, Authoring/Inputs/Numerical_input.md, Authoring/Answer_Tests/Numerical.md, Authoring/Answer_Tests/Grading_recipes.md, Authoring/Potential_response_trees.md, CAS/Random.md, Authoring/Question_note.md, Authoring/Variables.md, STACK_question_admin/Testing.md, AI_authors/stack_essentials.md
+```
+
